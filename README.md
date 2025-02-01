@@ -13,7 +13,7 @@ Include a demo video of your game here (you don't have to wait until the end, yo
 
 Add a group photo here!
 
-|     Name      |         E-mail        | Role |                    Username                     |
+|   🎭 Name      |       📧 E-mail        | 📌 Role |                  🐙 Username                     |
 |---------------|-----------------------|------|-------------------------------------------------|
 | Chengjun Yi   | lw24658@bristol.ac.uk | TBD  | [realYDIAN](https://github.com/realYDIAN)       |
 | Qiutong Zhao  | fa24741@bristol.ac.uk | TBD  | [AQIU20](https://github.com/AQIU20)             |
