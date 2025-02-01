@@ -29,20 +29,88 @@ This is our [Kanban link(Jira)](https://1971026049.atlassian.net/jira/software/p
 ## Game Ideas
 
 ### Game Idea 1:
-Game Introduction:
-This is a survival shooting game set in a post-apocalyptic wasteland. The game features dynamic environments and random events that create unpredictable challenges. 
-Players experience surprises every 3 minutes and moments of despair every 5 minutes.
+# Survival Shooting Game (Roguelike Elements)  
 
-Game Mechanics:
-Monster Spawning: Enemies continuously move toward the player and spawn randomly at the screen edges.
-Monster Types: Includes mobs (numerous but scattered threats) and bosses (independent HP with special skills).
-Shooting System: Precision shooting is controlled by the mouse, impacting combat effectiveness.
-Reward System: Players earn XP and item drops, progressively upgrading abilities. Pets can also be obtained and selected.
+## 🎯 Introduction  
+This **Survival Shooting Game** combines **Roguelike elements** with a **post-apocalyptic wasteland** setting. Players must survive against relentless enemies while facing dynamic environmental changes and **random events**. Every **3 minutes** brings a **surprise**, while every **5 minutes** introduces **despair**, ensuring an intense and unpredictable gameplay experience.  
+
+## 🔥 Game Mechanics  
+
+### 👥 Characters & Growth  
+- Choose from **3 initial characters**, each with unique skills.  
+- Gain **random rewards** (items, pets) to enhance abilities.  
+- **Synergy system** creates unique experiences in each playthrough.  
+
+### 👾 Monster System  
+- **Enemies spawn randomly** at screen edges and move toward the player.  
+- **Two enemy types**:  
+  - **Mobs**: Numerous but weak.  
+  - **Bosses**: Special abilities & independent HP bars.  
+
+### 🎯 Shooting & Combat  
+- **Mouse-controlled aiming** for precise shooting.  
+- **Progressive upgrades**: Gain XP, new items, and ability boosts.  
+- **Pet drops**: Obtain companions with unique effects.  
+
+### 🌍 Dynamic Challenges  
+- **Random events**: Weather changes (Intense sunlight,Falling snowflakes,Lightning strikes，Raining ) and terrain traps (quicksand, spikes).  
+- **Unpredictable battles**: Environmental changes force strategic adaptation.  
+
+### 🔀 Story & Progression  
+- **Post-apocalyptic world** with a deep storyline.  
+- Character progression tied to uncovering **the secrets of the wasteland**.  
+- Unlockable content reveals hidden lore.  
+
+## ⚙️ Development & Technology  
+- **Agile development** with tools like **use case diagrams, class diagrams, and communication diagrams**.  
+- **Core mechanics**: Monster spawning, shooting physics, and rewards.  
+- **GitHub version control** for efficient collaboration.  
+- **Continuous testing & optimization** to ensure combat balance and fluidity.  
+
+---  
+💀 **Survive, adapt, and uncover the secrets of the wasteland!**  
+
 
 #### Example:
 [Survival Shooting Game](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/Material/Pictures/Survival%20Shooting%20Game%20(Rogue%20like%20Elements).jpg)
 
 ### Game Idea 2:
+# Horror Puzzle RPG  
+
+## Introduction  
+In this **Horror Puzzle RPG**, players take on the role of a **computer science undergraduate** trapped in the university's experimental building. The building is mysteriously frozen in time at **22:22**, with supernatural events occurring. The protagonist must explore, solve puzzles, and uncover the truth to break the time curse.  
+
+## Game Mechanics  
+
+### 🔍 Exploration & Puzzle Solving  
+- Unlock new areas by **finding items** and **deciphering codes**.  
+- Various **puzzle types**:  
+  - **Logic puzzles** based on environmental clues.  
+  - **Item-based puzzles** requiring specific objects.  
+  - **Memory puzzles** (e.g., recognizing paintings or texts).  
+
+### ⏳ Time Loop Mechanic  
+- **Failure resets time**, forcing players to retry.  
+- Repeated loops **unlock new areas and story elements**.  
+
+### 🏚️ Dynamic Horror Environment  
+- **Random supernatural events** (lights flicker, paintings shift).  
+- Rooms become **more distorted** with each visit.  
+
+### 🔀 Multiple Endings  
+- **Good Ending**: The protagonist **fixes the time system** and escapes.  
+- **Bad Ending**: The protagonist is **trapped in the time loop forever**.  
+- **Hidden Ending**: The protagonist uncovers the **university’s secret experiment** on time control.  
+
+### 💻 Tech-Based Puzzle Design  
+- Includes **debugging code, repairing programs, and hacking servers**.  
+- Aligns with the **computer science theme**.  
+
+## 🎭 Story Background  
+A failed **quantum time synchronization experiment** caused the time freeze. The protagonist must repair the system to **restore normal time** and escape.  
+
+---  
+🚀 **Can you break the cycle and uncover the truth?**  
 
 ## Paper Prototype
 
