@@ -40,6 +40,7 @@ Shooting System: Precision shooting is controlled by the mouse, impacting combat
 Reward System: Players earn XP and item drops, progressively upgrading abilities. Pets can also be obtained and selected.
 
 #### Example:
+![Game Screenshot](file:///E:/Document/Engineering%20Discipline/image.jpg)
 
 ### Game Idea 2:
 
