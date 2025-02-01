@@ -40,7 +40,7 @@ Shooting System: Precision shooting is controlled by the mouse, impacting combat
 Reward System: Players earn XP and item drops, progressively upgrading abilities. Pets can also be obtained and selected.
 
 #### Example:
-[Survival Shooting Game](../Material/Pictures/Survival%20Shooting%20Game%20(Rogue%20like%20Elements).jpg)
+[Survival Shooting Game](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/Material/Pictures/Survival%20Shooting%20Game%20(Rogue%20like%20Elements).jpg)
 
 ### Game Idea 2:
 
