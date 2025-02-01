@@ -74,7 +74,7 @@ This **Survival Shooting Game** combines **Roguelike elements** with a **post-ap
 
 
 #### Example:
-[Survival Shooting Game](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/Material/Pictures/Survival%20Shooting%20Game%20(Rogue%20like%20Elements).jpg)
+![Survival Shooting Game](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/Material/Pictures/Survival%20Shooting%20Game%20(Rogue%20like%20Elements).jpg)
 
 ### Game Idea 2:
 # Horror Puzzle RPG
