@@ -77,12 +77,12 @@ This **Survival Shooting Game** combines **Roguelike elements** with a **post-ap
 
 # 2.Horror Puzzle RPG
 
-## Introduction  
+## 🎯 Introduction  
 In this **Horror Puzzle RPG**, players take on the role of a **computer science undergraduate** trapped in the university's experimental building. The building is mysteriously frozen in time at **22:22**, with supernatural events occurring. The protagonist must explore, solve puzzles, and uncover the truth to break the time curse.  
 
 **[GAME2 OVERVIEW](./Material/Horror%20Puzzle%20RPG.pdf)**
 
-## Game Mechanics  
+## 🔥 Game Mechanics  
 
 ### 🔍 Exploration & Puzzle Solving  
 - Unlock new areas by **finding items** and **deciphering codes**.  
