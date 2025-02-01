@@ -13,12 +13,18 @@ Include a demo video of your game here (you don't have to wait until the end, yo
 
 Add a group photo here!
 
-- Group member 1, name, email, role
-- Group member 2, name, email, role
-- Group member 3, name, email, role
-- Group member 4, name, email, role
-- Group member 5, name, email, role
-- Group member 6, name, email, role
+| 🏷️ Name  | 📧 E-mail | 💬 Role | 📌 User |
+|--------|------|------|------|------|---------|
+| Chengjun Yi | lw24658@bristol.ac.uk | TBD | [realYDIAN](https://github.com/realYDIAN) |
+| Qiutong Zhao | fa24741@bristol.ac.uk | TBD | [AQIU20](https://github.com/AQIU20) |
+| Heng Zhang | gg24694@bristol.ac.uk | TBD | [chrisheng456](https://github.com/chrisheng456) |
+| Tong Yu | mp24824@bristol.ac.uk | TBD | [CelesteYt](https://github.com/CelesteYt) |
+| Feihang Yan | vj24070@bristol.ac.uk | TBD | [Feihang027](https://github.com/Feihang027) |
+| Xianhang Peng |  ge24600@bristol.ac.uk | TBD | [capybara131](https://github.com/capybara131) |
+
+## Kanban
+
+This is our [Kanban link(Jira)](https://1971026049.atlassian.net/jira/software/projects/KAN/boards/1)
 
 ## Project Report
 
