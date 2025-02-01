@@ -34,7 +34,7 @@ This is our [Kanban link(Jira)](https://1971026049.atlassian.net/jira/software/p
 ## 🎯 Introduction  
 This **Survival Shooting Game** combines **Roguelike elements** with a **post-apocalyptic wasteland** setting. Players must survive against relentless enemies while facing dynamic environmental changes and **random events**. Every **3 minutes** brings a **surprise**, while every **5 minutes** introduces **despair**, ensuring an intense and unpredictable gameplay experience.  
 
-**[Full Game Overview (PDF)](Material/Survival Shooting Game (Roguelike Elements).pdf)**
+**[Material/Survival Shooting Game (Roguelike Elements).pdf](./Material/Survival%20Shooting%20Game%20(Roguelike%20Elements).pdf)**
 
 ## 🔥 Game Mechanics  
 
@@ -82,7 +82,7 @@ This **Survival Shooting Game** combines **Roguelike elements** with a **post-ap
 ## Introduction  
 In this **Horror Puzzle RPG**, players take on the role of a **computer science undergraduate** trapped in the university's experimental building. The building is mysteriously frozen in time at **22:22**, with supernatural events occurring. The protagonist must explore, solve puzzles, and uncover the truth to break the time curse.  
 
-**[Full Game Overview (PDF)](Material/Horror Puzzle RPG.pdf)**
+**[Material/Horror Puzzle RPG.pdf](./Material/Horror%20Puzzle%20RPG.pdf)**
 
 ## Game Mechanics  
 
