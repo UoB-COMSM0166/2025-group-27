@@ -29,6 +29,15 @@ This is our [Kanban link(Jira)](https://1971026049.atlassian.net/jira/software/p
 ## Game Ideas
 
 ### Game Idea 1:
+Game Introduction:
+This is a survival shooting game set in a post-apocalyptic wasteland. The game features dynamic environments and random events that create unpredictable challenges. 
+Players experience surprises every 3 minutes and moments of despair every 5 minutes.
+
+Game Mechanics:
+Monster Spawning: Enemies continuously move toward the player and spawn randomly at the screen edges.
+Monster Types: Includes mobs (numerous but scattered threats) and bosses (independent HP with special skills).
+Shooting System: Precision shooting is controlled by the mouse, impacting combat effectiveness.
+Reward System: Players earn XP and item drops, progressively upgrading abilities. Pets can also be obtained and selected.
 
 #### Example:
 
