@@ -13,14 +13,14 @@ Include a demo video of your game here (you don't have to wait until the end, yo
 
 Add a group photo here!
 
-| 🏷️ Name  | 📧 E-mail | 💬 Role | 📌 User |
-|--------|------|------|------|------|---------|
-| Chengjun Yi | lw24658@bristol.ac.uk | TBD | [realYDIAN](https://github.com/realYDIAN) |
-| Qiutong Zhao | fa24741@bristol.ac.uk | TBD | [AQIU20](https://github.com/AQIU20) |
-| Heng Zhang | gg24694@bristol.ac.uk | TBD | [chrisheng456](https://github.com/chrisheng456) |
-| Tong Yu | mp24824@bristol.ac.uk | TBD | [CelesteYt](https://github.com/CelesteYt) |
-| Feihang Yan | vj24070@bristol.ac.uk | TBD | [Feihang027](https://github.com/Feihang027) |
-| Xianhang Peng |  ge24600@bristol.ac.uk | TBD | [capybara131](https://github.com/capybara131) |
+|     Name      |         E-mail        | Role |                    Username                     |
+|---------------|-----------------------|------|-------------------------------------------------|
+| Chengjun Yi   | lw24658@bristol.ac.uk | TBD  | [realYDIAN](https://github.com/realYDIAN)       |
+| Qiutong Zhao  | fa24741@bristol.ac.uk | TBD  | [AQIU20](https://github.com/AQIU20)             |
+| Heng Zhang    | gg24694@bristol.ac.uk | TBD  | [chrisheng456](https://github.com/chrisheng456) |
+| Tong Yu       | mp24824@bristol.ac.uk | TBD  | [CelesteYt](https://github.com/CelesteYt)       |
+| Feihang Yan   | vj24070@bristol.ac.uk | TBD  | [Feihang027](https://github.com/Feihang027)     |
+| Xianhang Peng | ge24600@bristol.ac.uk | TBD  | [capybara131](https://github.com/capybara131)   |
 
 ## Kanban
 
