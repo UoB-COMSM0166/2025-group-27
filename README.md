@@ -37,6 +37,7 @@ This is our [Kanban link(Jira)](https://1971026049.atlassian.net/jira/software/p
 ## Paper Prototype
 
 🎮 **Game Idea 1 - Demo Video** 📹: [Click here to watch!](your-link-here)
+
 🎮 **Game Idea 2 - Demo Video** 📹: [Click here to watch!](your-link-here)
 
 ## Project Report
