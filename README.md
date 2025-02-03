@@ -116,9 +116,9 @@ A failed **quantum time synchronization experiment** caused the time freeze. The
 
 ## Paper Prototype
 
-🎮 **Game Idea 1 - Demo Video** 📹: [Click here to watch!](your-link-here)
+🎮 **Game Idea 1 - Demo Video** 📹: [Click here to watch!](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/Material/Videos/Prototype%20Game%20Idea%201.mp4)
 
-🎮 **Game Idea 2 - Demo Video** 📹: [Click here to watch!](your-link-here)
+🎮 **Game Idea 2 - Demo Video** 📹: [Click here to watch!](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/Material/Videos/Prototype%20Game%20Idea%202.mp4)
 
 ## Project Report
 
