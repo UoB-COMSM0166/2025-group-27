@@ -33,7 +33,7 @@ This is our [Kanban link(Jira)](https://1971026049.atlassian.net/jira/software/p
 ## 🎯 Introduction  
 This **Survival Shooting Game** combines **Roguelike elements** with a **post-apocalyptic wasteland** setting. Players must survive against relentless enemies while facing dynamic environmental changes and **random events**. Every **3 minutes** brings a **surprise**, while every **5 minutes** introduces **despair**, ensuring an intense and unpredictable gameplay experience.  
 
-**[GAME1 OVERVIEW](.docs/game%20idea/Survival%20Shooting%20Game%20(Roguelike%20Elements).pdf)**
+**[GAME1 OVERVIEW](./docs/game%20idea/Survival%20Shooting%20Game%20(Roguelike%20Elements).pdf)**
 
 ## 🔥 Game Mechanics  
 
