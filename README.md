@@ -33,7 +33,7 @@ This is our [Kanban link(Jira)](https://1971026049.atlassian.net/jira/software/p
 ## 🎯 Introduction  
 This **Survival Shooting Game** combines **Roguelike elements** with a **post-apocalyptic wasteland** setting. Players must survive against relentless enemies while facing dynamic environmental changes and **random events**. Every **3 minutes** brings a **surprise**, while every **5 minutes** introduces **despair**, ensuring an intense and unpredictable gameplay experience.  
 
-**[GAME1 OVERVIEW](./Material/Files/Survival%20Shooting%20Game%20(Roguelike%20Elements).pdf)**
+**[GAME1 OVERVIEW](.docs/game%20idea/Survival%20Shooting%20Game%20(Roguelike%20Elements).pdf)**
 
 ## 🔥 Game Mechanics  
 
@@ -73,14 +73,14 @@ This **Survival Shooting Game** combines **Roguelike elements** with a **post-ap
 
 
 #### Example:
-![Survival Shooting Game](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/Material/Pictures/Survival%20Shooting%20Game%20(Rogue%20like%20Elements).jpg)
+![Survival Shooting Game](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/docs/game%20idea/Survival%20Shooting%20Game%20(Rogue%20like%20Elements).jpg)
 
 # 2.Horror Puzzle RPG
 
 ## 🎯 Introduction  
 In this **Horror Puzzle RPG**, players take on the role of a **computer science undergraduate** trapped in the university's experimental building. The building is mysteriously frozen in time at **22:22**, with supernatural events occurring. The protagonist must explore, solve puzzles, and uncover the truth to break the time curse.  
 
-**[GAME2 OVERVIEW](./Material/Files/Horror%20Puzzle%20RPG.pdf)**
+**[GAME2 OVERVIEW](./docs/game%20idea/Horror%20Puzzle%20RPG.pdf)**
 
 ## 🔥 Game Mechanics  
 
@@ -116,9 +116,9 @@ A failed **quantum time synchronization experiment** caused the time freeze. The
 
 ## Paper Prototype
 
-🎮 **Game Idea 1 - Demo Video** 📹: [Click here to watch!](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/Material/Videos/Prototype%20Game%20Idea%201.mp4)
+🎮 **Game Idea 1 - Demo Video** 📹: [Click here to watch!](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/docs/prototype/video/Prototype%20Game%20Idea%201.mp4)
 
-🎮 **Game Idea 2 - Demo Video** 📹: [Click here to watch!](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/Material/Videos/Prototype%20Game%20Idea%202.mp4)
+🎮 **Game Idea 2 - Demo Video** 📹: [Click here to watch!](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/docs/prototype/video/Prototype%20Game%20Idea%202.mp4)
 
 ## Project Report
 
