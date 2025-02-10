@@ -37,9 +37,9 @@ This is our [Kanban link(Jira)](https://1971026049.atlassian.net/jira/software/p
  🎯 Introduction  
 This **Survival Shooting Game** combines **Roguelike elements** with a **post-apocalyptic wasteland** setting. Players must survive against relentless enemies while facing dynamic environmental changes and **random events**. Every **3 minutes** brings a **surprise**, while every **5 minutes** introduces **despair**, ensuring an intense and unpredictable gameplay experience.  
 
-**[GAME1 OVERVIEW](./docs/game%20idea/Survival%20Shooting%20Game%20(Roguelike%20Elements).pdf)**
+**[GAME1 OVERVIEW](./docs/game_idea/Survival_Shooting_Game(Roguelike_Elements).pdf)**
 
-![Survival Shooting Game](docs/game%20idea/Survival%20Shooting%20Game%20(Rogue%20like%20Elements).png)
+![Survival Shooting Game](docs/game_idea/Survival_Shooting_Game(Rogue_like_Elements).png)
 
 ###### 🔥 Game Mechanics  
 
@@ -78,7 +78,7 @@ This **Survival Shooting Game** combines **Roguelike elements** with a **post-ap
 
 ###### 🎬 Paper Prototype
 
-🎮 **Game Idea 1 - Demo Video** 📹: [Click here to watch!](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/docs/prototype/video/Prototype%20Game%20Idea%201.mp4)
+🎮 **Game Idea 1 - Demo Video** 📹: [Click here to watch!](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/docs/prototype/video/Prototype_Game_Idea_1.mp4)
 
 ---
 
@@ -87,9 +87,9 @@ This **Survival Shooting Game** combines **Roguelike elements** with a **post-ap
 ###### 🎯 Introduction  
 In this **Horror Puzzle RPG**, players take on the role of a **computer science undergraduate** trapped in the university's experimental building. The building is mysteriously frozen in time at **22:22**, with supernatural events occurring. The protagonist must explore, solve puzzles, and uncover the truth to break the time curse.  
 
-**[GAME2 OVERVIEW](./docs/game%20idea/Horror%20Puzzle%20RPG.pdf)**
+**[GAME2 OVERVIEW](./docs/game_idea/Horror_Puzzle_RPG.pdf)**
 
-![Horror Puzzle RPG](docs/game%20idea/Horror%20Puzzle%20RPG.png)
+![Horror Puzzle RPG](docs/game_idea/Horror_Puzzle_RPG.png)
 
 
 ###### 🔥 Game Mechanics  
@@ -125,7 +125,7 @@ A failed **quantum time synchronization experiment** caused the time freeze. The
 
 ###### 🎬 Paper Prototype
 
-🎮 **Game Idea 2 - Demo Video** 📹: [Click here to watch!](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/docs/prototype/video/Prototype%20Game%20Idea%202.mp4)
+🎮 **Game Idea 2 - Demo Video** 📹: [Click here to watch!](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/docs/prototype/video/Prototype_Game_Idea_2.mp4)
 
 ---
 
@@ -170,7 +170,7 @@ This structured approach eliminated ambiguity, ensuring that both designers and 
 
 The diagram below illustrates the Epics, User Stories, and Acceptance Criteria for our project.
 
-![Stakeholder Requirements](docs/requirements/Stakeholder%20Requirements.png)
+![Stakeholder Requirements](docs/requirements/Stakeholder_Requirements.png)
 
 ### Application in Our Game Development
 
