@@ -193,6 +193,70 @@ Ensuring clear communication between designers, developers, and testers.
 Focusing on user experience rather than just technical implementation.
 By using Epics, User Stories, and Acceptance Criteria, we now have a well-structured, efficient workflow that aligns with both technical feasibility and player expectations. This experience has made us more mindful of structured planning in game development, improving both our teamwork and final product quality.
 
+## Design
+
+**This part is based on our early design**
+
+![Class Diagram](docs/design/ClassDiagram.png)
+### **Class Diagram Description (First Image)**
+The class diagram represents a game system with multiple interacting components, focusing on **players, enemies, weapons, weather effects, and rewards**.
+
+#### 1. **Field and Figures**  
+- The **Field** class represents the game area with a `size` attribute.  
+- The **Figures** class is a general entity affecting the game.
+
+#### 2. **Player and Enemy**  
+- The **Player** class includes attributes such as `speed`, `HP`, `level`, `defense`, `attackSpeed`, and `type`. It has methods for movement (`move()`), upgrades (`upgrade()`), and display (`display()`).  
+- The **Enemy** class has `HP` and `attackPower`, along with methods to `appear()`, `disappear()`, and `attack()`.  
+- A subclass of **Enemy** is **Boss**, which has an additional method to `displayHealthBar()`.
+
+#### 3. **Weapons**  
+- **Sword** (`power`, `attackRange`, `swordAttack()`)  
+- **Gun** (`attackDistance`, `bulletAttack()`)  
+- **Bow** (`fireCoolDown`, `attackDistance`, `arrowAttack()`)  
+- **Bullet** (`perDamage`, `numberOfOneShoot`, `touchEnemy()`, `disappear()`)
+
+#### 4. **Weather Effects**  
+- The **Weather** class affects gameplay and includes types such as:  
+  - **Snow** (`slowDownRate`)  
+  - **Thunder** (`range`, `damage`)  
+  - **Sun** (`duration`, `powerUpRate`)  
+
+#### 5. **Rewards**  
+- **Potion** (`effect`, `color`)  
+- **Pet**, which has `name`, `type`, `follow()`, `attack()`, and `move()`.  
+  - **Bird** (`attackRange`, `fly()`)  
+  - **Cat** (`speed`, `touchEnemy()`)  
+  - **Elf** (`effect`, `makeEffect()`)
+
+---
+
+![Sequence Diagram](docs/design/SequenceDiagram.png)
+### **Sequence Diagram Description (Second Image)**
+The sequence diagram illustrates interactions between game components in various gameplay scenarios.
+
+#### 1. **Character Selection & Attack System**  
+- The **Player** selects a role (**Sword, Gun, or Bow**).  
+- Depending on the weapon, the player either **attacks** directly (sword) or uses a ranged attack (gun or bow).  
+- The **attack** process triggers different methods (`shootBullet()`, `shootArrow()`, `attack()`).
+
+#### 2. **Potion System**  
+- The **Player** interacts with the **PotionSystem** to retrieve health potions (`getPotion()`).  
+- The system checks the player's HP and applies the necessary effects.
+
+#### 3. **Pet System**  
+- The player chooses a **Pet** (`choosePet()`), which can **follow and attack** enemies.  
+- Pets provide additional support in combat.
+
+#### 4. **Enemy and Boss Battle**  
+- The **CommonEnemy** and **Boss** entities engage in battle with the **Player**.  
+- The **Boss** has additional attack patterns (`heavyAttack()`).
+
+#### 5. **Weather System Effects**  
+- The **WeatherSystem** influences gameplay through different weather conditions (`affect()`).  
+- Weather may hinder movement or provide power-ups.
+
+Both diagrams comprehensively depict the structure and interactions within the game.
 
 ## Project Report
 
