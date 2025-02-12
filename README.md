@@ -193,6 +193,8 @@ Ensuring clear communication between designers, developers, and testers.
 Focusing on user experience rather than just technical implementation.
 By using Epics, User Stories, and Acceptance Criteria, we now have a well-structured, efficient workflow that aligns with both technical feasibility and player expectations. This experience has made us more mindful of structured planning in game development, improving both our teamwork and final product quality.
 
+---
+
 ## Design
 
 **This part is based on our early design**
@@ -202,7 +204,7 @@ By using Epics, User Stories, and Acceptance Criteria, we now have a well-struct
 The class diagram represents a game system with multiple interacting components, focusing on **players, enemies, weapons, weather effects, and rewards**.
 
 #### 1. **Field and Figures**  
-- The **Field** class represents the game area with a `size` attribute.  
+- The **Field** class represents the game area with a size attribute.  
 - The **Figures** class is a general entity affecting the game.
 
 #### 2. **Player and Enemy**  
@@ -256,7 +258,7 @@ The sequence diagram illustrates interactions between game components in various
 - The WeatherSystem influences gameplay through different weather conditions (affect()).  
 - Weather may hinder movement or provide power-ups.
 
-Both diagrams comprehensively depict the structure and interactions within the game.
+---
 
 ## Project Report
 
