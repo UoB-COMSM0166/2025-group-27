@@ -1,0 +1,56 @@
+<diagram program="umletino" version="15.1"><zoom_level>8</zoom_level><element><id>UMLSequenceAllInOne</id><coordinates><x>96</x><y>0</y><w>1120</w><h>1088</h></coordinates><panel_attributes>title=Sequence Diagram
+obj=Player~a
+obj=Sword~b
+obj=Gun~c
+obj=Bow~d
+obj=PotionSystem~e
+obj=PetSystem~f
+obj=CommonEnemy~g
+obj=Boss~h
+obj=WeatherSystem~i
+
+a-&gt;&gt;&gt;b : chooseRole; 
+a-&gt;&gt;&gt;c : chooseRole; 
+a-&gt;&gt;&gt;d : chooseRole; 
+b-&gt;&gt;&gt;g : attack; 
+c-&gt;&gt;&gt;g : shootBullet; 
+d-&gt;&gt;&gt;g : shootArrow; 
+b-&gt;&gt;&gt;h : attack; 
+c-&gt;&gt;&gt;h : shootBullet; 
+d-&gt;&gt;&gt;h : shootArrow; 
+b-&gt;&gt;&gt;e : getPottion; 
+c-&gt;&gt;&gt;e : getPotion; 
+d-&gt;&gt;&gt;e : getPotion; 
+b-&gt;&gt;&gt;f : choosePet; 
+c-&gt;&gt;&gt;f : choosePet; 
+d-&gt;&gt;&gt;f : choosePet; 
+e-&gt;&gt;&gt;b : IncreaseSwordPower;
+e-&gt;&gt;&gt;c : IncreaseGunPower;
+e-&gt;&gt;&gt;d : IncreaseBowPower; 
+f-&gt;&gt;&gt;b : help; 
+f-&gt;&gt;&gt;c : help; 
+f-&gt;&gt;&gt;d : help; 
+f-&gt;&gt;&gt;g : follow and attack; 
+f-&gt;&gt;&gt;h : follow and attack; 
+g-&gt;&gt;&gt;b : attack; 
+g-&gt;&gt;&gt;c : attack; 
+g-&gt;&gt;&gt;d : attack; 
+h-&gt;&gt;&gt;b : heavyAttack; 
+h-&gt;&gt;&gt;c : heavyAttack; 
+h-&gt;&gt;&gt;d : heavyAttack; 
+i-&gt;&gt;&gt;b : affect; 
+i-&gt;&gt;&gt;c : affect; 
+i-&gt;&gt;&gt;d : affect; 
+i-&gt;&gt;&gt;g : affect; 
+i-&gt;&gt;&gt;h : affect; 
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1008</x><y>544</y><w>104</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;-
+Check HP</panel_attributes><additional_attributes>10;50;60;50;60;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1008</x><y>600</y><w>120</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;-
+If HP&lt;=0, die</panel_attributes><additional_attributes>10;50;60;50;60;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>888</x><y>544</y><w>104</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;-
+Check HP</panel_attributes><additional_attributes>10;50;60;50;60;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>888</x><y>600</y><w>120</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;-
+If HP&lt;=0, die</panel_attributes><additional_attributes>10;50;60;50;60;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>288</x><y>856</y><w>104</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;-
+Check HP</panel_attributes><additional_attributes>10;50;60;50;60;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>288</x><y>936</y><w>120</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;-
+If HP&lt;=0, die</panel_attributes><additional_attributes>10;50;60;50;60;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>408</x><y>664</y><w>104</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;-
+Check HP</panel_attributes><additional_attributes>10;50;60;50;60;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>408</x><y>784</y><w>120</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;-
+If HP&lt;=0, die</panel_attributes><additional_attributes>10;50;60;50;60;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>528</x><y>680</y><w>120</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;-
+If HP&lt;=0, die</panel_attributes><additional_attributes>10;50;60;50;60;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>528</x><y>88</y><w>104</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;-
+Check HP</panel_attributes><additional_attributes>10;50;60;50;60;10;10;10</additional_attributes></element></diagram>
