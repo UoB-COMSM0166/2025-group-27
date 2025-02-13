@@ -1,0 +1,119 @@
+// --- Bullet 类 ---
+class Bullet {
+  constructor(x, y, vel, type = "normal") {
+    this.pos = createVector(x, y);
+    this.vel = vel;
+    this.radius = 5;
+    this.type = type;
+    this.damage = 10;
+    this.pierceCount = type === "pierce" ? 3 : 0;
+    this.bounceCount = 0;
+    this.maxBounces = type === "bounce" ? 3 : 0;
+  }
+
+  update() {
+    this.pos.add(this.vel);
+
+    // 检测敌人碰撞
+    for (let i = enemies.length - 1; i >= 0; i--) {
+      let enemy = enemies[i];
+      if (p5.Vector.dist(this.pos, enemy.pos) < enemy.radius + this.radius) {
+        let killed = enemy.hit(this.damage);
+        if (killed) {
+          enemies.splice(i, 1);
+          if (enemy instanceof Boss) {
+            // 检查是否是 Boss
+            bossDefeated++;
+            bossDefeatedCount++;
+          }
+          normalEnemiesDefeated++;
+          player.gainExp(enemy.expValue);
+        }
+        if (this.type === "pierce") {
+          this.pierceCount--;
+          if (this.pierceCount <= 0) return false;
+        } else if (this.type !== "bounce") {
+          return false;
+        }
+      }
+    }
+
+    // 检测障碍物碰撞
+    for (let obs of obstacles) {
+      if (obs.collidesWith(this.pos, this.radius)) {
+        if (this.type === "bounce") {
+          let closestX = constrain(
+            this.pos.x,
+            obs.pos.x,
+            obs.pos.x + obs.width
+          );
+          let closestY = constrain(
+            this.pos.y,
+            obs.pos.y,
+            obs.pos.y + obs.height
+          );
+          if (abs(this.pos.x - closestX) < abs(this.pos.y - closestY)) {
+            this.vel.y *= -1;
+          } else {
+            this.vel.x *= -1;
+          }
+          this.bounceCount++;
+          showFloatingText(
+            "Bounce!",
+            this.pos.x,
+            this.pos.y,
+            color(255, 200, 0)
+          );
+          if (this.bounceCount > this.maxBounces) return false;
+          this.pos.add(this.vel);
+        } else if (this.type === "pierce") {
+          this.pierceCount--;
+          if (this.pierceCount <= 0) return false;
+        } else {
+          return false;
+        }
+      }
+    }
+
+    // 边界检测
+    if (
+      this.pos.x < 0 ||
+      this.pos.x > width ||
+      this.pos.y < 0 ||
+      this.pos.y > height
+    ) {
+      if (this.type === "bounce") {
+        if (this.pos.x < 0 || this.pos.x > width) {
+          this.vel.x *= -1;
+          this.pos.x = constrain(this.pos.x, 0, width);
+        }
+        if (this.pos.y < 0 || this.pos.y > height) {
+          this.vel.y *= -1;
+          this.pos.y = constrain(this.pos.y, 0, height);
+        }
+        this.bounceCount++;
+        showFloatingText("Bounce!", this.pos.x, this.pos.y, color(255, 200, 0));
+        if (this.bounceCount > this.maxBounces) return false;
+      } else {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  display() {
+    if (this.type === "bounce") {
+      stroke(255, 200, 0, 100);
+      strokeWeight(2);
+      line(
+        this.pos.x - this.vel.x,
+        this.pos.y - this.vel.y,
+        this.pos.x,
+        this.pos.y
+      );
+    }
+    noStroke();
+    fill(255, 200, 0);
+    ellipse(this.pos.x, this.pos.y, this.radius * 2);
+  }
+}

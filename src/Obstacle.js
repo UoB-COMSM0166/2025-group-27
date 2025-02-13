@@ -1,0 +1,53 @@
+// --- Obstacle 类 ---
+class Obstacle {
+  constructor(x, y, width, height, isVertical) {
+    this.pos = createVector(x, y);
+    this.width = width;
+    this.height = height;
+    this.isVertical = isVertical;
+    this.moving = false;
+    this.targetPos = null;
+    this.moveStartTime = 0;
+    this.moveStartPos = null;
+  }
+
+  update() {
+    if (this.moving && this.targetPos) {
+      let elapsed = millis() - this.moveStartTime;
+      const duration = 2000;
+      if (elapsed < duration) {
+        let progress = elapsed / duration;
+        progress =
+          progress < 0.5
+            ? 2 * progress * progress
+            : -1 + (4 - 2 * progress) * progress;
+        this.pos.x = lerp(this.moveStartPos.x, this.targetPos.x, progress);
+        this.pos.y = lerp(this.moveStartPos.y, this.targetPos.y, progress);
+      } else {
+        this.pos = this.targetPos.copy();
+        this.moving = false;
+        this.targetPos = null;
+      }
+    }
+  }
+
+  moveTo(newPos) {
+    this.moving = true;
+    this.targetPos = newPos.copy();
+    this.moveStartPos = this.pos.copy();
+    this.moveStartTime = millis();
+  }
+
+  display() {
+    fill(100);
+    noStroke();
+    rect(this.pos.x, this.pos.y, this.width, this.height);
+  }
+
+  collidesWith(position, radius) {
+    let closestX = constrain(position.x, this.pos.x, this.pos.x + this.width);
+    let closestY = constrain(position.y, this.pos.y, this.pos.y + this.height);
+    let distanceSquared = sq(position.x - closestX) + sq(position.y - closestY);
+    return distanceSquared < sq(radius);
+  }
+}
