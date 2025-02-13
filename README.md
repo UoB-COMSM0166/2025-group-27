@@ -39,7 +39,7 @@ This **Survival Shooting Game** combines **Roguelike elements** with a **post-ap
 
 **[GAME1 OVERVIEW](./docs/game_idea/Survival_Shooting_Game(Roguelike_Elements).pdf)**
 
-![Survival Shooting Game](docs/game_idea/Horror_Puzzle_RPG_Game.png)
+![Survival Shooting Game](docs/game_idea/Survival_Shooting_Game(Rogue_like_Elements).png)
 
 ###### 🔥 Game Mechanics  
 
