@@ -39,7 +39,7 @@ This **Survival Shooting Game** combines **Roguelike elements** with a **post-ap
 
 **[GAME1 OVERVIEW](./docs/game_idea/Survival_Shooting_Game(Roguelike_Elements).pdf)**
 
-![Survival Shooting Game](docs/game_idea/Survival_Shooting_Game(Rogue_like_Elements).png)
+![Survival Shooting Game](docs/game_idea/Horror_Puzzle_RPG_Game.png)
 
 ###### 🔥 Game Mechanics  
 
@@ -89,7 +89,7 @@ In this **Horror Puzzle RPG**, players take on the role of a **computer science 
 
 **[GAME2 OVERVIEW](./docs/game_idea/Horror_Puzzle_RPG.pdf)**
 
-![Horror Puzzle RPG](docs/game_idea/Horror_Puzzle_RPG.png)
+![Horror_Puzzle_RPG_Game](docs/game_idea/Horror_Puzzle_RPG.png)
 
 
 ###### 🔥 Game Mechanics  
