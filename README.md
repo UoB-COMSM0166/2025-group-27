@@ -89,7 +89,7 @@ In this **Horror Puzzle RPG**, players take on the role of a **computer science 
 
 **[GAME2 OVERVIEW](./docs/game_idea/Horror_Puzzle_RPG.pdf)**
 
-![Horror_Puzzle_RPG_Game](docs/game_idea/Horror_Puzzle_RPG.png)
+![Horror_Puzzle_RPG_Game](docs/game_idea/Horror_Puzzle_RPG_Game.png)
 
 
 ###### 🔥 Game Mechanics  
