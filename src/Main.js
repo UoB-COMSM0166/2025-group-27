@@ -1,3 +1,4 @@
+// Main.js
 // ===== 全局变量 =====
 let player;
 let bullets = [];
@@ -6,24 +7,29 @@ let enemies = [];
 let obstacles = [];
 let expOrbs = [];
 let floatingTexts = [];
-let poisonTrails = []; // 新增：毒气轨迹数组
+let poisonTrails = []; // 毒气轨迹数组
 let score = 0;
 let wave = 1;
-let gameState = "mainMenu"; // "mainMenu", "menu"（角色选择）, "game", "paused", "upgrading", "gameOver"
+let gameState = "mainMenu"; // "mainMenu", "menu", "game", "paused", "upgrading", "gameOver"
 let lastTerrainChange = 0;
-let weather = "normal";
-let lastWeatherChange = 0;
+
+// ----- 天气相关全局变量 -----
+let weather = "normal";              // 当前天气："normal", "hot", "snowy", "thunderstorm"
+let lastWeatherChange = 0;           // 上一次随机选择天气的时间
+let weatherStartTime = 0;            // 当前特殊天气开始的时间
+
 let lightningZone = null;
 let lightningChain = [];
 let lastLightningTime = 0;
-const lightningDelay = 1000; // 每道闪电延迟（毫秒）
-const maxLightningChain = 3; // 最大连续闪电数
+const lightningDelay = 1000;         // 闪电延迟（毫秒）
+const maxLightningChain = 3;           // 最大闪电链数
+
+// 其它全局变量...
 let upgradeOptions = [];
 let choosingUpgrade = false;
 let passiveSkills = [];
 let coins = 0;
 let usedBossTypes = [];
-// 以下变量属于扩展（UI、统计等）
 let savedGame = null;
 let normalEnemiesDefeated = 0;
 let bossDefeated = 0;
@@ -35,69 +41,134 @@ let bossActive = false;
 let potionOptions = [];
 let choosingPotion = false;
 let potionButtons = [];
-// 波数提示动画（可选效果）
 let waveTextAnimation = 0;
-// 调试标记
 const debug = false;
 let mainMenuButtons = [];
 let charSelectButtons = [];
 let pauseButtons = [];
 
-// ===== 战力评价系统 =====
-const combatRating = {
-  player: 0,
-  enemies: 0,
-  lastCheck: 0,
-  checkInterval: 1000,
-  calculatePlayerRating() {
-    return Math.floor(
-      player.health * 0.5 +
-        player.attackPower * 10 +
-        player.fireRate * 15 +
-        player.speed * 20 +
-        player.defense * 25 +
-        player.level * 30 +
-        (player.bulletType !== "normal" ? 50 : 0) +
-        player.passiveSkills.length * 40
-    );
-  },
-  calculateEnemiesRating() {
-    return enemies.reduce((total, enemy) => {
-      let baseRating = enemy.health * 0.3 + enemy.damage * 8 + enemy.speed * 15;
-      if (enemy.type === "ranged") baseRating *= 1.5;
-      if (enemy.type === "exploding") baseRating *= 1.3;
-      if (enemy.type === "boss") baseRating *= 2;
-      if (enemy.isElite) baseRating *= 1.5;
-      return total + baseRating;
-    }, 0);
-  },
-  update() {
-    if (millis() - this.lastCheck > this.checkInterval) {
-      this.player = this.calculatePlayerRating();
-      this.enemies = this.calculateEnemiesRating();
-      this.lastCheck = millis();
-    }
-  },
-  getDifficultyMultiplier() {
-    let ratio = this.player / Math.max(this.enemies, 1);
-    if (ratio > 3) return 1.5;
-    if (ratio > 2) return 1.2;
-    if (ratio < 0.5) return 0.8;
-    return 1;
-  },
-};
+// ----- 天气效果绘制 -----
+// 热天效果：利用噪声生成水平条纹模拟热浪扭曲效果
+function drawHeatHaze() {
+  push();
+  noStroke();
+  for (let y = 0; y < height; y += 5) {
+    let offset = map(noise(y * 0.01, millis() * 0.002), 0, 1, -10, 10);
+    fill(255, 200, 200, 30);
+    rect(offset, y, width, 5);
+  }
+  pop();
+}
 
-// ===== p5.js 核心函数 =====
+// 冰雪效果：粒子系统模拟雪花飘落
+class Snowflake {
+  constructor() {
+    this.x = random(width);
+    this.y = random(-50, -10);
+    this.size = random(2, 5);
+    this.speed = random(0.5, 1.5);
+  }
+  update() {
+    this.y += this.speed;
+    if (this.y > height) {
+      this.y = random(-50, -10);
+      this.x = random(width);
+    }
+  }
+  display() {
+    noStroke();
+    fill(255, 255, 255, 200);
+    ellipse(this.x, this.y, this.size);
+  }
+}
+let snowflakes = [];
+function setupSnow() {
+  for (let i = 0; i < 100; i++) {
+    snowflakes.push(new Snowflake());
+  }
+}
+function drawSnow() {
+  for (let s of snowflakes) {
+    s.update();
+    s.display();
+  }
+}
+
+// 雷暴效果：短暂闪光模拟闪电
+let lightningFlash = false;
+let lightningTimer = 0;
+function updateLightningFlash() {
+  if (millis() - lightningTimer > 3000) {
+    lightningFlash = true;
+    lightningTimer = millis();
+    setTimeout(() => { lightningFlash = false; }, 100);
+  }
+}
+function drawLightningFlash() {
+  if (lightningFlash) {
+    push();
+    fill(255, 255, 255, 200);
+    rect(0, 0, width, height);
+    pop();
+  }
+}
+
+// 根据当前天气状态调用不同效果
+function drawWeatherEffects() {
+  if (weather === "hot") {
+    drawHeatHaze();
+  } else if (weather === "snowy") {
+    drawSnow();
+  } else if (weather === "thunderstorm") {
+    updateLightningFlash();
+    drawLightningFlash();
+  }
+}
+
+// ----- 天气更新函数 -----
+// 每隔 60000 毫秒随机选择一种天气（"normal", "hot", "snowy", "thunderstorm"）
+// 如果选择的是特殊天气（hot, snowy, thunderstorm），则持续效果为20秒，之后自动恢复为 normal
+function updateWeather() {
+  let currentTime = millis();
+  
+  // 每隔 60000 毫秒重新随机选择天气
+  if (currentTime - lastWeatherChange > 60000) {
+    let weatherOptions = ["normal", "hot", "snowy", "thunderstorm"];
+    weather = random(weatherOptions);
+    console.log("天气切换为：", weather);
+    lastWeatherChange = currentTime;
+    weatherStartTime = currentTime;
+    
+    // 如果选到雷暴，则以玩家当前位置作为闪电起点
+    if (weather === "thunderstorm") {
+      lightningZone = player.pos.copy();
+      lightningChain = [lightningZone];
+      lastLightningTime = currentTime;
+    }
+  }
+  
+  // 如果当前天气为特殊天气且持续超过20秒，则自动恢复为 normal
+  if (weather !== "normal" && currentTime - weatherStartTime > 20000) {
+    weather = "normal";
+  }
+}
+
+// ----- p5.js 核心函数 -----
 function setup() {
   createCanvas(800, 600);
   gameStartTime = millis();
   generateInitialObstacles();
   initButtons();
   gameState = "mainMenu";
+  setupSnow(); // 初始化雪花粒子
 }
 
 function draw() {
-  background(51);
+  background(51); // 保持原始背景色
+  
+  updateWeather(); // 更新天气状态
+  
+  // 绘制游戏界面（依状态）
   if (gameState === "mainMenu") {
     displayMainMenu();
   } else if (gameState === "menu") {
@@ -115,7 +186,8 @@ function draw() {
   } else if (gameState === "gameOver") {
     displayGameOverScreen();
   }
-
+  
+  // 处理浮动文字
   floatingTexts = floatingTexts.filter((ft) => {
     if (ft.update()) {
       ft.display();
@@ -123,12 +195,21 @@ function draw() {
     }
     return false;
   });
-
+  
   if (bossActive) {
     displayBossHealthBar();
   }
-
   if (showAttributes) {
     displayAttributes();
   }
+  
+  // 叠加当前天气效果（不改变原始背景色）
+  drawWeatherEffects();
+  
+  // 显示当前天气文本（调试用）
+  textSize(16);
+  fill(255);
+  text("当前天气：" + weather, 10, height - 10);
 }
+
+// 其它函数（如 generateInitialObstacles, initButtons, spawnEnemiesForWave, displayHUD 等）保持不变

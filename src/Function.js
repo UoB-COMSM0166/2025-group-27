@@ -1,10 +1,12 @@
 // ===== 核心游戏逻辑 =====
 function handleGameplay(now) {
+  // 玩家相关操作
   player.move();
   player.shoot();
   player.update();
   player.display();
 
+  // 更新并显示子弹
   bullets = bullets.filter((bullet) => {
     if (bullet.update()) {
       bullet.display();
@@ -13,17 +15,20 @@ function handleGameplay(now) {
     return false;
   });
 
+  // 更新并显示障碍物
   obstacles.forEach((obs) => {
     obs.update();
     obs.display();
   });
 
+  // 更新并显示敌人
   for (let j = enemies.length - 1; j >= 0; j--) {
     let enemy = enemies[j];
     enemy.update();
     enemy.display();
   }
 
+  // 更新并显示敌人子弹，同时检测与玩家的碰撞
   enemyBullets = enemyBullets.filter((bullet) => {
     if (bullet.update()) {
       bullet.display();
@@ -45,13 +50,14 @@ function handleGameplay(now) {
     return false;
   });
 
+  // 更新经验球
   expOrbs = expOrbs.filter((orb) => {
     orb.update();
     orb.display();
     return !orb.checkCollection();
   });
 
-  // 处理毒气伤害
+  // 处理毒气伤害效果
   for (let i = poisonTrails.length - 1; i >= 0; i--) {
     let trail = poisonTrails[i];
     if (millis() - trail.startTime > trail.duration) {
@@ -69,6 +75,7 @@ function handleGameplay(now) {
     }
   }
 
+  // 如果所有敌人被消灭，则生成下一波敌人
   if (enemies.length === 0) {
     wave++;
     waveTextAnimation = 30;
@@ -81,6 +88,7 @@ function handleGameplay(now) {
     );
   }
 
+  // 显示波数提示动画
   if (waveTextAnimation > 0) {
     push();
     waveTextAnimation--;
@@ -91,9 +99,11 @@ function handleGameplay(now) {
     pop();
   }
 
+  // 显示 HUD 信息
   let elapsedTime = floor((now - gameStartTime) / 1000);
   displayHUD(elapsedTime);
 
+  // 判断游戏结束
   if (player.health <= 0) {
     finalStats = {
       normalEnemies: normalEnemiesDefeated,
@@ -106,12 +116,15 @@ function handleGameplay(now) {
     gameState = "gameOver";
   }
 
+  // 如果处于升级状态，则绘制升级界面
   if (choosingUpgrade) {
     drawUpgradeScreen();
   }
 
+  // ★ 调用天气效果函数，应用天气效果 ★
   applyWeatherEffects(now);
 }
+
 
 // 初始化相关
 // ===== 角色选择和按钮初始化 =====
