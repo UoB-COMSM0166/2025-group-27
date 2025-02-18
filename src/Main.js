@@ -212,4 +212,4 @@ function draw() {
   text("当前天气：" + weather, 10, height - 10);
 }
 
-// 其它函数（如 generateInitialObstacles, initButtons, spawnEnemiesForWave, displayHUD 等）保持不变
+
