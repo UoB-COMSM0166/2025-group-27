@@ -268,4 +268,4 @@ function drawPlayerStats() {
   );
 }
 
-// 其它函数（如 generateInitialObstacles, initButtons, spawnEnemiesForWave, displayHUD 等）保持不变
+
