@@ -228,9 +228,9 @@ function displayHUD(elapsedTime) {
   fill(255);
   textSize(14);
   textAlign(LEFT, TOP);
-  text(`Time: ${elapsedTime}s`, 10, 10);
-  text(`Enemies Killed: ${normalEnemiesDefeated}`, 10, 30);
-  text(`Bosses Defeated: ${bossDefeated}`, 10, 50);
+  text(`Time: ${elapsedTime}s`, 10, 60); // 向下移动
+  text(`Enemies Killed: ${normalEnemiesDefeated}`, 10, 80); // 向下移动
+  text(`Bosses Defeated: ${bossDefeated}`, 10, 100); // 向下移动
 
   textSize(24);
   textAlign(CENTER, TOP);
@@ -362,6 +362,11 @@ function displayPauseMenu() {
   fill(255);
   textAlign(CENTER, CENTER);
   text("Game Paused", width / 2, height / 3);
+
+  // 计算并显示暂停时间
+  let pausedTime = floor((millis() - pauseStartTime) / 1000);
+  text(`Paused for: ${pausedTime}s`, width / 2, height / 3 + 30);
+
   text(`Level: ${player.level}`, width / 2, height / 2);
   text(`Health: ${player.health}`, width / 2, height / 2 + 30);
   text(`XP: ${player.exp}`, width / 2, height / 2 + 60);

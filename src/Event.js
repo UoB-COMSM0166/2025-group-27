@@ -18,6 +18,13 @@ function mousePressed() {
     }
   }
 
+  if (gameState === "game") {
+    if (pauseButton.contains(mouseX, mouseY)) {
+      pauseButton.action();
+      return;
+    }
+  }
+
   let currentButtons = [];
   if (gameState === "mainMenu") currentButtons = mainMenuButtons;
   else if (gameState === "menu") currentButtons = charSelectButtons;
