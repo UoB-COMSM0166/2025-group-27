@@ -1,4 +1,3 @@
-// Main.js
 // ===== 全局变量 =====
 let player;
 let bullets = [];
@@ -7,10 +6,10 @@ let enemies = [];
 let obstacles = [];
 let expOrbs = [];
 let floatingTexts = [];
-let poisonTrails = []; // 毒气轨迹数组
+let poisonTrails = []; // 新增：毒气轨迹数组
 let score = 0;
 let wave = 1;
-let gameState = "mainMenu"; // "mainMenu", "menu", "game", "paused", "upgrading", "gameOver"
+let gameState = "mainMenu"; // "mainMenu", "menu"（角色选择）, "game", "paused", "upgrading", "gameOver"
 let lastTerrainChange = 0;
 
 // 暂停按钮和暂停时间
@@ -26,15 +25,15 @@ let weatherStartTime = 0;            // 当前特殊天气开始的时间
 let lightningZone = null;
 let lightningChain = [];
 let lastLightningTime = 0;
-const lightningDelay = 1000;         // 闪电延迟（毫秒）
-const maxLightningChain = 3;           // 最大闪电链数
-
-// 其它全局变量...
+const lightningDelay = 1000; // 每道闪电延迟（毫秒）
+const maxLightningChain = 3; // 最大连续闪电数
 let upgradeOptions = [];
 let choosingUpgrade = false;
 let passiveSkills = [];
 let coins = 0;
 let usedBossTypes = [];
+let commonEnemyAction = {};
+// 以下变量属于扩展（UI、统计等）
 let savedGame = null;
 let normalEnemiesDefeated = 0;
 let bossDefeated = 0;
@@ -46,7 +45,9 @@ let bossActive = false;
 let potionOptions = [];
 let choosingPotion = false;
 let potionButtons = [];
+// 波数提示动画（可选效果）
 let waveTextAnimation = 0;
+// 调试标记
 const debug = false;
 let mainMenuButtons = [];
 let charSelectButtons = [];
@@ -159,6 +160,18 @@ function updateWeather() {
 }
 
 // ----- p5.js 核心函数 -----
+// preload function
+function preload() {
+  playerAction = loadImage("assets/images/Characters/Main_Character/MinerFemale_skin.png");
+  bossAction = loadImage("assets/images/Characters/Enemies/Birdman/BirdBoss.png");
+  commonEnemyAction.idle = loadImage("assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_idleEmote1.png"); //18 22
+  commonEnemyAction.up = loadImage("assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_move_up.png"); 
+  commonEnemyAction.down = loadImage("assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_move.png"); 
+  commonEnemyAction.side = loadImage("assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_move_side.png"); 
+  obstacle1 = loadImage("assets/images/Environment/Objects/石碑/alienObeliskTall.png");
+  obstacle2 = loadImage("assets/images/Environment/Objects/石碑/cipher.png");
+}
+
 function setup() {
   createCanvas(800, 600);
   gameStartTime = millis();
@@ -209,6 +222,7 @@ function draw() {
   if (bossActive) {
     displayBossHealthBar();
   }
+
   if (showAttributes) {
     displayAttributes();
   }
