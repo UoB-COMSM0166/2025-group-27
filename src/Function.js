@@ -577,13 +577,12 @@ function generateUpgradeOptions() {
 function spawnEnemiesForWave(currentWave) {
   enemies = [];
   if (currentWave % 5 === 0) {
-    enemies.push(new SpiderBoss());
-    showFloatingText(
-      "Spider Boss Appears!",
-      width / 2,
-      height / 2 - 40,
-      color(0, 255, 0)
-    );
+    // Boss生成
+    let bossPos = getValidSpawnPosition();
+    let boss = new SpiderBoss();
+    boss.pos = bossPos;
+    enemies.push(boss);
+    showFloatingText("Spider Boss Appears!", width / 2, height / 2 - 40, color(0, 255, 0));
     bossActive = true;
   } else {
     let baseEnemyCount = Math.floor(6 + currentWave * 0.8);
@@ -591,6 +590,8 @@ function spawnEnemiesForWave(currentWave) {
       let isElite = random() < 0.2;
       let enemyType = random();
       let enemy;
+      let pos = getValidSpawnPosition();
+      
       if (enemyType < 0.4) {
         enemy = new Enemy(isElite, "normal", commonEnemyAction, 18, 22);
       } else if (enemyType < 0.75) {
@@ -598,10 +599,79 @@ function spawnEnemiesForWave(currentWave) {
       } else {
         enemy = new Enemy(isElite, "exploding", commonEnemyAction, 18, 22);
       }
-      if (enemy) enemies.push(enemy);
+      
+      if (enemy) {
+        enemy.pos = pos;
+        enemies.push(enemy);
+      }
     }
     bossActive = false;
   }
+}
+
+// 新增函数：获取有效的生成位置
+function getValidSpawnPosition() {
+  let pos;
+  let isValid = false;
+  let attempts = 0;
+  const maxAttempts = 50;
+
+  while (!isValid && attempts < maxAttempts) {
+    pos = createVector(random(width), random(height));
+    
+    // 检查是否离玩家太近
+    let tooCloseToPlayer = player && p5.Vector.dist(pos, player.pos) < 150;
+    
+    // 检查是否在障碍物内或太靠近障碍物
+    let nearObstacle = false;
+    for (let obs of obstacles) {
+      // 增加一个缓冲区
+      if (obs.collidesWith(pos, 30, 30)) {
+        nearObstacle = true;
+        break;
+      }
+    }
+    
+    if (!tooCloseToPlayer && !nearObstacle) {
+      isValid = true;
+    }
+    
+    attempts++;
+  }
+  
+  // 如果找不到合适位置，在地图边缘生成，并确保不在障碍物内
+  if (!isValid) {
+    let side = floor(random(4));
+    let margin = 40; // 增加边缘距离
+    
+    do {
+      switch(side) {
+        case 0: // 上边
+          pos = createVector(random(margin, width - margin), -margin);
+          break;
+        case 1: // 右边
+          pos = createVector(width + margin, random(margin, height - margin));
+          break;
+        case 2: // 下边
+          pos = createVector(random(margin, width - margin), height + margin);
+          break;
+        case 3: // 左边
+          pos = createVector(-margin, random(margin, height - margin));
+          break;
+      }
+      // 检查新位置是否在障碍物内
+      let inObstacle = false;
+      for (let obs of obstacles) {
+        if (obs.collidesWith(pos, 30, 30)) {
+          inObstacle = true;
+          break;
+        }
+      }
+      if (!inObstacle) break;
+    } while (true);
+  }
+  
+  return pos;
 }
 
 function loadSavedGame() {
@@ -631,18 +701,18 @@ function loadSavedGame() {
       case "Boss":
         enemy = new Boss();
         break;
-      // 添加其他敌人类型...
-      case "MeleeEnemy": // 新增：处理近战敌人
-        enemy = new MeleeEnemy(eData.pos.x, eData.pos.y);
+      case "MeleeEnemy":
+        enemy = new MeleeEnemy(eData.isElite);
         break;
-      case "RangedEnemy": // 新增：处理远程敌人
-        enemy = new RangedEnemy(eData.pos.x, eData.pos.y);
+      case "RangedEnemy":
+        enemy = new RangedEnemy(eData.isElite);
         break;
       default:
-        enemy = new Enemy();
+        enemy = new Enemy(eData.isElite, eData.type, commonEnemyAction, 18, 22);
     }
-    Object.assign(enemy, eData);
+    // 确保位置正确设置
     enemy.pos = createVector(eData.pos.x, eData.pos.y);
+    Object.assign(enemy, eData);
     return enemy;
   });
 
