@@ -378,11 +378,10 @@ class SpiderBoss extends Boss {
   display() {
     let frameWidth = 200; // 修正后的帧宽度
     let frameHeight = 160; // 修正后的帧高度
-    let columns = floor(this.spiderBossAction.width / frameWidth); // 计算精灵表列数
+    let columns = floor(this.spiderBossAction.width / frameWidth);
     let frameX = (this.currentAnimation[this.frameIndex] % columns) * frameWidth;
     let frameY = floor(this.currentAnimation[this.frameIndex] / columns) * frameHeight;
 
-    // 绘制精灵
     image(
       this.spiderBossAction,
       this.pos.x - this.size / 2,
