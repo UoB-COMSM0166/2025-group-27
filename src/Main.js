@@ -170,7 +170,7 @@ function preload() {
   commonEnemyAction.side = loadImage("assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_move_side.png"); 
   obstacle1 = loadImage("assets/images/Environment/Objects/石碑/alienObeliskTall.png");
   obstacle2 = loadImage("assets/images/Environment/Objects/石碑/cipher.png");
-  spiderBossAction = loadImage("assets/images/Characters/Enemies/Birdman/Birdboss.png");
+  spiderBossAction = loadImage("assets/images/Characters/Enemies/Birdman/BirdBoss.png");
 }
 
 function setup() {

@@ -157,6 +157,50 @@ class Enemy {
     return this.health <= 0;
   }
 
+  applyKnockback(knockbackVector) {
+    // 计算击退总长度
+    let totalDistance = knockbackVector.mag();
+
+    if (totalDistance < 1) {
+      this.tryMove(knockbackVector);
+      return;
+    }
+  
+    // 将击退向量拆成若干步
+    let stepVector = knockbackVector.copy().normalize(); 
+    let steps = Math.floor(totalDistance); 
+    let remainder = totalDistance - steps; 
+  
+    // 逐步移动
+    for (let i = 0; i < steps; i++) {
+      if (!this.tryMove(stepVector)) {
+   
+        break;
+      }
+    }
+  
+    // 处理剩余距离
+    if (remainder > 0) {
+      let remainderVector = stepVector.copy().mult(remainder);
+      this.tryMove(remainderVector);
+    }
+  }
+  
+  /**
+   * 封装一个 tryMove 函数，用于尝试移动给定的向量距离，
+   * 如果移动后会碰撞障碍物，则不移动，返回 false；否则移动并返回 true。
+   */
+  tryMove(moveVec) {
+    let newPos = p5.Vector.add(this.pos, moveVec);
+    if (!this.isCollidingWithObstacle(newPos)) {
+      this.pos = newPos;
+      return true;
+    }
+    return false;
+  }
+  
+ 
+
   animate() {
     this.enCounter++;
     if (this.enCounter >= this.enDelay) {
