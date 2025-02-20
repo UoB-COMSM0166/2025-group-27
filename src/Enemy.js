@@ -294,8 +294,8 @@ class RangedEnemy extends Enemy {
 
 // === Boss 类 ===
 class Boss extends Enemy {
-  constructor() {
-    super(true, "boss");
+  constructor(isElite = true, enemyType = "boss", bossAction, bossWidth, bossHeight) {
+    super(isElite, enemyType, bossAction, bossWidth, bossHeight);
     this.size = 40;
     this.health = 600;
     this.maxHealth = 600;
@@ -315,8 +315,9 @@ class Boss extends Enemy {
 
 // === SpiderBoss 类 ===
 class SpiderBoss extends Boss {
-  constructor() {
-    super();
+  constructor(spiderBossAction) {
+    super(true, "boss", spiderBossAction, 200, 160);
+    this.spiderBossAction = spiderBossAction
     this.health = 800;
     this.maxHealth = 800;
     this.size = 50;
@@ -324,6 +325,16 @@ class SpiderBoss extends Boss {
     this.webCooldown = 0;
     this.trailInterval = 30;
     this.trailCounter = 0;
+    this.animation = {
+      move: [0, 4, 8, 12, 16, 1, 5, 9, 13, 17, 2, 6, 10, 14, 18, 3, 7, 11, 15, 19]
+    };
+    this.currentAnimation = this.animation.move;
+    this.frameIndex = 0;
+    this.animationDelay = 20; // control animation speed
+    this.animationCounter = 0;
+    this.direction = 'move';
+    // 位置初始化
+    this.pos = createVector(width / 2, height / 2);
   }
 
   update() {
@@ -353,11 +364,36 @@ class SpiderBoss extends Boss {
     } else {
       this.webCooldown--;
     }
+    this.animate();
+  }
+
+  animate() {
+    this.animationCounter++;
+    if (this.animationCounter >= this.animationDelay) {
+        this.animationCounter = 0;
+        this.frameIndex = (this.frameIndex + 1) % this.currentAnimation.length;
+    }
   }
 
   display() {
-    fill(50, 200, 50);
-    ellipse(this.pos.x, this.pos.y, this.size);
+    let frameWidth = 200; // 修正后的帧宽度
+    let frameHeight = 160; // 修正后的帧高度
+    let columns = floor(this.spiderBossAction.width / frameWidth); // 计算精灵表列数
+    let frameX = (this.currentAnimation[this.frameIndex] % columns) * frameWidth;
+    let frameY = floor(this.currentAnimation[this.frameIndex] / columns) * frameHeight;
+
+    // 绘制精灵
+    image(
+      this.spiderBossAction,
+      this.pos.x - this.size / 2,
+      this.pos.y - this.size / 2,
+      this.size,
+      this.size * (frameHeight / frameWidth), // 按比例缩放高度
+      frameX,
+      frameY,
+      frameWidth,
+      frameHeight
+    );
     this.displayHealthBar();
   }
 }

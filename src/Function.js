@@ -577,7 +577,7 @@ function generateUpgradeOptions() {
 function spawnEnemiesForWave(currentWave) {
   enemies = [];
   if (currentWave % 5 === 0) {
-    enemies.push(new SpiderBoss());
+    enemies.push(new SpiderBoss(spiderBossAction));
     showFloatingText(
       "Spider Boss Appears!",
       width / 2,
