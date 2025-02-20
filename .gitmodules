@@ -1,2 +1,3 @@
 [submodule "2025-group-27"]
-	url = https://github.com/UoB-COMSM0166/2025-group-27.git
+    path = 2025-group-27
+    url = https://github.com/UoB-COMSM0166/2025-group-27.git
