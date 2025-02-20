@@ -11,8 +11,17 @@ let score = 0;
 let wave = 1;
 let gameState = "mainMenu"; // "mainMenu", "menu"（角色选择）, "game", "paused", "upgrading", "gameOver"
 let lastTerrainChange = 0;
-let weather = "normal";
-let lastWeatherChange = 0;
+
+// 暂停按钮和暂停时间
+let pauseButton;
+let pauseStartTime = 0;
+let totalPausedTime = 0;
+
+// ----- 天气相关全局变量 -----
+let weather = "normal";              // 当前天气："normal", "hot", "snowy", "thunderstorm"
+let lastWeatherChange = 0;           // 上一次随机选择天气的时间
+let weatherStartTime = 0;            // 当前特殊天气开始的时间
+
 let lightningZone = null;
 let lightningChain = [];
 let lastLightningTime = 0;
@@ -73,60 +82,130 @@ const combatRating = {
     }, 0);
   },
   update() {
-    if (millis() - this.lastCheck > this.checkInterval) {
-      this.player = this.calculatePlayerRating();
-      this.enemies = this.calculateEnemiesRating();
-      this.lastCheck = millis();
+    this.y += this.speed;
+    if (this.y > height) {
+      this.y = random(-50, -10);
+      this.x = random(width);
     }
-  },
-  getDifficultyMultiplier() {
-    let ratio = this.player / Math.max(this.enemies, 1);
-    if (ratio > 3) return 1.5;
-    if (ratio > 2) return 1.2;
-    if (ratio < 0.5) return 0.8;
-    return 1;
-  },
-};
-// preload function
-function preload() {
-  playerAction = loadImage("assets/images/Characters/Main_Character/MinerFemale_skin.png");
-  bossAction = loadImage("assets/images/Characters/Enemies/Birdman/BirdBoss.png");
-  commonEnemyAction.idle = loadImage("assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_idleEmote1.png"); //18 22
-  commonEnemyAction.up = loadImage("assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_move_up.png"); 
-  commonEnemyAction.down = loadImage("assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_move.png"); 
-  commonEnemyAction.side = loadImage("assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_move_side.png"); 
-  obstacle1 = loadImage("assets/images/Environment/Objects/石碑/alienObeliskTall.png");
-  obstacle2 = loadImage("assets/images/Environment/Objects/石碑/cipher.png");
+  }
+  display() {
+    noStroke();
+    fill(255, 255, 255, 200);
+    ellipse(this.x, this.y, this.size);
+  }
 }
-// ===== p5.js 核心函数 =====
+let snowflakes = [];
+function setupSnow() {
+  for (let i = 0; i < 100; i++) {
+    snowflakes.push(new Snowflake());
+  }
+}
+function drawSnow() {
+  for (let s of snowflakes) {
+    s.update();
+    s.display();
+  }
+}
+
+// 雷暴效果：短暂闪光模拟闪电
+let lightningFlash = false;
+let lightningTimer = 0;
+function updateLightningFlash() {
+  if (millis() - lightningTimer > 3000) {
+    lightningFlash = true;
+    lightningTimer = millis();
+    setTimeout(() => { lightningFlash = false; }, 100);
+  }
+}
+function drawLightningFlash() {
+  if (lightningFlash) {
+    push();
+    fill(255, 255, 255, 200);
+    rect(0, 0, width, height);
+    pop();
+  }
+}
+
+// 根据当前天气状态调用不同效果
+function drawWeatherEffects() {
+  if (weather === "hot") {
+    drawHeatHaze();
+  } else if (weather === "snowy") {
+    drawSnow();
+  } else if (weather === "thunderstorm") {
+    updateLightningFlash();
+    drawLightningFlash();
+  }
+}
+
+// ----- 天气更新函数 -----
+// 每隔 60000 毫秒随机选择一种天气（"normal", "hot", "snowy", "thunderstorm"）
+// 如果选择的是特殊天气（hot, snowy, thunderstorm），则持续效果为20秒，之后自动恢复为 normal
+function updateWeather() {
+  let currentTime = millis();
+
+  // 每隔 60000 毫秒重新随机选择天气
+  if (currentTime - lastWeatherChange > 60000) {
+    let weatherOptions = ["normal", "hot", "snowy", "thunderstorm"];
+    weather = random(weatherOptions);
+    console.log("天气切换为：", weather);
+    lastWeatherChange = currentTime;
+    weatherStartTime = currentTime;
+
+    // 如果选到雷暴，则以玩家当前位置作为闪电起点
+    if (weather === "thunderstorm") {
+      lightningZone = player.pos.copy();
+      lightningChain = [lightningZone];
+      lastLightningTime = currentTime;
+    }
+  }
+
+  // 如果当前天气为特殊天气且持续超过20秒，则自动恢复为 normal
+  if (weather !== "normal" && currentTime - weatherStartTime > 20000) {
+    weather = "normal";
+  }
+}
+
+// ----- p5.js 核心函数 -----
 function setup() {
   createCanvas(800, 600);
   gameStartTime = millis();
   generateInitialObstacles();
   initButtons();
   gameState = "mainMenu";
+  setupSnow(); // 初始化雪花粒子
+
+  // 初始化暂停按钮
+  pauseButton = new Button(width - 110, 10, 100, 30, "Pause", () => {
+    if (gameState === "game") {
+      gameState = "paused";
+      pauseStartTime = millis();
+    }
+  });
 }
 
 function draw() {
-  background(51);
+  background(51); // 保持原始背景色
+
+  updateWeather(); // 更新天气状态
+
+  // 绘制游戏界面（依状态）
   if (gameState === "mainMenu") {
     displayMainMenu();
   } else if (gameState === "menu") {
     displayCharacterSelection();
   } else if (gameState === "game") {
     handleGameplay(millis());
+    pauseButton.display(); // 显示暂停按钮
   } else if (gameState === "paused") {
-    if (showAttributes) {
-      displayAttributes();
-    } else {
-      displayPauseMenu();
-    }
+    displayPauseMenu();
   } else if (gameState === "upgrading") {
     drawUpgradeScreen();
   } else if (gameState === "gameOver") {
     displayGameOverScreen();
   }
 
+  // 处理浮动文字
   floatingTexts = floatingTexts.filter((ft) => {
     if (ft.update()) {
       ft.display();
@@ -142,4 +221,60 @@ function draw() {
   if (showAttributes) {
     displayAttributes();
   }
+
+  // 叠加当前天气效果（不改变原始背景色）
+  drawWeatherEffects();
+
+  // 显示当前天气文本（调试用）
+  textSize(16);
+  fill(255);
+  text("当前天气：" + weather, 10, height - 10);
+
+  // === 添加血条和经验条 ===
+  drawPlayerStats();
 }
+
+// 新增函数：绘制主角的血条和经验条
+function drawPlayerStats() {
+  // 检查 player 对象是否已定义
+  if (!player) {
+    console.warn("Player object is not defined.");
+    return;
+  }
+
+  // 血条
+  const healthBarWidth = 200;
+  const healthBarHeight = 20;
+  const healthPercentage = player.health / player.maxHealth;
+  fill(255, 0, 0); // 红色表示已损失的血量
+  rect(10, 10, healthBarWidth, healthBarHeight);
+  fill(0, 255, 0); // 绿色表示当前血量
+  rect(10, 10, healthBarWidth * healthPercentage, healthBarHeight);
+  fill(255);
+  textSize(12);
+  textAlign(CENTER, CENTER);
+  text(
+    `HP: ${Math.floor(player.health)} / ${player.maxHealth}`,
+    10 + healthBarWidth / 2,
+    10 + healthBarHeight / 2
+  );
+
+  // 经验条
+  const expBarWidth = 200;
+  const expBarHeight = 10;
+  const expPercentage = player.exp / player.expToNextLevel;
+  fill(100); // 灰色表示未获得的经验
+  rect(10, 40, expBarWidth, expBarHeight);
+  fill(0, 0, 255); // 蓝色表示当前经验
+  rect(10, 40, expBarWidth * expPercentage, expBarHeight);
+  fill(255);
+  textSize(10);
+  textAlign(CENTER, CENTER);
+  text(
+    `EXP: ${Math.floor(player.exp)} / ${player.expToNextLevel}`,
+    10 + expBarWidth / 2,
+    40 + expBarHeight / 2
+  );
+}
+
+
