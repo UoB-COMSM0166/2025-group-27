@@ -6,7 +6,7 @@ import os
 app = Flask(__name__)
 CORS(app)  # 允许所有前端访问
 
-VOLC_API_KEY = "75aaba48-0de3-49f5-9bca-9e0d39601c82"  
+VOLC_API_KEY = ""  
 VOLC_API_URL = "https://ark.cn-beijing.volces.com/api/v3/chat/completions"  # 火山引擎 API 地址
 
 @app.route("/chat", methods=["GET", "POST"])

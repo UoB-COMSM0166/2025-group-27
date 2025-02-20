@@ -1,4 +1,4 @@
-window.message = "HiaHia....";
+message = "HiaHia....";
 let lastUpdateTime = 0;
 const API_URL = "http://127.0.0.1:5000/chat";  // Python 服务器 API 地址
 const maxWidth = 600;  // 最大文本宽度
@@ -19,8 +19,8 @@ async function getAIMessage() {
             你知道这个秘密，但不会直接告诉玩家。
 
             当前游戏信息：
-            玩家血量：100/100
-            玩家进度：1/3
+            玩家血量：
+            玩家进度：
 
             要求：
             请你用非常短的语言嘲讽玩家，每次返回一句话，不要重复。
