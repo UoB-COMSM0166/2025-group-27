@@ -40,7 +40,7 @@ class Bullet {
 
     // 检测障碍物碰撞
     for (let obs of obstacles) {
-      if (obs.collidesWith(this.pos, this.radius)) {
+      if (obs.collidesWithCircle(this.pos, this.radius)) {
         if (this.type === "bounce") {
           let closestX = constrain(
             this.pos.x,
@@ -130,7 +130,7 @@ class EnemyBullet {
   update() {
     this.pos.add(this.vel);
     for (let obs of obstacles) {
-      if (obs.collidesWith(this.pos, this.radius)) return false;
+      if (obs.collidesWithCircle(this.pos, this.radius)) return false;
     }
     return !(
       this.pos.x < 0 ||

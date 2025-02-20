@@ -32,13 +32,23 @@ class Enemy {
 
   resolveCollision() {
     for (let obs of obstacles) {
-      if (obs.collidesWith(this.pos, this.radius)) {
-        let closestX = constrain(this.pos.x, obs.pos.x, obs.pos.x + obs.width);
-        let closestY = constrain(this.pos.y, obs.pos.y, obs.pos.y + obs.height);
-        let diff = createVector(this.pos.x - closestX, this.pos.y - closestY);
-        if (diff.mag() === 0) diff = createVector(1, 0);
-        diff.normalize();
-        this.pos.add(diff.mult(5));
+      if (obs.collidesWith(this.pos, this.enWidth, this.enHeight)) {
+        // 计算 X 方向的可能移动位置
+        let xOnly = createVector(this.pos.x - this.vel.x, this.pos.y);
+        let yOnly = createVector(this.pos.x, this.pos.y - this.vel.y);
+  
+        // 优先尝试 X 方向移动
+        if (!obs.collidesWith(xOnly, this.enWidth, this.enHeight)) {
+          this.pos = xOnly;
+        } 
+        // 否则尝试 Y 方向移动
+        else if (!obs.collidesWith(yOnly, this.enWidth, this.enHeight)) {
+          this.pos = yOnly;
+        } 
+        // 如果两个方向都碰撞，完全阻止移动
+        else {
+          this.pos.sub(this.vel);
+        }
       }
     }
   }
@@ -58,11 +68,11 @@ class Enemy {
       let nextPos = p5.Vector.add(this.pos, direction);
       canMove = true;
       for (let obs of obstacles) {
-        if (obs.collidesWith(nextPos, this.radius)) {
+        if (obs.collidesWith(nextPos, this.enWidth, this.enHeight)) {
           canMove = false;
           break;
         }
-      }
+      }      
     }
     this.attackCooldown--;
     let dx = player.pos.x - this.pos.x;

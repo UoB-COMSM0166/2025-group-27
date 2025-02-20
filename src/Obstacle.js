@@ -46,7 +46,16 @@ class Obstacle {
     }
   }
 
-  collidesWith(position, radius) {
+  collidesWith(otherPos, otherWidth, otherHeight) {
+    return !(
+      otherPos.x + otherWidth < this.pos.x ||    // 其他矩形的右边界在当前矩形左侧
+      otherPos.x > this.pos.x + this.width ||    // 其他矩形的左边界在当前矩形右侧
+      otherPos.y + otherHeight < this.pos.y ||   // 其他矩形的下边界在当前矩形上侧
+      otherPos.y > this.pos.y + this.height      // 其他矩形的上边界在当前矩形下侧
+    );
+  }
+
+  collidesWithCircle(position, radius) {
     let closestX = constrain(position.x, this.pos.x, this.pos.x + this.width);
     let closestY = constrain(position.y, this.pos.y, this.pos.y + this.height);
     let distanceSquared = sq(position.x - closestX) + sq(position.y - closestY);

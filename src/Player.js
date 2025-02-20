@@ -75,13 +75,23 @@ class Player {
 
   resolveCollision() {
     for (let obs of obstacles) {
-      if (obs.collidesWith(this.pos, this.radius)) {
-        let closestX = constrain(this.pos.x, obs.pos.x, obs.pos.x + obs.width);
-        let closestY = constrain(this.pos.y, obs.pos.y, obs.pos.y + obs.height);
-        let diff = createVector(this.pos.x - closestX, this.pos.y - closestY);
-        if (diff.mag() === 0) diff = createVector(1, 0);
-        diff.normalize();
-        this.pos.add(diff.mult(5));
+      if (obs.collidesWith(this.pos, this.chWidth, this.chHeight)) {
+        // 计算 X 方向的可能移动位置
+        let xOnly = createVector(this.pos.x - this.vel.x, this.pos.y);
+        let yOnly = createVector(this.pos.x, this.pos.y - this.vel.y);
+  
+        // 优先尝试 X 方向移动
+        if (!obs.collidesWith(xOnly, this.chWidth, this.chHeight)) {
+          this.pos = xOnly;
+        } 
+        // 否则尝试 Y 方向移动
+        else if (!obs.collidesWith(yOnly, this.chWidth, this.chHeight)) {
+          this.pos = yOnly;
+        } 
+        // 如果两个方向都碰撞，完全阻止移动
+        else {
+          this.pos.sub(this.vel);
+        }
       }
     }
   }
@@ -213,12 +223,17 @@ class Player {
       let newPos = p5.Vector.add(this.pos, moveVec);
       let canMove = true;
       for (let obs of obstacles) {
-        if (obs.collidesWith(newPos, this.radius)) {
+        if (obs.collidesWith(newPos, this.chWidth, this.chHeight)) {
           let xOnly = createVector(newPos.x, this.pos.y);
           let yOnly = createVector(this.pos.x, newPos.y);
-          if (!obs.collidesWith(xOnly, this.radius)) newPos = xOnly;
-          else if (!obs.collidesWith(yOnly, this.radius)) newPos = yOnly;
-          else canMove = false;
+          
+          if (!obs.collidesWith(xOnly, this.chWidth, this.chHeight)) {
+            newPos = xOnly; // 只在 X 方向移动
+          } else if (!obs.collidesWith(yOnly, this.chWidth, this.chHeight)) {
+            newPos = yOnly; // 只在 Y 方向移动
+          } else {
+            canMove = false; // 两个方向都被阻挡，不能移动
+          }
           break;
         }
       }
