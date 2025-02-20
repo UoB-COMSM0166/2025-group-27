@@ -7,7 +7,7 @@ function applyWeatherEffects(now) {
   enemies.forEach((enemy) => {
     enemy.speed = weather === "snowy" ? 1 : random(1, 3);
   });
-  
+
   if (weather === "thunderstorm") {
     // 绘制闪电效果
     for (let i = 0; i < lightningChain.length; i++) {
@@ -47,7 +47,7 @@ function applyWeatherEffects(now) {
         }
       }
     }
-    
+
     // 生成闪电链：让新段朝向玩家
     if (now - lastLightningTime > lightningDelay && lightningChain.length < maxLightningChain) {
       let lastPos = lightningChain[lightningChain.length - 1];

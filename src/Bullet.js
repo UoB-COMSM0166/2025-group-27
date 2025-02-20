@@ -128,6 +128,8 @@ class EnemyBullet {
   }
 
   update() {
+    // 在检测碰撞时跳过无敌玩家
+    if (player.invincible) return true;
     this.pos.add(this.vel);
     for (let obs of obstacles) {
       if (obs.collidesWith(this.pos, this.radius)) return false;
@@ -159,5 +161,3 @@ class WebProjectile extends EnemyBullet {
     ellipse(this.pos.x, this.pos.y, this.radius * 2);
   }
 }
-
-

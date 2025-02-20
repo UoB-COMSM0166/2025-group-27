@@ -1,12 +1,12 @@
 // ===== 核心游戏逻辑 =====
 function handleGameplay(now) {
-  // 玩家相关操作
+  // ===== 玩家基本操作 =====
   player.move();
   player.shoot();
   player.update();
   player.display();
 
-  // 更新并显示子弹
+  // ===== 子弹系统 =====
   bullets = bullets.filter((bullet) => {
     if (bullet.update()) {
       bullet.display();
@@ -15,49 +15,62 @@ function handleGameplay(now) {
     return false;
   });
 
-  // 更新并显示障碍物
+  // ===== 障碍物系统 =====
   obstacles.forEach((obs) => {
     obs.update();
     obs.display();
   });
 
-  // 更新并显示敌人
-  for (let j = enemies.length - 1; j >= 0; j--) {
-    let enemy = enemies[j];
-    enemy.update();
-    enemy.display();
+  // ===== 敌人系统 =====
+  // 只在游戏进行状态更新敌人
+  if (gameState === "game") {
+    for (let j = enemies.length - 1; j >= 0; j--) {
+      let enemy = enemies[j];
+      enemy.update();
+      enemy.display();
+    }
+
+    // 敌人子弹处理
+    enemyBullets = enemyBullets.filter((bullet) => {
+      if (bullet.update()) {
+        bullet.display();
+        if (p5.Vector.dist(bullet.pos, player.pos) < player.radius + bullet.radius) {
+          if (bullet instanceof WebProjectile) {
+            player.isWebbed = true;
+            player.webDuration = 120;
+            showFloatingText("Webbed!", player.pos.x, player.pos.y, color(200));
+          } else {
+            player.takeDamage(bullet.damage);
+          }
+          return false;
+        }
+        return true;
+      }
+      return false;
+    });
+
+    // ===== 波次生成逻辑 =====
+    if (enemies.length === 0) {
+      wave++;
+      waveTextAnimation = 30;
+      spawnEnemiesForWave(wave);
+      showFloatingText(
+        "Wave " + wave + "!",
+        width / 2,
+        height / 2,
+        color(255, 200, 0)
+      );
+    }
   }
 
-  // 更新并显示敌人子弹，同时检测与玩家的碰撞
-  enemyBullets = enemyBullets.filter((bullet) => {
-    if (bullet.update()) {
-      bullet.display();
-      if (
-        p5.Vector.dist(bullet.pos, player.pos) <
-        player.radius + bullet.radius
-      ) {
-        if (bullet instanceof WebProjectile) {
-          player.isWebbed = true;
-          player.webDuration = 120;
-          showFloatingText("Webbed!", player.pos.x, player.pos.y, color(200));
-        } else {
-          player.takeDamage(bullet.damage);
-        }
-        return false;
-      }
-      return true;
-    }
-    return false;
-  });
-
-  // 更新经验球
+  // ===== 经验系统 =====
   expOrbs = expOrbs.filter((orb) => {
     orb.update();
     orb.display();
     return !orb.checkCollection();
   });
 
-  // 处理毒气伤害效果
+  // ===== 毒气效果 =====
   for (let i = poisonTrails.length - 1; i >= 0; i--) {
     let trail = poisonTrails[i];
     if (millis() - trail.startTime > trail.duration) {
@@ -75,20 +88,8 @@ function handleGameplay(now) {
     }
   }
 
-  // 如果所有敌人被消灭，则生成下一波敌人
-  if (enemies.length === 0) {
-    wave++;
-    waveTextAnimation = 30;
-    spawnEnemiesForWave(wave);
-    showFloatingText(
-      "Wave " + wave + "!",
-      width / 2,
-      height / 2,
-      color(255, 200, 0)
-    );
-  }
-
-  // 显示波数提示动画
+  // ===== 界面显示 =====
+  // 波数提示动画（始终显示）
   if (waveTextAnimation > 0) {
     push();
     waveTextAnimation--;
@@ -99,11 +100,11 @@ function handleGameplay(now) {
     pop();
   }
 
-  // 显示 HUD 信息
+  // HUD信息
   let elapsedTime = floor((now - gameStartTime) / 1000);
   displayHUD(elapsedTime);
 
-  // 判断游戏结束
+  // ===== 游戏状态判断 =====
   if (player.health <= 0) {
     finalStats = {
       normalEnemies: normalEnemiesDefeated,
@@ -116,15 +117,92 @@ function handleGameplay(now) {
     gameState = "gameOver";
   }
 
-  // 如果处于升级状态，则绘制升级界面
+  // ===== 升级系统 =====
   if (choosingUpgrade) {
     drawUpgradeScreen();
   }
 
-  // ★ 调用天气效果函数，应用天气效果 ★
+  // ===== 宠物系统 =====
+  if (player.pet) {
+    // 更新宠物位置和逻辑
+    if (player.pet instanceof Pet) {
+      player.pet.follow(player);
+      player.pet.attack(enemies);
+    } else if (player.pet instanceof Pet2) {
+      player.pet.follow(player);
+      player.pet.update(player); // 更新护盾逻辑
+    }
+    // 绘制宠物
+    player.pet.display();
+  }
+
+  // ===== 天气系统 =====
   applyWeatherEffects(now);
 }
 
+// 初始化相关
+// ===== 角色选择和按钮初始化 =====
+function initButtons() {
+  const baseY = height / 2 - 30;
+
+  mainMenuButtons = [
+    new Button(width / 2 - 75, baseY - 50, 150, 40, "Resume Game", () => {
+      loadSavedGame();
+      gameState = "game"; // 从暂停改为直接进入游戏
+    }),
+    new Button(width / 2 - 75, baseY, 150, 40, "Start Game", () => {
+      savedGame = null;
+      wave = 1; // 重置波数
+      normalEnemiesDefeated = 0; // 重置击杀数
+      bossDefeated = 0;
+      gameState = "menu";
+    }),
+    new Button(width / 2 - 75, baseY + 50, 150, 40, "Quit Game", () =>
+      noLoop()
+    ),
+  ];
+
+  charSelectButtons = [
+    new Button(width / 2 - 100, baseY - 30, 200, 40, "Melee Character", () =>
+      initPlayer("melee")
+    ),
+    new Button(
+      width / 2 - 100,
+      baseY + 30,
+      200,
+      40,
+      "Ranged Character", // 间距从+20改为+30
+      () => initPlayer("ranged")
+    ),
+  ];
+
+  pauseButtons = [
+    new Button(
+      width / 2 - 75,
+      baseY,
+      150,
+      40,
+      "Resume Game",
+      () => (gameState = "game")
+    ),
+    new Button(width / 2 - 75, baseY + 60, 150, 40, "Main Menu", () => {
+      savedGame = {
+        ...savedGame,
+        wave: wave, // 新增保存波数
+        player: JSON.stringify({
+          ...player,
+          pos: { x: player.pos.x, y: player.pos.y }, // 保存精确坐标
+        }),
+        enemies: enemies.map((e) => ({
+          ...e,
+          type: e.constructor.name, // 保存具体敌人类型
+          pos: { x: e.pos.x, y: e.pos.y },
+        })),
+      };
+      gameState = "mainMenu";
+    }),
+  ];
+}
 
 // 初始化相关
 // ===== 角色选择和按钮初始化 =====
@@ -256,6 +334,7 @@ function displayHUD(elapsedTime) {
   pop();
 }
 
+
 // ===== UI 及输入 =====
 function drawUIElements() {
   switch (gameState) {
@@ -362,11 +441,6 @@ function displayPauseMenu() {
   fill(255);
   textAlign(CENTER, CENTER);
   text("Game Paused", width / 2, height / 3);
-
-  // 计算并显示暂停时间
-  let pausedTime = floor((millis() - pauseStartTime) / 1000);
-  text(`Paused for: ${pausedTime}s`, width / 2, height / 3 + 30);
-
   text(`Level: ${player.level}`, width / 2, height / 2);
   text(`Health: ${player.health}`, width / 2, height / 2 + 30);
   text(`XP: ${player.exp}`, width / 2, height / 2 + 60);

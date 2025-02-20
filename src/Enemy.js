@@ -271,6 +271,36 @@ class Boss extends Enemy {
   displayHealthBar() {
     displayBossHealthBar();
   }
+
+  // 合并后的hit方法
+  hit(damage, knockback = true) {
+    // 原始伤害处理
+    this.health -= damage;
+
+    // 击退效果
+    if (knockback) {
+      let knockbackDir = p5.Vector.sub(this.pos, player.pos)
+        .normalize()
+        .mult(10 * (1 - this.knockbackResist));
+      this.pos.add(knockbackDir);
+    }
+
+    // 显示伤害文字
+    showFloatingText(
+      "-" + Math.floor(damage),
+      this.pos.x,
+      this.pos.y - 20,
+      color(255, 0, 0)
+    );
+
+    // 新增状态切换逻辑
+    if (this.health <= 0) {
+      gameState = "petSelection"; // 切换游戏状态
+      bossDefeatedCount++;        // 记录击败次数
+      return true;                // 返回true表示敌人被消灭
+    }
+    return false; // 返回false表示敌人仍然存活
+  }
 }
 
 // === SpiderBoss 类 ===
