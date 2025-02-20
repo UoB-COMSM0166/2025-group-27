@@ -53,34 +53,27 @@ let mainMenuButtons = [];
 let charSelectButtons = [];
 let pauseButtons = [];
 
-// ===== 战力评价系统 =====
-const combatRating = {
-  player: 0,
-  enemies: 0,
-  lastCheck: 0,
-  checkInterval: 1000,
-  calculatePlayerRating() {
-    return Math.floor(
-      player.health * 0.5 +
-        player.attackPower * 10 +
-        player.fireRate * 15 +
-        player.speed * 20 +
-        player.defense * 25 +
-        player.level * 30 +
-        (player.bulletType !== "normal" ? 50 : 0) +
-        player.passiveSkills.length * 40
-    );
-  },
-  calculateEnemiesRating() {
-    return enemies.reduce((total, enemy) => {
-      let baseRating = enemy.health * 0.3 + enemy.damage * 8 + enemy.speed * 15;
-      if (enemy.type === "ranged") baseRating *= 1.5;
-      if (enemy.type === "exploding") baseRating *= 1.3;
-      if (enemy.type === "boss") baseRating *= 2;
-      if (enemy.isElite) baseRating *= 1.5;
-      return total + baseRating;
-    }, 0);
-  },
+// ----- 天气效果绘制 -----
+// 热天效果：利用噪声生成水平条纹模拟热浪扭曲效果
+function drawHeatHaze() {
+  push();
+  noStroke();
+  for (let y = 0; y < height; y += 5) {
+    let offset = map(noise(y * 0.01, millis() * 0.002), 0, 1, -10, 10);
+    fill(255, 200, 200, 30);
+    rect(offset, y, width, 5);
+  }
+  pop();
+}
+
+// 冰雪效果：粒子系统模拟雪花飘落
+class Snowflake {
+  constructor() {
+    this.x = random(width);
+    this.y = random(-50, -10);
+    this.size = random(2, 5);
+    this.speed = random(0.5, 1.5);
+  }
   update() {
     this.y += this.speed;
     if (this.y > height) {
@@ -167,6 +160,18 @@ function updateWeather() {
 }
 
 // ----- p5.js 核心函数 -----
+// preload function
+function preload() {
+  playerAction = loadImage("assets/images/Characters/Main_Character/MinerFemale_skin.png");
+  bossAction = loadImage("assets/images/Characters/Enemies/Birdman/BirdBoss.png");
+  commonEnemyAction.idle = loadImage("assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_idleEmote1.png"); //18 22
+  commonEnemyAction.up = loadImage("assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_move_up.png"); 
+  commonEnemyAction.down = loadImage("assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_move.png"); 
+  commonEnemyAction.side = loadImage("assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_move_side.png"); 
+  obstacle1 = loadImage("assets/images/Environment/Objects/石碑/alienObeliskTall.png");
+  obstacle2 = loadImage("assets/images/Environment/Objects/石碑/cipher.png");
+}
+
 function setup() {
   createCanvas(800, 600);
   gameStartTime = millis();
