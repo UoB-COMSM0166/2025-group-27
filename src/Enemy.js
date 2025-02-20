@@ -403,52 +403,58 @@ class SpiderBoss extends Boss {
     this.shieldActive = false;  // 护盾状态
     this.shieldHealth = 200;    // 护盾值
     
-    // 添加状态检查标志
+    // 确保所有计时器都有初始值
+    this.webCooldown = 0;
+    this.meleeAttackCooldown = 0;
+    this.dashCooldown = 0;
+    this.webWallCooldown = 0;
+    this.summonCooldown = 0;
+    this.teleportCooldown = 0;
+    this.trailCounter = 0;
+    this.dashDuration = 0;
+    
+    // 确保状态标志正确初始化
     this.isActive = true;
+    this.isDashing = false;
+    this.isEnraged = false;
+    this.shieldActive = false;
   }
 
   update() {
     try {
+      // 基础状态检查
       if (!this.isActive || !player) {
-        console.warn("Boss or player is not active");
         return;
       }
 
+      // 无敌时间更新
       if (this.invulnerableTime > 0) {
         this.invulnerableTime--;
       }
 
-      // 检查阶段转换
-      if (this.health < this.maxHealth * 0.6 && this.phase === 1) {
-        this.phase = 2;
-        this.isEnraged = true;
-        this.enrageTimer = 300;
-        showFloatingText("Boss Enraged!", this.pos.x, this.pos.y - 40, color(255, 0, 0));
-      }
-
       // 更新攻击模式
       this.patternTimer++;
-      if (this.patternTimer > 240) { // 缩短模式切换时间
-        this.attackPattern = (this.attackPattern + 1) % 5; // 增加到5种攻击模式
+      if (this.patternTimer > 240) {
+        this.attackPattern = (this.attackPattern + 1) % 5;
         this.patternTimer = 0;
+        // 切换模式时显示提示
+        let patternNames = ["Web Attack", "Dash Attack", "Poison Attack", "Web Wall", "Summon"];
+        showFloatingText(patternNames[this.attackPattern], this.pos.x, this.pos.y - 40, color(255, 255, 0));
+      }
+
+      // 检查阶段转换
+      if (this.health < this.maxHealth * 0.6 && !this.isEnraged) {
+        this.isEnraged = true;
+        this.enrageTimer = 300;
+        this.speed *= 1.5;
+        this.damage *= 1.5;
+        showFloatingText("Boss Enraged!", this.pos.x, this.pos.y - 40, color(255, 0, 0));
       }
 
       let distToPlayer = p5.Vector.dist(this.pos, player.pos);
       let dirToPlayer = p5.Vector.sub(player.pos, this.pos).normalize();
 
-      // 狂暴状态效果
-      if (this.isEnraged) {
-        this.speed = 3.5;
-        this.damage *= 1.5;
-        this.enrageTimer--;
-        if (this.enrageTimer <= 0) {
-          this.isEnraged = false;
-          this.speed = 2.5;
-          this.damage = 30;
-        }
-      }
-
-      // 处理移动和攻击
+      // 移动逻辑
       if (!this.shieldActive) {
         if (this.isDashing) {
           this.handleDashing(dirToPlayer);
@@ -461,56 +467,73 @@ class SpiderBoss extends Boss {
           this.performMeleeAttack();
         }
 
-        // 根据不同攻击模式执行攻击
-        switch(this.attackPattern) {
-          case 0: // 改进的蛛网攻击
-            this.performWebAttack(dirToPlayer);
-            break;
-          case 1: // 改进的冲刺攻击
-            this.performDashAttack();
-            break;
-          case 2: // 改进的毒气攻击
-            this.performPoisonAttack();
-            break;
-          case 3: // 新增：蛛网墙
-            this.performWebWallAttack(dirToPlayer);
-            break;
-          case 4: // 新增：召唤小蜘蛛
-            this.performSummonAttack();
-            break;
-        }
+        // 执行当前攻击模式
+        this.executeAttackPattern(dirToPlayer);
       }
 
-      // 第二阶段特殊机制
-      if (this.phase === 2) {
-        // 随机传送
-        if (this.teleportCooldown <= 0 && random() < 0.01) {
-          this.performTeleport();
-        }
-        
-        // 护盾机制
-        if (!this.shieldActive && this.health < this.maxHealth * 0.3 && random() < 0.005) {
-          this.activateShield();
-        }
-      }
+      // 更新所有计时器
+      this.updateTimers();
 
       // 更新小蜘蛛
       this.updateSpiderlings();
 
-      // 更新计时器
-      this.updateTimers();
-
-      // 添加边界检查
+      // 边界检查
       this.pos.x = constrain(this.pos.x, 0, width);
       this.pos.y = constrain(this.pos.y, 0, height);
 
-      // 确保生命值不会小于0
-      this.health = Math.max(0, this.health);
-
     } catch (error) {
       console.error("Error in SpiderBoss update:", error);
-      this.isActive = false;
+      console.error(error.stack); // 添加堆栈跟踪
     }
+  }
+
+  // 新增：执行攻击模式的方法
+  executeAttackPattern(dirToPlayer) {
+    switch(this.attackPattern) {
+      case 0:
+        this.performWebAttack(dirToPlayer);
+        break;
+      case 1:
+        this.performDashAttack();
+        break;
+      case 2:
+        this.performPoisonAttack();
+        break;
+      case 3:
+        this.performWebWallAttack(dirToPlayer);
+        break;
+      case 4:
+        this.performSummonAttack();
+        break;
+    }
+  }
+
+  hit(damage) {
+    if (!this.isActive) return false;
+
+    if (this.invulnerableTime <= 0) {
+      if (this.shieldActive) {
+        this.shieldHealth -= damage;
+        showFloatingText("-" + Math.floor(damage), this.pos.x, this.pos.y - 20, color(0, 255, 255));
+        if (this.shieldHealth <= 0) {
+          this.shieldActive = false;
+          showFloatingText("Shield Broken!", this.pos.x, this.pos.y - 30, color(255, 255, 0));
+        }
+      } else {
+        this.health -= damage;
+        this.invulnerableTime = 5;
+        showFloatingText("-" + Math.floor(damage), this.pos.x, this.pos.y - 20, color(255, 0, 0));
+      }
+
+      // 检查是否死亡
+      if (this.health <= 0) {
+        this.isActive = false;
+        this.spiderlings = [];
+        showFloatingText("Boss Defeated!", this.pos.x, this.pos.y - 40, color(255, 215, 0));
+        return true;
+      }
+    }
+    return false;
   }
 
   // 新增的攻击方法
@@ -575,97 +598,6 @@ class SpiderBoss extends Boss {
     this.shieldActive = true;
     this.shieldHealth = 200;
     showFloatingText("Shield Activated!", this.pos.x, this.pos.y - 30, color(0, 255, 255));
-  }
-
-  hit(damage) {
-    try {
-      if (!this.isActive) return false;
-      
-      if (this.invulnerableTime <= 0) {
-        if (this.shieldActive) {
-          this.shieldHealth -= damage;
-          if (this.shieldHealth <= 0) {
-            this.shieldActive = false;
-            showFloatingText("Shield Broken!", this.pos.x, this.pos.y - 30, color(255, 255, 0));
-          }
-        } else {
-          this.health -= damage;
-          this.invulnerableTime = 5;
-        }
-        showFloatingText("-" + Math.floor(damage), this.pos.x, this.pos.y - 20, color(255, 0, 0));
-      }
-      
-      if (this.health <= 0) {
-        this.isActive = false;
-        // 确保清理所有相关实体
-        this.spiderlings = [];
-        return true;
-      }
-      return false;
-    } catch (error) {
-      console.error("Error in SpiderBoss hit:", error);
-      return true; // 出错时移除 Boss
-    }
-  }
-
-  display() {
-    // 显示小蜘蛛
-    this.spiderlings.forEach(spiderling => spiderling.display());
-
-    // 显示传送效果
-    if (this.teleportCooldown > 160) {
-      push();
-      noFill();
-      stroke(128, 0, 128, 150);
-      strokeWeight(3);
-      ellipse(this.pos.x, this.pos.y, this.size * 2);
-      pop();
-    }
-
-    // 显示护盾效果
-    if (this.shieldActive) {
-      push();
-      noFill();
-      stroke(0, 255, 255, 150);
-      strokeWeight(3);
-      ellipse(this.pos.x, this.pos.y, this.size * 1.5);
-      pop();
-    }
-
-    // 显示狂暴效果
-    if (this.isEnraged) {
-      push();
-      noFill();
-      stroke(255, 0, 0, 150);
-      strokeWeight(2);
-      ellipse(this.pos.x, this.pos.y, this.size * 1.2);
-      pop();
-    }
-
-    // 显示Boss本体
-    fill(50, 200, 50);
-    noStroke();
-    ellipse(this.pos.x, this.pos.y, this.size);
-
-    // 显示血条
-    let healthBarWidth = 50;
-    let healthBarHeight = 6;
-    let healthPercentage = this.health / this.maxHealth;
-    
-    fill(255, 0, 0);
-    rect(
-      this.pos.x - healthBarWidth / 2,
-      this.pos.y - this.size - 15,
-      healthBarWidth,
-      healthBarHeight
-    );
-    fill(0, 255, 0);
-    rect(
-      this.pos.x - healthBarWidth / 2,
-      this.pos.y - this.size - 15,
-      healthBarWidth * healthPercentage,
-      healthBarHeight
-    );
   }
 
   // 添加缺失的移动处理方法
