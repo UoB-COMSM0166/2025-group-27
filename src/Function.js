@@ -579,7 +579,7 @@ function spawnEnemiesForWave(currentWave) {
   if (currentWave % 5 === 0) {
     // Boss生成
     let bossPos = getValidSpawnPosition();
-    let boss = new SpiderBoss();
+    let boss = new SpiderBoss(spiderBossAction);
     boss.pos = bossPos;
     enemies.push(boss);
     showFloatingText("Spider Boss Appears!", width / 2, height / 2 - 40, color(0, 255, 0));
