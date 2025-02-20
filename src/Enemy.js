@@ -1,6 +1,18 @@
 // ===== Enemy 类 =====
 class Enemy {
-  constructor(isElite = false, enemyType = "normal") {
+  constructor(isElite = false, enemyType = "normal", enemyAction, enWidth, enHeight) {
+    this.enemyAction = enemyAction;
+    this.enWidth = enWidth;
+    this.enHeight = enHeight;
+    this.x = width / 2;
+    this.y = height / 2;
+    this.frameIndex = 0;
+    this.enDelay = 6;
+    this.enCounter = 0;
+    this.direction = 'idle';
+    this.currentAction = this.enemyAction.idle;
+    this.framesPerDirection = 4; 
+
     this.pos = createVector(random(width), random(height));
     this.vel = createVector(0, 0);
     this.radius = 15;
@@ -12,6 +24,8 @@ class Enemy {
     this.isElite = isElite;
     this.expValue = 10;
     this.attackCooldown = 0;
+    this.attackRange = 1;  //initial attackrange
+    this.attackSpeed = 1;
     this.type = enemyType;
     this.invulnerableTime = 0;
   }
@@ -30,48 +44,43 @@ class Enemy {
   }
 
   update() {
-    let desired = p5.Vector.sub(player.pos, this.pos)
-      .normalize()
-      .mult(this.speed);
-    let steps = 4;
-    let stepVec = desired.copy().div(steps);
-    let newPos = this.pos.copy();
-    for (let i = 0; i < steps; i++) {
-      let candidate = p5.Vector.add(newPos, stepVec);
-      let collision = false;
+    let canMove;
+    let distToPlayer = p5.Vector.dist(this.pos, player.pos);
+    if (distToPlayer <= this.attackRange) {
+      if (this.attackCooldown <= 0) {
+        player.takeDamage(this.damage);
+        this.attackCooldown = 60 / this.attackSpeed;
+      }
+    } else {
+      let direction = p5.Vector.sub(player.pos, this.pos)
+        .normalize()
+        .mult(this.speed);
+      let nextPos = p5.Vector.add(this.pos, direction);
+      canMove = true;
       for (let obs of obstacles) {
-        if (obs.collidesWith(candidate, this.radius)) {
-          collision = true;
+        if (obs.collidesWith(nextPos, this.radius)) {
+          canMove = false;
           break;
         }
       }
-      if (!collision) {
-        newPos = candidate;
-      } else {
-        let foundPath = false;
-        let angleOffsets = [PI / 12, -PI / 12, PI / 6, -PI / 6];
-        for (let offset of angleOffsets) {
-          let altStep = stepVec.copy().rotate(offset);
-          candidate = p5.Vector.add(newPos, altStep);
-          collision = false;
-          for (let obs of obstacles) {
-            if (obs.collidesWith(candidate, this.radius)) {
-              collision = true;
-              break;
-            }
-          }
-          if (!collision) {
-            newPos = candidate;
-            foundPath = true;
-            break;
-          }
-        }
-        if (!foundPath) break;
-      }
     }
-    this.pos = newPos;
-    this.checkPlayerCollision();
-    this.resolveCollision();
+    this.attackCooldown--;
+    let dx = player.pos.x - this.pos.x;
+    let dy = player.pos.y - this.pos.y;
+    if (abs(dx) > 0.1) {
+      if(canMove){
+        this.pos.x += this.speed * Math.sign(dx);
+      }
+      this.direction = dx > 0 ? 'right' : 'left';
+      this.currentAction = this.enemyAction.side;
+    } else {
+      if(canMove){
+        this.pos.y += this.speed * Math.sign(dy);
+      }
+      this.direction = dy > 0 ? 'down' : 'up';
+      this.currentAction = this.enemyAction[this.direction];
+    } 
+    this.animate();
   }
 
   checkPlayerCollision() {
@@ -101,6 +110,14 @@ class Enemy {
     return this.health <= 0;
   }
 
+  animate() {
+    this.enCounter++;
+    if (this.enCounter >= this.enDelay) {
+        this.enCounter = 0;
+        this.frameIndex = (this.frameIndex + 1) % this.framesPerDirection;
+    }
+  }
+
   display() {
     let healthBarWidth = 30,
       healthBarHeight = 4;
@@ -119,9 +136,22 @@ class Enemy {
       healthBarWidth * healthPercentage,
       healthBarHeight
     );
-    noStroke();
-    fill(255, 0, 0);
-    ellipse(this.pos.x, this.pos.y, this.radius * 2);
+    if (!this.enemyAction) {
+      console.error("currentSprite is undefined!");
+      return;
+    }
+    let frameX = this.frameIndex * this.enWidth;
+    
+
+    push();
+    if (this.direction === 'left') {
+      translate(this.pos.x + this.enWidth, this.pos.y);
+      scale(-1, 1);
+      image(this.currentAction, 0, 0, this.enWidth, this.enHeight, frameX, 0, this.enWidth, this.enHeight);
+    } else {
+      image(this.currentAction, this.pos.x, this.pos.y, this.enWidth, this.enHeight, frameX, 0, this.enWidth, this.enHeight);
+    }
+    pop();
   }
 }
 

@@ -192,7 +192,7 @@ function initButtons() {
 
 // ===== 初始化角色时生成第一波敌人 =====
 function initPlayer(type) {
-  player = new Player(width / 2, height / 2, type);
+  player = new Player(playerAction, 26, 26, type);
   if (type === "melee") {
     player.attackPower = 10;
     player.attackDamage = 10;
@@ -587,11 +587,11 @@ function spawnEnemiesForWave(currentWave) {
       let enemyType = random();
       let enemy;
       if (enemyType < 0.4) {
-        enemy = new Enemy(isElite, "normal");
+        enemy = new Enemy(isElite, "normal", commonEnemyAction, 18, 22);
       } else if (enemyType < 0.75) {
-        enemy = new Enemy(isElite, "ranged");
+        enemy = new Enemy(isElite, "ranged", commonEnemyAction, 18, 22);
       } else {
-        enemy = new Enemy(isElite, "exploding");
+        enemy = new Enemy(isElite, "exploding", commonEnemyAction, 18, 22);
       }
       if (enemy) enemies.push(enemy);
     }

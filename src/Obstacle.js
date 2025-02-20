@@ -39,9 +39,11 @@ class Obstacle {
   }
 
   display() {
-    fill(100);
-    noStroke();
-    rect(this.pos.x, this.pos.y, this.width, this.height);
+    if(this.isVertical){
+      image(obstacle1, this.pos.x, this.pos.y, this.width, this.height);
+    } else{
+      image(obstacle2, this.pos.x, this.pos.y, this.width, this.height);
+    }
   }
 
   collidesWith(position, radius) {

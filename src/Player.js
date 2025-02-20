@@ -1,7 +1,26 @@
 // ===== Player 类 =====
 class Player {
-  constructor(x, y, type) {
-    this.pos = createVector(x || width / 2, y || height / 2);
+  constructor(actionImg,chWidth,chHeight, type) {
+    // change
+    this.actionImg = actionImg;
+    this.chWidth = chWidth;
+    this.chHeight = chHeight;
+    this.x = width / 2;
+    this.y = height / 2;
+    this.pos = createVector(this.x, this.y);
+    this.animations = {
+      idle: [0, 1, 2],
+      up: [27, 28, 29, 30, 31, 32],
+      down: [9, 10, 11, 12, 13, 14],
+      left: [18, 19, 20, 21, 22, 23],
+      right: [18, 19, 20, 21, 22, 23]
+    };
+    this.currentAnimation = this.animations.idle;
+    this.frameIndex = 0;
+    this.animationDelay = 6; // control animation speed
+    this.animationCounter = 0;
+    this.direction = 'idle';
+
     this.speed = 5;
     this.radius = 20;
     this.health = 100;
@@ -146,16 +165,49 @@ class Player {
   }
 
   move() {
+    let moving = false;
     if (this.isWebbed) {
       this.webDuration--;
       if (this.webDuration <= 0) this.isWebbed = false;
       return;
     }
     let moveVec = createVector(0, 0);
-    if (keyIsDown(87)) moveVec.y -= 1;
-    if (keyIsDown(83)) moveVec.y += 1;
-    if (keyIsDown(65)) moveVec.x -= 1;
-    if (keyIsDown(68)) moveVec.x += 1;
+    if (keyIsDown(87)) { // W 上
+      this.y -= this.speed;
+      this.currentAnimation = this.animations.up;
+      this.direction = 'up';
+      moving = true;
+      moveVec.y -= 1;
+
+    } else if (keyIsDown(83)) { // S 下
+      this.y += this.speed;
+      this.currentAnimation = this.animations.down;
+      this.direction = 'down';
+      moving = true;
+      moveVec.y += 1;
+    }
+  
+    if (keyIsDown(65)) { // A 左
+      this.x -= this.speed;
+      this.currentAnimation = this.animations.left;
+      this.direction = 'left';
+      moving = true;
+      moveVec.x -= 1;
+      
+    } else if (keyIsDown(68)) { // D 右
+      this.x += this.speed;
+      this.currentAnimation = this.animations.right;
+      this.direction = 'right';
+      moving = true;
+      moveVec.x += 1;
+    }
+    if (!moving) {
+      this.currentAnimation = this.animations.idle;
+      this.direction = 'idle';
+    }
+  
+    this.animate();
+    
     if (moveVec.mag() > 0) {
       moveVec.setMag(this.speed);
       let newPos = p5.Vector.add(this.pos, moveVec);
@@ -177,6 +229,14 @@ class Player {
       }
     }
     this.resolveCollision();
+  }
+  
+  animate() {
+    this.animationCounter++;
+    if (this.animationCounter >= this.animationDelay) {
+        this.animationCounter = 0;
+        this.frameIndex = (this.frameIndex + 1) % this.currentAnimation.length;
+    }
   }
 
   shoot() {
@@ -250,13 +310,17 @@ class Player {
   }
 
   display() {
-    noStroke();
-    if (this.hitFlashTimer > 0) {
-      fill(255);
-      this.hitFlashTimer--;
+    let frameX = this.currentAnimation[this.frameIndex] % (this.actionImg.width / this.chWidth) * this.chWidth;
+    let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.actionImg.width / this.chWidth)) * this.chHeight;
+
+    push();
+    if (this.direction === 'left') {
+      translate(this.pos.x + this.chWidth, this.pos.y);
+      scale(-1, 1);
+      image(this.actionImg, 0, 0, this.chWidth, this.chHeight, frameX, frameY, this.chWidth, this.chHeight);
     } else {
-      fill(0, 150, 255);
+      image(this.actionImg, this.pos.x, this.pos.y, this.chWidth, this.chHeight, frameX, frameY, this.chWidth, this.chHeight);
     }
-    ellipse(this.pos.x, this.pos.y, this.radius * 2);
+    pop();
   }
 }
