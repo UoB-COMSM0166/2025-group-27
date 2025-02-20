@@ -177,24 +177,34 @@ function setup() {
 }
 
 function draw() {
-  background(51); // 保持原始背景色
+  background(51);
 
-  updateWeather(); // 更新天气状态
+  updateWeather();
 
   // 绘制游戏界面（依状态）
-  if (gameState === "mainMenu") {
-    displayMainMenu();
-  } else if (gameState === "menu") {
-    displayCharacterSelection();
-  } else if (gameState === "game") {
-    handleGameplay(millis());
-    pauseButton.display(); // 显示暂停按钮
-  } else if (gameState === "paused") {
-    displayPauseMenu();
-  } else if (gameState === "upgrading") {
-    drawUpgradeScreen();
-  } else if (gameState === "gameOver") {
-    displayGameOverScreen();
+  switch (gameState) {
+    case "mainMenu":
+      displayMainMenu();
+      break;
+    case "menu":
+      displayCharacterSelection();
+      break;
+    case "game":
+      handleGameplay(millis());
+      pauseButton.display(); // 显示暂停按钮
+      break;
+    case "paused":
+      displayPauseMenu();
+      break;
+    case "upgrading":
+      drawUpgradeScreen();
+      break;
+    case "gameOver":
+      displayGameOverScreen();
+      break;
+    case "petSelection":
+      showPetSelectionScreen(); // 添加宠物选择界面的状态处理
+      break;
   }
 
   // 处理浮动文字
@@ -221,7 +231,7 @@ function draw() {
   fill(255);
   text("当前天气：" + weather, 10, height - 10);
 
-  // === 添加血条和经验条 ===
+  // 绘制血条和经验条
   drawPlayerStats();
 }
 
@@ -266,6 +276,196 @@ function drawPlayerStats() {
     10 + expBarWidth / 2,
     40 + expBarHeight / 2
   );
+}
+
+// 显示选择宠物的界面
+function showPetSelectionScreen() {
+  // 暂停游戏逻辑
+  background(0, 150);
+
+  // 绘制选择界面
+  fill(255);
+  textSize(32);
+  textAlign(CENTER, CENTER);
+  text("选择你的战斗伙伴！", width / 2, height / 4);
+
+  // 宠物选项1：攻击型
+  fill(200);
+  rect(width / 2 - 220, height / 2 - 80, 200, 120, 10);
+  fill(255);
+  textSize(20);
+  text("烈焰战狼", width / 2 - 120, height / 2 - 40);
+  textSize(14);
+  text("自动攻击最近敌人\n+15 攻击伤害", width / 2 - 120, height / 2);
+
+  // 宠物选项2：防御型
+  fill(200);
+  rect(width / 2 + 20, height / 2 - 80, 200, 120, 10);
+  fill(255);
+  textSize(20);
+  text("钢铁巨龟", width / 2 + 120, height / 2 - 40);
+  textSize(14);
+  text("每15秒生成护盾\n1.5秒无敌时间", width / 2 + 120, height / 2);
+
+  // 检测鼠标点击
+  if (mouseIsPressed) {
+    // 点击左侧区域选择攻击宠物
+    if (mouseX > width / 2 - 220 && mouseX < width / 2 - 20 &&
+      mouseY > height / 2 - 80 && mouseY < height / 2 + 40) {
+      player.pet = new Pet(player.pos.x, player.pos.y); // 创建宠物实例
+      player.attackDamage += 15; // 增加攻击力
+      gameState = "game";
+    }
+
+    // 点击右侧区域选择防御宠物
+    if (mouseX > width / 2 + 20 && mouseX < width / 2 + 220 &&
+      mouseY > height / 2 - 80 && mouseY < height / 2 + 40) {
+      player.pet = new Pet2(); // 创建宠物实例
+      player.maxHealth += 150;
+      player.health += 150;
+      gameState = "game";
+    }
+  }
+}
+
+// --- Pet 类 ---
+class Pet {
+  constructor(x, y) {
+    this.pos = createVector(x, y);
+    this.radius = 15;
+    this.attackRange = 40;      // 增加攻击范围
+    this.attackDamage = 15;     // 提高攻击力
+    this.speed = 4;             // 增加移动速度
+    this.attackCooldown = 0;    // 新增攻击冷却
+    this.orbitRadius = 30;      // 新增：绕玩家飞行的半径
+    this.angle = 0;             // 新增：飞行角度
+  }
+
+  // 修改后的跟随方法（绕玩家飞行）
+  follow(player) {
+    this.angle += 0.05;
+    const targetPos = createVector(
+      player.pos.x + cos(this.angle) * this.orbitRadius,
+      player.pos.y + sin(this.angle) * this.orbitRadius
+    );
+    this.pos.lerp(targetPos, 0.1); // 平滑移动
+  }
+
+  // 强化后的攻击逻辑
+  attack(enemies) {
+    this.attackCooldown--;
+
+    // 寻找最近敌人
+    let closest = null;
+    let record = Infinity;
+    for (const enemy of enemies) {
+      const d = p5.Vector.dist(this.pos, enemy.pos);
+      if (d < record) {
+        record = d;
+        closest = enemy;
+      }
+    }
+
+    // 攻击逻辑
+    if (closest && record < this.attackRange && this.attackCooldown <= 0) {
+      closest.hit(this.attackDamage);
+      this.attackCooldown = 30; // 每半秒攻击一次
+      showFloatingText("⚔️", this.pos.x, this.pos.y, color(255, 200, 0));
+    }
+  }
+
+  display() {
+    push();
+    fill(255, 200, 0);
+    noStroke();
+    // 添加翅膀动画
+    translate(this.pos.x, this.pos.y);
+    rotate(frameCount * 0.1);
+    triangle(-10, 0, 0, -15, 10, 0);
+    triangle(-10, 0, 0, 15, 10, 0);
+    pop();
+  }
+}
+
+// --- Pet2 类 ---
+class Pet2 {
+  constructor() {
+    this.pos = createVector(0, 0);
+    this.radius = 15;
+    this.shieldCharge = 0;      // 护盾充能进度（0-100）
+    this.isShieldActive = false;
+    this.shieldDuration = 90;   // 1.5秒=90帧
+    this.shieldTimer = 0;
+    this.shieldChargeInterval = 15000; // 15秒充能
+    this.lastShieldTime = 0;
+  }
+
+  follow(player) {
+    // 保持在玩家右后方
+    const target = p5.Vector.add(player.pos, createVector(30, 20));
+    this.pos.lerp(target, 0.1);
+  }
+
+  update(player) {
+    // 充能逻辑
+    if (!this.isShieldActive) {
+      if (millis() - this.lastShieldTime > this.shieldChargeInterval) {
+        this.activateShield(player);
+        this.lastShieldTime = millis();
+      }
+    }
+
+    // 护盾持续时间
+    if (this.isShieldActive) {
+      this.shieldTimer--;
+      if (this.shieldTimer <= 0) {
+        this.isShieldActive = false;
+        player.invincible = false;
+        showFloatingText("🛡️ 护盾消失", player.pos.x, player.pos.y - 40, color(100));
+      }
+    }
+  }
+
+  activateShield(player) {
+    this.isShieldActive = true;
+    this.shieldTimer = 90; // 1.5秒
+    player.invincible = true;
+    showFloatingText("🛡️ 无敌护盾激活！", player.pos.x, player.pos.y - 40, color(0, 200, 255));
+  }
+
+
+  activateShield(player) {
+    this.isShieldActive = true;
+    this.shieldCharge = 0;
+    this.shieldTimer = this.shieldDuration;
+    player.invincible = true;
+    showFloatingText("🛡️ Shield Active!", player.pos.x, player.pos.y - 40, color(0, 200, 255));
+  }
+
+  display() {
+    // 护盾特效
+    if (this.isShieldActive) {
+      push();
+      fill(0, 200, 255, 50);
+      stroke(0, 150, 255);
+      ellipse(this.pos.x, this.pos.y, 40);
+      pop();
+    }
+
+    // 本体显示
+    fill(0, 150, 255);
+    ellipse(this.pos.x, this.pos.y, this.radius * 2);
+
+    // 充能显示
+    if (!this.isShieldActive) {
+      push();
+      textSize(12);
+      fill(255);
+      textAlign(CENTER);
+      text(`${floor(this.shieldCharge)}%`, this.pos.x, this.pos.y + 25);
+      pop();
+    }
+  }
 }
 
 

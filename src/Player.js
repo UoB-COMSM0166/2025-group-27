@@ -40,9 +40,13 @@ class Player {
     this.lifesteal = 0;
     this.thorns = 0;
     this.lastDamageTime = 0;
+    this.pet = null;
+    this.invincible = false; // 新增无敌状态
+    this.invincibleFlash = 0; // 无敌闪烁效果
   }
 
   takeDamage(amount) {
+    if (this.invincible) return; // 无敌时免疫伤害
     let actual = amount * (1 - this.defense * 0.1);
     this.health -= actual;
     this.hitFlashTimer = 10;
@@ -250,6 +254,11 @@ class Player {
   }
 
   display() {
+    // 添加无敌闪烁效果
+    if (this.invincible) {
+      this.invincibleFlash++;
+      if (this.invincibleFlash % 10 < 5) return; // 闪烁效果
+    }
     noStroke();
     if (this.hitFlashTimer > 0) {
       fill(255);
