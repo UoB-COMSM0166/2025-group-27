@@ -598,8 +598,10 @@ function generateUpgradeOptions() {
 function spawnEnemiesForWave(currentWave) {
   enemies = [];
   if (currentWave % 5 === 0) {
+    // Boss生成
+    let bossPos = getValidSpawnPosition();
     let boss = new SpiderBoss();
-    boss.pos = getValidSpawnPosition(); // 确保Boss有正确的生成位置
+    boss.pos = bossPos;
     enemies.push(boss);
     showFloatingText(
       "Spider Boss Appears!",
