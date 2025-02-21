@@ -80,6 +80,13 @@ function handleGameplay(now) {
     if (gameState !== "game") {
       return; // 如果不是游戏状态，不生成新敌人
     }
+
+    // 检查是否需要等待宠物选择
+    if (wave === 5 && player.needsPetSelection) {
+      gameState = "petSelection";
+      return;
+    }
+
     wave++;
     waveTextAnimation = 30;
     spawnEnemiesForWave(wave);
@@ -600,7 +607,7 @@ function spawnEnemiesForWave(currentWave) {
   if (currentWave % 5 === 0) {
     // Boss生成
     let bossPos = getValidSpawnPosition();
-    let boss = new SpiderBoss();
+    let boss = new SpiderBoss(spiderBossAction); // 传入 spiderBossAction
     boss.pos = bossPos;
     enemies.push(boss);
     showFloatingText(
@@ -610,7 +617,6 @@ function spawnEnemiesForWave(currentWave) {
       color(0, 255, 0)
     );
     bossActive = true;
-    console.log("Boss spawned at wave:", currentWave); // 添加调试信息
   } else {
     let baseEnemyCount = Math.floor(6 + currentWave * 0.8);
     for (let i = 0; i < baseEnemyCount; i++) {
