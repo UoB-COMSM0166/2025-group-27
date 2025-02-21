@@ -13,6 +13,11 @@ function mousePressed() {
         player.applyUpgrade(upgradeOptions[i]);
         choosingUpgrade = false;
         gameState = "game";
+        
+        // 如果需要生成新的敌人，直接生成，不使用 setTimeout
+        if (enemies.length === 0) {
+          spawnEnemiesForWave(wave);
+        }
         return;
       }
     }

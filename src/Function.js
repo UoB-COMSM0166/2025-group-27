@@ -446,6 +446,7 @@ function drawUpgradeScreen() {
   textSize(32);
   textAlign(CENTER);
   text("Upgrade! Choose one option", width / 2, height / 4);
+  
   for (let i = 0; i < upgradeOptions.length; i++) {
     let x = width / 4 + (i * width) / 4;
     let y = height / 2;
@@ -467,24 +468,6 @@ function drawUpgradeScreen() {
     text(option.description, x, y + 20);
   }
   textAlign(LEFT);
-
-  // 在选择升级后添加敌人生成逻辑
-  for (let i = 0; i < upgradeOptions.length; i++) {
-    let x = width / 4 + (i * width) / 4;
-    let y = height / 2;
-    if (mouseX > x - 100 && mouseX < x + 100 && mouseY > y - 50 && mouseY < y + 50) {
-      player.applyUpgrade(upgradeOptions[i]);
-      choosingUpgrade = false;
-      gameState = "game";
-      // 添加延迟，确保状态正确切换
-      setTimeout(() => {
-        if (enemies.length === 0) {
-          spawnEnemiesForWave(wave);
-        }
-      }, 100);
-      return;
-    }
-  }
 }
 
 // ===== 升级选项 =====
