@@ -77,6 +77,9 @@ function handleGameplay(now) {
 
   // 如果所有敌人被消灭，则生成下一波敌人
   if (enemies.length === 0) {
+    if (gameState !== "game") {
+      return; // 如果不是游戏状态，不生成新敌人
+    }
     wave++;
     waveTextAnimation = 30;
     spawnEnemiesForWave(wave);
@@ -457,6 +460,24 @@ function drawUpgradeScreen() {
     text(option.description, x, y + 20);
   }
   textAlign(LEFT);
+
+  // 在选择升级后添加敌人生成逻辑
+  for (let i = 0; i < upgradeOptions.length; i++) {
+    let x = width / 4 + (i * width) / 4;
+    let y = height / 2;
+    if (mouseX > x - 100 && mouseX < x + 100 && mouseY > y - 50 && mouseY < y + 50) {
+      player.applyUpgrade(upgradeOptions[i]);
+      choosingUpgrade = false;
+      gameState = "game";
+      // 添加延迟，确保状态正确切换
+      setTimeout(() => {
+        if (enemies.length === 0) {
+          spawnEnemiesForWave(wave);
+        }
+      }, 100);
+      return;
+    }
+  }
 }
 
 // ===== 升级选项 =====
@@ -577,13 +598,17 @@ function generateUpgradeOptions() {
 function spawnEnemiesForWave(currentWave) {
   enemies = [];
   if (currentWave % 5 === 0) {
-    // Boss生成
-    let bossPos = getValidSpawnPosition();
     let boss = new SpiderBoss();
-    boss.pos = bossPos;
+    boss.pos = getValidSpawnPosition(); // 确保Boss有正确的生成位置
     enemies.push(boss);
-    showFloatingText("Spider Boss Appears!", width / 2, height / 2 - 40, color(0, 255, 0));
+    showFloatingText(
+      "Spider Boss Appears!",
+      width / 2,
+      height / 2 - 40,
+      color(0, 255, 0)
+    );
     bossActive = true;
+    console.log("Boss spawned at wave:", currentWave); // 添加调试信息
   } else {
     let baseEnemyCount = Math.floor(6 + currentWave * 0.8);
     for (let i = 0; i < baseEnemyCount; i++) {
@@ -854,4 +879,180 @@ function distToLine(point, lineStart, lineEnd) {
 // 显示浮动文字
 function showFloatingText(text, x, y, col) {
   floatingTexts.push(new FloatingText(text, x, y, col));
+}
+
+// 添加宠物类定义
+class Pet {
+  constructor(x, y) {
+    this.pos = createVector(x, y);
+    this.radius = 15;
+    this.attackRange = 40;
+    this.attackDamage = 15;
+    this.speed = 4;
+    this.attackCooldown = 0;
+    this.orbitRadius = 30;
+    this.angle = 0;
+  }
+
+  follow(player) {
+    this.angle += 0.05;
+    const targetPos = createVector(
+      player.pos.x + cos(this.angle) * this.orbitRadius,
+      player.pos.y + sin(this.angle) * this.orbitRadius
+    );
+    this.pos.lerp(targetPos, 0.1);
+  }
+
+  attack(enemies) {
+    this.attackCooldown--;
+    
+    let closest = null;
+    let record = Infinity;
+    for (const enemy of enemies) {
+      const d = p5.Vector.dist(this.pos, enemy.pos);
+      if (d < record) {
+        record = d;
+        closest = enemy;
+      }
+    }
+
+    if (closest && record < this.attackRange && this.attackCooldown <= 0) {
+      closest.hit(this.attackDamage);
+      this.attackCooldown = 30;
+      showFloatingText("⚔️", this.pos.x, this.pos.y, color(255, 200, 0));
+    }
+  }
+
+  display() {
+    push();
+    fill(255, 200, 0);
+    noStroke();
+    translate(this.pos.x, this.pos.y);
+    rotate(frameCount * 0.1);
+    triangle(-10, 0, 0, -15, 10, 0);
+    triangle(-10, 0, 0, 15, 10, 0);
+    pop();
+  }
+}
+
+class Pet2 {
+  constructor() {
+    this.pos = createVector(0, 0);
+    this.radius = 15;
+    this.shieldCharge = 0;
+    this.isShieldActive = false;
+    this.shieldDuration = 90;
+    this.shieldTimer = 0;
+    this.shieldChargeInterval = 15000;
+    this.lastShieldTime = 0;
+  }
+
+  follow(player) {
+    const target = p5.Vector.add(player.pos, createVector(30, 20));
+    this.pos.lerp(target, 0.1);
+  }
+
+  update(player) {
+    if (!this.isShieldActive) {
+      if (millis() - this.lastShieldTime > this.shieldChargeInterval) {
+        this.activateShield(player);
+        this.lastShieldTime = millis();
+      }
+    }
+
+    if (this.isShieldActive) {
+      this.shieldTimer--;
+      if (this.shieldTimer <= 0) {
+        this.isShieldActive = false;
+        player.invincible = false;
+        showFloatingText("🛡️ 护盾消失", player.pos.x, player.pos.y-40, color(100));
+      }
+    }
+  }
+
+  activateShield(player) {
+    this.isShieldActive = true;
+    this.shieldTimer = this.shieldDuration;
+    player.invincible = true;
+    showFloatingText("🛡️ 护盾激活!", player.pos.x, player.pos.y-40, color(0, 200, 255));
+  }
+
+  display() {
+    if (this.isShieldActive) {
+      push();
+      fill(0, 200, 255, 50);
+      stroke(0, 150, 255);
+      ellipse(this.pos.x, this.pos.y, 40);
+      pop();
+    }
+    
+    fill(0, 150, 255);
+    ellipse(this.pos.x, this.pos.y, this.radius*2);
+    
+    if (!this.isShieldActive) {
+      push();
+      textSize(12);
+      fill(255);
+      textAlign(CENTER);
+      text(`${floor((millis() - this.lastShieldTime) / this.shieldChargeInterval * 100)}%`, 
+           this.pos.x, this.pos.y + 25);
+      pop();
+    }
+  }
+}
+
+// 添加宠物选择界面
+function showPetSelectionScreen() {
+  background(0, 150);
+  
+  fill(255);
+  textSize(32);
+  textAlign(CENTER, CENTER);
+  text("选择你的战斗伙伴！", width/2, height/4);
+
+  fill(200);
+  rect(width/2 - 220, height/2 - 80, 200, 120, 10);
+  rect(width/2 + 20, height/2 - 80, 200, 120, 10);
+  
+  fill(255);
+  textSize(20);
+  text("烈焰战狼", width/2 - 120, height/2 - 40);
+  text("钢铁巨龟", width/2 + 120, height/2 - 40);
+  
+  textSize(14);
+  text("自动攻击最近敌人\n+15 攻击伤害", width/2 - 120, height/2);
+  text("每15秒生成护盾\n1.5秒无敌时间", width/2 + 120, height/2);
+
+  if (mouseIsPressed) {
+    if (mouseX > width/2 - 220 && mouseX < width/2 - 20 &&
+        mouseY > height/2 - 80 && mouseY < height/2 + 40) {
+      player.pet = new AttackPet(player.pos.x, player.pos.y);
+      player.attackDamage += 15;
+      generateUpgradeOptions();
+      choosingUpgrade = true;
+      gameState = "upgrading";
+      // 添加延迟，确保状态正确切换
+      setTimeout(() => {
+        if (enemies.length === 0) {
+          spawnEnemiesForWave(wave);
+        }
+      }, 100);
+    }
+    
+    if (mouseX > width/2 + 20 && mouseX < width/2 + 220 &&
+        mouseY > height/2 - 80 && mouseY < height/2 + 40) {
+      player.pet = new DefensePet();
+      player.maxHealth += 150;
+      player.health += 150;
+      generateUpgradeOptions();
+      choosingUpgrade = true;
+      gameState = "upgrading";
+      // 添加延迟，确保状态正确切换
+      setTimeout(() => {
+        if (enemies.length === 0) {
+          spawnEnemiesForWave(wave);
+        }
+      }, 100);
+    }
+  }
 }

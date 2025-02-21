@@ -360,6 +360,39 @@ class Boss extends Enemy {
   displayHealthBar() {
     displayBossHealthBar();
   }
+
+  hit(damage) {
+    if (!this.isActive) return false;
+
+    if (this.invulnerableTime <= 0) {
+      if (this.shieldActive) {
+        this.shieldHealth -= damage;
+        showFloatingText("-" + Math.floor(damage), this.pos.x, this.pos.y - 20, color(0, 255, 255));
+        if (this.shieldHealth <= 0) {
+          this.shieldActive = false;
+          showFloatingText("Shield Broken!", this.pos.x, this.pos.y - 30, color(255, 255, 0));
+        }
+      } else {
+        this.health -= damage;
+        this.invulnerableTime = 5;
+        showFloatingText("-" + Math.floor(damage), this.pos.x, this.pos.y - 20, color(255, 0, 0));
+      }
+
+      // 检查是否死亡
+      if (this.health <= 0) {
+        this.isActive = false;
+        this.spiderlings = [];
+        showFloatingText("Boss Defeated!", this.pos.x, this.pos.y - 40, color(255, 215, 0));
+        
+        // 新增：检查是否是第一次击败boss（第5波）
+        if (wave === 5 && !player.pet) {
+          gameState = "petSelection";
+        }
+        return true;
+      }
+    }
+    return false;
+  }
 }
 
 // === SpiderBoss 类 ===
@@ -525,11 +558,15 @@ class SpiderBoss extends Boss {
         showFloatingText("-" + Math.floor(damage), this.pos.x, this.pos.y - 20, color(255, 0, 0));
       }
 
-      // 检查是否死亡
       if (this.health <= 0) {
         this.isActive = false;
         this.spiderlings = [];
         showFloatingText("Boss Defeated!", this.pos.x, this.pos.y - 40, color(255, 215, 0));
+        
+        // 存储是否需要选择宠物的状态
+        if (wave === 5 && !player.pet) {
+          player.needsPetSelection = true;
+        }
         return true;
       }
     }

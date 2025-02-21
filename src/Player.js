@@ -59,9 +59,16 @@ class Player {
     this.lifesteal = 0;
     this.thorns = 0;
     this.lastDamageTime = 0;
+    
+    // 添加宠物相关属性
+    this.pet = null;
+    this.invincible = false; // 无敌状态(用于防御型宠物)
+    this.invincibleFlash = 0; // 无敌闪烁效果
+    this.needsPetSelection = false; // 添加新属性
   }
 
   takeDamage(amount) {
+    if (this.invincible) return; // 无敌时免疫伤害
     let actual = amount * (1 - this.defense * 0.1);
     this.health -= actual;
     this.hitFlashTimer = 10;
@@ -116,9 +123,16 @@ class Player {
     this.health += 20;
     this.fireRate += 1;
     this.speed += 0.5;
-    generateUpgradeOptions();
-    choosingUpgrade = true;
-    gameState = "upgrading";
+
+    // 如果需要选择宠物，优先进入宠物选择界面
+    if (this.needsPetSelection) {
+      this.needsPetSelection = false;
+      gameState = "petSelection";
+    } else {
+      generateUpgradeOptions();
+      choosingUpgrade = true;
+      gameState = "upgrading";
+    }
   }
 
   applyUpgrade(upgrade) {
@@ -322,6 +336,11 @@ class Player {
     if (this.health < this.maxHealth) {
       this.health = Math.min(this.maxHealth, this.health + this.healthRegen);
     }
+    
+    // 更新宠物
+    if (this.pet) {
+      this.pet.update(this);
+    }
   }
 
   display() {
@@ -337,5 +356,10 @@ class Player {
       image(this.actionImg, this.pos.x, this.pos.y, this.chWidth, this.chHeight, frameX, frameY, this.chWidth, this.chHeight);
     }
     pop();
+    
+    // 显示宠物
+    if (this.pet) {
+      this.pet.display();
+    }
   }
 }

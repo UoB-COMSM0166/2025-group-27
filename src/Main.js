@@ -190,24 +190,32 @@ function setup() {
 }
 
 function draw() {
-  background(51); // 保持原始背景色
+  background(51);
+  updateWeather();
 
-  updateWeather(); // 更新天气状态
-
-  // 绘制游戏界面（依状态）
-  if (gameState === "mainMenu") {
-    displayMainMenu();
-  } else if (gameState === "menu") {
-    displayCharacterSelection();
-  } else if (gameState === "game") {
-    handleGameplay(millis());
-    pauseButton.display(); // 显示暂停按钮
-  } else if (gameState === "paused") {
-    displayPauseMenu();
-  } else if (gameState === "upgrading") {
-    drawUpgradeScreen();
-  } else if (gameState === "gameOver") {
-    displayGameOverScreen();
+  switch (gameState) {
+    case "mainMenu":
+      displayMainMenu();
+      break;
+    case "menu":
+      displayCharacterSelection();
+      break;
+    case "petSelection":
+      showPetSelectionScreen();
+      break;
+    case "game":
+      handleGameplay(millis());
+      pauseButton.display();
+      break;
+    case "paused":
+      displayPauseMenu();
+      break;
+    case "upgrading":
+      drawUpgradeScreen();
+      break;
+    case "gameOver":
+      displayGameOverScreen();
+      break;
   }
 
   // 处理浮动文字
@@ -280,6 +288,14 @@ function drawPlayerStats() {
     10 + expBarWidth / 2,
     40 + expBarHeight / 2
   );
+}
+
+// 修改角色选择后的流程
+function initPlayer(type) {
+  player = new Player(playerAction, 26, 26, type);
+  // ... 其他初始化代码 ...
+  
+  gameState = "petSelection"; // 角色选择后进入宠物选择
 }
 
 
