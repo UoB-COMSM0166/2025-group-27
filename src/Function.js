@@ -26,6 +26,23 @@ function handleGameplay(now) {
     let enemy = enemies[j];
     enemy.update();
     enemy.display();
+    if (enemy.isBoss && enemy.health <= 0) {
+      bossesDefeated++;
+      enemies.splice(j, 1);
+
+      if (wave === 15) {
+        gameState = "victory";
+        finalStats = {
+          normalEnemies: normalEnemiesDefeated,
+          bosses: bossDefeated,
+          level: player.level,
+          attackPower: player.attackPower,
+          attackSpeed: player.attackSpeed,
+          attackDamage: player.attackDamage,
+        };
+        return;
+      }
+    }
   }
 
   // 更新并显示敌人子弹，同时检测与玩家的碰撞
@@ -80,9 +97,23 @@ function handleGameplay(now) {
     if (gameState !== "game") {
       return; // 如果不是游戏状态，不生成新敌人
     }
+    
+    if (wave === 15) {
+      gameState = "victory";
+      finalStats = {
+        normalEnemies: normalEnemiesDefeated,
+        bosses: bossDefeated,
+        level: player.level,
+        attackPower: player.attackPower,
+        attackSpeed: player.attackSpeed,
+        attackDamage: player.attackDamage,
+      };
+      return;
+    }
 
     // 检查是否需要等待宠物选择
     if (wave === 5 && player.needsPetSelection) {
+      console.log("C");
       gameState = "petSelection";
       return;
     }
@@ -1045,4 +1076,39 @@ function showPetSelectionScreen() {
       }, 100);
     }
   }
+}
+
+// 添加游戏胜利界面相关内容
+function displayVictoryScreen() {
+  background(0, 150);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textSize(32);
+  text("🎉 Victory! 🎉", width / 2, height / 4);
+  
+  textSize(20);
+  text(`Level: ${finalStats.level}`, width / 2, height / 3);
+  text(`Normal Enemies Defeated: ${finalStats.normalEnemies}`, width / 2, height / 3 + 30);
+  text(`Bosses Defeated: ${finalStats.bosses}`, width / 2, height / 3 + 60);
+  text(`Attack Power: ${finalStats.attackPower}`, width / 2, height / 3 + 90);
+  text(`Attack Speed: ${finalStats.attackSpeed}`, width / 2, height / 3 + 120);
+  text(`Attack Damage: ${finalStats.attackDamage}`, width / 2, height / 3 + 150);
+
+  for (let i = 0; i < victoryButtons.length; i++) {
+    victoryButtons[i].display(); // 显示每个按钮
+  }
+}
+
+// 创建按钮
+function setupVictoryButtons() {
+  victoryButtons = [
+    new Button(width / 2 - 120, height - 100, 100, 40, "Main Menu", () => {
+      gameState = "mainMenu";
+    }),
+    new Button(width / 2 + 20, height - 100, 100, 40, "Endless Mode", () => {
+      gameState = "game";
+      wave = 16;
+      spawnEnemiesForWave(wave);
+    })
+  ];
 }

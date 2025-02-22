@@ -1,6 +1,9 @@
 // --- Bullet 类 ---
 class Bullet {
-  constructor(x, y, vel, type = "normal") {
+  constructor(x, y, vel, type = "normal", bImage, bWidth, bHeight) {
+    this.bImage = bImage;
+    this.bWidth = bWidth;
+    this.bHeight = bHeight;
     this.pos = createVector(x, y);
     this.vel = vel;
     this.radius = 5;
@@ -9,6 +12,13 @@ class Bullet {
     this.pierceCount = type === "pierce" ? 3 : 0;
     this.bounceCount = 0;
     this.maxBounces = type === "bounce" ? 3 : 0;
+    this.animations = {
+      shoot: [0, 1, 2, 3, 4, 5],
+    };
+    this.currentAnimation = this.animations.shoot;
+    this.frameIndex = 0;
+    this.animationDelay = 6; // control animation speed
+    this.animationCounter = 0;
   }
 
   update() {
@@ -100,8 +110,18 @@ class Bullet {
     }
     return true;
   }
+  
+  animate() {
+    this.animationCounter++;
+    if (this.animationCounter >= this.animationDelay) {
+        this.animationCounter = 0;
+        this.frameIndex = (this.frameIndex + 1) % this.currentAnimation.length;
+    }
+  }
 
   display() {
+    let frameX = this.currentAnimation[this.frameIndex] % (this.bImage.width / this.bWidth) * this.bWidth;
+    let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.bImage.width / this.bWidth)) * this.bHeight;
     if (this.type === "bounce") {
       stroke(255, 200, 0, 100);
       strokeWeight(2);
@@ -112,9 +132,7 @@ class Bullet {
         this.pos.y
       );
     }
-    noStroke();
-    fill(255, 200, 0);
-    ellipse(this.pos.x, this.pos.y, this.radius * 2);
+    image(this.bImage, this.pos.x, this.pos.y, this.bWidth * 2, this.bHeight * 2, frameX / 2, frameY / 2, this.bWidth, this.bHeight);
   }
 }
 

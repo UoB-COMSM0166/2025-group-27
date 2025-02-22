@@ -11,6 +11,7 @@ let score = 0;
 let wave = 1;
 let gameState = "mainMenu"; // "mainMenu", "menu"（角色选择）, "game", "paused", "upgrading", "gameOver"
 let lastTerrainChange = 0;
+const borderOffset = 10;
 
 // 暂停按钮和暂停时间
 let pauseButton;
@@ -52,6 +53,9 @@ const debug = false;
 let mainMenuButtons = [];
 let charSelectButtons = [];
 let pauseButtons = [];
+
+let mainMenuButton = [];
+let endlessModeButton = [];
 
 // ----- 天气效果绘制 -----
 // 热天效果：利用噪声生成水平条纹模拟热浪扭曲效果
@@ -171,6 +175,7 @@ function preload() {
   obstacle1 = loadImage("assets/images/Environment/Objects/石碑/alienObeliskTall.png");
   obstacle2 = loadImage("assets/images/Environment/Objects/石碑/cipher.png");
   spiderBossAction = loadImage("assets/images/Characters/Enemies/Birdman/BirdBoss.png");
+  bombAction = loadImage("assets/images/Items/Weapons/bomb/bomb.png");
 }
 
 function setup() {
@@ -178,6 +183,7 @@ function setup() {
   gameStartTime = millis();
   generateInitialObstacles();
   initButtons();
+  setupVictoryButtons();
   gameState = "mainMenu";
   setupSnow(); // 初始化雪花粒子
 
@@ -193,6 +199,8 @@ function setup() {
 function draw() {
   background(51);
   updateWeather();
+  noStroke();
+  strokeWeight(1);
 
   switch (gameState) {
     case "mainMenu":
@@ -216,6 +224,9 @@ function draw() {
       break;
     case "gameOver":
       displayGameOverScreen();
+      break;
+    case "victory":
+      displayVictoryScreen();
       break;
   }
 
@@ -242,10 +253,15 @@ function draw() {
   // 显示当前天气文本（调试用）
   textSize(16);
   fill(255);
-  text("当前天气：" + weather, 10, height - 10);
+  text("当前天气：" + weather, 70, height - 10);
 
   // === 添加血条和经验条 ===
   drawPlayerStats();
+  // 绘制边界
+  stroke(255, 0, 0);
+  strokeWeight(4);
+  noFill();
+  rect(0, 0, width, height);
 }
 
 // 新增函数：绘制主角的血条和经验条

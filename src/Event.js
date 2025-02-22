@@ -35,6 +35,7 @@ function mousePressed() {
   else if (gameState === "menu") currentButtons = charSelectButtons;
   else if (gameState === "paused")
     currentButtons = choosingPotion ? potionButtons : pauseButtons;
+  else if (gameState === "victory") currentButtons = victoryButtons;
   for (let btn of currentButtons) {
     if (btn.contains(mouseX, mouseY)) {
       btn.action();

@@ -238,9 +238,9 @@ class Enemy {
     if (this.direction === 'left') {
       translate(this.pos.x + this.enWidth, this.pos.y);
       scale(-1, 1);
-      image(this.currentAction, 0, 0, this.enWidth, this.enHeight, frameX, 0, this.enWidth, this.enHeight);
+      image(this.currentAction, 0, 0, this.enWidth * 1.5, this.enHeight * 1.5, frameX, 0, this.enWidth, this.enHeight);
     } else {
-      image(this.currentAction, this.pos.x, this.pos.y, this.enWidth, this.enHeight, frameX, 0, this.enWidth, this.enHeight);
+      image(this.currentAction, this.pos.x, this.pos.y, this.enWidth * 1.5, this.enHeight * 1.5, frameX, 0, this.enWidth, this.enHeight);
     }
     pop();
   }
@@ -428,8 +428,22 @@ class Boss extends Enemy {
         this.spiderlings = [];
         showFloatingText("Boss Defeated!", this.pos.x, this.pos.y - 40, color(255, 215, 0));
         
+        if (wave === 15) {
+          gameState = "victory";
+          finalStats = {
+            normalEnemies: normalEnemiesDefeated,
+            bosses: bossesDefeated,
+            level: player.level,
+            attackPower: player.attackPower,
+            attackSpeed: player.attackSpeed,
+            attackDamage: player.attackDamage,
+          };
+          return;
+        }
+        
         // 新增：检查是否是第一次击败boss（第5波）
         if (wave === 5 && !player.pet) {
+          console.log("A");
           gameState = "petSelection";
         }
         return true;
@@ -617,8 +631,23 @@ class SpiderBoss extends Boss {
         this.spiderlings = [];
         showFloatingText("Boss Defeated!", this.pos.x, this.pos.y - 40, color(255, 215, 0));
         
+        if (wave === 15) {
+          console.log("A", bossDefeated);
+          gameState = "victory";
+          finalStats = {
+            normalEnemies: normalEnemiesDefeated,
+            bosses: bossDefeated,
+            level: player.level,
+            attackPower: player.attackPower,
+            attackSpeed: player.attackSpeed,
+            attackDamage: player.attackDamage,
+          };
+          return false;
+        }
+
         // 存储是否需要选择宠物的状态
         if (wave === 5 && !player.pet) {
+          console.log("B", bossDefeated);
           player.needsPetSelection = true;
         }
         return true;
