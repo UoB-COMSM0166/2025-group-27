@@ -631,6 +631,7 @@ function getValidSpawnPosition() {
   let isValid = false;
   let attempts = 0;
   const maxAttempts = 50;
+  const safeMargin = 150; // 修改后的缓冲距离
 
   while (!isValid && attempts < maxAttempts) {
     pos = createVector(random(width), random(height));
@@ -641,8 +642,7 @@ function getValidSpawnPosition() {
     // 检查是否在障碍物内或太靠近障碍物
     let nearObstacle = false;
     for (let obs of obstacles) {
-      // 增加一个缓冲区
-      if (obs.collidesWith(pos, 30, 30)) {
+      if (obs.collidesWith(pos, safeMargin, safeMargin)) {
         nearObstacle = true;
         break;
       }
@@ -655,11 +655,10 @@ function getValidSpawnPosition() {
     attempts++;
   }
   
-  // 如果找不到合适位置，在地图边缘生成，并确保不在障碍物内
+  // 如果尝试多次仍找不到合适位置，则在地图边缘生成，并确保不在障碍物内
   if (!isValid) {
     let side = floor(random(4));
-    let margin = 40; // 增加边缘距离
-    
+    let margin = safeMargin; // 使用安全边距
     do {
       switch(side) {
         case 0: // 上边
@@ -675,10 +674,9 @@ function getValidSpawnPosition() {
           pos = createVector(-margin, random(margin, height - margin));
           break;
       }
-      // 检查新位置是否在障碍物内
       let inObstacle = false;
       for (let obs of obstacles) {
-        if (obs.collidesWith(pos, 30, 30)) {
+        if (obs.collidesWith(pos, safeMargin, safeMargin)) {
           inObstacle = true;
           break;
         }
@@ -689,6 +687,7 @@ function getValidSpawnPosition() {
   
   return pos;
 }
+
 
 function loadSavedGame() {
   if (!savedGame) return;
