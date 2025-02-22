@@ -268,22 +268,29 @@ class Player {
     }
   }
 
+  // 修改子弹发射逻辑
   shoot() {
     if (mouseIsPressed && this.fireCooldown <= 0) {
+      // 计算角色中心
+      let centerX = this.pos.x + this.chWidth / 2;
+      let centerY = this.pos.y + this.chHeight / 2;
+  
+      // 计算朝向
       let direction = p5.Vector.sub(
         createVector(mouseX, mouseY),
-        this.pos
+        createVector(centerX, centerY)
       ).normalize();
+  
+      // 子弹从中心发射
+      let bulletStart = createVector(centerX, centerY);
+  
       switch (this.bulletType) {
         case "bounce":
-          bullets.push(
-            new Bullet(
-              this.pos.x,
-              this.pos.y,
-              p5.Vector.mult(direction, 10),
-              "bounce"
-            )
-          );
+          bullets.push(new Bullet(
+            bulletStart.x, bulletStart.y,
+            p5.Vector.mult(direction, 10),
+            "bounce", bombAction, 16, 16
+          ));
           break;
         case "shotgun":
           let count = this.shotgunLevel + 1;
@@ -293,49 +300,44 @@ class Player {
             let perp = createVector(-direction.y, direction.x);
             let offset = startOffset + i * 15;
             let bulletPos = p5.Vector.add(
-              this.pos,
+              bulletStart,
               p5.Vector.mult(perp, offset)
             );
-            bullets.push(
-              new Bullet(
-                bulletPos.x,
-                bulletPos.y,
-                p5.Vector.mult(direction, 10),
-                "normal"
-              )
-            );
+            bullets.push(new Bullet(
+              bulletPos.x, bulletPos.y,
+              p5.Vector.mult(direction, 10),
+              "normal", bombAction, 16, 16
+            ));
           }
           break;
         case "pierce":
-          bullets.push(
-            new Bullet(
-              this.pos.x,
-              this.pos.y,
-              p5.Vector.mult(direction, 10),
-              "pierce"
-            )
-          );
+          bullets.push(new Bullet(
+            bulletStart.x, bulletStart.y,
+            p5.Vector.mult(direction, 10),
+            "pierce", bombAction, 16, 16
+          ));
           break;
         default:
-          bullets.push(
-            new Bullet(
-              this.pos.x,
-              this.pos.y,
-              p5.Vector.mult(direction, 10),
-              "normal"
-            )
-          );
+          bullets.push(new Bullet(
+            bulletStart.x, bulletStart.y,
+            p5.Vector.mult(direction, 10),
+            "normal", bombAction, 16, 16
+          ));
           break;
       }
+  
       this.fireCooldown = 60 / this.fireRate;
     }
     this.fireCooldown--;
   }
-
+  
   update() {
     if (this.health < this.maxHealth) {
       this.health = Math.min(this.maxHealth, this.health + this.healthRegen);
     }
+    
+    player.pos.x = constrain(player.pos.x, 0, width - player.chWidth);
+    player.pos.y = constrain(player.pos.y, 0, height - player.chHeight);
     
     // 更新宠物
     if (this.pet) {
@@ -351,9 +353,9 @@ class Player {
     if (this.direction === 'left') {
       translate(this.pos.x + this.chWidth, this.pos.y);
       scale(-1, 1);
-      image(this.actionImg, 0, 0, this.chWidth, this.chHeight, frameX, frameY, this.chWidth, this.chHeight);
+      image(this.actionImg, 0, 0, this.chWidth * 2, this.chHeight * 2, frameX, frameY, this.chWidth, this.chHeight, CENTER);
     } else {
-      image(this.actionImg, this.pos.x, this.pos.y, this.chWidth, this.chHeight, frameX, frameY, this.chWidth, this.chHeight);
+      image(this.actionImg, this.pos.x, this.pos.y, this.chWidth * 2, this.chHeight * 2, frameX, frameY, this.chWidth, this.chHeight, CENTER);
     }
     pop();
     
