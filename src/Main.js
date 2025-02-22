@@ -11,6 +11,8 @@ let score = 0;
 let wave = 1;
 let gameState = "mainMenu"; // "mainMenu", "menu"（角色选择）, "game", "paused", "upgrading", "gameOver"
 let lastTerrainChange = 0;
+let feathers = []; 
+let featherSprite;
 const borderOffset = 10;
 
 // 暂停按钮和暂停时间
@@ -164,19 +166,23 @@ function updateWeather() {
 }
 
 // ----- p5.js 核心函数 -----
-// preload function
 function preload() {
   playerAction = loadImage("assets/images/Characters/Main_Character/MinerFemale_skin.png");
+  // bossAction 用于 BirdBoss
   bossAction = loadImage("assets/images/Characters/Enemies/Birdman/BirdBoss.png");
-  commonEnemyAction.idle = loadImage("assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_idleEmote1.png"); //18 22
-  commonEnemyAction.up = loadImage("assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_move_up.png"); 
-  commonEnemyAction.down = loadImage("assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_move.png"); 
-  commonEnemyAction.side = loadImage("assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_move_side.png"); 
+  featherSprite = loadImage("assets/images/Characters/Enemies/Birdman/falling_feather_yellow.png");
+
+  //spiderBossAction = loadImage("assets/images/Characters/Enemies/SpiderBoss/SpiderBoss.png");
+  
+  commonEnemyAction.idle = loadImage("assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_idleEmote1.png");
+  commonEnemyAction.up = loadImage("assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_move_up.png");
+  commonEnemyAction.down = loadImage("assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_move.png");
+  commonEnemyAction.side = loadImage("assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_move_side.png");
   obstacle1 = loadImage("assets/images/Environment/Objects/石碑/alienObeliskTall.png");
   obstacle2 = loadImage("assets/images/Environment/Objects/石碑/cipher.png");
-  spiderBossAction = loadImage("assets/images/Characters/Enemies/Birdman/BirdBoss.png");
   bombAction = loadImage("assets/images/Items/Weapons/bomb/bomb.png");
 }
+
 
 function setup() {
   createCanvas(800, 600);

@@ -186,10 +186,7 @@ class Enemy {
     }
   }
   
-  /**
-   * 封装一个 tryMove 函数，用于尝试移动给定的向量距离，
-   * 如果移动后会碰撞障碍物，则不移动，返回 false；否则移动并返回 true。
-   */
+  //尝试移动给定的向量距离，
   tryMove(moveVec) {
     let newPos = p5.Vector.add(this.pos, moveVec);
     if (!this.isCollidingWithObstacle(newPos)) {
@@ -385,16 +382,15 @@ class RangedEnemy extends Enemy {
 class Boss extends Enemy {
   constructor(isElite = true, enemyType = "boss", bossAction, bossWidth, bossHeight) {
     super(isElite, enemyType, bossAction, bossWidth, bossHeight);
-    this.size = 40;
-    this.health = 600;
-    this.maxHealth = 600;
-    this.damage = 20;
-    this.radius = 20;
-    this.expValue = 50;
-    this.attackRange = 100;
-    this.attackSpeed = 1;
+    // 通用 Boss 属性
+    this.isActive = true;
+    this.invulnerableTime = 0;
+    
+    // 用于碰撞后冻结状态
+    this.isFrozen = false;
+    this.freezeEndTime = 0;
   }
-
+  
   display() {
     fill(255, 165, 0);
     ellipse(this.pos.x, this.pos.y, this.size);
@@ -404,6 +400,470 @@ class Boss extends Enemy {
   displayHealthBar() {
     displayBossHealthBar();
   }
+
+}
+
+class BirdBoss extends Boss {
+  constructor(birdBossAction) {
+    // 调用 Boss 构造函数
+    super(true, "boss", birdBossAction, 200, 160);
+    this.birdBossAction = birdBossAction;
+    this.feathers = [];
+    
+    // Boss 属性设置（可根据需求调整数值）
+    this.health = 800;
+    this.maxHealth = 800;
+    this.size = 100;
+    this.speed = 2.5;
+    this.attackRange = 150;
+    this.attackSpeed = 1.5;
+    this.damage = 30;
+    this.type = "BirdBoss";
+    
+    // 攻击相关属性
+    this.meleeAttackCooldown = 0;
+    this.meleeAttackRange = 60;
+    this.meleeDamage = 40;
+    this.dashCooldown = 0;
+    this.isDashing = false;
+    this.dashSpeed = 10;
+    this.dashDuration = 0;
+    this.attackPattern = 0;
+    this.patternTimer = 0;
+    
+    // 额外属性
+    this.phase = 1;
+    this.webWallCooldown = 0;
+    this.summonCooldown = 0;
+    this.birdlings = []; // BirdBoss召唤的小兵
+    this.enrageTimer = 0;
+    this.isEnraged = false;
+    this.teleportCooldown = 0;
+    this.shieldActive = false;
+    this.shieldHealth = 200;
+    
+    // 初始化计时器
+    this.webCooldown = 0;
+    this.trailCounter = 0;
+    
+    // 初始化冻结状态
+    this.isFrozen = false;
+    this.freezeEndTime = 0;
+    
+    // 初始位置
+    this.pos = createVector(width / 2, height / 2);
+    this.radius = 25;
+    this.expValue = 200;
+    this.isActive = true;
+    
+    // 假设 birdBossAction 已内置动画信息，例如当前动画数组、帧延迟等
+    this.currentAnimation = birdBossAction.animation || [0,1,2,3]; 
+    this.frameIndex = 0;
+    this.animationDelay = 20;
+    this.animationCounter = 0;
+
+      //  z羽毛掉落相关变量
+      this.featherFalling = false;   
+      this.featherEndTime = 0;      
+      this.featherOffsetY = 0;      
+  }
+
+  
+
+  
+
+  hit(damage) {
+    if (!this.isActive) return false;
+
+     // 生成4片羽毛，以Boss当前位置为中心稍作偏移
+    let offsets = [
+      createVector(-30, -30),
+      createVector(30, -30),
+      createVector(-15, 0),
+      createVector(15, 0)
+    ];
+    for (let off of offsets) {
+      let fx = this.pos.x + off.x;
+      let fy = this.pos.y + off.y;
+      let feather = new Feather(fx, fy, featherSprite);
+      this.feathers.push(feather);
+    }
+
+    if (this.invulnerableTime <= 0) {
+      if (this.shieldActive) {
+        this.shieldHealth -= damage;
+        showFloatingText("-" + Math.floor(damage), this.pos.x, this.pos.y - 20, color(0, 255, 255));
+        if (this.shieldHealth <= 0) {
+          this.shieldActive = false;
+          showFloatingText("Shield Broken!", this.pos.x, this.pos.y - 30, color(255, 255, 0));
+        }
+      } else {
+        this.health -= damage;
+        this.invulnerableTime = 5;
+        showFloatingText("-" + Math.floor(damage), this.pos.x, this.pos.y - 20, color(255, 0, 0));
+      }
+
+      
+      this.health -= damage;
+      if (this.health <= 0) {
+        this.isActive = false;
+        enemies = enemies.filter(e => e !== this);  // 从敌人列表中移除Boss
+        bossActive = false;  // Boss战结束
+        showFloatingText("Boss Defeated!", this.pos.x, this.pos.y - 40, color(255, 215, 0));
+        
+  
+        if (wave === 5 && !player.pet) {
+          gameState = "petSelection";
+        } else {
+          wave++;
+          setTimeout(() => {
+            spawnEnemiesForWave(wave);
+          }, 500);
+        }
+
+        if (wave === 15) {
+          gameState = "victory";
+          finalStats = {
+            normalEnemies: normalEnemiesDefeated,
+            bosses: bossesDefeated,
+            level: player.level,
+            attackPower: player.attackPower,
+            attackSpeed: player.attackSpeed,
+            attackDamage: player.attackDamage,
+          };
+          return;
+        }
+
+      return true;
+  }
+      
+    }
+    return false;
+  }
+  
+  update() {
+    try {
+      if (!this.isActive || !player) return;
+
+      // 始终更新羽毛掉落动画和羽毛数组
+      if (this.featherFalling) {
+        this.featherOffsetY += 2;  
+        if (millis() >= this.featherEndTime) {
+          this.featherFalling = false;
+        }
+      }
+      // 更新所有由 Boss 生成的羽毛对象
+      for (let i = this.feathers.length - 1; i >= 0; i--) {
+        let f = this.feathers[i];
+        f.update();
+        if (f.isOffScreen()) {
+          this.feathers.splice(i, 1);
+        }
+      }
+  
+      this.animate();
+  
+      // 如果 Boss 处于冻结状态，则只更新计时器，不执行移动和攻击
+      if (this.isFrozen) {
+        if (millis() >= this.freezeEndTime) {
+          this.isFrozen = false;
+        } else {
+
+          this.updateTimers();
+          return;
+        }
+      }
+  
+      // 正常 Boss 更新逻辑：无敌时间、攻击模式、移动、攻击等
+      if (this.invulnerableTime > 0) {
+        this.invulnerableTime--;
+      }
+  
+      this.patternTimer++;
+      if (this.patternTimer > 240) {
+        this.attackPattern = (this.attackPattern + 1) % 5;
+        this.patternTimer = 0;
+        let patternNames = ["Web Attack", "Dash Attack", "Poison Attack", "Web Wall", "Summon"];
+        showFloatingText(patternNames[this.attackPattern], this.pos.x, this.pos.y - 40, color(255, 255, 0));
+      }
+  
+      if (this.health < this.maxHealth * 0.6 && !this.isEnraged) {
+        this.isEnraged = true;
+        this.enrageTimer = 300;
+        this.speed *= 1.5;
+        this.damage *= 1.5;
+        showFloatingText("Boss Enraged!", this.pos.x, this.pos.y - 40, color(255, 0, 0));
+      }
+  
+      let distToPlayer = p5.Vector.dist(this.pos, player.pos);
+      let dirToPlayer = p5.Vector.sub(player.pos, this.pos).normalize();
+  
+      if (!this.shieldActive) {
+        if (this.isDashing) {
+          this.handleDashing(dirToPlayer);
+        } else {
+          this.handleNormalMovement(dirToPlayer);
+        }
+        if (distToPlayer <= this.meleeAttackRange && this.meleeAttackCooldown <= 0) {
+          this.performMeleeAttack();
+        }
+        this.executeAttackPattern(dirToPlayer);
+      }
+  
+      this.updateTimers();
+  
+      this.pos.x = constrain(this.pos.x, 0, width);
+      this.pos.y = constrain(this.pos.y, 0, height);
+  
+      if (p5.Vector.dist(this.pos, player.pos) < this.radius + player.radius) {
+        let knockbackDir = p5.Vector.sub(player.pos, this.pos).normalize();
+        player.pos.add(knockbackDir.mult(20)); // 将玩家击退20个单位
+        this.isFrozen = true;
+        this.freezeEndTime = millis() + 2000; // Boss 冻结2秒
+      }
+  
+      this.animate();
+    } 
+    catch (error) {
+      console.error("Error in BirdBoss update:", error);
+    }
+  }
+  
+  executeAttackPattern(dirToPlayer) {
+    switch(this.attackPattern) {
+      case 0:
+        this.performWebAttack(dirToPlayer);
+        break;
+      case 1:
+        this.performDashAttack();
+        break;
+      case 2:
+        this.performPoisonAttack();
+        break;
+      case 3:
+        this.performWebWallAttack(dirToPlayer);
+        break;
+      case 4:
+        this.performSummonAttack();
+        break;
+    }
+  }
+  
+  performWebAttack(dirToPlayer) {
+    if (this.webCooldown <= 0) {
+      for (let i = -2; i <= 2; i++) {
+        let angle = i * 0.3;
+        let rotatedDir = createVector(
+          dirToPlayer.x * cos(angle) - dirToPlayer.y * sin(angle),
+          dirToPlayer.x * sin(angle) + dirToPlayer.y * cos(angle)
+        );
+        let webVel = p5.Vector.mult(rotatedDir, 6);
+        enemyBullets.push(new WebProjectile(this.pos.x, this.pos.y, webVel));
+      }
+      this.webCooldown = 100;
+    }
+  }
+  
+  performWebWallAttack(dirToPlayer) {
+    if (this.webWallCooldown <= 0) {
+      let perpDir = createVector(-dirToPlayer.y, dirToPlayer.x);
+      for (let i = -3; i <= 3; i++) {
+        let pos = p5.Vector.add(this.pos, p5.Vector.mult(perpDir, i * 30));
+        let webVel = p5.Vector.mult(dirToPlayer, 3);
+        enemyBullets.push(new WebProjectile(pos.x, pos.y, webVel));
+      }
+      this.webWallCooldown = 180;
+    }
+  }
+  
+  performSummonAttack() {
+    if (this.summonCooldown <= 0 && this.birdlings.length < 4) {
+      for (let i = 0; i < 2; i++) {
+        let birdling = new MeleeEnemy(true, "melee", commonEnemyAction, 18, 22);
+        birdling.pos = this.pos.copy();
+        birdling.health = 30;
+        birdling.damage = 15;
+        birdling.speed = 3;
+        this.birdlings.push(birdling);
+      }
+      this.summonCooldown = 300;
+    }
+  }
+  
+  performDashAttack() {
+    if (this.dashCooldown <= 0 && !this.isDashing) {
+      this.isDashing = true;
+      this.dashDuration = 30;
+      this.dashCooldown = 180;
+      showFloatingText("Dash Attack!", this.pos.x, this.pos.y - 30, color(255, 100, 0));
+    }
+  }
+  
+  performPoisonAttack() {
+    if (this.trailCounter >= 20) {
+      for (let i = 0; i < 4; i++) {
+        let angle = (i * PI) / 2;
+        let offset = createVector(cos(angle) * 40, sin(angle) * 40);
+        let poisonPos = p5.Vector.add(this.pos, offset);
+        poisonTrails.push({
+          pos: poisonPos,
+          radius: 40,
+          startTime: millis(),
+          duration: 4000,
+        });
+      }
+      this.trailCounter = 0;
+    }
+  }
+  
+  performMeleeAttack() {
+    player.takeDamage(this.meleeDamage);
+    this.meleeAttackCooldown = 45;
+    showFloatingText("Melee Attack!", this.pos.x, this.pos.y - 30, color(255, 0, 0));
+  }
+  
+  handleDashing(dirToPlayer) {
+    this.dashDuration--;
+    if (this.dashDuration > 0) {
+      this.pos.add(p5.Vector.mult(dirToPlayer, this.dashSpeed));
+    } else {
+      this.isDashing = false;
+    }
+  }
+  
+  handleNormalMovement(dirToPlayer) {
+    let nextPos = p5.Vector.add(this.pos, p5.Vector.mult(dirToPlayer, this.speed));
+    let canMove = true;
+    for (let obs of obstacles) {
+      if (obs.collidesWith(nextPos, this.size, this.size)) {
+        canMove = false;
+        break;
+      }
+    }
+    if (canMove) {
+      this.pos.add(p5.Vector.mult(dirToPlayer, this.speed));
+    }
+  }
+  
+  updateTimers() {
+    this.webCooldown--;
+    this.meleeAttackCooldown--;
+    this.dashCooldown--;
+    this.webWallCooldown--;
+    this.summonCooldown--;
+    this.trailCounter++;
+  }
+  
+  updateBirdlings() {
+    for (let i = this.birdlings.length - 1; i >= 0; i--) {
+      let birdling = this.birdlings[i];
+      birdling.update();
+      birdling.display();
+      if (birdling.health <= 0) {
+        this.birdlings.splice(i, 1);
+      }
+    }
+    this.animate();
+  }
+  
+  animate() {
+    this.animationCounter++;
+    if (this.animationCounter >= this.animationDelay) {
+      this.animationCounter = 0;
+      this.frameIndex = (this.frameIndex + 1) % this.currentAnimation.length;
+    }
+  }
+  
+  display() {
+  // 绘制 Boss
+  let frameWidth = 200;
+  let frameHeight = 160;
+  let columns = floor(this.birdBossAction.width / frameWidth);
+  let frameX = (this.currentAnimation[this.frameIndex] % columns) * frameWidth;
+  let frameY = floor(this.currentAnimation[this.frameIndex] / columns) * frameHeight;
+
+  let drawWidth = this.size;
+  let drawHeight = this.size * (frameHeight / frameWidth);
+  let drawX = this.pos.x - drawWidth / 2;
+  let drawY = this.pos.y - drawHeight / 2;
+
+  image(
+    this.birdBossAction,
+    drawX,
+    drawY,
+    drawWidth,
+    drawHeight,
+    frameX,
+    frameY,
+    frameWidth,
+    frameHeight
+  );
+
+  this.displayHealthBar();
+
+  // 绘制羽毛
+  for (let f of this.feathers) {
+    f.display();  // Feather 自己负责动画帧切割
+  }
+}
+
+  
+  displayHealthBar() {
+    displayBossHealthBar();
+  }
+}
+
+
+
+
+class SpiderBoss extends Boss {
+  constructor(spiderBossAction, animationData) {
+    // animationData 为一个对象，例如：{ frameWidth: 200, frameHeight: 160, frames: [0,4,8,12,16,...], delay: 20 }
+    super(true, "boss", spiderBossAction, animationData.frameWidth, animationData.frameHeight);
+    this.spiderBossAction = spiderBossAction;
+    this.animationData = animationData;
+    this.currentAnimation = animationData.frames;
+    this.frameIndex = 0;
+    this.animationDelay = animationData.delay || 20;
+    this.animationCounter = 0;
+    
+    // SpiderBoss 特有属性
+    this.health = 1000;
+    this.maxHealth = 1000;
+    this.size = 60;
+    this.speed = 3;
+    this.attackRange = 180;
+    this.attackSpeed = 1;
+    this.damage = 40;
+    this.type = "SpiderBoss";
+    
+    // 攻击相关
+    this.meleeAttackCooldown = 0;
+    this.meleeAttackRange = 70;
+    this.meleeDamage = 50;
+    this.isDashing = false;
+    this.dashCooldown = 0;
+    this.dashDuration = 0;
+    this.attackPattern = 0;
+    this.patternTimer = 0;
+    
+    // 冻结相关
+    this.isFrozen = false;
+    this.freezeEndTime = 0;
+    
+    // 初始位置与其他属性
+    this.pos = createVector(width / 2, height / 2);
+    this.radius = 30;
+    this.expValue = 300;
+    
+    // 其他计时器
+    this.webCooldown = 0;
+    this.meleeAttackCooldown = 0;
+    this.dashCooldown = 0;
+    this.webWallCooldown = 0;
+    this.summonCooldown = 0;
+  }
+
 
   hit(damage) {
     if (!this.isActive) return false;
@@ -451,99 +911,30 @@ class Boss extends Enemy {
     }
     return false;
   }
-}
-
-// === SpiderBoss 类 ===
-class SpiderBoss extends Boss {
-  constructor(spiderBossAction) {
-    super(true, "boss", spiderBossAction, 200, 160);
-    this.spiderBossAction = spiderBossAction
-    this.health = 800;
-    this.maxHealth = 800;
-    this.size = 50;
-    this.speed = 2.5;
-    this.webCooldown = 0;
-    this.trailInterval = 20;
-    this.trailCounter = 0;
-    this.animation = {
-      move: [0, 4, 8, 12, 16, 1, 5, 9, 13, 17, 2, 6, 10, 14, 18, 3, 7, 11, 15, 19]
-    };
-    this.currentAnimation = this.animation.move;
-    this.frameIndex = 0;
-    this.animationDelay = 20; // control animation speed
-    this.animationCounter = 0;
-    this.direction = 'move';
-    // 位置初始化
-    this.pos = createVector(width / 2, height / 2);
-    this.radius = 25;
-    this.expValue = 200;
-    this.attackRange = 150;
-    this.attackSpeed = 1.5;
-    this.damage = 30;
-    this.type = "SpiderBoss";
-    
-    // 攻击相关属性
-    this.meleeAttackCooldown = 0;
-    this.meleeAttackRange = 60;
-    this.meleeDamage = 40;
-    this.dashCooldown = 0;
-    this.isDashing = false;
-    this.dashSpeed = 10;
-    this.dashDuration = 0;
-    this.attackPattern = 0;
-    this.patternTimer = 0;
-    
-    // 新增属性
-    this.phase = 1;             // Boss战斗阶段
-    this.webWallCooldown = 0;   // 蛛网墙冷却
-    this.summonCooldown = 0;    // 召唤小蜘蛛冷却
-    this.spiderlings = [];      // 小蜘蛛数组
-    this.enrageTimer = 0;       // 狂暴计时器
-    this.isEnraged = false;     // 是否处于狂暴状态
-    this.teleportCooldown = 0;  // 传送冷却
-    this.shieldActive = false;  // 护盾状态
-    this.shieldHealth = 200;    // 护盾值
-    
-    // 确保所有计时器都有初始值
-    this.webCooldown = 0;
-    this.meleeAttackCooldown = 0;
-    this.dashCooldown = 0;
-    this.webWallCooldown = 0;
-    this.summonCooldown = 0;
-    this.teleportCooldown = 0;
-    this.trailCounter = 0;
-    this.dashDuration = 0;
-    
-    // 确保状态标志正确初始化
-    this.isActive = true;
-    this.isDashing = false;
-    this.isEnraged = false;
-    this.shieldActive = false;
-  }
-
+  
   update() {
     try {
-      // 基础状态检查
-      if (!this.isActive || !player) {
-        return;
+      if (!this.isActive || !player) return;
+      
+      if (this.isFrozen) {
+        if (millis() >= this.freezeEndTime) {
+          this.isFrozen = false;
+        } else {
+          this.updateTimers();
+          return;
+        }
       }
-
-      // 无敌时间更新
-      if (this.invulnerableTime > 0) {
-        this.invulnerableTime--;
-      }
-
-      // 更新攻击模式
+      
+      if (this.invulnerableTime > 0) this.invulnerableTime--;
+      
       this.patternTimer++;
       if (this.patternTimer > 240) {
         this.attackPattern = (this.attackPattern + 1) % 5;
         this.patternTimer = 0;
-        // 切换模式时显示提示
         let patternNames = ["Web Attack", "Dash Attack", "Poison Attack", "Web Wall", "Summon"];
         showFloatingText(patternNames[this.attackPattern], this.pos.x, this.pos.y - 40, color(255, 255, 0));
       }
-
-      // 检查阶段转换
+      
       if (this.health < this.maxHealth * 0.6 && !this.isEnraged) {
         this.isEnraged = true;
         this.enrageTimer = 300;
@@ -551,44 +942,38 @@ class SpiderBoss extends Boss {
         this.damage *= 1.5;
         showFloatingText("Boss Enraged!", this.pos.x, this.pos.y - 40, color(255, 0, 0));
       }
-
+      
       let distToPlayer = p5.Vector.dist(this.pos, player.pos);
       let dirToPlayer = p5.Vector.sub(player.pos, this.pos).normalize();
-
-      // 移动逻辑
+      
       if (!this.shieldActive) {
         if (this.isDashing) {
           this.handleDashing(dirToPlayer);
         } else {
           this.handleNormalMovement(dirToPlayer);
         }
-
-        // 近战攻击检测
         if (distToPlayer <= this.meleeAttackRange && this.meleeAttackCooldown <= 0) {
           this.performMeleeAttack();
         }
-
-        // 执行当前攻击模式
         this.executeAttackPattern(dirToPlayer);
       }
-
-      // 更新所有计时器
+      
       this.updateTimers();
-
-      // 更新小蜘蛛
-      this.updateSpiderlings();
-
-      // 边界检查
+      
       this.pos.x = constrain(this.pos.x, 0, width);
       this.pos.y = constrain(this.pos.y, 0, height);
-
+      
+      if (p5.Vector.dist(this.pos, player.pos) < this.radius + player.radius) {
+        let newPos = getValidSpawnPosition();
+        this.pos = newPos;
+        this.isFrozen = true;
+        this.freezeEndTime = millis() + 2000;
+      }
     } catch (error) {
       console.error("Error in SpiderBoss update:", error);
-      console.error(error.stack); // 添加堆栈跟踪
     }
   }
-
-  // 新增：执行攻击模式的方法
+  
   executeAttackPattern(dirToPlayer) {
     switch(this.attackPattern) {
       case 0:
@@ -608,58 +993,9 @@ class SpiderBoss extends Boss {
         break;
     }
   }
-
-  hit(damage) {
-    if (!this.isActive) return false;
-
-    if (this.invulnerableTime <= 0) {
-      if (this.shieldActive) {
-        this.shieldHealth -= damage;
-        showFloatingText("-" + Math.floor(damage), this.pos.x, this.pos.y - 20, color(0, 255, 255));
-        if (this.shieldHealth <= 0) {
-          this.shieldActive = false;
-          showFloatingText("Shield Broken!", this.pos.x, this.pos.y - 30, color(255, 255, 0));
-        }
-      } else {
-        this.health -= damage;
-        this.invulnerableTime = 5;
-        showFloatingText("-" + Math.floor(damage), this.pos.x, this.pos.y - 20, color(255, 0, 0));
-      }
-
-      if (this.health <= 0) {
-        this.isActive = false;
-        this.spiderlings = [];
-        showFloatingText("Boss Defeated!", this.pos.x, this.pos.y - 40, color(255, 215, 0));
-        
-        if (wave === 15) {
-          console.log("A", bossDefeated);
-          gameState = "victory";
-          finalStats = {
-            normalEnemies: normalEnemiesDefeated,
-            bosses: bossDefeated,
-            level: player.level,
-            attackPower: player.attackPower,
-            attackSpeed: player.attackSpeed,
-            attackDamage: player.attackDamage,
-          };
-          return false;
-        }
-
-        // 存储是否需要选择宠物的状态
-        if (wave === 5 && !player.pet) {
-          console.log("B", bossDefeated);
-          player.needsPetSelection = true;
-        }
-        return true;
-      }
-    }
-    return false;
-  }
-
-  // 新增的攻击方法
+  
   performWebAttack(dirToPlayer) {
     if (this.webCooldown <= 0) {
-      // 发射更多蛛网，呈扇形
       for (let i = -2; i <= 2; i++) {
         let angle = i * 0.3;
         let rotatedDir = createVector(
@@ -669,88 +1005,10 @@ class SpiderBoss extends Boss {
         let webVel = p5.Vector.mult(rotatedDir, 6);
         enemyBullets.push(new WebProjectile(this.pos.x, this.pos.y, webVel));
       }
-      this.webCooldown = 100;
+      this.webCooldown = 20;
     }
   }
-
-  performWebWallAttack(dirToPlayer) {
-    if (this.webWallCooldown <= 0) {
-      // 创建垂直于玩家方向的蛛网墙
-      let perpDir = createVector(-dirToPlayer.y, dirToPlayer.x);
-      for (let i = -3; i <= 3; i++) {
-        let pos = p5.Vector.add(this.pos, p5.Vector.mult(perpDir, i * 30));
-        let webVel = p5.Vector.mult(dirToPlayer, 3);
-        enemyBullets.push(new WebProjectile(pos.x, pos.y, webVel));
-      }
-      this.webWallCooldown = 180;
-    }
-  }
-
-  performSummonAttack() {
-    if (this.summonCooldown <= 0 && this.spiderlings.length < 4) {
-      for (let i = 0; i < 2; i++) {
-        let spiderling = new MeleeEnemy(true);
-        spiderling.pos = this.pos.copy();
-        spiderling.health = 30;
-        spiderling.damage = 15;
-        spiderling.speed = 3;
-        this.spiderlings.push(spiderling);
-      }
-      this.summonCooldown = 300;
-      showFloatingText("Spiderlings Summoned!", this.pos.x, this.pos.y - 30, color(255, 100, 255));
-    }
-  }
-
-  performTeleport() {
-    let newPos = getValidSpawnPosition();
-    this.pos = newPos;
-    this.teleportCooldown = 180;
-    // 传送后立即进行范围攻击
-    for (let i = 0; i < 8; i++) {
-      let angle = (i * PI) / 4;
-      let dir = createVector(cos(angle), sin(angle));
-      enemyBullets.push(new WebProjectile(this.pos.x, this.pos.y, p5.Vector.mult(dir, 5)));
-    }
-    showFloatingText("Teleport!", this.pos.x, this.pos.y - 30, color(128, 0, 128));
-  }
-
-  activateShield() {
-    this.shieldActive = true;
-    this.shieldHealth = 200;
-    showFloatingText("Shield Activated!", this.pos.x, this.pos.y - 30, color(0, 255, 255));
-  }
-
-  // 添加缺失的移动处理方法
-  handleDashing(dirToPlayer) {
-    this.dashDuration--;
-    if (this.dashDuration > 0) {
-      this.pos.add(p5.Vector.mult(dirToPlayer, this.dashSpeed));
-    } else {
-      this.isDashing = false;
-    }
-  }
-
-  handleNormalMovement(dirToPlayer) {
-    let nextPos = p5.Vector.add(this.pos, p5.Vector.mult(dirToPlayer, this.speed));
-    let canMove = true;
-    for (let obs of obstacles) {
-      if (obs.collidesWith(nextPos, this.size, this.size)) {
-        canMove = false;
-        break;
-      }
-    }
-    if (canMove) {
-      this.pos.add(p5.Vector.mult(dirToPlayer, this.speed));
-    }
-  }
-
-  // 添加缺失的攻击方法
-  performMeleeAttack() {
-    player.takeDamage(this.meleeDamage);
-    this.meleeAttackCooldown = 45;
-    showFloatingText("Melee Attack!", this.pos.x, this.pos.y - 30, color(255, 0, 0));
-  }
-
+  
   performDashAttack() {
     if (this.dashCooldown <= 0 && !this.isDashing) {
       this.isDashing = true;
@@ -759,10 +1017,10 @@ class SpiderBoss extends Boss {
       showFloatingText("Dash Attack!", this.pos.x, this.pos.y - 30, color(255, 100, 0));
     }
   }
-
+  
   performPoisonAttack() {
-    if (this.trailCounter >= this.trailInterval) {
-      // 在Boss周围生成多个毒气区域
+    // 毒气
+    if (this.trailCounter >= 20) {
       for (let i = 0; i < 4; i++) {
         let angle = (i * PI) / 2;
         let offset = createVector(cos(angle) * 40, sin(angle) * 40);
@@ -777,42 +1035,96 @@ class SpiderBoss extends Boss {
       this.trailCounter = 0;
     }
   }
+  
+  performWebWallAttack(dirToPlayer) {
+    if (this.webWallCooldown <= 0) {
+      let perpDir = createVector(-dirToPlayer.y, dirToPlayer.x);
+      for (let i = -3; i <= 3; i++) {
+        let pos = p5.Vector.add(this.pos, p5.Vector.mult(perpDir, i * 30));
+        let webVel = p5.Vector.mult(dirToPlayer, 3);
+        enemyBullets.push(new WebProjectile(pos.x, pos.y, webVel));
+      }
+      this.webWallCooldown = 40;
+    }
+  }
+  
+  performSummonAttack() {
+    if (this.summonCooldown <= 0) {
+      for (let i = 0; i < 2; i++) {
+        let minion = new Enemy(false, "normal", commonEnemyAction, 18, 22);
+        minion.pos = this.pos.copy();
 
-  // 添加小蜘蛛更新方法
-  updateSpiderlings() {
-    // 更新小蜘蛛状态
-    for (let i = this.spiderlings.length - 1; i >= 0; i--) {
-      let spiderling = this.spiderlings[i];
-      spiderling.update();
-      spiderling.display();
-      if (spiderling.health <= 0) {
-        this.spiderlings.splice(i, 1);
+        minion.health = 50;
+        minion.damage = 10;
+        minion.speed = 2;
+        // 将小怪加入全局敌人数组
+        enemies.push(minion);
+      }
+      this.summonCooldown = 300;
+      showFloatingText("Minions Summoned!", this.pos.x, this.pos.y - 30, color(255, 100, 255));
+    }
+  }
+  
+  
+  performMeleeAttack() {
+    player.takeDamage(this.meleeDamage);
+    this.meleeAttackCooldown = 45;
+    showFloatingText("Melee Attack!", this.pos.x, this.pos.y - 30, color(255, 0, 0));
+  }
+  
+  handleDashing(dirToPlayer) {
+    this.dashDuration--;
+    if (this.dashDuration > 0) {
+      this.pos.add(p5.Vector.mult(dirToPlayer, this.dashSpeed));
+    } else {
+      this.isDashing = false;
+    }
+  }
+  
+  handleNormalMovement(dirToPlayer) {
+    let nextPos = p5.Vector.add(this.pos, p5.Vector.mult(dirToPlayer, this.speed));
+    let canMove = true;
+    for (let obs of obstacles) {
+      if (obs.collidesWith(nextPos, this.size, this.size)) {
+        canMove = false;
+        break;
       }
     }
-    this.animate();
+    if (canMove) {
+      this.pos.add(p5.Vector.mult(dirToPlayer, this.speed));
+    }
   }
-
+  
+  updateTimers() {
+    this.webCooldown--;
+    this.meleeAttackCooldown--;
+    this.dashCooldown--;
+    this.webWallCooldown--;
+    this.summonCooldown--;
+    this.trailCounter++;
+  }
+  
   animate() {
     this.animationCounter++;
     if (this.animationCounter >= this.animationDelay) {
-        this.animationCounter = 0;
-        this.frameIndex = (this.frameIndex + 1) % this.currentAnimation.length;
+      this.animationCounter = 0;
+      this.frameIndex = (this.frameIndex + 1) % this.currentAnimation.length;
     }
   }
-
+  
   display() {
-    let frameWidth = 200; // 修正后的帧宽度
-    let frameHeight = 160; // 修正后的帧高度
+    let frameWidth = this.animationData.frameWidth;
+    let frameHeight = this.animationData.frameHeight;
     let columns = floor(this.spiderBossAction.width / frameWidth);
     let frameX = (this.currentAnimation[this.frameIndex] % columns) * frameWidth;
     let frameY = floor(this.currentAnimation[this.frameIndex] / columns) * frameHeight;
-
+    
     image(
       this.spiderBossAction,
       this.pos.x - this.size / 2,
       this.pos.y - this.size / 2,
       this.size,
-      this.size * (frameHeight / frameWidth), // 按比例缩放高度
+      this.size * (frameHeight / frameWidth),
       frameX,
       frameY,
       frameWidth,
@@ -820,14 +1132,8 @@ class SpiderBoss extends Boss {
     );
     this.displayHealthBar();
   }
-  // 添加计时器更新方法
-  updateTimers() {
-    this.webCooldown--;
-    this.meleeAttackCooldown--;
-    this.dashCooldown--;
-    this.trailCounter++;
-    this.webWallCooldown--;
-    this.summonCooldown--;
-    this.teleportCooldown--;
+  
+  displayHealthBar() {
+    displayBossHealthBar();
   }
 }

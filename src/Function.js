@@ -6,6 +6,17 @@ function handleGameplay(now) {
   player.update();
   player.display();
 
+
+  //更新并绘制羽毛
+  feathers = feathers.filter((feather) => {
+    if (!feather.update()) {
+      return false; // 超出屏幕等条件，移除
+    }
+    feather.animate(); // 如果有多帧动画
+    feather.display();
+    return true;
+  });
+
   // 更新并显示子弹
   bullets = bullets.filter((bullet) => {
     if (bullet.update()) {
@@ -56,7 +67,7 @@ function handleGameplay(now) {
         if (bullet instanceof WebProjectile) {
           player.isWebbed = true;
           player.webDuration = 120;
-          showFloatingText("Webbed!", player.pos.x, player.pos.y, color(200));
+          showFloatingText("Frozen!", player.pos.x, player.pos.y - player.radius - 10, color(0, 200, 255));
         } else {
           player.takeDamage(bullet.damage);
         }
@@ -257,8 +268,10 @@ function initPlayer(type) {
   }
   wave = 1; // 新增：重置波数
   enemies = [];
-  spawnEnemiesForWave(wave);
+  
   generateInitialObstacles();
+
+  spawnEnemiesForWave(wave);
   gameState = "game";
 }
 
@@ -618,10 +631,18 @@ function generateUpgradeOptions() {
 // ===== 根据当前波数生成敌人 =====
 function spawnEnemiesForWave(currentWave) {
   enemies = [];
-  if (currentWave % 5 === 0) {
-    // Boss生成
+
+  if (currentWave === 10) {
+    // 生成 SpiderBoss
     let bossPos = getValidSpawnPosition();
-    let boss = new SpiderBoss(spiderBossAction); // 传入 spiderBossAction
+    // 定义 SpiderBoss 动画数据（帧宽、帧高、帧序列、动画延迟）
+    let animationData = {
+      frameWidth: 200,
+      frameHeight: 160,
+      frames: [0, 4, 8, 12, 16, 1, 5, 9, 13, 17, 2, 6, 10, 14, 18, 3, 7, 11, 15, 19],
+      delay: 20
+    };
+    let boss = new SpiderBoss(spiderBossAction, animationData);
     boss.pos = bossPos;
     enemies.push(boss);
     showFloatingText(
@@ -631,7 +652,21 @@ function spawnEnemiesForWave(currentWave) {
       color(0, 255, 0)
     );
     bossActive = true;
+  } else if (currentWave === 5) {
+    // 生成 BirdBoss
+    let bossPos = getValidSpawnPosition();
+    let boss = new BirdBoss(bossAction);
+    boss.pos = bossPos;
+    enemies.push(boss);
+    showFloatingText(
+      "Bird Boss Appears!",
+      width / 2,
+      height / 2 - 40,
+      color(0, 255, 0)
+    );
+    bossActive = true;
   } else {
+    // 普通敌人生成逻辑
     let baseEnemyCount = Math.floor(6 + currentWave * 0.8);
     for (let i = 0; i < baseEnemyCount; i++) {
       let isElite = random() < 0.2;
@@ -656,6 +691,7 @@ function spawnEnemiesForWave(currentWave) {
   }
 }
 
+
 // 新增函数：获取有效的生成位置
 function getValidSpawnPosition() {
   let pos;
@@ -668,7 +704,7 @@ function getValidSpawnPosition() {
     pos = createVector(random(width), random(height));
     
     // 检查是否离玩家太近
-    let tooCloseToPlayer = player && p5.Vector.dist(pos, player.pos) < 150;
+    let tooCloseToPlayer = player && p5.Vector.dist(pos, player.pos) < safeMargin;
     
     // 检查是否在障碍物内或太靠近障碍物
     let nearObstacle = false;

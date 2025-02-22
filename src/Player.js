@@ -8,6 +8,7 @@ class Player {
     this.x = width / 2;
     this.y = height / 2;
     this.pos = createVector(this.x, this.y);
+    this.vel = createVector(0, 0); 
     this.animations = {
       idle: [0, 1, 2],
       up: [27, 28, 29, 30, 31, 32],
@@ -81,6 +82,10 @@ class Player {
   }
 
   resolveCollision() {
+    if (!this.vel) {
+      this.vel = createVector(0, 0);
+  }
+
     for (let obs of obstacles) {
       if (obs.collidesWith(this.pos, this.chWidth, this.chHeight)) {
         // 计算 X 方向的可能移动位置
@@ -185,7 +190,6 @@ class Player {
         break;
     }
     choosingUpgrade = false;
-    gameState = "game";
   }
 
   move() {
@@ -234,6 +238,7 @@ class Player {
     
     if (moveVec.mag() > 0) {
       moveVec.setMag(this.speed);
+      this.vel = moveVec.copy();
       let newPos = p5.Vector.add(this.pos, moveVec);
       let canMove = true;
       for (let obs of obstacles) {
