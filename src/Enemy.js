@@ -769,161 +769,123 @@ class BirdBoss extends Boss {
 
 
 class SlimeBoss extends Boss {
-  constructor(slimeBossImage, moveMultiplier15, moveMultiplier16) {
+  constructor(slimeBossImage, type = "normal") {
     super(true, "slimeBoss", slimeBossImage, 200, 160);
-    this.slimeBossImage = slimeBossImage;
- 
-    this.moveMultiplier15 = moveMultiplier15;
-    this.moveMultiplier16 = moveMultiplier16;
     
-    
-    this.columns = 4;
-    this.rows = 5;
-    this.totalFrames = 19; 
-    this.frameWidth = this.slimeBossImage.width / this.columns;
-    this.frameHeight = this.slimeBossImage.height / this.rows;
-    // 动画序列：简单使用帧号 0～18
-    this.currentAnimation = Array.from({ length: this.totalFrames }, (_, i) => i);
-    this.frameIndex = 0;
-    this.animationDelay = 6;  // 控制动画播放速度
-    this.animationCounter = 0;
-    
-    // Boss 属性
-    this.pos = createVector(width / 2, height / 2);
-    this.size = 120;         // 显示时的宽度
-    this.health = 200;       // 调整后的血量（可根据需要调整）
+    // Boss 基础属性
+    this.health = 200;
     this.maxHealth = 200;
     this.damage = 25;
-    this.speed = 2.5;        // 用于在特定帧触发位移
-    this.radius = 40;        // 近战判定范围（原设定）
+    this.speed = 2.5;
+    this.size = 120;
     this.isActive = true;
-    this.invulnerableTime = 0;  // 这里我们不再使用无敌效果
-    this.isEnraged = false;
+    this.pos = createVector(width / 2, height / 2);
     
-    // 攻击相关设置
-    this.attackCooldown = 0;
-    this.meleeRange = 80;    // 攻击范围（范围伤害），例如 80 像素
-    // 5 种攻击模式（全部为范围伤害模式，名称和伤害可调整）
-    this.modes = [
-      { name: "Slam", damage: 30 },
-      { name: "Spin", damage: 20 },
-      { name: "PoisonBody", damage: 15 },
-      { name: "HeavySlam", damage: 40 },
-      { name: "MultiHit", damage: 10 }
-    ];
-    this.attackPattern = 0;  // 当前使用的模式索引
-    this.patternTimer = 0;   // 用于轮换攻击模式
+    // 动画相关
+    this.slimeBossImage = slimeBossImage;
+    this.columns = 4;
+    this.rows = 5;
+    this.totalFrames = 19;
+    this.frameWidth = this.slimeBossImage.width / this.columns;
+    this.frameHeight = this.slimeBossImage.height / this.rows;
+    this.currentAnimation = Array.from({ length: this.totalFrames }, (_, i) => i);
+    this.frameIndex = 0;
+    this.animationDelay = 6;
+    this.animationCounter = 0;
     
-    // 用于控制在特定帧只移动一次
-    this.movedFrame15 = false; // 对应第15帧（动画值 14）
-    this.movedFrame16 = false; // 对应第16帧（动画值 15）
+    // 移动相关
+    this.moveMultiplier15 = 30;
+    this.moveMultiplier16 = 80;
+    this.movedFrame15 = false;
+    this.movedFrame16 = false;
+    
+    // 元素相关
+    this.type = type;
+    this.elementalColor = this.getElementalColor(type);
   }
-  
-  update() {
-    if (!this.isActive || !player) return;
-    
-    // 更新动画帧
-    this.animate();
-    let currentFrame = this.currentAnimation[this.frameIndex];
-    
-    // 在第15帧（动画值 14）时：Boss 向主角方向移动，使用自定义横向移动距离，再额外向上移动 60 像素
-    if (currentFrame === 14) {
-      if (!this.movedFrame15) {
-        let dir = p5.Vector.sub(player.pos, this.pos).normalize();
-        // 使用 moveMultiplier15 控制横向移动距离
-        this.pos.add(p5.Vector.mult(dir, this.moveMultiplier15));
-        this.pos.add(createVector(0, -60));  // 向上
-        this.movedFrame15 = true;
-      }
-    } else {
-      this.movedFrame15 = false;
-    }
-    
-    // 在第16帧（动画值 15）时：Boss 向主角方向移动，使用自定义横向移动距离，再额外向下移动 30 像素
-    if (currentFrame === 15) {
-      if (!this.movedFrame16) {
-        let dir = p5.Vector.sub(player.pos, this.pos).normalize();
-        // 使用 moveMultiplier16 控制横向移动距离
-        this.pos.add(p5.Vector.mult(dir, this.moveMultiplier16));
-        this.pos.add(createVector(0, 30));  // 向下
-        this.movedFrame16 = true;
-      }
-    } else {
-      this.movedFrame16 = false;
-    }
-    
-    // 攻击逻辑：Boss 的攻击为范围伤害，如果玩家在攻击范围内，则受到伤害
-    let distToPlayer = p5.Vector.dist(this.pos, player.pos);
-    if (distToPlayer <= this.meleeRange && this.attackCooldown <= 0) {
-      this.performMeleeAttack();
-    }
-    
-    // 更新攻击冷却和模式轮换计时器
-    if (this.attackCooldown > 0) this.attackCooldown--;
-    this.patternTimer++;
-    if (this.patternTimer > 240) {
-      this.attackPattern = (this.attackPattern + 1) % this.modes.length;
-      this.patternTimer = 0;
-      showFloatingText(
-        this.modes[this.attackPattern].name + " Mode",
-        this.pos.x,
-        this.pos.y - 40,
-        color(0, 255, 0)
-      );
+
+  getElementalColor(type) {
+    switch(type) {
+      case "fire": return color(255, 100, 0);
+      case "water": return color(0, 100, 255);
+      case "poison": return color(0, 255, 0);
+      case "wind": return color(200, 200, 255);
+      default: return color(255);
     }
   }
-  
-  // 修改后的 performMeleeAttack：范围伤害，不再对玩家产生击退效果
-  performMeleeAttack() {
-    let mode = this.modes[this.attackPattern];
-    // 定义攻击区域为以 Boss 为中心的圆，半径为 meleeRange（例如 80 像素）
-    let attackArea = this.meleeRange;
-    if (p5.Vector.dist(this.pos, player.pos) <= attackArea) {
-      player.takeDamage(mode.damage);
-      showFloatingText(mode.name + " Attack!", this.pos.x, this.pos.y - 30, color(255, 0, 0));
-    }
-    this.attackCooldown = 60; // 约1秒冷却
-  }
-  
+
   animate() {
     this.animationCounter++;
     if (this.animationCounter >= this.animationDelay) {
       this.animationCounter = 0;
-      // 循环播放前 totalFrames 帧
       this.frameIndex = (this.frameIndex + 1) % this.totalFrames;
     }
   }
-  
+
+  update() {
+    if (!this.isActive || !player) return;
+    
+    // 更新动画
+    this.animate();
+    let currentFrame = this.currentAnimation[this.frameIndex];
+    
+    // 计算到玩家的方向
+    let dirToPlayer = p5.Vector.sub(player.pos, this.pos).normalize();
+    
+    // 在第15帧时移动
+    if (currentFrame === 14 && !this.movedFrame15) {
+      let moveVec = p5.Vector.mult(dirToPlayer, this.moveMultiplier15);
+      this.pos.add(moveVec);
+      this.movedFrame15 = true;
+    } else if (currentFrame !== 14) {
+      this.movedFrame15 = false;
+    }
+    
+    // 在第16帧时移动
+    if (currentFrame === 15 && !this.movedFrame16) {
+      let moveVec = p5.Vector.mult(dirToPlayer, this.moveMultiplier16);
+      this.pos.add(moveVec);
+      this.movedFrame16 = true;
+    } else if (currentFrame !== 15) {
+      this.movedFrame16 = false;
+    }
+    
+    // 确保不会移出屏幕
+    this.pos.x = constrain(this.pos.x, 0, width);
+    this.pos.y = constrain(this.pos.y, 0, height);
+  }
+
   display() {
-    // 计算当前帧在精灵图中的行、列
+    push();
+    // 绘制元素效果
+    if (this.type === "fire" && (this.movedFrame15 || this.movedFrame16)) {
+      fill(255, 100, 0, 100);
+      ellipse(this.pos.x, this.pos.y, this.size * 1.2);
+    }
+    
+    // 绘制史莱姆
+    tint(this.elementalColor);
     let frameNum = this.currentAnimation[this.frameIndex];
     let col = frameNum % this.columns;
     let row = floor(frameNum / this.columns);
-    let sx = col * this.frameWidth;
-    let sy = row * this.frameHeight;
-    
-    // 保持原图比例，计算显示尺寸（this.size 表示显示宽度）
-    let ratio = this.frameHeight / this.frameWidth;
-    let displayW = this.size;
-    let displayH = displayW * ratio;
-    
-    // 以 Boss 位置为中心绘制
-    let drawX = this.pos.x - displayW / 2;
-    let drawY = this.pos.y - displayH / 2;
     
     image(
       this.slimeBossImage,
-      drawX, drawY,           // 绘制位置
-      displayW, displayH,     // 显示尺寸
-      sx, sy,                 // 原图截取起点
-      this.frameWidth, this.frameHeight  // 截取区域尺寸
+      this.pos.x - this.size/2,
+      this.pos.y - this.size/2,
+      this.size,
+      this.size,
+      col * this.frameWidth,
+      row * this.frameHeight,
+      this.frameWidth,
+      this.frameHeight
     );
-    
-    this.displayHealthBar();
+    noTint();
+    pop();
   }
-  
+
   displayHealthBar() {
-    displayBossHealthBar(this);
+    displayBossHealthBar();
   }
 }
 
