@@ -632,7 +632,7 @@ function generateUpgradeOptions() {
 function spawnEnemiesForWave(currentWave) {
   enemies = [];
 
-  if (currentWave === 1) {
+  if (currentWave === 3) {
     let boss1 = new SlimeBoss(slimeBossImage, 30, 20);
     let boss2 = new SlimeBoss(slimeBossImage, 80, 50);
     let boss3 = new SlimeBoss(slimeBoss2Image, 100, 80);
@@ -656,7 +656,7 @@ function spawnEnemiesForWave(currentWave) {
   }
   
   
-  else if (currentWave === 2) {
+  else if (currentWave === 6) {
     // 生成 BirdBoss
     let bossPos = getValidSpawnPosition();
     let boss = new BirdBoss(bossAction);

@@ -411,8 +411,8 @@ class BirdBoss extends Boss {
     this.feathers = [];
     
     // Boss 属性设置（可根据需求调整数值）
-    this.health = 200;
-    this.maxHealth = 200;
+    this.health = 600;
+    this.maxHealth = 600;
     this.size = 100;
     this.speed = 2.5;
     this.attackRange = 150;
@@ -813,7 +813,6 @@ class BirdBoss extends Boss {
   }
 }
 
-  
   displayHealthBar() {
     displayBossHealthBar();
   }
