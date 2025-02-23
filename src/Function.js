@@ -124,7 +124,6 @@ function handleGameplay(now) {
 
     // 检查是否需要等待宠物选择
     if (wave === 5 && player.needsPetSelection) {
-      console.log("C");
       gameState = "petSelection";
       return;
     }
@@ -201,16 +200,24 @@ function initButtons() {
   ];
 
   charSelectButtons = [
-    new Button(width / 2 - 100, baseY - 30, 200, 40, "Melee Character", () =>
-      initPlayer("melee")
+    new Button(width / 2 - 100, baseY - 30, 200, 40, "Gunner", () =>
+      initPlayer("gunner")
     ),
     new Button(
       width / 2 - 100,
       baseY + 30,
       200,
       40,
-      "Ranged Character", // 间距从+20改为+30
-      () => initPlayer("ranged")
+      "Archer", // 间距从+20改为+30
+      () => initPlayer("archer")
+    ),
+    new Button(
+      width / 2 - 100,
+      baseY + 90,
+      200,
+      40,
+      "Knight",
+      () => initPlayer("knight")
     ),
   ];
 
@@ -245,7 +252,7 @@ function initButtons() {
 // ===== 初始化角色时生成第一波敌人 =====
 function initPlayer(type) {
   player = new Player(playerAction, 26, 26, type);
-  if (type === "melee") {
+  if (type === "gunner") {
     player.attackPower = 10;
     player.attackDamage = 10;
     player.attackSpeed = 500;
@@ -255,14 +262,29 @@ function initPlayer(type) {
     player.dodgeRate = 0;
     player.lifesteal = 0;
     player.thorns = 0;
-  } else if (type === "ranged") {
+  } else if (type === "archer") {
     player.attackPower = 8;
-    player.attackDamage = 8;
+    player.attackDamage = 50;
     player.attackSpeed = 300;
     player.moveSpeed = 4;
     player.critRate = 0.1;
     player.critDamage = 2;
     player.dodgeRate = 0.05;
+    player.lifesteal = 0;
+    player.thorns = 0;
+    player.arrowDamage = 20;          // 基础伤害
+    player.arrowSpeed = 10;           // 基础速度
+    player.maxChargeTime = 90;        // 增加最大蓄力时间
+    player.arrowCooldown = 20;        // 冷却时间调整
+    player.chargeBarScale = 0.7;      // 新增蓄力条缩放系数
+  } else if (type === "knight") {
+    player.attackPower = 10;
+    player.attackDamage = 100;
+    player.attackSpeed = 500;
+    player.moveSpeed = 3;
+    player.critRate = 0;
+    player.critDamage = 1.5;
+    player.dodgeRate = 0;
     player.lifesteal = 0;
     player.thorns = 0;
   }
