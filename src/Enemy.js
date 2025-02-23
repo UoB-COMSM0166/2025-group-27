@@ -380,8 +380,8 @@ class RangedEnemy extends Enemy {
 
 // === Boss 类 ===
 class Boss extends Enemy {
-  constructor(isElite = true, enemyType = "boss", bossAction, bossWidth, bossHeight) {
-    super(isElite, enemyType, bossAction, bossWidth, bossHeight);
+  constructor(isElite = true, enemyType = "boss", enemyAction, enWidth, enHeight) {
+    super(isElite, enemyType, enemyAction, enWidth, enHeight);
     this.isActive = true;
     this.invulnerableTime = 0;
     this.isFrozen = false;
@@ -779,7 +779,7 @@ class SlimeBoss extends Boss {
     this.speed = 2.5;
     this.size = 120;
     this.isActive = true;
-    this.pos = createVector(width / 2, height / 2);
+    this.pos = createVector(width / 2, height / 2); // 确保初始化位置
     
     // 动画相关
     this.slimeBossImage = slimeBossImage;
@@ -794,14 +794,51 @@ class SlimeBoss extends Boss {
     this.animationCounter = 0;
     
     // 移动相关
-    this.moveMultiplier15 = 30;
-    this.moveMultiplier16 = 80;
     this.movedFrame15 = false;
     this.movedFrame16 = false;
     
     // 元素相关
     this.type = type;
     this.elementalColor = this.getElementalColor(type);
+    this.elementalEffects = [];
+    this.poisonPools = []; // 确保初始化毒池数组
+    
+    // 技能相关
+    this.skillCooldown = 180;
+    this.skillDelay = 180;
+    
+    // 元素技能属性
+    this.initElementalProperties(type);
+  }
+
+  initElementalProperties(type) {
+    switch(type) {
+      case "fire":
+        this.flameDamage = 40;
+        this.flameRadius = 150;
+        this.flameDuration = 90;
+        this.dashSpeed = 20;
+        break;
+      case "water":
+        this.waveSpeed = 8;
+        this.slowDuration = 180;
+        this.slowAmount = 0.3;
+        this.waveRadius = 50;
+        this.wavesCount = 3;
+        break;
+      case "poison":
+        this.poisonDamage = 8;
+        this.poisonDuration = 240;
+        this.poisonRadius = 60;
+        this.poisonSpreadSpeed = 0.5;
+        break;
+      case "wind":
+        this.windForce = 15;
+        this.windRadius = 200;
+        this.windDuration = 60;
+        this.windAngle = PI/2;
+        break;
+    }
   }
 
   getElementalColor(type) {
@@ -825,45 +862,288 @@ class SlimeBoss extends Boss {
   update() {
     if (!this.isActive || !player) return;
     
-    // 更新动画
-    this.animate();
-    let currentFrame = this.currentAnimation[this.frameIndex];
-    
-    // 计算到玩家的方向
+    try {
+      // 更新动画
+      this.animate();
+      let currentFrame = this.currentAnimation[this.frameIndex];
+      
+      // 计算到玩家的方向
+      let dirToPlayer = p5.Vector.sub(player.pos, this.pos).normalize();
+      
+      // 基本移动逻辑
+      if (!this.isDashing) {
+        if (currentFrame === 14 && !this.movedFrame15) {
+          let moveVec = p5.Vector.mult(dirToPlayer, 30);
+          this.pos.add(moveVec);
+          this.movedFrame15 = true;
+        } else if (currentFrame !== 14) {
+          this.movedFrame15 = false;
+        }
+        
+        if (currentFrame === 15 && !this.movedFrame16) {
+          let moveVec = p5.Vector.mult(dirToPlayer, 80);
+          this.pos.add(moveVec);
+          this.movedFrame16 = true;
+        } else if (currentFrame !== 15) {
+          this.movedFrame16 = false;
+        }
+      }
+      
+      // 更新技能冷却
+      if (this.skillCooldown > 0) {
+        this.skillCooldown--;
+      } else {
+        this.useElementalSkill();
+        this.skillCooldown = this.skillDelay;
+      }
+      
+      // 更新元素效果
+      if (this.elementalEffects) {
+        this.updateElementalEffects();
+      }
+      
+      // 确保不会移出屏幕
+      this.pos.x = constrain(this.pos.x, 0, width);
+      this.pos.y = constrain(this.pos.y, 0, height);
+    } catch (error) {
+      console.error("Error in SlimeBoss update:", error);
+    }
+  }
+
+  useElementalSkill() {
+    switch(this.type) {
+      case "fire":
+        this.fireSkill();
+        break;
+      case "water":
+        this.waterSkill();
+        break;
+      case "poison":
+        this.poisonSkill();
+        break;
+      case "wind":
+        this.windSkill();
+        break;
+    }
+  }
+
+  // 火焰史莱姆技能
+  fireSkill() {
+    this.isDashing = true;
     let dirToPlayer = p5.Vector.sub(player.pos, this.pos).normalize();
     
-    // 在第15帧时移动
-    if (currentFrame === 14 && !this.movedFrame15) {
-      let moveVec = p5.Vector.mult(dirToPlayer, this.moveMultiplier15);
-      this.pos.add(moveVec);
-      this.movedFrame15 = true;
-    } else if (currentFrame !== 14) {
-      this.movedFrame15 = false;
+    // 烈焰冲撞
+    let dashVec = p5.Vector.mult(dirToPlayer, this.dashSpeed);
+    this.pos.add(dashVec);
+    
+    // 火焰爆炸效果
+    this.elementalEffects.push({
+      type: "fire",
+      pos: this.pos.copy(),
+      radius: this.flameRadius,
+      duration: this.flameDuration,
+      damage: this.flameDamage,
+      startTime: millis(),
+      expandSpeed: 2
+    });
+    
+    showFloatingText("Flame Burst!", this.pos.x, this.pos.y - 30, color(255, 100, 0));
+    
+    // 设置短暂的冲刺状态
+    setTimeout(() => {
+      this.isDashing = false;
+    }, 500);
+  }
+
+  // 水流史莱姆技能
+  waterSkill() {
+    let dirToPlayer = p5.Vector.sub(player.pos, this.pos).normalize();
+    
+    // 发射多个水波
+    for (let i = 0; i < this.wavesCount; i++) {
+      let angle = -PI/6 + (i * PI/6);
+      let rotatedDir = createVector(
+        dirToPlayer.x * cos(angle) - dirToPlayer.y * sin(angle),
+        dirToPlayer.x * sin(angle) + dirToPlayer.y * cos(angle)
+      );
+      
+      this.elementalEffects.push({
+        type: "water",
+        pos: this.pos.copy(),
+        vel: p5.Vector.mult(rotatedDir, this.waveSpeed),
+        radius: this.waveRadius,
+        duration: 90,
+        slowDuration: this.slowDuration,
+        slowAmount: this.slowAmount,
+        pulseTime: millis()
+      });
     }
     
-    // 在第16帧时移动
-    if (currentFrame === 15 && !this.movedFrame16) {
-      let moveVec = p5.Vector.mult(dirToPlayer, this.moveMultiplier16);
-      this.pos.add(moveVec);
-      this.movedFrame16 = true;
-    } else if (currentFrame !== 15) {
-      this.movedFrame16 = false;
-    }
+    showFloatingText("Water Waves!", this.pos.x, this.pos.y - 30, color(0, 100, 255));
+  }
+
+  // 毒液史莱姆技能
+  poisonSkill() {
+    // 创建扩散的毒池
+    this.poisonPools.push({
+      pos: this.pos.copy(),
+      radius: this.poisonRadius,
+      duration: this.poisonDuration,
+      damage: this.poisonDamage,
+      startRadius: this.poisonRadius,
+      maxRadius: this.poisonRadius * 2,
+      spreadSpeed: this.poisonSpreadSpeed
+    });
     
-    // 确保不会移出屏幕
-    this.pos.x = constrain(this.pos.x, 0, width);
-    this.pos.y = constrain(this.pos.y, 0, height);
+    showFloatingText("Toxic Pool!", this.pos.x, this.pos.y - 30, color(0, 255, 0));
+  }
+
+  // 疾风史莱姆技能
+  windSkill() {
+    let angleToPlayer = atan2(player.pos.y - this.pos.y, player.pos.x - this.pos.x);
+    
+    this.elementalEffects.push({
+      type: "wind",
+      pos: this.pos.copy(),
+      angle: angleToPlayer,
+      radius: this.windRadius,
+      duration: this.windDuration,
+      force: this.windForce,
+      startTime: millis(),
+      particles: Array(20).fill().map(() => ({
+        pos: this.pos.copy(),
+        vel: p5.Vector.random2D().mult(random(2, 5)),
+        life: random(20, 40)
+      }))
+    });
+    
+    showFloatingText("Wind Gust!", this.pos.x, this.pos.y - 30, color(200, 200, 255));
+  }
+
+  updateElementalEffects() {
+    // 更新所有元素效果
+    for (let i = this.elementalEffects.length - 1; i >= 0; i--) {
+      let effect = this.elementalEffects[i];
+      effect.duration--;
+      
+      switch(effect.type) {
+        case "fire":
+          // 火焰效果扩散
+          effect.radius += effect.expandSpeed;
+          if (p5.Vector.dist(player.pos, effect.pos) < effect.radius) {
+            player.takeDamage(effect.damage / 30);
+            showFloatingText("Burning!", player.pos.x, player.pos.y - 20, color(255, 100, 0));
+          }
+          break;
+          
+        case "water":
+          // 水波移动和脉动
+          effect.pos.add(effect.vel);
+          let pulse = sin((millis() - effect.pulseTime) / 100) * 10;
+          if (p5.Vector.dist(player.pos, effect.pos) < effect.radius + pulse) {
+            player.speed *= effect.slowAmount;
+            setTimeout(() => player.speed /= effect.slowAmount, effect.slowDuration);
+            showFloatingText("Slowed!", player.pos.x, player.pos.y - 20, color(0, 100, 255));
+          }
+          break;
+          
+        case "wind":
+          // 更新风效果粒子
+          effect.particles.forEach(p => {
+            p.pos.add(p.vel);
+            p.life--;
+          });
+          effect.particles = effect.particles.filter(p => p.life > 0);
+          
+          let playerInRange = p5.Vector.dist(player.pos, effect.pos) < effect.radius;
+          if (playerInRange) {
+            let pushDir = p5.Vector.fromAngle(effect.angle).mult(effect.force);
+            player.pos.add(pushDir);
+            showFloatingText("Blown Away!", player.pos.x, player.pos.y - 20, color(200, 200, 255));
+          }
+          break;
+      }
+      
+      if (effect.duration <= 0) {
+        this.elementalEffects.splice(i, 1);
+      }
+    }
+
+    // 更新毒池
+    if (this.type === "poison") {
+      for (let i = this.poisonPools.length - 1; i >= 0; i--) {
+        let pool = this.poisonPools[i];
+        pool.duration--;
+        
+        // 毒池扩散
+        pool.radius = min(pool.maxRadius, 
+          pool.startRadius + (pool.maxRadius - pool.startRadius) * 
+          (1 - pool.duration / this.poisonDuration));
+        
+        if (p5.Vector.dist(player.pos, pool.pos) < pool.radius) {
+          player.takeDamage(pool.damage / 60);
+          showFloatingText("Poisoned!", player.pos.x, player.pos.y - 20, color(0, 255, 0));
+        }
+        
+        if (pool.duration <= 0) {
+          this.poisonPools.splice(i, 1);
+        }
+      }
+    }
   }
 
   display() {
     push();
     // 绘制元素效果
-    if (this.type === "fire" && (this.movedFrame15 || this.movedFrame16)) {
-      fill(255, 100, 0, 100);
-      ellipse(this.pos.x, this.pos.y, this.size * 1.2);
+    for (let effect of this.elementalEffects) {
+      switch(effect.type) {
+        case "fire":
+          // 绘制火焰效果
+          for (let r = 0; r < 3; r++) {
+            let alpha = map(r, 0, 2, 100, 20);
+            fill(255, 100 + r * 50, 0, alpha);
+            ellipse(effect.pos.x, effect.pos.y, effect.radius * (1 - r * 0.2));
+          }
+          break;
+          
+        case "water":
+          // 绘制水波效果
+          let pulse = sin((millis() - effect.pulseTime) / 100) * 10;
+          for (let r = 0; r < 3; r++) {
+            let alpha = map(r, 0, 2, 80, 20);
+            fill(0, 100, 255, alpha);
+            ellipse(effect.pos.x, effect.pos.y, (effect.radius + pulse) * (1 - r * 0.2));
+          }
+          break;
+          
+        case "wind":
+          // 绘制风效果
+          fill(200, 200, 255, 60);
+          arc(effect.pos.x, effect.pos.y, effect.radius * 2, effect.radius * 2,
+              effect.angle - this.windAngle/2, effect.angle + this.windAngle/2);
+          
+          // 绘制风粒子
+          effect.particles.forEach(p => {
+            let alpha = map(p.life, 0, 40, 0, 255);
+            fill(200, 200, 255, alpha);
+            ellipse(p.pos.x, p.pos.y, 4);
+          });
+          break;
+      }
     }
     
-    // 绘制史莱姆
+    // 绘制毒池
+    if (this.type === "poison") {
+      for (let pool of this.poisonPools) {
+        for (let r = 0; r < 3; r++) {
+          let alpha = map(r, 0, 2, 80, 20);
+          fill(0, 255, 0, alpha);
+          ellipse(pool.pos.x, pool.pos.y, pool.radius * (1 - r * 0.2));
+        }
+      }
+    }
+    
+    // 保持现有的史莱姆绘制代码...
     tint(this.elementalColor);
     let frameNum = this.currentAnimation[this.frameIndex];
     let col = frameNum % this.columns;
