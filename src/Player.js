@@ -109,6 +109,9 @@ class Player {
   }
 
   gainExp(amount) {
+    // 如果处于第5波（Boss波），停止记录经验
+    if (wave === 5) return;
+    
     showFloatingText(
       `+${Math.floor(amount)} EXP`,
       this.pos.x,
@@ -122,14 +125,14 @@ class Player {
   }
 
   levelUp() {
+  
     this.level++;
     this.exp -= this.expToNextLevel;
     this.expToNextLevel = Math.floor(this.expToNextLevel * 1.5);
     this.health += 20;
     this.fireRate += 1;
     this.speed += 0.5;
-
-    // 如果需要选择宠物，优先进入宠物选择界面
+  
     if (this.needsPetSelection) {
       this.needsPetSelection = false;
       gameState = "petSelection";

@@ -411,8 +411,8 @@ class BirdBoss extends Boss {
     this.feathers = [];
     
     // Boss 属性设置（可根据需求调整数值）
-    this.health = 800;
-    this.maxHealth = 800;
+    this.health = 200;
+    this.maxHealth = 200;
     this.size = 100;
     this.speed = 2.5;
     this.attackRange = 150;
@@ -469,13 +469,10 @@ class BirdBoss extends Boss {
   }
 
   
-
-  
-
   hit(damage) {
     if (!this.isActive) return false;
-
-     // 生成4片羽毛，以Boss当前位置为中心稍作偏移
+  
+    // 生成4片羽毛，以Boss当前位置为中心稍作偏移
     let offsets = [
       createVector(-30, -30),
       createVector(30, -30),
@@ -488,7 +485,7 @@ class BirdBoss extends Boss {
       let feather = new Feather(fx, fy, featherSprite);
       this.feathers.push(feather);
     }
-
+  
     if (this.invulnerableTime <= 0) {
       if (this.shieldActive) {
         this.shieldHealth -= damage;
@@ -502,16 +499,13 @@ class BirdBoss extends Boss {
         this.invulnerableTime = 5;
         showFloatingText("-" + Math.floor(damage), this.pos.x, this.pos.y - 20, color(255, 0, 0));
       }
-
-      
-      this.health -= damage;
+  
       if (this.health <= 0) {
         this.isActive = false;
-        enemies = enemies.filter(e => e !== this);  // 从敌人列表中移除Boss
-        bossActive = false;  // Boss战结束
+        enemies = enemies.filter(e => e !== this);
+        bossActive = false;
         showFloatingText("Boss Defeated!", this.pos.x, this.pos.y - 40, color(255, 215, 0));
-        
-  
+      
         if (wave === 5 && !player.pet) {
           gameState = "petSelection";
         } else {
@@ -520,7 +514,7 @@ class BirdBoss extends Boss {
             spawnEnemiesForWave(wave);
           }, 500);
         }
-
+        
         if (wave === 15) {
           gameState = "victory";
           finalStats = {
@@ -533,13 +527,14 @@ class BirdBoss extends Boss {
           };
           return;
         }
-
-      return true;
-  }
-      
+  
+        return true;
+      }
     }
     return false;
   }
+  
+  
   
   update() {
     try {
@@ -580,13 +575,14 @@ class BirdBoss extends Boss {
       }
   
       this.patternTimer++;
-      if (this.patternTimer > 240) {
+      if (this.patternTimer > 180) {  // 从240降到180
         this.attackPattern = (this.attackPattern + 1) % 5;
         this.patternTimer = 0;
         let patternNames = ["Web Attack", "Dash Attack", "Poison Attack", "Web Wall", "Summon"];
         showFloatingText(patternNames[this.attackPattern], this.pos.x, this.pos.y - 40, color(255, 255, 0));
       }
-  
+
+
       if (this.health < this.maxHealth * 0.6 && !this.isEnraged) {
         this.isEnraged = true;
         this.enrageTimer = 300;
@@ -664,30 +660,40 @@ class BirdBoss extends Boss {
     }
   }
   
-  performWebWallAttack(dirToPlayer) {
-    if (this.webWallCooldown <= 0) {
-      let perpDir = createVector(-dirToPlayer.y, dirToPlayer.x);
-      for (let i = -3; i <= 3; i++) {
-        let pos = p5.Vector.add(this.pos, p5.Vector.mult(perpDir, i * 30));
-        let webVel = p5.Vector.mult(dirToPlayer, 3);
-        enemyBullets.push(new WebProjectile(pos.x, pos.y, webVel));
+  performSummonAttack() {
+    if (this.summonCooldown <= 0) {
+      let bulletCount = 8;
+      for (let i = 0; i < bulletCount; i++) {
+        let angle = (TWO_PI / bulletCount) * i;
+        let bulletVel = p5.Vector.fromAngle(angle).mult(5);
+        // 创建并加入 enemyBullets
+        let bullet = new EnemyBullet(this.pos.x, this.pos.y, bulletVel);
+        enemyBullets.push(bullet);
       }
-      this.webWallCooldown = 180;
+      
+      this.summonCooldown = 50; 
+      showFloatingText("Radial Attack!", this.pos.x, this.pos.y - 30, color(255, 100, 255));
     }
   }
   
-  performSummonAttack() {
-    if (this.summonCooldown <= 0 && this.birdlings.length < 4) {
-      for (let i = 0; i < 2; i++) {
-        let birdling = new MeleeEnemy(true, "melee", commonEnemyAction, 18, 22);
-        birdling.pos = this.pos.copy();
-        birdling.health = 30;
-        birdling.damage = 15;
-        birdling.speed = 3;
-        this.birdlings.push(birdling);
-      }
-      this.summonCooldown = 300;
+  
+  performWebWallAttack(dirToPlayer) {
+    if (this.webWallCooldown > 0) return;
+    let perpDir = createVector(-dirToPlayer.y, dirToPlayer.x);
+    let segmentCount = 5;   
+    let spacing = 20;       
+  
+    for (let i = -Math.floor(segmentCount / 2); i <= Math.floor(segmentCount / 2); i++) {
+      let offset = p5.Vector.mult(perpDir, i * spacing);
+      let spawnPos = p5.Vector.add(this.pos, offset);
+ 
+      let bulletVel = p5.Vector.mult(dirToPlayer, 5);
+      let web = new WebProjectile(spawnPos.x, spawnPos.y, bulletVel);
+      enemyBullets.push(web);
     }
+
+    this.webWallCooldown = 180;  
+    showFloatingText("Web Wall!", this.pos.x, this.pos.y - 30, color(255, 100, 255));
   }
   
   performDashAttack() {
@@ -803,7 +809,7 @@ class BirdBoss extends Boss {
 
   // 绘制羽毛
   for (let f of this.feathers) {
-    f.display();  // Feather 自己负责动画帧切割
+    f.display();  
   }
 }
 
@@ -814,7 +820,183 @@ class BirdBoss extends Boss {
 }
 
 
-
+// 假设 Boss 是你已有的父类
+class SlimeBoss extends Boss {
+  // 新增参数 moveMultiplier15 和 moveMultiplier16 分别用于第15帧和第16帧横向移动距离
+  constructor(slimeBossImage, moveMultiplier15, moveMultiplier16) {
+    super(true, "slimeBoss", slimeBossImage, 200, 160);
+    this.slimeBossImage = slimeBossImage;
+    
+    // 新增：横向移动距离参数
+    this.moveMultiplier15 = moveMultiplier15;
+    this.moveMultiplier16 = moveMultiplier16;
+    
+    // 动画设置（精灵图分为 4 列×5 行，使用前 19 帧）
+    this.columns = 4;
+    this.rows = 5;
+    this.totalFrames = 19; 
+    this.frameWidth = this.slimeBossImage.width / this.columns;
+    this.frameHeight = this.slimeBossImage.height / this.rows;
+    // 动画序列：简单使用帧号 0～18
+    this.currentAnimation = Array.from({ length: this.totalFrames }, (_, i) => i);
+    this.frameIndex = 0;
+    this.animationDelay = 6;  // 控制动画播放速度
+    this.animationCounter = 0;
+    
+    // Boss 属性
+    this.pos = createVector(width / 2, height / 2);
+    this.size = 120;         // 显示时的宽度
+    this.health = 800;       // 调整后的血量（可根据需要调整）
+    this.maxHealth = 800;
+    this.damage = 25;
+    this.speed = 2.5;        // 用于在特定帧触发位移
+    this.radius = 40;        // 近战判定范围（原设定）
+    this.isActive = true;
+    this.invulnerableTime = 0;  // 这里我们不再使用无敌效果
+    this.isEnraged = false;
+    
+    // 攻击相关设置
+    this.attackCooldown = 0;
+    this.meleeRange = 80;    // 攻击范围（范围伤害），例如 80 像素
+    // 5 种攻击模式（全部为范围伤害模式，名称和伤害可调整）
+    this.modes = [
+      { name: "Slam", damage: 30 },
+      { name: "Spin", damage: 20 },
+      { name: "PoisonBody", damage: 15 },
+      { name: "HeavySlam", damage: 40 },
+      { name: "MultiHit", damage: 10 }
+    ];
+    this.attackPattern = 0;  // 当前使用的模式索引
+    this.patternTimer = 0;   // 用于轮换攻击模式
+    
+    // 用于控制在特定帧只移动一次
+    this.movedFrame15 = false; // 对应第15帧（动画值 14）
+    this.movedFrame16 = false; // 对应第16帧（动画值 15）
+  }
+  
+  // 修改后的 hit 方法：去掉无敌判断，使 Boss 每次被打都会扣血
+  hit(damage) {
+    if (!this.isActive) return false;
+    // 扣血
+    this.health -= damage;
+    showFloatingText("-" + Math.floor(damage), this.pos.x, this.pos.y - 20, color(255, 0, 0));
+    if (this.health <= 0) {
+      this.isActive = false;
+      enemies = enemies.filter(e => e !== this);
+      bossActive = false;
+      showFloatingText("Slime Boss Defeated!", this.pos.x, this.pos.y - 40, color(255, 215, 0));
+      return true;
+    }
+    return false;
+  }
+  
+  update() {
+    if (!this.isActive || !player) return;
+    
+    // 更新动画帧
+    this.animate();
+    let currentFrame = this.currentAnimation[this.frameIndex];
+    
+    // 在第15帧（动画值 14）时：Boss 向主角方向移动，使用自定义横向移动距离，再额外向上移动 60 像素
+    if (currentFrame === 14) {
+      if (!this.movedFrame15) {
+        let dir = p5.Vector.sub(player.pos, this.pos).normalize();
+        // 使用 moveMultiplier15 控制横向移动距离
+        this.pos.add(p5.Vector.mult(dir, this.moveMultiplier15));
+        this.pos.add(createVector(0, -60));  // 向上
+        this.movedFrame15 = true;
+      }
+    } else {
+      this.movedFrame15 = false;
+    }
+    
+    // 在第16帧（动画值 15）时：Boss 向主角方向移动，使用自定义横向移动距离，再额外向下移动 30 像素
+    if (currentFrame === 15) {
+      if (!this.movedFrame16) {
+        let dir = p5.Vector.sub(player.pos, this.pos).normalize();
+        // 使用 moveMultiplier16 控制横向移动距离
+        this.pos.add(p5.Vector.mult(dir, this.moveMultiplier16));
+        this.pos.add(createVector(0, 30));  // 向下
+        this.movedFrame16 = true;
+      }
+    } else {
+      this.movedFrame16 = false;
+    }
+    
+    // 攻击逻辑：Boss 的攻击为范围伤害，如果玩家在攻击范围内，则受到伤害
+    let distToPlayer = p5.Vector.dist(this.pos, player.pos);
+    if (distToPlayer <= this.meleeRange && this.attackCooldown <= 0) {
+      this.performMeleeAttack();
+    }
+    
+    // 更新攻击冷却和模式轮换计时器
+    if (this.attackCooldown > 0) this.attackCooldown--;
+    this.patternTimer++;
+    if (this.patternTimer > 240) {
+      this.attackPattern = (this.attackPattern + 1) % this.modes.length;
+      this.patternTimer = 0;
+      showFloatingText(
+        this.modes[this.attackPattern].name + " Mode",
+        this.pos.x,
+        this.pos.y - 40,
+        color(0, 255, 0)
+      );
+    }
+  }
+  
+  // 修改后的 performMeleeAttack：范围伤害，不再对玩家产生击退效果
+  performMeleeAttack() {
+    let mode = this.modes[this.attackPattern];
+    // 定义攻击区域为以 Boss 为中心的圆，半径为 meleeRange（例如 80 像素）
+    let attackArea = this.meleeRange;
+    if (p5.Vector.dist(this.pos, player.pos) <= attackArea) {
+      player.takeDamage(mode.damage);
+      showFloatingText(mode.name + " Attack!", this.pos.x, this.pos.y - 30, color(255, 0, 0));
+    }
+    this.attackCooldown = 60; // 约1秒冷却
+  }
+  
+  animate() {
+    this.animationCounter++;
+    if (this.animationCounter >= this.animationDelay) {
+      this.animationCounter = 0;
+      // 循环播放前 totalFrames 帧
+      this.frameIndex = (this.frameIndex + 1) % this.totalFrames;
+    }
+  }
+  
+  display() {
+    // 计算当前帧在精灵图中的行、列
+    let frameNum = this.currentAnimation[this.frameIndex];
+    let col = frameNum % this.columns;
+    let row = floor(frameNum / this.columns);
+    let sx = col * this.frameWidth;
+    let sy = row * this.frameHeight;
+    
+    // 保持原图比例，计算显示尺寸（this.size 表示显示宽度）
+    let ratio = this.frameHeight / this.frameWidth;
+    let displayW = this.size;
+    let displayH = displayW * ratio;
+    
+    // 以 Boss 位置为中心绘制
+    let drawX = this.pos.x - displayW / 2;
+    let drawY = this.pos.y - displayH / 2;
+    
+    image(
+      this.slimeBossImage,
+      drawX, drawY,           // 绘制位置
+      displayW, displayH,     // 显示尺寸
+      sx, sy,                 // 原图截取起点
+      this.frameWidth, this.frameHeight  // 截取区域尺寸
+    );
+    
+    this.displayHealthBar();
+  }
+  
+  displayHealthBar() {
+    displayBossHealthBar(this);
+  }
+}
 
 class SpiderBoss extends Boss {
   constructor(spiderBossAction, animationData) {
@@ -1105,6 +1287,7 @@ class SpiderBoss extends Boss {
   }
   
   animate() {
+    // 更新动画帧
     this.animationCounter++;
     if (this.animationCounter >= this.animationDelay) {
       this.animationCounter = 0;
@@ -1113,23 +1296,32 @@ class SpiderBoss extends Boss {
   }
   
   display() {
-    let frameWidth = this.animationData.frameWidth;
-    let frameHeight = this.animationData.frameHeight;
-    let columns = floor(this.spiderBossAction.width / frameWidth);
-    let frameX = (this.currentAnimation[this.frameIndex] % columns) * frameWidth;
-    let frameY = floor(this.currentAnimation[this.frameIndex] / columns) * frameHeight;
-    
+
+    let frameNumber = this.currentAnimation[this.frameIndex];
+  
+
+    let frameX = frameNumber * this.frameWidth;
+    let frameY = 0; 
+  
+
+    let displayW = this.size;              
+    let displayH = this.size * ratio;      
+  
+
+    let drawX = this.pos.x - displayW / 2;
+    let drawY = this.pos.y - displayH / 2;
+  
+
     image(
-      this.spiderBossAction,
-      this.pos.x - this.size / 2,
-      this.pos.y - this.size / 2,
-      this.size,
-      this.size * (frameHeight / frameWidth),
-      frameX,
-      frameY,
-      frameWidth,
-      frameHeight
+      this.slimeBossAction, 
+      drawX, drawY,         
+      displayW, displayH,    
+      frameX, frameY,       
+      this.frameWidth,       
+      this.frameHeight       
     );
+  
+    // 显示血条等
     this.displayHealthBar();
   }
   

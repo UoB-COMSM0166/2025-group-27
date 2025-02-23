@@ -172,6 +172,8 @@ function preload() {
   bossAction = loadImage("assets/images/Characters/Enemies/Birdman/BirdBoss.png");
   featherSprite = loadImage("assets/images/Characters/Enemies/Birdman/falling_feather_yellow.png");
 
+  slimeBossImage = loadImage("assets/images/Effects/ Skill Effects/Drip/cell_sphere/boss_slime_blue.png");
+  slimeBoss2Image = loadImage("assets/images/Effects/ Skill Effects/Drip/cell_sphere/boss_slime.png");
   //spiderBossAction = loadImage("assets/images/Characters/Enemies/SpiderBoss/SpiderBoss.png");
   
   commonEnemyAction.idle = loadImage("assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_idleEmote1.png");

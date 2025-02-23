@@ -632,27 +632,31 @@ function generateUpgradeOptions() {
 function spawnEnemiesForWave(currentWave) {
   enemies = [];
 
-  if (currentWave === 10) {
-    // 生成 SpiderBoss
-    let bossPos = getValidSpawnPosition();
-    // 定义 SpiderBoss 动画数据（帧宽、帧高、帧序列、动画延迟）
-    let animationData = {
-      frameWidth: 200,
-      frameHeight: 160,
-      frames: [0, 4, 8, 12, 16, 1, 5, 9, 13, 17, 2, 6, 10, 14, 18, 3, 7, 11, 15, 19],
-      delay: 20
-    };
-    let boss = new SpiderBoss(spiderBossAction, animationData);
-    boss.pos = bossPos;
-    enemies.push(boss);
+  if (currentWave === 1) {
+    let boss1 = new SlimeBoss(slimeBossImage, 30, 20);
+    let boss2 = new SlimeBoss(slimeBossImage, 80, 50);
+    let boss3 = new SlimeBoss(slimeBoss2Image, 100, 80);
+    let boss4 = new SlimeBoss(slimeBoss2Image, 120, 30);
+    
+    // 可选：设置不同位置以区分这四个 boss
+    boss1.pos = createVector(width / 2 - 200, height / 2- 70);
+    boss2.pos = createVector(width / 2 + 10, height / 2- 10);
+    boss3.pos = createVector(width / 2 - 120, height / 2 - 50);
+    boss4.pos = createVector(width / 2 + 60, height / 2 - 190);
+    
+    enemies.push(boss1, boss2, boss3, boss4);
+  
     showFloatingText(
-      "Spider Boss Appears!",
+      "SLime Boss Appears!",
       width / 2,
       height / 2 - 40,
       color(0, 255, 0)
     );
-    bossActive = true;
-  } else if (currentWave === 5) {
+    bossActive = true; // 标记Boss战
+  }
+  
+  
+  else if (currentWave === 2) {
     // 生成 BirdBoss
     let bossPos = getValidSpawnPosition();
     let boss = new BirdBoss(bossAction);
@@ -665,7 +669,11 @@ function spawnEnemiesForWave(currentWave) {
       color(0, 255, 0)
     );
     bossActive = true;
-  } else {
+  } 
+  
+  
+  
+  else {
     // 普通敌人生成逻辑
     let baseEnemyCount = Math.floor(6 + currentWave * 0.8);
     for (let i = 0; i < baseEnemyCount; i++) {
