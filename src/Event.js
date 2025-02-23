@@ -24,6 +24,9 @@ function mousePressed() {
   }
 
   if (gameState === "game") {
+    if (player.characterType === "archer" && !player.isCharging) {
+      player.startCharge();
+    }
     if (pauseButton.contains(mouseX, mouseY)) {
       pauseButton.action();
       return;
@@ -40,6 +43,12 @@ function mousePressed() {
       btn.action();
       return;
     }
+  }
+}
+
+function mouseReleased() {
+  if (player.characterType === "archer") {
+    player.releaseArrow();
   }
 }
 
@@ -64,8 +73,8 @@ function keyPressed() {
     if ((key === "C" || key === "c") && savedGame) gameState = "game";
     else if (key === "Q" || key === "q") noLoop();
   } else if (gameState === "menu") {
-    if (key === "1") initPlayer("melee");
-    if (key === "2") initPlayer("ranged");
+    if (key === "1") initPlayer("gunner");
+    if (key === "2") initPlayer("archer");
   } else if (gameState === "paused" && !choosingPotion) {
     if (key === "S" || key === "s") {
       savedGame = true;
