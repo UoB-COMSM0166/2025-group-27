@@ -420,7 +420,6 @@ class Boss extends Enemy {
 
 class BirdBoss extends Boss {
   constructor(birdBossAction) {
-    // 调用 Boss 构造函数
     super(true, "boss", birdBossAction, 200, 160);
     this.birdBossAction = birdBossAction;
     this.feathers = [];
@@ -481,25 +480,62 @@ class BirdBoss extends Boss {
       this.featherFalling = false;   
       this.featherEndTime = 0;      
       this.featherOffsetY = 0;      
+    
+    // 降低羽毛生成参数
+    this.featherDropRate = 30; // 降低生成频率
+    this.featherBurstCount = 3; // 减少每次生成数量
+    this.featherCounter = 0;
+    this.featherAngle = 0;
+    
+    // 减少受伤时的羽毛数量
+    this.damageBurstCount = 4;
+    
+    // 添加最大羽毛数量限制
+    this.maxFeathers = 50;
   }
 
-  
   update() {
     try {
       if (!this.isActive || !player) return;
 
-      // 始终更新羽毛掉落动画和羽毛数组
-      if (this.featherFalling) {
-        this.featherOffsetY += 2;  
-        if (millis() >= this.featherEndTime) {
-          this.featherFalling = false;
+      // 限制羽毛总数
+      if (this.feathers.length >= this.maxFeathers) {
+        // 移除最早的羽毛
+        this.feathers.splice(0, this.feathers.length - this.maxFeathers + 5);
+      }
+
+      // 更新羽毛掉落
+      this.featherCounter++;
+      if (this.featherCounter >= this.featherDropRate && this.feathers.length < this.maxFeathers) {
+        this.featherCounter = 0;
+        this.featherAngle += PI/4; // 增大旋转角度，使图案更明显
+        
+        // 以圆形方式生成羽毛
+        for (let i = 0; i < this.featherBurstCount; i++) {
+          let angle = this.featherAngle + (TWO_PI / this.featherBurstCount) * i;
+          let radius = 30;
+          let featherX = this.pos.x + cos(angle) * radius;
+          let featherY = this.pos.y + sin(angle) * radius;
+          this.feathers.push(new Feather(featherX, featherY, featherSprite));
+        }
+        
+        // 受伤或冲刺时的额外羽毛
+        if ((this.health < this.maxHealth * 0.5 || this.isDashing) && 
+            this.feathers.length < this.maxFeathers - this.damageBurstCount) {
+          let burstRadius = 50;
+          for (let i = 0; i < this.damageBurstCount; i++) {
+            let angle = random(TWO_PI);
+            let dist = random(20, burstRadius);
+            let featherX = this.pos.x + cos(angle) * dist;
+            let featherY = this.pos.y + sin(angle) * dist;
+            this.feathers.push(new Feather(featherX, featherY, featherSprite));
+          }
         }
       }
-      // 更新所有由 Boss 生成的羽毛对象
+
+      // 更新所有羽毛，使用倒序循环以优化性能
       for (let i = this.feathers.length - 1; i >= 0; i--) {
-        let f = this.feathers[i];
-        f.update();
-        if (f.isOffScreen()) {
+        if (!this.feathers[i].update()) {
           this.feathers.splice(i, 1);
         }
       }
@@ -729,37 +765,37 @@ class BirdBoss extends Boss {
   }
   
   display() {
-  // 绘制 Boss
-  let frameWidth = 200;
-  let frameHeight = 160;
-  let columns = floor(this.birdBossAction.width / frameWidth);
-  let frameX = (this.currentAnimation[this.frameIndex] % columns) * frameWidth;
-  let frameY = floor(this.currentAnimation[this.frameIndex] / columns) * frameHeight;
+    // 先绘制羽毛
+    for (let feather of this.feathers) {
+      feather.display();
+    }
 
-  let drawWidth = this.size;
-  let drawHeight = this.size * (frameHeight / frameWidth);
-  let drawX = this.pos.x - drawWidth / 2;
-  let drawY = this.pos.y - drawHeight / 2;
+    // 绘制Boss本体
+    let frameWidth = 200;
+    let frameHeight = 160;
+    let columns = floor(this.birdBossAction.width / frameWidth);
+    let frameX = (this.currentAnimation[this.frameIndex] % columns) * frameWidth;
+    let frameY = floor(this.currentAnimation[this.frameIndex] / columns) * frameHeight;
 
-  image(
-    this.birdBossAction,
-    drawX,
-    drawY,
-    drawWidth,
-    drawHeight,
-    frameX,
-    frameY,
-    frameWidth,
-    frameHeight
-  );
+    let drawWidth = this.size;
+    let drawHeight = this.size * (frameHeight / frameWidth);
+    let drawX = this.pos.x - drawWidth / 2;
+    let drawY = this.pos.y - drawHeight / 2;
 
-  this.displayHealthBar();
+    image(
+      this.birdBossAction,
+      drawX,
+      drawY,
+      drawWidth,
+      drawHeight,
+      frameX,
+      frameY,
+      frameWidth,
+      frameHeight
+    );
 
-  // 绘制羽毛
-  for (let f of this.feathers) {
-    f.display();  
+    this.displayHealthBar();
   }
-}
 
   displayHealthBar() {
     displayBossHealthBar();
