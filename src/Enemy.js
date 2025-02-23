@@ -11,7 +11,7 @@ class Enemy {
     this.enCounter = 0;
     this.direction = 'idle';
     this.currentAction = this.enemyAction.idle;
-    this.framesPerDirection = 4; 
+    this.framesPerDirection = 4;
 
     this.pos = createVector(0, 0);
     this.vel = createVector(0, 0);
@@ -28,7 +28,7 @@ class Enemy {
     this.attackSpeed = 1;
     this.type = enemyType;
     this.invulnerableTime = 0;
-    
+
     // 添加碰撞盒尺寸
     this.collisionWidth = this.enWidth || this.radius * 2;
     this.collisionHeight = this.enHeight || this.radius * 2;
@@ -40,15 +40,15 @@ class Enemy {
         // 计算 X 方向的可能移动位置
         let xOnly = createVector(this.pos.x - this.vel.x, this.pos.y);
         let yOnly = createVector(this.pos.x, this.pos.y - this.vel.y);
-  
+
         // 优先尝试 X 方向移动
         if (!obs.collidesWith(xOnly, this.enWidth, this.enHeight)) {
           this.pos = xOnly;
-        } 
+        }
         // 否则尝试 Y 方向移动
         else if (!obs.collidesWith(yOnly, this.enWidth, this.enHeight)) {
           this.pos = yOnly;
-        } 
+        }
         // 如果两个方向都碰撞，完全阻止移动
         else {
           this.pos.sub(this.vel);
@@ -63,16 +63,16 @@ class Enemy {
     }
 
     let distToPlayer = p5.Vector.dist(this.pos, player.pos);
-    
+
     // 计算到玩家的方向
     let dirToPlayer = p5.Vector.sub(player.pos, this.pos);
-    
+
     // 添加一些随机偏移，使移动不那么机械
     let noiseOffset = createVector(
       map(noise(this.pos.x * 0.01 + frameCount * 0.01), 0, 1, -1, 1),
       map(noise(this.pos.y * 0.01 + frameCount * 0.01), 0, 1, -1, 1)
     ).mult(0.3); // 调整这个值可以改变随机性的程度
-    
+
     dirToPlayer.add(noiseOffset);
     dirToPlayer.normalize();
 
@@ -85,7 +85,7 @@ class Enemy {
     } else {
       // 计算下一个位置
       let nextPos = p5.Vector.add(this.pos, p5.Vector.mult(dirToPlayer, this.speed));
-      
+
       // 检查障碍物碰撞
       let canMove = true;
       for (let obs of obstacles) {
@@ -93,13 +93,13 @@ class Enemy {
           // 尝试沿着障碍物移动
           let leftDir = createVector(-dirToPlayer.y, dirToPlayer.x);
           let rightDir = createVector(dirToPlayer.y, -dirToPlayer.x);
-          
+
           let leftPos = p5.Vector.add(this.pos, p5.Vector.mult(leftDir, this.speed));
           let rightPos = p5.Vector.add(this.pos, p5.Vector.mult(rightDir, this.speed));
-          
+
           let leftBlocked = obs.collidesWith(leftPos, this.enWidth, this.enHeight);
           let rightBlocked = obs.collidesWith(rightPos, this.enWidth, this.enHeight);
-          
+
           if (!leftBlocked) {
             nextPos = leftPos;
           } else if (!rightBlocked) {
@@ -110,7 +110,7 @@ class Enemy {
           break;
         }
       }
-      
+
       if (canMove) {
         this.pos = nextPos;
         // 更新朝向
@@ -125,7 +125,7 @@ class Enemy {
         }
       }
     }
-    
+
     this.attackCooldown--;
     this.animate();
   }
@@ -165,27 +165,27 @@ class Enemy {
       this.tryMove(knockbackVector);
       return;
     }
-  
+
     // 将击退向量拆成若干步
-    let stepVector = knockbackVector.copy().normalize(); 
-    let steps = Math.floor(totalDistance); 
-    let remainder = totalDistance - steps; 
-  
+    let stepVector = knockbackVector.copy().normalize();
+    let steps = Math.floor(totalDistance);
+    let remainder = totalDistance - steps;
+
     // 逐步移动
     for (let i = 0; i < steps; i++) {
       if (!this.tryMove(stepVector)) {
-   
+
         break;
       }
     }
-  
+
     // 处理剩余距离
     if (remainder > 0) {
       let remainderVector = stepVector.copy().mult(remainder);
       this.tryMove(remainderVector);
     }
   }
-  
+
   //尝试移动给定的向量距离，
   tryMove(moveVec) {
     let newPos = p5.Vector.add(this.pos, moveVec);
@@ -195,14 +195,14 @@ class Enemy {
     }
     return false;
   }
-  
- 
+
+
 
   animate() {
     this.enCounter++;
     if (this.enCounter >= this.enDelay) {
-        this.enCounter = 0;
-        this.frameIndex = (this.frameIndex + 1) % this.framesPerDirection;
+      this.enCounter = 0;
+      this.frameIndex = (this.frameIndex + 1) % this.framesPerDirection;
     }
   }
 
@@ -229,7 +229,7 @@ class Enemy {
       return;
     }
     let frameX = this.frameIndex * this.enWidth;
-    
+
 
     push();
     if (this.direction === 'left') {
@@ -399,11 +399,11 @@ class Boss extends Enemy {
     if (this.health <= 0) {
       this.health = 0; // 确保血量不会小于0
       this.isActive = false;
-      
+
       // 显示击败提示
       let bossName = this.constructor.name.replace('Boss', '');
       showFloatingText(`${bossName} Boss Defeated!`, this.pos.x, this.pos.y - 40, color(255, 215, 0));
-      
+
       // 检查是否所有Boss都被击败
       let remainingActiveBosses = enemies.filter(e => e instanceof Boss && e.isActive).length;
       if (remainingActiveBosses === 0) {
@@ -411,7 +411,7 @@ class Boss extends Enemy {
         // 增加Boss击败计数
         bossDefeated++;
       }
-      
+
       return true;
     }
     return false;
@@ -424,7 +424,7 @@ class BirdBoss extends Boss {
     super(true, "boss", birdBossAction, 200, 160);
     this.birdBossAction = birdBossAction;
     this.feathers = [];
-    
+
     // Boss 属性设置（可根据需求调整数值）
     this.health = 600;
     this.maxHealth = 600;
@@ -434,7 +434,7 @@ class BirdBoss extends Boss {
     this.attackSpeed = 1.5;
     this.damage = 30;
     this.type = "BirdBoss";
-    
+
     // 攻击相关属性
     this.meleeAttackCooldown = 0;
     this.meleeAttackRange = 60;
@@ -445,7 +445,7 @@ class BirdBoss extends Boss {
     this.dashDuration = 0;
     this.attackPattern = 0;
     this.patternTimer = 0;
-    
+
     // 额外属性
     this.phase = 1;
     this.webWallCooldown = 0;
@@ -456,37 +456,37 @@ class BirdBoss extends Boss {
     this.teleportCooldown = 0;
     this.shieldActive = false;
     this.shieldHealth = 200;
-    
+
     // 初始化计时器
     this.webCooldown = 0;
     this.trailCounter = 0;
-    
+
     // 初始化冻结状态
     this.isFrozen = false;
     this.freezeEndTime = 0;
-    
+
     // 初始位置
     this.pos = createVector(width / 2, height / 2);
     this.radius = 25;
     this.expValue = 200;
     this.isActive = true;
-    
+
     // 假设 birdBossAction 已内置动画信息，例如当前动画数组、帧延迟等
-    this.currentAnimation = birdBossAction.animation || [0,1,2,3]; 
+    this.currentAnimation = birdBossAction.animation || [0, 1, 2, 3];
     this.frameIndex = 0;
     this.animationDelay = 20;
     this.animationCounter = 0;
 
-      //  z羽毛掉落相关变量
-      this.featherFalling = false;   
-      this.featherEndTime = 0;      
-      this.featherOffsetY = 0;      
+    //  z羽毛掉落相关变量
+    this.featherFalling = false;
+    this.featherEndTime = 0;
+    this.featherOffsetY = 0;
   }
 
-  
+
   hit(damage) {
     if (!this.isActive) return false;
-  
+
     // 生成4片羽毛，以Boss当前位置为中心稍作偏移
     let offsets = [
       createVector(-30, -30),
@@ -500,7 +500,7 @@ class BirdBoss extends Boss {
       let feather = new Feather(fx, fy, featherSprite);
       this.feathers.push(feather);
     }
-  
+
     if (this.invulnerableTime <= 0) {
       if (this.shieldActive) {
         this.shieldHealth -= damage;
@@ -514,22 +514,23 @@ class BirdBoss extends Boss {
         this.invulnerableTime = 5;
         showFloatingText("-" + Math.floor(damage), this.pos.x, this.pos.y - 20, color(255, 0, 0));
       }
-  
+
       if (this.health <= 0) {
         this.isActive = false;
         enemies = enemies.filter(e => e !== this);
         bossActive = false;
         showFloatingText("Boss Defeated!", this.pos.x, this.pos.y - 40, color(255, 215, 0));
-      
-        if (wave === 5 && !player.pet) {
+
+        if (wave === 6) {
           gameState = "petSelection";
+          player.needsPetSelection = true;
         } else {
           wave++;
           setTimeout(() => {
             spawnEnemiesForWave(wave);
           }, 500);
         }
-        
+
         if (wave === 15) {
           gameState = "victory";
           finalStats = {
@@ -542,22 +543,21 @@ class BirdBoss extends Boss {
           };
           return;
         }
-  
         return true;
       }
     }
     return false;
   }
-  
-  
-  
+
+
+
   update() {
     try {
       if (!this.isActive || !player) return;
 
       // 始终更新羽毛掉落动画和羽毛数组
       if (this.featherFalling) {
-        this.featherOffsetY += 2;  
+        this.featherOffsetY += 2;
         if (millis() >= this.featherEndTime) {
           this.featherFalling = false;
         }
@@ -570,9 +570,9 @@ class BirdBoss extends Boss {
           this.feathers.splice(i, 1);
         }
       }
-  
+
       this.animate();
-  
+
       // 如果 Boss 处于冻结状态，则只更新计时器，不执行移动和攻击
       if (this.isFrozen) {
         if (millis() >= this.freezeEndTime) {
@@ -583,12 +583,12 @@ class BirdBoss extends Boss {
           return;
         }
       }
-  
+
       // 正常 Boss 更新逻辑：无敌时间、攻击模式、移动、攻击等
       if (this.invulnerableTime > 0) {
         this.invulnerableTime--;
       }
-  
+
       this.patternTimer++;
       if (this.patternTimer > 180) {  // 从240降到180
         this.attackPattern = (this.attackPattern + 1) % 5;
@@ -605,10 +605,10 @@ class BirdBoss extends Boss {
         this.damage *= 1.5;
         showFloatingText("Boss Enraged!", this.pos.x, this.pos.y - 40, color(255, 0, 0));
       }
-  
+
       let distToPlayer = p5.Vector.dist(this.pos, player.pos);
       let dirToPlayer = p5.Vector.sub(player.pos, this.pos).normalize();
-  
+
       if (!this.shieldActive) {
         if (this.isDashing) {
           this.handleDashing(dirToPlayer);
@@ -620,28 +620,28 @@ class BirdBoss extends Boss {
         }
         this.executeAttackPattern(dirToPlayer);
       }
-  
+
       this.updateTimers();
-  
+
       this.pos.x = constrain(this.pos.x, 0, width);
       this.pos.y = constrain(this.pos.y, 0, height);
-  
+
       if (p5.Vector.dist(this.pos, player.pos) < this.radius + player.radius) {
         let knockbackDir = p5.Vector.sub(player.pos, this.pos).normalize();
         player.pos.add(knockbackDir.mult(20)); // 将玩家击退20个单位
         this.isFrozen = true;
         this.freezeEndTime = millis() + 2000; // Boss 冻结2秒
       }
-  
+
       this.animate();
-    } 
+    }
     catch (error) {
       console.error("Error in BirdBoss update:", error);
     }
   }
-  
+
   executeAttackPattern(dirToPlayer) {
-    switch(this.attackPattern) {
+    switch (this.attackPattern) {
       case 0:
         this.performWebAttack(dirToPlayer);
         break;
@@ -659,7 +659,7 @@ class BirdBoss extends Boss {
         break;
     }
   }
-  
+
   performWebAttack(dirToPlayer) {
     if (this.webCooldown <= 0) {
       for (let i = -2; i <= 2; i++) {
@@ -674,7 +674,7 @@ class BirdBoss extends Boss {
       this.webCooldown = 100;
     }
   }
-  
+
   performSummonAttack() {
     if (this.summonCooldown <= 0) {
       let bulletCount = 8;
@@ -685,32 +685,32 @@ class BirdBoss extends Boss {
         let bullet = new EnemyBullet(this.pos.x, this.pos.y, bulletVel);
         enemyBullets.push(bullet);
       }
-      
-      this.summonCooldown = 50; 
+
+      this.summonCooldown = 50;
       showFloatingText("Radial Attack!", this.pos.x, this.pos.y - 30, color(255, 100, 255));
     }
   }
-  
-  
+
+
   performWebWallAttack(dirToPlayer) {
     if (this.webWallCooldown > 0) return;
     let perpDir = createVector(-dirToPlayer.y, dirToPlayer.x);
-    let segmentCount = 5;   
-    let spacing = 20;       
-  
+    let segmentCount = 5;
+    let spacing = 20;
+
     for (let i = -Math.floor(segmentCount / 2); i <= Math.floor(segmentCount / 2); i++) {
       let offset = p5.Vector.mult(perpDir, i * spacing);
       let spawnPos = p5.Vector.add(this.pos, offset);
- 
+
       let bulletVel = p5.Vector.mult(dirToPlayer, 5);
       let web = new WebProjectile(spawnPos.x, spawnPos.y, bulletVel);
       enemyBullets.push(web);
     }
 
-    this.webWallCooldown = 180;  
+    this.webWallCooldown = 180;
     showFloatingText("Web Wall!", this.pos.x, this.pos.y - 30, color(255, 100, 255));
   }
-  
+
   performDashAttack() {
     if (this.dashCooldown <= 0 && !this.isDashing) {
       this.isDashing = true;
@@ -719,7 +719,7 @@ class BirdBoss extends Boss {
       showFloatingText("Dash Attack!", this.pos.x, this.pos.y - 30, color(255, 100, 0));
     }
   }
-  
+
   performPoisonAttack() {
     if (this.trailCounter >= 20) {
       for (let i = 0; i < 4; i++) {
@@ -736,13 +736,13 @@ class BirdBoss extends Boss {
       this.trailCounter = 0;
     }
   }
-  
+
   performMeleeAttack() {
     player.takeDamage(this.meleeDamage);
     this.meleeAttackCooldown = 45;
     showFloatingText("Melee Attack!", this.pos.x, this.pos.y - 30, color(255, 0, 0));
   }
-  
+
   handleDashing(dirToPlayer) {
     this.dashDuration--;
     if (this.dashDuration > 0) {
@@ -751,7 +751,7 @@ class BirdBoss extends Boss {
       this.isDashing = false;
     }
   }
-  
+
   handleNormalMovement(dirToPlayer) {
     let nextPos = p5.Vector.add(this.pos, p5.Vector.mult(dirToPlayer, this.speed));
     let canMove = true;
@@ -765,7 +765,7 @@ class BirdBoss extends Boss {
       this.pos.add(p5.Vector.mult(dirToPlayer, this.speed));
     }
   }
-  
+
   updateTimers() {
     this.webCooldown--;
     this.meleeAttackCooldown--;
@@ -774,7 +774,7 @@ class BirdBoss extends Boss {
     this.summonCooldown--;
     this.trailCounter++;
   }
-  
+
   updateBirdlings() {
     for (let i = this.birdlings.length - 1; i >= 0; i--) {
       let birdling = this.birdlings[i];
@@ -786,7 +786,7 @@ class BirdBoss extends Boss {
     }
     this.animate();
   }
-  
+
   animate() {
     this.animationCounter++;
     if (this.animationCounter >= this.animationDelay) {
@@ -794,39 +794,39 @@ class BirdBoss extends Boss {
       this.frameIndex = (this.frameIndex + 1) % this.currentAnimation.length;
     }
   }
-  
+
   display() {
-  // 绘制 Boss
-  let frameWidth = 200;
-  let frameHeight = 160;
-  let columns = floor(this.birdBossAction.width / frameWidth);
-  let frameX = (this.currentAnimation[this.frameIndex] % columns) * frameWidth;
-  let frameY = floor(this.currentAnimation[this.frameIndex] / columns) * frameHeight;
+    // 绘制 Boss
+    let frameWidth = 200;
+    let frameHeight = 160;
+    let columns = floor(this.birdBossAction.width / frameWidth);
+    let frameX = (this.currentAnimation[this.frameIndex] % columns) * frameWidth;
+    let frameY = floor(this.currentAnimation[this.frameIndex] / columns) * frameHeight;
 
-  let drawWidth = this.size;
-  let drawHeight = this.size * (frameHeight / frameWidth);
-  let drawX = this.pos.x - drawWidth / 2;
-  let drawY = this.pos.y - drawHeight / 2;
+    let drawWidth = this.size;
+    let drawHeight = this.size * (frameHeight / frameWidth);
+    let drawX = this.pos.x - drawWidth / 2;
+    let drawY = this.pos.y - drawHeight / 2;
 
-  image(
-    this.birdBossAction,
-    drawX,
-    drawY,
-    drawWidth,
-    drawHeight,
-    frameX,
-    frameY,
-    frameWidth,
-    frameHeight
-  );
+    image(
+      this.birdBossAction,
+      drawX,
+      drawY,
+      drawWidth,
+      drawHeight,
+      frameX,
+      frameY,
+      frameWidth,
+      frameHeight
+    );
 
-  this.displayHealthBar();
+    this.displayHealthBar();
 
-  // 绘制羽毛
-  for (let f of this.feathers) {
-    f.display();  
+    // 绘制羽毛
+    for (let f of this.feathers) {
+      f.display();
+    }
   }
-}
 
   displayHealthBar() {
     displayBossHealthBar();
@@ -836,7 +836,7 @@ class BirdBoss extends Boss {
 class SlimeBoss extends Boss {
   constructor(slimeBossImage, type = "normal") {
     super(true, "slimeBoss", slimeBossImage, 200, 160);
-    
+
     // Boss 基础属性
     this.health = 200;
     this.maxHealth = 200;
@@ -845,7 +845,7 @@ class SlimeBoss extends Boss {
     this.size = 120;
     this.isActive = true;
     this.pos = createVector(width / 2, height / 2); // 确保初始化位置
-    
+
     // 动画相关
     this.slimeBossImage = slimeBossImage;
     this.columns = 4;
@@ -857,27 +857,27 @@ class SlimeBoss extends Boss {
     this.frameIndex = 0;
     this.animationDelay = 6;
     this.animationCounter = 0;
-    
+
     // 移动相关
     this.movedFrame15 = false;
     this.movedFrame16 = false;
-    
+
     // 元素相关
     this.type = type;
     this.elementalColor = this.getElementalColor(type);
     this.elementalEffects = [];
     this.poisonPools = []; // 确保初始化毒池数组
-    
+
     // 技能相关
     this.skillCooldown = 180;
     this.skillDelay = 180;
-    
+
     // 元素技能属性
     this.initElementalProperties(type);
   }
 
   initElementalProperties(type) {
-    switch(type) {
+    switch (type) {
       case "fire":
         this.flameDamage = 40;
         this.flameRadius = 150;
@@ -901,13 +901,13 @@ class SlimeBoss extends Boss {
         this.windForce = 15;
         this.windRadius = 200;
         this.windDuration = 60;
-        this.windAngle = PI/2;
+        this.windAngle = PI / 2;
         break;
     }
   }
 
   getElementalColor(type) {
-    switch(type) {
+    switch (type) {
       case "fire": return color(255, 100, 0);
       case "water": return color(0, 100, 255);
       case "poison": return color(0, 255, 0);
@@ -926,15 +926,15 @@ class SlimeBoss extends Boss {
 
   update() {
     if (!this.isActive || !player) return;
-    
+
     try {
       // 更新动画
       this.animate();
       let currentFrame = this.currentAnimation[this.frameIndex];
-      
+
       // 计算到玩家的方向
       let dirToPlayer = p5.Vector.sub(player.pos, this.pos).normalize();
-      
+
       // 基本移动逻辑
       if (!this.isDashing) {
         if (currentFrame === 14 && !this.movedFrame15) {
@@ -944,7 +944,7 @@ class SlimeBoss extends Boss {
         } else if (currentFrame !== 14) {
           this.movedFrame15 = false;
         }
-        
+
         if (currentFrame === 15 && !this.movedFrame16) {
           let moveVec = p5.Vector.mult(dirToPlayer, 80);
           this.pos.add(moveVec);
@@ -953,7 +953,7 @@ class SlimeBoss extends Boss {
           this.movedFrame16 = false;
         }
       }
-      
+
       // 更新技能冷却
       if (this.skillCooldown > 0) {
         this.skillCooldown--;
@@ -961,12 +961,12 @@ class SlimeBoss extends Boss {
         this.useElementalSkill();
         this.skillCooldown = this.skillDelay;
       }
-      
+
       // 更新元素效果
       if (this.elementalEffects) {
         this.updateElementalEffects();
       }
-      
+
       // 确保不会移出屏幕
       this.pos.x = constrain(this.pos.x, 0, width);
       this.pos.y = constrain(this.pos.y, 0, height);
@@ -976,7 +976,7 @@ class SlimeBoss extends Boss {
   }
 
   useElementalSkill() {
-    switch(this.type) {
+    switch (this.type) {
       case "fire":
         this.fireSkill();
         break;
@@ -996,11 +996,11 @@ class SlimeBoss extends Boss {
   fireSkill() {
     this.isDashing = true;
     let dirToPlayer = p5.Vector.sub(player.pos, this.pos).normalize();
-    
+
     // 烈焰冲撞
     let dashVec = p5.Vector.mult(dirToPlayer, this.dashSpeed);
     this.pos.add(dashVec);
-    
+
     // 火焰爆炸效果
     this.elementalEffects.push({
       type: "fire",
@@ -1011,9 +1011,9 @@ class SlimeBoss extends Boss {
       startTime: millis(),
       expandSpeed: 2
     });
-    
+
     showFloatingText("Flame Burst!", this.pos.x, this.pos.y - 30, color(255, 100, 0));
-    
+
     // 设置短暂的冲刺状态
     setTimeout(() => {
       this.isDashing = false;
@@ -1023,15 +1023,15 @@ class SlimeBoss extends Boss {
   // 水流史莱姆技能
   waterSkill() {
     let dirToPlayer = p5.Vector.sub(player.pos, this.pos).normalize();
-    
+
     // 发射多个水波
     for (let i = 0; i < this.wavesCount; i++) {
-      let angle = -PI/6 + (i * PI/6);
+      let angle = -PI / 6 + (i * PI / 6);
       let rotatedDir = createVector(
         dirToPlayer.x * cos(angle) - dirToPlayer.y * sin(angle),
         dirToPlayer.x * sin(angle) + dirToPlayer.y * cos(angle)
       );
-      
+
       this.elementalEffects.push({
         type: "water",
         pos: this.pos.copy(),
@@ -1043,7 +1043,7 @@ class SlimeBoss extends Boss {
         pulseTime: millis()
       });
     }
-    
+
     showFloatingText("Water Waves!", this.pos.x, this.pos.y - 30, color(0, 100, 255));
   }
 
@@ -1059,14 +1059,14 @@ class SlimeBoss extends Boss {
       maxRadius: this.poisonRadius * 2,
       spreadSpeed: this.poisonSpreadSpeed
     });
-    
+
     showFloatingText("Toxic Pool!", this.pos.x, this.pos.y - 30, color(0, 255, 0));
   }
 
   // 疾风史莱姆技能
   windSkill() {
     let angleToPlayer = atan2(player.pos.y - this.pos.y, player.pos.x - this.pos.x);
-    
+
     this.elementalEffects.push({
       type: "wind",
       pos: this.pos.copy(),
@@ -1081,7 +1081,7 @@ class SlimeBoss extends Boss {
         life: random(20, 40)
       }))
     });
-    
+
     showFloatingText("Wind Gust!", this.pos.x, this.pos.y - 30, color(200, 200, 255));
   }
 
@@ -1090,8 +1090,8 @@ class SlimeBoss extends Boss {
     for (let i = this.elementalEffects.length - 1; i >= 0; i--) {
       let effect = this.elementalEffects[i];
       effect.duration--;
-      
-      switch(effect.type) {
+
+      switch (effect.type) {
         case "fire":
           // 火焰效果扩散
           effect.radius += effect.expandSpeed;
@@ -1100,7 +1100,7 @@ class SlimeBoss extends Boss {
             showFloatingText("Burning!", player.pos.x, player.pos.y - 20, color(255, 100, 0));
           }
           break;
-          
+
         case "water":
           // 水波移动和脉动
           effect.pos.add(effect.vel);
@@ -1111,7 +1111,7 @@ class SlimeBoss extends Boss {
             showFloatingText("Slowed!", player.pos.x, player.pos.y - 20, color(0, 100, 255));
           }
           break;
-          
+
         case "wind":
           // 更新风效果粒子
           effect.particles.forEach(p => {
@@ -1119,7 +1119,7 @@ class SlimeBoss extends Boss {
             p.life--;
           });
           effect.particles = effect.particles.filter(p => p.life > 0);
-          
+
           let playerInRange = p5.Vector.dist(player.pos, effect.pos) < effect.radius;
           if (playerInRange) {
             let pushDir = p5.Vector.fromAngle(effect.angle).mult(effect.force);
@@ -1128,7 +1128,7 @@ class SlimeBoss extends Boss {
           }
           break;
       }
-      
+
       if (effect.duration <= 0) {
         this.elementalEffects.splice(i, 1);
       }
@@ -1139,17 +1139,17 @@ class SlimeBoss extends Boss {
       for (let i = this.poisonPools.length - 1; i >= 0; i--) {
         let pool = this.poisonPools[i];
         pool.duration--;
-        
+
         // 毒池扩散
-        pool.radius = min(pool.maxRadius, 
-          pool.startRadius + (pool.maxRadius - pool.startRadius) * 
+        pool.radius = min(pool.maxRadius,
+          pool.startRadius + (pool.maxRadius - pool.startRadius) *
           (1 - pool.duration / this.poisonDuration));
-        
+
         if (p5.Vector.dist(player.pos, pool.pos) < pool.radius) {
           player.takeDamage(pool.damage / 60);
           showFloatingText("Poisoned!", player.pos.x, player.pos.y - 20, color(0, 255, 0));
         }
-        
+
         if (pool.duration <= 0) {
           this.poisonPools.splice(i, 1);
         }
@@ -1165,7 +1165,7 @@ class SlimeBoss extends Boss {
     push();
     // 绘制元素效果
     for (let effect of this.elementalEffects) {
-      switch(effect.type) {
+      switch (effect.type) {
         case "fire":
           // 绘制火焰效果
           for (let r = 0; r < 3; r++) {
@@ -1174,7 +1174,7 @@ class SlimeBoss extends Boss {
             ellipse(effect.pos.x, effect.pos.y, effect.radius * (1 - r * 0.2));
           }
           break;
-          
+
         case "water":
           // 绘制水波效果
           let pulse = sin((millis() - effect.pulseTime) / 100) * 10;
@@ -1184,13 +1184,13 @@ class SlimeBoss extends Boss {
             ellipse(effect.pos.x, effect.pos.y, (effect.radius + pulse) * (1 - r * 0.2));
           }
           break;
-          
+
         case "wind":
           // 绘制风效果
           fill(200, 200, 255, 60);
           arc(effect.pos.x, effect.pos.y, effect.radius * 2, effect.radius * 2,
-              effect.angle - this.windAngle/2, effect.angle + this.windAngle/2);
-          
+            effect.angle - this.windAngle / 2, effect.angle + this.windAngle / 2);
+
           // 绘制风粒子
           effect.particles.forEach(p => {
             let alpha = map(p.life, 0, 40, 0, 255);
@@ -1200,7 +1200,7 @@ class SlimeBoss extends Boss {
           break;
       }
     }
-    
+
     // 绘制毒池
     if (this.type === "poison") {
       for (let pool of this.poisonPools) {
@@ -1211,17 +1211,17 @@ class SlimeBoss extends Boss {
         }
       }
     }
-    
+
     // 保持现有的史莱姆绘制代码...
     tint(this.elementalColor);
     let frameNum = this.currentAnimation[this.frameIndex];
     let col = frameNum % this.columns;
     let row = floor(frameNum / this.columns);
-    
+
     image(
       this.slimeBossImage,
-      this.pos.x - this.size/2,
-      this.pos.y - this.size/2,
+      this.pos.x - this.size / 2,
+      this.pos.y - this.size / 2,
       this.size,
       this.size,
       col * this.frameWidth,
@@ -1246,9 +1246,9 @@ class SpiderBoss extends Boss {
       this.isActive = false;
       return;
     }
-    
+
     super(true, "spiderBoss", spiderBossImage, 200, 160);
-    
+
     // 基础属性
     this.health = 1000;
     this.maxHealth = 1000;
@@ -1257,7 +1257,7 @@ class SpiderBoss extends Boss {
     this.size = 120;
     this.isActive = true;
     this.pos = createVector(width / 2, height / 2);
-    
+
     // 动画相关
     this.columns = 4;
     this.rows = 5;
@@ -1268,18 +1268,18 @@ class SpiderBoss extends Boss {
     this.frameIndex = 0;
     this.animationDelay = 6;
     this.animationCounter = 0;
-    
+
     // 狂暴相关
     this.isEnraged = false;
     this.enrageThreshold = this.maxHealth * 0.5;
     this.enrageMultiplier = 1.5;
-    
+
     // 小蜘蛛召唤相关
     this.spawnThresholds = [this.maxHealth * 0.66, this.maxHealth * 0.33];
     this.hasSpawnedAt66 = false;
     this.hasSpawnedAt33 = false;
     this.minions = [];
-    
+
     // 技能相关
     this.skillCooldowns = {
       poison: 0,
@@ -1291,20 +1291,20 @@ class SpiderBoss extends Boss {
       grab: 240,
       fear: 300
     };
-    
+
     // 毒液攻击
     this.poisonDamage = 5;
     this.poisonDuration = 180;
-    this.poisonAngle = PI/4;
+    this.poisonAngle = PI / 4;
     this.poisonRange = 200;
-    
+
     // 捕食连击
     this.grabRange = 300;
     this.grabSpeed = 15;
     this.comboHits = 5;
     this.comboDamage = 15;
     this.comboDelay = 10;
-    
+
     // 恐惧气息
     this.fearDuration = 120;
     this.fearRange = 250;
@@ -1312,31 +1312,31 @@ class SpiderBoss extends Boss {
 
   update() {
     if (!this.isActive || !player) return;
-    
+
     // 更新动画
     this.animate();
-    
+
     // 检查狂暴状态
     if (!this.isEnraged && this.health < this.enrageThreshold) {
       this.enterEnragedState();
     }
-    
+
     // 检查小蜘蛛召唤
     this.checkMinionSpawn();
-    
+
     // 更新技能冷却
     Object.keys(this.skillCooldowns).forEach(skill => {
       if (this.skillCooldowns[skill] > 0) {
         this.skillCooldowns[skill]--;
       }
     });
-    
+
     // 使用技能
     this.useSkills();
-    
+
     // 更新小蜘蛛
     this.updateMinions();
-    
+
     // 确保不会移出屏幕
     this.pos.x = constrain(this.pos.x, 0, width);
     this.pos.y = constrain(this.pos.y, 0, height);
@@ -1377,19 +1377,19 @@ class SpiderBoss extends Boss {
 
   useSkills() {
     let distToPlayer = p5.Vector.dist(this.pos, player.pos);
-    
+
     // 毒液喷射
     if (this.skillCooldowns.poison <= 0 && distToPlayer < this.poisonRange) {
       this.poisonSpray();
       this.skillCooldowns.poison = this.skillDelays.poison;
     }
-    
+
     // 捕食连击
     if (this.skillCooldowns.grab <= 0 && distToPlayer < this.grabRange) {
       this.grabAttack();
       this.skillCooldowns.grab = this.skillDelays.grab;
     }
-    
+
     // 恐惧气息
     if (this.skillCooldowns.fear <= 0 && distToPlayer < this.fearRange) {
       this.fearAura();
@@ -1416,7 +1416,7 @@ class SpiderBoss extends Boss {
     let dirToPlayer = p5.Vector.sub(player.pos, this.pos).normalize();
     player.pos = this.pos.copy().add(dirToPlayer.mult(50));
     showFloatingText("Web Grab!", this.pos.x, this.pos.y - 30, color(200));
-    
+
     // 连击
     for (let i = 0; i < this.comboHits; i++) {
       await new Promise(resolve => setTimeout(resolve, this.comboDelay));
@@ -1460,17 +1460,17 @@ class SpiderBoss extends Boss {
           this.pos.y + sin(angle) * 200);
       }
     }
-    
+
     // 绘制Boss
     tint(this.isEnraged ? color(255, 100, 100) : 255);
     let frameNum = this.currentAnimation[this.frameIndex];
     let col = frameNum % this.columns;
     let row = floor(frameNum / this.columns);
-    
+
     image(
       this.spiderBossImage,
-      this.pos.x - this.size/2,
-      this.pos.y - this.size/2,
+      this.pos.x - this.size / 2,
+      this.pos.y - this.size / 2,
       this.size,
       this.size,
       col * this.frameWidth,
@@ -1492,7 +1492,7 @@ class SpiderMinion {
     this.speed = 3;
     this.size = 30;
   }
-  
+
   // ... 小蜘蛛的其他方法
 }
 
@@ -1505,6 +1505,6 @@ class PoisonProjectile {
     this.duration = duration;
     this.radius = 10;
   }
-  
+
   // ... 毒液弹的其他方法
 }

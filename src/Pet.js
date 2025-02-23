@@ -194,8 +194,12 @@ function showPetSelectionScreen() {
 
 function finishPetSelection() {
   player.needsPetSelection = false;
-  wave++;
-  spawnEnemiesForWave(wave);
+  if (wave === 6) {
+    wave++;
+    setTimeout(() => {
+      spawnEnemiesForWave(wave);
+    }, 500);
+  }
   gameState = "game";
 }
 

@@ -43,6 +43,8 @@ function handleGameplay(now) {
 
       if (wave === 6) {
         player.needsPetSelection = true;
+        gameState = "petSelection";
+        return;
       }
 
       if (wave === 15) {

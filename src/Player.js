@@ -81,10 +81,10 @@ class Player {
     this.chargeBarScale = 0.7;
 
     // 添加宠物相关属性
-    this.pet = null;
     this.invincible = false; // 无敌状态(用于防御型宠物)
     this.invincibleFlash = 0; // 无敌闪烁效果
-    this.needsPetSelection = false; // 添加新属性
+    this.needsPetSelection = false;
+    this.pet = null;
   }
 
   takeDamage(amount) {
