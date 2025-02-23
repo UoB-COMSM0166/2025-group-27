@@ -147,7 +147,6 @@ function updateWeather() {
   if (currentTime - lastWeatherChange > 60000) {
     let weatherOptions = ["normal", "hot", "snowy", "thunderstorm"];
     weather = random(weatherOptions);
-    console.log("天气切换为：", weather);
     lastWeatherChange = currentTime;
     weatherStartTime = currentTime;
 

@@ -297,10 +297,7 @@ class Player {
   // 修改子弹发射逻辑
   shoot() {
     if (mouseIsPressed && this.fireCooldown <= 0) {
-      console.log("A");
-      console.log("type:" + this.characterType);
       if (this.characterType === "gunner") {
-        console.log("B");
         // 计算角色中心
         let centerX = this.pos.x + this.chWidth / 2;
         let centerY = this.pos.y + this.chHeight / 2;
@@ -579,7 +576,6 @@ class Player {
   updateArrows() {
     for (let i = this.arrows.length - 1; i >= 0; i--) {
       let arrow = this.arrows[i];
-      console.log("Arrow damage:" + arrow.damage);
       // 添加速度衰减模拟空气阻力
       arrow.vel.mult(0.99);
       
@@ -602,14 +598,11 @@ class Player {
         
         // 使用矢量距离计算
         let distVec = p5.Vector.sub(arrow.pos, enemyCenter);
-        console.log("mag:" + distVec.mag());
-        console.log("enemy.size:" + enemy.size);
         if (distVec.mag() < enemy.enHeight * 1.0) { // 增加碰撞范围
           let isCrit = random() < this.critRate;
           let finalDamage = isCrit ? 
             arrow.damage * this.critDamage : 
             arrow.damage;
-          console.log("Finaldamage:" + finalDamage);
           let killed = enemy.hit(finalDamage);
           if (killed) {
             enemies.splice(j, 1);

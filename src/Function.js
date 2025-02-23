@@ -124,7 +124,6 @@ function handleGameplay(now) {
 
     // 检查是否需要等待宠物选择
     if (wave === 5 && player.needsPetSelection) {
-      console.log("C");
       gameState = "petSelection";
       return;
     }
@@ -253,7 +252,6 @@ function initButtons() {
 // ===== 初始化角色时生成第一波敌人 =====
 function initPlayer(type) {
   player = new Player(playerAction, 26, 26, type);
-  console.log("type-" + type);
   if (type === "gunner") {
     player.attackPower = 10;
     player.attackDamage = 10;
