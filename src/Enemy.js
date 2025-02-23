@@ -820,18 +820,16 @@ class BirdBoss extends Boss {
 }
 
 
-// 假设 Boss 是你已有的父类
+
 class SlimeBoss extends Boss {
-  // 新增参数 moveMultiplier15 和 moveMultiplier16 分别用于第15帧和第16帧横向移动距离
   constructor(slimeBossImage, moveMultiplier15, moveMultiplier16) {
     super(true, "slimeBoss", slimeBossImage, 200, 160);
     this.slimeBossImage = slimeBossImage;
-    
-    // 新增：横向移动距离参数
+ 
     this.moveMultiplier15 = moveMultiplier15;
     this.moveMultiplier16 = moveMultiplier16;
     
-    // 动画设置（精灵图分为 4 列×5 行，使用前 19 帧）
+    
     this.columns = 4;
     this.rows = 5;
     this.totalFrames = 19; 
@@ -846,8 +844,8 @@ class SlimeBoss extends Boss {
     // Boss 属性
     this.pos = createVector(width / 2, height / 2);
     this.size = 120;         // 显示时的宽度
-    this.health = 800;       // 调整后的血量（可根据需要调整）
-    this.maxHealth = 800;
+    this.health = 200;       // 调整后的血量（可根据需要调整）
+    this.maxHealth = 200;
     this.damage = 25;
     this.speed = 2.5;        // 用于在特定帧触发位移
     this.radius = 40;        // 近战判定范围（原设定）
