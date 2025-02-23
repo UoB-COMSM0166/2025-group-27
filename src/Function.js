@@ -361,27 +361,73 @@ function displayAttributes() {
 
 // === 显示Boss血条 ===
 function displayBossHealthBar() {
-  let boss = enemies.find((e) => e instanceof Boss);
-  if (!boss) return;
+  // 只计算活跃的Boss
+  let activeBosses = enemies.filter(e => e instanceof Boss && e.isActive);
+  if (activeBosses.length === 0) {
+    bossActive = false;
+    return;
+  }
+
+  // 计算活跃Boss的总血量
+  let totalMaxHealth = 0;
+  let totalCurrentHealth = 0;
+  for (let boss of activeBosses) {
+    totalMaxHealth += boss.maxHealth;
+    totalCurrentHealth += Math.max(0, boss.health); // 确保不会出现负数
+  }
+
+  // 绘制血条
   const barWidth = width * 0.6;
   const barHeight = 20;
   const x = width / 2 - barWidth / 2;
   const y = 30;
+
+  // 血条背景
   stroke(255, 215, 0);
   strokeWeight(2);
   fill(50);
   rect(x, y, barWidth, barHeight, 5);
   noStroke();
-  fill(255, 0, 0);
-  rect(x + 2, y + 2, barWidth - 4, barHeight - 4, 3);
-  fill(0, 255, 0);
-  rect(
-    x + 2,
-    y + 2,
-    (barWidth - 4) * (boss.health / boss.maxHealth),
-    barHeight - 4,
-    3
+
+  // 当前血量
+  if (totalMaxHealth > 0) { // 添加检查以避免除以零
+    let healthPercentage = totalCurrentHealth / totalMaxHealth;
+    healthPercentage = constrain(healthPercentage, 0, 1); // 确保百分比在0-1之间
+    
+    fill(255, 0, 0);
+    rect(x + 2, y + 2, barWidth - 4, barHeight - 4, 3);
+    fill(0, 255, 0);
+    rect(
+      x + 2,
+      y + 2,
+      (barWidth - 4) * healthPercentage,
+      barHeight - 4,
+      3
+    );
+  }
+
+  // 显示血量数值
+  fill(255);
+  textAlign(CENTER);
+  textSize(14);
+  text(
+    `Boss HP: ${Math.ceil(totalCurrentHealth)} / ${totalMaxHealth}`,
+    width / 2,
+    y + barHeight + 15
   );
+
+  // 只显示活跃Boss的单独血量
+  if (activeBosses.length > 1) {
+    textSize(12);
+    activeBosses.forEach((boss, index) => {
+      fill(255);
+      text(
+        `Slime ${index + 1}: ${Math.ceil(boss.health)} / ${boss.maxHealth}`,
+        width / 2,
+        y + barHeight + 35 + index * 15
+      );
+    });
+  }
 }
 
 // ===== 其他UI函数 =====
@@ -633,26 +679,21 @@ function spawnEnemiesForWave(currentWave) {
   enemies = [];
 
   if (currentWave === 3) {
-    let boss1 = new SlimeBoss(slimeBossImage, 30, 20);
-    let boss2 = new SlimeBoss(slimeBossImage, 80, 50);
-    let boss3 = new SlimeBoss(slimeBoss2Image, 100, 80);
-    let boss4 = new SlimeBoss(slimeBoss2Image, 120, 30);
+    let boss1 = new SlimeBoss(slimeBossImage, "fire");
+    let boss2 = new SlimeBoss(slimeBossImage, "water");
+    let boss3 = new SlimeBoss(slimeBoss2Image, "poison");
+    let boss4 = new SlimeBoss(slimeBoss2Image, "wind");
     
-    // 可选：设置不同位置以区分这四个 boss
-    boss1.pos = createVector(width / 2 - 200, height / 2- 70);
-    boss2.pos = createVector(width / 2 + 10, height / 2- 10);
+    // 设置不同位置
+    boss1.pos = createVector(width / 2 - 200, height / 2 - 70);
+    boss2.pos = createVector(width / 2 + 10, height / 2 - 10);
     boss3.pos = createVector(width / 2 - 120, height / 2 - 50);
     boss4.pos = createVector(width / 2 + 60, height / 2 - 190);
     
     enemies.push(boss1, boss2, boss3, boss4);
-  
-    showFloatingText(
-      "SLime Boss Appears!",
-      width / 2,
-      height / 2 - 40,
-      color(0, 255, 0)
-    );
-    bossActive = true; // 标记Boss战
+    
+    showFloatingText("Elemental Slime Bosses Appear!", width / 2, height / 2 - 40, color(0, 255, 0));
+    bossActive = true;
   }
   
   

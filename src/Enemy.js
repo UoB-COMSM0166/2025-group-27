@@ -382,25 +382,40 @@ class RangedEnemy extends Enemy {
 class Boss extends Enemy {
   constructor(isElite = true, enemyType = "boss", bossAction, bossWidth, bossHeight) {
     super(isElite, enemyType, bossAction, bossWidth, bossHeight);
-    // 通用 Boss 属性
     this.isActive = true;
     this.invulnerableTime = 0;
-    
-    // 用于碰撞后冻结状态
     this.isFrozen = false;
     this.freezeEndTime = 0;
   }
-  
-  display() {
-    fill(255, 165, 0);
-    ellipse(this.pos.x, this.pos.y, this.size);
-    this.displayHealthBar();
-  }
 
-  displayHealthBar() {
-    displayBossHealthBar();
-  }
+  hit(damage) {
+    if (!this.isActive) return false;
 
+    // 扣血
+    this.health -= damage;
+    showFloatingText("-" + Math.floor(damage), this.pos.x, this.pos.y - 20, color(255, 0, 0));
+
+    // 检查是否死亡
+    if (this.health <= 0) {
+      this.health = 0; // 确保血量不会小于0
+      this.isActive = false;
+      
+      // 显示击败提示
+      let bossName = this.constructor.name.replace('Boss', '');
+      showFloatingText(`${bossName} Boss Defeated!`, this.pos.x, this.pos.y - 40, color(255, 215, 0));
+      
+      // 检查是否所有Boss都被击败
+      let remainingActiveBosses = enemies.filter(e => e instanceof Boss && e.isActive).length;
+      if (remainingActiveBosses === 0) {
+        bossActive = false;
+        // 增加Boss击败计数
+        bossDefeated++;
+      }
+      
+      return true;
+    }
+    return false;
+  }
 }
 
 class BirdBoss extends Boss {
@@ -468,73 +483,6 @@ class BirdBoss extends Boss {
       this.featherOffsetY = 0;      
   }
 
-  
-  hit(damage) {
-    if (!this.isActive) return false;
-  
-    // 生成4片羽毛，以Boss当前位置为中心稍作偏移
-    let offsets = [
-      createVector(-30, -30),
-      createVector(30, -30),
-      createVector(-15, 0),
-      createVector(15, 0)
-    ];
-    for (let off of offsets) {
-      let fx = this.pos.x + off.x;
-      let fy = this.pos.y + off.y;
-      let feather = new Feather(fx, fy, featherSprite);
-      this.feathers.push(feather);
-    }
-  
-    if (this.invulnerableTime <= 0) {
-      if (this.shieldActive) {
-        this.shieldHealth -= damage;
-        showFloatingText("-" + Math.floor(damage), this.pos.x, this.pos.y - 20, color(0, 255, 255));
-        if (this.shieldHealth <= 0) {
-          this.shieldActive = false;
-          showFloatingText("Shield Broken!", this.pos.x, this.pos.y - 30, color(255, 255, 0));
-        }
-      } else {
-        this.health -= damage;
-        this.invulnerableTime = 5;
-        showFloatingText("-" + Math.floor(damage), this.pos.x, this.pos.y - 20, color(255, 0, 0));
-      }
-  
-      if (this.health <= 0) {
-        this.isActive = false;
-        enemies = enemies.filter(e => e !== this);
-        bossActive = false;
-        showFloatingText("Boss Defeated!", this.pos.x, this.pos.y - 40, color(255, 215, 0));
-      
-        if (wave === 5 && !player.pet) {
-          gameState = "petSelection";
-        } else {
-          wave++;
-          setTimeout(() => {
-            spawnEnemiesForWave(wave);
-          }, 500);
-        }
-        
-        if (wave === 15) {
-          gameState = "victory";
-          finalStats = {
-            normalEnemies: normalEnemiesDefeated,
-            bosses: bossesDefeated,
-            level: player.level,
-            attackPower: player.attackPower,
-            attackSpeed: player.attackSpeed,
-            attackDamage: player.attackDamage,
-          };
-          return;
-        }
-  
-        return true;
-      }
-    }
-    return false;
-  }
-  
-  
   
   update() {
     try {
@@ -871,22 +819,6 @@ class SlimeBoss extends Boss {
     this.movedFrame16 = false; // 对应第16帧（动画值 15）
   }
   
-  // 修改后的 hit 方法：去掉无敌判断，使 Boss 每次被打都会扣血
-  hit(damage) {
-    if (!this.isActive) return false;
-    // 扣血
-    this.health -= damage;
-    showFloatingText("-" + Math.floor(damage), this.pos.x, this.pos.y - 20, color(255, 0, 0));
-    if (this.health <= 0) {
-      this.isActive = false;
-      enemies = enemies.filter(e => e !== this);
-      bossActive = false;
-      showFloatingText("Slime Boss Defeated!", this.pos.x, this.pos.y - 40, color(255, 215, 0));
-      return true;
-    }
-    return false;
-  }
-  
   update() {
     if (!this.isActive || !player) return;
     
@@ -1044,53 +976,6 @@ class SpiderBoss extends Boss {
   }
 
 
-  hit(damage) {
-    if (!this.isActive) return false;
-
-    if (this.invulnerableTime <= 0) {
-      if (this.shieldActive) {
-        this.shieldHealth -= damage;
-        showFloatingText("-" + Math.floor(damage), this.pos.x, this.pos.y - 20, color(0, 255, 255));
-        if (this.shieldHealth <= 0) {
-          this.shieldActive = false;
-          showFloatingText("Shield Broken!", this.pos.x, this.pos.y - 30, color(255, 255, 0));
-        }
-      } else {
-        this.health -= damage;
-        this.invulnerableTime = 5;
-        showFloatingText("-" + Math.floor(damage), this.pos.x, this.pos.y - 20, color(255, 0, 0));
-      }
-
-      // 检查是否死亡
-      if (this.health <= 0) {
-        this.isActive = false;
-        this.spiderlings = [];
-        showFloatingText("Boss Defeated!", this.pos.x, this.pos.y - 40, color(255, 215, 0));
-        
-        if (wave === 15) {
-          gameState = "victory";
-          finalStats = {
-            normalEnemies: normalEnemiesDefeated,
-            bosses: bossesDefeated,
-            level: player.level,
-            attackPower: player.attackPower,
-            attackSpeed: player.attackSpeed,
-            attackDamage: player.attackDamage,
-          };
-          return;
-        }
-        
-        // 新增：检查是否是第一次击败boss（第5波）
-        if (wave === 5 && !player.pet) {
-          console.log("A");
-          gameState = "petSelection";
-        }
-        return true;
-      }
-    }
-    return false;
-  }
-  
   update() {
     try {
       if (!this.isActive || !player) return;
