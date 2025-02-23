@@ -41,6 +41,10 @@ function handleGameplay(now) {
       bossesDefeated++;
       enemies.splice(j, 1);
 
+      if (wave === 6) {
+        player.needsPetSelection = true;
+      }
+
       if (wave === 15) {
         gameState = "victory";
         finalStats = {
@@ -108,7 +112,14 @@ function handleGameplay(now) {
     if (gameState !== "game") {
       return; // 如果不是游戏状态，不生成新敌人
     }
-    
+
+    // 检查是否需要宠物选择（第6波Boss战后）
+    if (wave === 6 && player.needsPetSelection) {
+      gameState = "petSelection";
+      player.needsPetSelection = false; // 重置标志
+      return; // 直接返回，不执行后续生成敌人的逻辑
+    }
+
     if (wave === 15) {
       gameState = "victory";
       finalStats = {
@@ -119,13 +130,6 @@ function handleGameplay(now) {
         attackSpeed: player.attackSpeed,
         attackDamage: player.attackDamage,
       };
-      return;
-    }
-
-    // 检查是否需要等待宠物选择
-    if (wave === 5 && player.needsPetSelection) {
-      console.log("C");
-      gameState = "petSelection";
       return;
     }
 
@@ -245,6 +249,7 @@ function initButtons() {
 // ===== 初始化角色时生成第一波敌人 =====
 function initPlayer(type) {
   player = new Player(playerAction, 26, 26, type);
+  player.needsPetSelection = false;
   if (type === "melee") {
     player.attackPower = 10;
     player.attackDamage = 10;
@@ -268,7 +273,7 @@ function initPlayer(type) {
   }
   wave = 1; // 新增：重置波数
   enemies = [];
-  
+
   generateInitialObstacles();
 
   spawnEnemiesForWave(wave);
@@ -313,6 +318,9 @@ function displayHUD(elapsedTime) {
 // ===== UI 及输入 =====
 function drawUIElements() {
   switch (gameState) {
+    case "petSelection":
+      showPetSelectionScreen();
+      break;
     case "mainMenu":
       displayMainMenu();
       break;
@@ -393,7 +401,7 @@ function displayBossHealthBar() {
   if (totalMaxHealth > 0) { // 添加检查以避免除以零
     let healthPercentage = totalCurrentHealth / totalMaxHealth;
     healthPercentage = constrain(healthPercentage, 0, 1); // 确保百分比在0-1之间
-    
+
     fill(255, 0, 0);
     rect(x + 2, y + 2, barWidth - 4, barHeight - 4, 3);
     fill(0, 255, 0);
@@ -536,7 +544,7 @@ function drawUpgradeScreen() {
   textSize(32);
   textAlign(CENTER);
   text("Upgrade! Choose one option", width / 2, height / 4);
-  
+
   for (let i = 0; i < upgradeOptions.length; i++) {
     let x = width / 4 + (i * width) / 4;
     let y = height / 2;
@@ -683,20 +691,20 @@ function spawnEnemiesForWave(currentWave) {
     let boss2 = new SlimeBoss(slimeBossImage, "water");
     let boss3 = new SlimeBoss(slimeBoss2Image, "poison");
     let boss4 = new SlimeBoss(slimeBoss2Image, "wind");
-    
+
     // 设置不同位置
     boss1.pos = createVector(width / 2 - 200, height / 2 - 70);
     boss2.pos = createVector(width / 2 + 10, height / 2 - 10);
     boss3.pos = createVector(width / 2 - 120, height / 2 - 50);
     boss4.pos = createVector(width / 2 + 60, height / 2 - 190);
-    
+
     enemies.push(boss1, boss2, boss3, boss4);
-    
+
     showFloatingText("Elemental Slime Bosses Appear!", width / 2, height / 2 - 40, color(0, 255, 0));
     bossActive = true;
   }
-  
-  
+
+
   else if (currentWave === 6) {
     // 生成 BirdBoss
     let bossPos = getValidSpawnPosition();
@@ -710,10 +718,10 @@ function spawnEnemiesForWave(currentWave) {
       color(0, 255, 0)
     );
     bossActive = true;
-  } 
-  
-  
-  
+  }
+
+
+
   else {
     // 普通敌人生成逻辑
     let baseEnemyCount = Math.floor(6 + currentWave * 0.8);
@@ -722,7 +730,7 @@ function spawnEnemiesForWave(currentWave) {
       let enemyType = random();
       let enemy;
       let pos = getValidSpawnPosition();
-      
+
       if (enemyType < 0.4) {
         enemy = new Enemy(isElite, "normal", commonEnemyAction, 18, 22);
       } else if (enemyType < 0.75) {
@@ -730,7 +738,7 @@ function spawnEnemiesForWave(currentWave) {
       } else {
         enemy = new Enemy(isElite, "exploding", commonEnemyAction, 18, 22);
       }
-      
+
       if (enemy) {
         enemy.pos = pos;
         enemies.push(enemy);
@@ -751,10 +759,10 @@ function getValidSpawnPosition() {
 
   while (!isValid && attempts < maxAttempts) {
     pos = createVector(random(width), random(height));
-    
+
     // 检查是否离玩家太近
     let tooCloseToPlayer = player && p5.Vector.dist(pos, player.pos) < safeMargin;
-    
+
     // 检查是否在障碍物内或太靠近障碍物
     let nearObstacle = false;
     for (let obs of obstacles) {
@@ -763,20 +771,20 @@ function getValidSpawnPosition() {
         break;
       }
     }
-    
+
     if (!tooCloseToPlayer && !nearObstacle) {
       isValid = true;
     }
-    
+
     attempts++;
   }
-  
+
   // 如果尝试多次仍找不到合适位置，则在地图边缘生成，并确保不在障碍物内
   if (!isValid) {
     let side = floor(random(4));
     let margin = safeMargin; // 使用安全边距
     do {
-      switch(side) {
+      switch (side) {
         case 0: // 上边
           pos = createVector(random(margin, width - margin), -margin);
           break;
@@ -800,7 +808,7 @@ function getValidSpawnPosition() {
       if (!inObstacle) break;
     } while (true);
   }
-  
+
   return pos;
 }
 
@@ -1011,7 +1019,7 @@ class Pet {
 
   attack(enemies) {
     this.attackCooldown--;
-    
+
     let closest = null;
     let record = Infinity;
     for (const enemy of enemies) {
@@ -1071,7 +1079,7 @@ class Pet2 {
       if (this.shieldTimer <= 0) {
         this.isShieldActive = false;
         player.invincible = false;
-        showFloatingText("🛡️ 护盾消失", player.pos.x, player.pos.y-40, color(100));
+        showFloatingText("🛡️ 护盾消失", player.pos.x, player.pos.y - 40, color(100));
       }
     }
   }
@@ -1080,7 +1088,7 @@ class Pet2 {
     this.isShieldActive = true;
     this.shieldTimer = this.shieldDuration;
     player.invincible = true;
-    showFloatingText("🛡️ 护盾激活!", player.pos.x, player.pos.y-40, color(0, 200, 255));
+    showFloatingText("🛡️ 护盾激活!", player.pos.x, player.pos.y - 40, color(0, 200, 255));
   }
 
   display() {
@@ -1091,76 +1099,73 @@ class Pet2 {
       ellipse(this.pos.x, this.pos.y, 40);
       pop();
     }
-    
+
     fill(0, 150, 255);
-    ellipse(this.pos.x, this.pos.y, this.radius*2);
-    
+    ellipse(this.pos.x, this.pos.y, this.radius * 2);
+
     if (!this.isShieldActive) {
       push();
       textSize(12);
       fill(255);
       textAlign(CENTER);
-      text(`${floor((millis() - this.lastShieldTime) / this.shieldChargeInterval * 100)}%`, 
-           this.pos.x, this.pos.y + 25);
+      text(`${floor((millis() - this.lastShieldTime) / this.shieldChargeInterval * 100)}%`,
+        this.pos.x, this.pos.y + 25);
       pop();
     }
   }
 }
 
 // 添加宠物选择界面
+// 修改showPetSelectionScreen函数中的判断条件
 function showPetSelectionScreen() {
   background(0, 150);
-  
+
   fill(255);
   textSize(32);
   textAlign(CENTER, CENTER);
-  text("选择你的战斗伙伴！", width/2, height/4);
+  text("选择你的战斗伙伴！", width / 2, height / 4);
 
+  // 绘制两个宠物选项
   fill(200);
-  rect(width/2 - 220, height/2 - 80, 200, 120, 10);
-  rect(width/2 + 20, height/2 - 80, 200, 120, 10);
-  
+  rect(width / 2 - 220, height / 2 - 80, 200, 120, 10);
+  rect(width / 2 + 20, height / 2 - 80, 200, 120, 10);
+
   fill(255);
   textSize(20);
-  text("烈焰战狼", width/2 - 120, height/2 - 40);
-  text("钢铁巨龟", width/2 + 120, height/2 - 40);
-  
-  textSize(14);
-  text("自动攻击最近敌人\n+15 攻击伤害", width/2 - 120, height/2);
-  text("每15秒生成护盾\n1.5秒无敌时间", width/2 + 120, height/2);
+  text("烈焰战狼", width / 2 - 120, height / 2 - 40);
+  text("钢铁巨龟", width / 2 + 120, height / 2 - 40);
 
-  if (mouseIsPressed) {
-    if (mouseX > width/2 - 220 && mouseX < width/2 - 20 &&
-        mouseY > height/2 - 80 && mouseY < height/2 + 40) {
-      player.pet = new AttackPet(player.pos.x, player.pos.y);
-      player.attackDamage += 15;
-      generateUpgradeOptions();
-      choosingUpgrade = true;
-      gameState = "upgrading";
-      // 添加延迟，确保状态正确切换
-      setTimeout(() => {
-        if (enemies.length === 0) {
-          spawnEnemiesForWave(wave);
-        }
-      }, 100);
-    }
-    
-    if (mouseX > width/2 + 20 && mouseX < width/2 + 220 &&
-        mouseY > height/2 - 80 && mouseY < height/2 + 40) {
-      player.pet = new DefensePet();
-      player.maxHealth += 150;
-      player.health += 150;
-      generateUpgradeOptions();
-      choosingUpgrade = true;
-      gameState = "upgrading";
-      // 添加延迟，确保状态正确切换
-      setTimeout(() => {
-        if (enemies.length === 0) {
-          spawnEnemiesForWave(wave);
-        }
-      }, 100);
+  textSize(14);
+  text("自动攻击最近敌人\n+15 攻击伤害", width / 2 - 120, height / 2);
+  text("每15秒生成护盾\n1.5秒无敌时间", width / 2 + 120, height / 2);
+
+  // 移除wave === 5的判断，改为检查player.needsPetSelection
+  if (player.needsPetSelection) {
+    if (mouseIsPressed) {
+      // 攻击型宠物区域
+      if (mouseX > width / 2 - 220 && mouseX < width / 2 - 20 &&
+        mouseY > height / 2 - 80 && mouseY < height / 2 + 40) {
+        player.pet = new AttackPet(player.pos.x, player.pos.y);
+        player.attackDamage += 15;
+        finishPetSelection();
+      }
+      // 防御型宠物区域
+      else if (mouseX > width / 2 + 20 && mouseX < width / 2 + 220 &&
+        mouseY > height / 2 - 80 && mouseY < height / 2 + 40) {
+        player.pet = new DefensePet();
+        player.maxHealth += 150;
+        player.health += 150;
+        finishPetSelection();
+      }
     }
   }
+}
+
+function finishPetSelection() {
+  player.needsPetSelection = false;
+  wave++;
+  spawnEnemiesForWave(wave);
+  gameState = "game";
 }
 
 // 添加游戏胜利界面相关内容
@@ -1170,7 +1175,7 @@ function displayVictoryScreen() {
   textAlign(CENTER, CENTER);
   textSize(32);
   text("🎉 Victory! 🎉", width / 2, height / 4);
-  
+
   textSize(20);
   text(`Level: ${finalStats.level}`, width / 2, height / 3);
   text(`Normal Enemies Defeated: ${finalStats.normalEnemies}`, width / 2, height / 3 + 30);

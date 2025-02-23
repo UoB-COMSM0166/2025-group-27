@@ -35,6 +35,10 @@ class Bullet {
             // 检查是否是 Boss
             bossDefeated++;
             bossDefeatedCount++;
+            if (wave === 6) {
+              player.needsPetSelection = true;
+              gameState = "petSelection";
+            }
           }
           normalEnemiesDefeated++;
           player.gainExp(enemy.expValue);
@@ -110,12 +114,12 @@ class Bullet {
     }
     return true;
   }
-  
+
   animate() {
     this.animationCounter++;
     if (this.animationCounter >= this.animationDelay) {
-        this.animationCounter = 0;
-        this.frameIndex = (this.frameIndex + 1) % this.currentAnimation.length;
+      this.animationCounter = 0;
+      this.frameIndex = (this.frameIndex + 1) % this.currentAnimation.length;
     }
   }
 

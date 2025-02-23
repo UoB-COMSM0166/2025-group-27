@@ -11,7 +11,7 @@ let score = 0;
 let wave = 1;
 let gameState = "mainMenu"; // "mainMenu", "menu"（角色选择）, "game", "paused", "upgrading", "gameOver"
 let lastTerrainChange = 0;
-let feathers = []; 
+let feathers = [];
 let featherSprite;
 const borderOffset = 10;
 
@@ -175,7 +175,7 @@ function preload() {
   slimeBossImage = loadImage("assets/images/Effects/ Skill Effects/Drip/cell_sphere/boss_slime_blue.png");
   slimeBoss2Image = loadImage("assets/images/Effects/ Skill Effects/Drip/cell_sphere/boss_slime.png");
   //spiderBossAction = loadImage("assets/images/Characters/Enemies/SpiderBoss/SpiderBoss.png");
-  
+
   commonEnemyAction.idle = loadImage("assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_idleEmote1.png");
   commonEnemyAction.up = loadImage("assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_move_up.png");
   commonEnemyAction.down = loadImage("assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_move.png");
@@ -318,8 +318,9 @@ function drawPlayerStats() {
 // 修改角色选择后的流程
 function initPlayer(type) {
   player = new Player(playerAction, 26, 26, type);
+  player.needsPetSelection = false;
   // ... 其他初始化代码 ...
-  
+
   gameState = "petSelection"; // 角色选择后进入宠物选择
 }
 

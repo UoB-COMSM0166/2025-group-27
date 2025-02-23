@@ -5,9 +5,9 @@ class BasePet {
     this.radius = 15;
   }
 
-  follow(player) {}
-  update(player) {}
-  display() {}
+  follow(player) { }
+  update(player) { }
+  display() { }
 }
 
 // === 攻击型宠物：烈焰战狼 ===
@@ -34,7 +34,7 @@ class AttackPet extends BasePet {
 
   attack(enemies) {
     this.attackCooldown--;
-    
+
     let closest = null;
     let record = Infinity;
     for (const enemy of enemies) {
@@ -108,13 +108,13 @@ class DefensePet extends BasePet {
     this.isShieldActive = true;
     this.shieldTimer = this.shieldDuration;
     player.invincible = true;
-    showFloatingText("护盾激活!", player.pos.x, player.pos.y-40, color(0, 200, 255));
+    showFloatingText("护盾激活!", player.pos.x, player.pos.y - 40, color(0, 200, 255));
   }
 
   deactivateShield(player) {
     this.isShieldActive = false;
     player.invincible = false;
-    showFloatingText("护盾消失", player.pos.x, player.pos.y-40, color(100));
+    showFloatingText("护盾消失", player.pos.x, player.pos.y - 40, color(100));
   }
 
   display() {
@@ -126,11 +126,11 @@ class DefensePet extends BasePet {
       ellipse(this.pos.x, this.pos.y, 40);
       pop();
     }
-    
+
     // 显示宠物本体
     fill(0, 150, 255);
     ellipse(this.pos.x, this.pos.y, this.radius * 2);
-    
+
     // 显示充能进度
     if (!this.isShieldActive) {
       push();
@@ -147,10 +147,10 @@ class DefensePet extends BasePet {
   }
 }
 
-// === 宠物选择界面 ===
+// 修改showPetSelectionScreen函数中的判断条件
 function showPetSelectionScreen() {
   background(0, 150);
-  
+
   fill(255);
   textSize(32);
   textAlign(CENTER, CENTER);
@@ -160,30 +160,29 @@ function showPetSelectionScreen() {
   fill(200);
   rect(width / 2 - 220, height / 2 - 80, 200, 120, 10);
   rect(width / 2 + 20, height / 2 - 80, 200, 120, 10);
-  
+
   fill(255);
   textSize(20);
   text("烈焰战狼", width / 2 - 120, height / 2 - 40);
   text("钢铁巨龟", width / 2 + 120, height / 2 - 40);
-  
+
   textSize(14);
   text("自动攻击最近敌人\n+15 攻击伤害", width / 2 - 120, height / 2);
   text("每15秒生成护盾\n1.5秒无敌时间", width / 2 + 120, height / 2);
 
-  // 只有在第5波Boss战后才显示宠物选择界面
-  if (wave === 5) {
+  // 移除wave === 5的判断，改为检查player.needsPetSelection
+  if (player.needsPetSelection) {
     if (mouseIsPressed) {
       // 攻击型宠物区域
       if (mouseX > width / 2 - 220 && mouseX < width / 2 - 20 &&
-          mouseY > height / 2 - 80 && mouseY < height / 2 + 40) {
+        mouseY > height / 2 - 80 && mouseY < height / 2 + 40) {
         player.pet = new AttackPet(player.pos.x, player.pos.y);
-        // 例如：增加一些攻击属性
         player.attackDamage += 15;
-        finishPetSelection(); // 选择完后直接进入下一关
+        finishPetSelection();
       }
       // 防御型宠物区域
       else if (mouseX > width / 2 + 20 && mouseX < width / 2 + 220 &&
-               mouseY > height / 2 - 80 && mouseY < height / 2 + 40) {
+        mouseY > height / 2 - 80 && mouseY < height / 2 + 40) {
         player.pet = new DefensePet();
         player.maxHealth += 150;
         player.health += 150;
@@ -194,8 +193,12 @@ function showPetSelectionScreen() {
 }
 
 function finishPetSelection() {
-  // 选择完宠物后递增波数并生成下一波敌人
+  player.needsPetSelection = false;
   wave++;
   spawnEnemiesForWave(wave);
   gameState = "game";
 }
+
+
+
+

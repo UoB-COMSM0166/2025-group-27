@@ -1,6 +1,6 @@
 // ===== Player 类 =====
 class Player {
-  constructor(actionImg,chWidth,chHeight, type) {
+  constructor(actionImg, chWidth, chHeight, type) {
     // change
     this.actionImg = actionImg;
     this.chWidth = chWidth;
@@ -8,7 +8,7 @@ class Player {
     this.x = width / 2;
     this.y = height / 2;
     this.pos = createVector(this.x, this.y);
-    this.vel = createVector(0, 0); 
+    this.vel = createVector(0, 0);
     this.animations = {
       idle: [0, 1, 2],
       up: [27, 28, 29, 30, 31, 32],
@@ -60,12 +60,12 @@ class Player {
     this.lifesteal = 0;
     this.thorns = 0;
     this.lastDamageTime = 0;
-    
+
     // 添加宠物相关属性
-    this.pet = null;
     this.invincible = false; // 无敌状态(用于防御型宠物)
     this.invincibleFlash = 0; // 无敌闪烁效果
-    this.needsPetSelection = false; // 添加新属性
+    this.needsPetSelection = false;
+    this.pet = null; // 添加新属性
   }
 
   takeDamage(amount) {
@@ -84,22 +84,22 @@ class Player {
   resolveCollision() {
     if (!this.vel) {
       this.vel = createVector(0, 0);
-  }
+    }
 
     for (let obs of obstacles) {
       if (obs.collidesWith(this.pos, this.chWidth, this.chHeight)) {
         // 计算 X 方向的可能移动位置
         let xOnly = createVector(this.pos.x - this.vel.x, this.pos.y);
         let yOnly = createVector(this.pos.x, this.pos.y - this.vel.y);
-  
+
         // 优先尝试 X 方向移动
         if (!obs.collidesWith(xOnly, this.chWidth, this.chHeight)) {
           this.pos = xOnly;
-        } 
+        }
         // 否则尝试 Y 方向移动
         else if (!obs.collidesWith(yOnly, this.chWidth, this.chHeight)) {
           this.pos = yOnly;
-        } 
+        }
         // 如果两个方向都碰撞，完全阻止移动
         else {
           this.pos.sub(this.vel);
@@ -111,7 +111,7 @@ class Player {
   gainExp(amount) {
     // 如果处于第5波（Boss波），停止记录经验
     if (wave === 5) return;
-    
+
     showFloatingText(
       `+${Math.floor(amount)} EXP`,
       this.pos.x,
@@ -125,14 +125,14 @@ class Player {
   }
 
   levelUp() {
-  
+
     this.level++;
     this.exp -= this.expToNextLevel;
     this.expToNextLevel = Math.floor(this.expToNextLevel * 1.5);
     this.health += 20;
     this.fireRate += 1;
     this.speed += 0.5;
-  
+
     if (this.needsPetSelection) {
       this.needsPetSelection = false;
       gameState = "petSelection";
@@ -217,14 +217,14 @@ class Player {
       moving = true;
       moveVec.y += 1;
     }
-  
+
     if (keyIsDown(65)) { // A 左
       this.x -= this.speed;
       this.currentAnimation = this.animations.left;
       this.direction = 'left';
       moving = true;
       moveVec.x -= 1;
-      
+
     } else if (keyIsDown(68)) { // D 右
       this.x += this.speed;
       this.currentAnimation = this.animations.right;
@@ -236,9 +236,9 @@ class Player {
       this.currentAnimation = this.animations.idle;
       this.direction = 'idle';
     }
-  
+
     this.animate();
-    
+
     if (moveVec.mag() > 0) {
       moveVec.setMag(this.speed);
       this.vel = moveVec.copy();
@@ -248,7 +248,7 @@ class Player {
         if (obs.collidesWith(newPos, this.chWidth, this.chHeight)) {
           let xOnly = createVector(newPos.x, this.pos.y);
           let yOnly = createVector(this.pos.x, newPos.y);
-          
+
           if (!obs.collidesWith(xOnly, this.chWidth, this.chHeight)) {
             newPos = xOnly; // 只在 X 方向移动
           } else if (!obs.collidesWith(yOnly, this.chWidth, this.chHeight)) {
@@ -267,12 +267,12 @@ class Player {
     }
     this.resolveCollision();
   }
-  
+
   animate() {
     this.animationCounter++;
     if (this.animationCounter >= this.animationDelay) {
-        this.animationCounter = 0;
-        this.frameIndex = (this.frameIndex + 1) % this.currentAnimation.length;
+      this.animationCounter = 0;
+      this.frameIndex = (this.frameIndex + 1) % this.currentAnimation.length;
     }
   }
 
@@ -282,16 +282,16 @@ class Player {
       // 计算角色中心
       let centerX = this.pos.x + this.chWidth / 2;
       let centerY = this.pos.y + this.chHeight / 2;
-  
+
       // 计算朝向
       let direction = p5.Vector.sub(
         createVector(mouseX, mouseY),
         createVector(centerX, centerY)
       ).normalize();
-  
+
       // 子弹从中心发射
       let bulletStart = createVector(centerX, centerY);
-  
+
       switch (this.bulletType) {
         case "bounce":
           bullets.push(new Bullet(
@@ -333,20 +333,20 @@ class Player {
           ));
           break;
       }
-  
+
       this.fireCooldown = 60 / this.fireRate;
     }
     this.fireCooldown--;
   }
-  
+
   update() {
     if (this.health < this.maxHealth) {
       this.health = Math.min(this.maxHealth, this.health + this.healthRegen);
     }
-    
+
     player.pos.x = constrain(player.pos.x, 0, width - player.chWidth);
     player.pos.y = constrain(player.pos.y, 0, height - player.chHeight);
-    
+
     // 更新宠物
     if (this.pet) {
       this.pet.update(this);
@@ -366,7 +366,7 @@ class Player {
       image(this.actionImg, this.pos.x, this.pos.y, this.chWidth * 2, this.chHeight * 2, frameX, frameY, this.chWidth, this.chHeight, CENTER);
     }
     pop();
-    
+
     // 显示宠物
     if (this.pet) {
       this.pet.display();
