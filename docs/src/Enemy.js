@@ -1237,3 +1237,47 @@ class SlimeBoss extends Boss {
     displayBossHealthBar();
   }
 }
+
+// === 在Boss类下方添加SpiderBoss ===
+class SpiderBoss extends Boss {
+  constructor(isElite = true, enemyType = "boss", enemyAction, enWidth, enHeight) {
+    super(isElite, enemyType, enemyAction, enWidth, enHeight);
+    this.health = 800;
+    this.maxHealth = 800;
+    this.size = 50;
+    this.speed = 2;
+    this.webCooldown = 0;
+    this.trailInterval = 30;
+    this.trailCounter = 0;
+  }
+
+  update() {
+    super.update();
+    
+    // 简单追踪玩家
+    let direction = p5.Vector.sub(player.pos, this.pos).normalize().mult(this.speed);
+    this.pos.add(direction);
+
+    // 毒气路径
+    this.trailCounter++;
+    if (this.trailCounter >= this.trailInterval) {
+      poisonTrails.push({
+        pos: this.pos.copy(),
+        radius: 40,
+        startTime: millis(),
+        duration: 3000
+      });
+      this.trailCounter = 0;
+    }
+
+    // 蛛网射击
+    if (this.webCooldown <= 0) {
+      let toPlayer = p5.Vector.sub(player.pos, this.pos).normalize();
+      let webVel = toPlayer.mult(4);
+      enemyBullets.push(new WebProjectile(this.pos.x, this.pos.y, webVel));
+      this.webCooldown = 180;
+    } else {
+      this.webCooldown--;
+    }
+  }
+}

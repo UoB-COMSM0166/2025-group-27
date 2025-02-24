@@ -750,6 +750,14 @@ function spawnEnemiesForWave(currentWave) {
     bossActive = true;
   }
 
+  else if (currentWave === 9) {  // 新增第9波
+    let boss = new SpiderBoss(true, "spiderBoss", commonEnemyAction, 40, 40);
+    boss.pos = getValidSpawnPosition();
+    enemies.push(boss);
+    showFloatingText("Spider Boss Appears!", width/2, height/2-40, color(0,255,0));
+    bossActive = true;
+  }
+
   else {
     // 普通敌人生成逻辑
     let baseEnemyCount = Math.floor(6 + currentWave * 0.8);
