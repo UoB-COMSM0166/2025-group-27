@@ -735,7 +735,6 @@ function spawnEnemiesForWave(currentWave) {
     bossActive = true;
   }
 
-
   else if (currentWave === 6) {
     // 生成 BirdBoss
     let bossPos = getValidSpawnPosition();
@@ -750,8 +749,6 @@ function spawnEnemiesForWave(currentWave) {
     );
     bossActive = true;
   }
-
-
 
   else {
     // 普通敌人生成逻辑
