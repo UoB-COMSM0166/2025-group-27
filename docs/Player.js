@@ -417,10 +417,6 @@ class Player {
   }
 
   update() {
-    if (this.health < this.maxHealth) {
-      this.health = Math.min(this.maxHealth, this.health + this.healthRegen);
-    }
-
     player.pos.x = constrain(player.pos.x, 0, width - player.chWidth);
     player.pos.y = constrain(player.pos.y, 0, height - player.chHeight);
 

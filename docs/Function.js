@@ -627,12 +627,6 @@ function generateUpgradeOptions() {
       description: "减少受到的伤害",
     },
     {
-      type: "healthRegen",
-      name: "生命恢复",
-      value: 0.1,
-      description: "每秒恢复0.1点生命值",
-    },
-    {
       type: "criticalChance",
       name: "暴击概率",
       value: 0.05,
