@@ -531,7 +531,7 @@ class BirdBoss extends Boss {
           }, 500);
         }
 
-        if (wave === 15) {
+        if (wave === 10) {
           gameState = "victory";
           finalStats = {
             normalEnemies: normalEnemiesDefeated,

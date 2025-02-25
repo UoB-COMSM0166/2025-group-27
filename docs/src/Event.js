@@ -23,6 +23,14 @@ function mousePressed() {
     }
   }
 
+  if (gameState === "victory") {
+    for (let button of victoryButtons) {
+      if (button.contains(mouseX, mouseY)) {
+        button.action();
+      }
+    }
+  }  
+
   if (gameState === "game") {
     if (player.characterType === "archer" && !player.isCharging) {
       player.startCharge();

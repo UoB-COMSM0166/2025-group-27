@@ -58,6 +58,7 @@ let pauseButtons = [];
 
 let mainMenuButton = [];
 let endlessModeButton = [];
+let victoryButtons = [];
 
 // ----- 天气效果绘制 -----
 // 热天效果：利用噪声生成水平条纹模拟热浪扭曲效果

@@ -47,7 +47,7 @@ function handleGameplay(now) {
         return;
       }
 
-      if (wave === 15) {
+      if (wave === 10) {
         gameState = "victory";
         finalStats = {
           normalEnemies: normalEnemiesDefeated,
@@ -122,7 +122,7 @@ function handleGameplay(now) {
       return; // 直接返回，不执行后续生成敌人的逻辑
     }
 
-    if (wave === 15) {
+    if (wave === 10) {
       gameState = "victory";
       finalStats = {
         normalEnemies: normalEnemiesDefeated,
@@ -1233,7 +1233,7 @@ function setupVictoryButtons() {
     }),
     new Button(width / 2 + 20, height - 100, 100, 40, "Endless Mode", () => {
       gameState = "game";
-      wave = 16;
+      wave = 11;
       spawnEnemiesForWave(wave);
     })
   ];
