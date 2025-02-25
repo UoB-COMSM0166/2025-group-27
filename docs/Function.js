@@ -754,7 +754,7 @@ function spawnEnemiesForWave(currentWave) {
     let boss = new SpiderBoss(true, "spiderBoss", commonEnemyAction, 40, 40);
     boss.pos = getValidSpawnPosition();
     enemies.push(boss);
-    showFloatingText("Spider Boss Appears!", width/2, height/2-40, color(0,255,0));
+    showFloatingText("Spider Boss Appears!", width / 2, height / 2 - 40, color(0, 255, 0));
     bossActive = true;
   }
 
@@ -1151,57 +1151,63 @@ class Pet2 {
   }
 }
 
-// 添加宠物选择界面
-// 修改showPetSelectionScreen函数中的判断条件
-function showPetSelectionScreen() {
-  background(0, 150);
+class Pet3 {
+  constructor() {
+    this.pos = createVector(0, 0);
+    this.radius = 15;
+    this.healAmount = 0.4; // 每秒回复量
+    this.healTick = 0;
+    this.healInterval = 60; // 每60帧（约1秒）治疗一次
+    this.angle = 0;
+    this.orbitRadius = 30;
+  }
 
-  fill(255);
-  textSize(32);
-  textAlign(CENTER, CENTER);
-  text("选择你的战斗伙伴！", width / 2, height / 4);
+  follow(player) {
+    this.angle += 0.02;
+    const orbitX = player.pos.x + cos(this.angle) * this.orbitRadius;
+    const orbitY = player.pos.y + sin(this.angle) * this.orbitRadius;
+    this.pos = createVector(orbitX, orbitY);
+  }
 
-  // 绘制两个宠物选项
-  fill(200);
-  rect(width / 2 - 220, height / 2 - 80, 200, 120, 10);
-  rect(width / 2 + 20, height / 2 - 80, 200, 120, 10);
+  update(player) {
+    this.follow(player);
 
-  fill(255);
-  textSize(20);
-  text("烈焰战狼", width / 2 - 120, height / 2 - 40);
-  text("钢铁巨龟", width / 2 + 120, height / 2 - 40);
-
-  textSize(14);
-  text("自动攻击最近敌人\n+15 攻击伤害", width / 2 - 120, height / 2);
-  text("每15秒生成护盾\n1.5秒无敌时间", width / 2 + 120, height / 2);
-
-  // 移除wave === 5的判断，改为检查player.needsPetSelection
-  if (player.needsPetSelection) {
-    if (mouseIsPressed) {
-      // 攻击型宠物区域
-      if (mouseX > width / 2 - 220 && mouseX < width / 2 - 20 &&
-        mouseY > height / 2 - 80 && mouseY < height / 2 + 40) {
-        player.pet = new AttackPet(player.pos.x, player.pos.y);
-        player.attackDamage += 15;
-        finishPetSelection();
-      }
-      // 防御型宠物区域
-      else if (mouseX > width / 2 + 20 && mouseX < width / 2 + 220 &&
-        mouseY > height / 2 - 80 && mouseY < height / 2 + 40) {
-        player.pet = new DefensePet();
-        player.maxHealth += 150;
-        player.health += 150;
-        finishPetSelection();
+    this.healTick++;
+    if (this.healTick >= this.healInterval) {
+      this.healTick = 0;
+      if (player.health < player.maxHealth) {
+        player.health = min(player.health + this.healAmount, player.maxHealth);
+        showFloatingText(
+          "+" + this.healAmount,
+          player.pos.x,
+          player.pos.y - 20,
+          color(0, 255, 0)
+        );
       }
     }
   }
-}
 
-function finishPetSelection() {
-  player.needsPetSelection = false;
-  wave++;
-  spawnEnemiesForWave(wave);
-  gameState = "game";
+  display() {
+    push();
+    // 绘制治疗光环
+    noFill();
+    stroke(0, 255, 150, 100);
+    strokeWeight(2);
+    ellipse(this.pos.x, this.pos.y, this.radius * 2);
+
+    // 绘制宠物本体
+    fill(0, 255, 150);
+    noStroke();
+    beginShape();
+    for (let i = 0; i < 5; i++) {
+      let angle = TWO_PI * i / 5 - PI / 2;
+      let x = this.pos.x + cos(angle) * this.radius;
+      let y = this.pos.y + sin(angle) * this.radius;
+      vertex(x, y);
+    }
+    endShape(CLOSE);
+    pop();
+  }
 }
 
 // 添加游戏胜利界面相关内容

@@ -147,6 +147,68 @@ class DefensePet extends BasePet {
   }
 }
 
+// === 治疗型宠物：生命天使 ===
+class HealerPet extends BasePet {
+  constructor() {
+    super();
+    this.healAmount = 0.4; // 每秒回复量
+    this.healTick = 0; // 计时器
+    this.healInterval = 60; // 每60帧（约1秒）治疗一次
+    // 视觉效果相关
+    this.angle = 0;
+    this.orbitRadius = 30; // 环绕半径
+  }
+
+  follow(player) {
+    // 让宠物以圆形轨迹环绕玩家
+    this.angle += 0.02;
+    const orbitX = player.pos.x + cos(this.angle) * this.orbitRadius;
+    const orbitY = player.pos.y + sin(this.angle) * this.orbitRadius;
+    this.pos = createVector(orbitX, orbitY);
+  }
+
+  update(player) {
+    this.follow(player);
+
+    // 治疗计时
+    this.healTick++;
+    if (this.healTick >= this.healInterval) {
+      this.healTick = 0;
+      if (player.health < player.maxHealth) {
+        player.health = min(player.health + this.healAmount, player.maxHealth);
+        showFloatingText(
+          "+" + this.healAmount,
+          player.pos.x,
+          player.pos.y - 20,
+          color(0, 255, 0)
+        );
+      }
+    }
+  }
+
+  display() {
+    push();
+    // 绘制治疗光环效果
+    noFill();
+    stroke(0, 255, 150, 100);
+    strokeWeight(2);
+    ellipse(this.pos.x, this.pos.y, this.radius * 2);
+
+    // 绘制宠物本体
+    fill(0, 255, 150);
+    noStroke();
+    beginShape();
+    for (let i = 0; i < 5; i++) {
+      let angle = TWO_PI * i / 5 - PI / 2;
+      let x = this.pos.x + cos(angle) * this.radius;
+      let y = this.pos.y + sin(angle) * this.radius;
+      vertex(x, y);
+    }
+    endShape(CLOSE);
+    pop();
+  }
+}
+
 // 修改showPetSelectionScreen函数中的判断条件
 function showPetSelectionScreen() {
   background(0, 150);
@@ -156,50 +218,48 @@ function showPetSelectionScreen() {
   textAlign(CENTER, CENTER);
   text("选择你的战斗伙伴！", width / 2, height / 4);
 
-  // 绘制两个宠物选项
+  // 绘制三个宠物选项
   fill(200);
-  rect(width / 2 - 220, height / 2 - 80, 200, 120, 10);
-  rect(width / 2 + 20, height / 2 - 80, 200, 120, 10);
+  rect(width / 4 - 100, height / 2 - 80, 200, 120, 10);
+  rect(width / 2 - 100, height / 2 - 80, 200, 120, 10);
+  rect(width * 3 / 4 - 100, height / 2 - 80, 200, 120, 10);
 
   fill(255);
   textSize(20);
-  text("烈焰战狼", width / 2 - 120, height / 2 - 40);
-  text("钢铁巨龟", width / 2 + 120, height / 2 - 40);
+  text("烈焰战狼", width / 4, height / 2 - 40);
+  text("钢铁巨龟", width / 2, height / 2 - 40);
+  text("生命天使", width * 3 / 4, height / 2 - 40);
 
   textSize(14);
-  text("自动攻击最近敌人\n+15 攻击伤害", width / 2 - 120, height / 2);
-  text("每15秒生成护盾\n1.5秒无敌时间", width / 2 + 120, height / 2);
+  text("自动攻击最近敌人\n+15 攻击伤害", width / 4, height / 2);
+  text("定期提供护盾\n+150 最大生命值", width / 2, height / 2);
+  text("持续回复生命值\n每秒恢复0.4生命", width * 3 / 4, height / 2);
 
-  // 移除wave === 5的判断，改为检查player.needsPetSelection
-  if (player.needsPetSelection) {
-    if (mouseIsPressed) {
-      // 攻击型宠物区域
-      if (mouseX > width / 2 - 220 && mouseX < width / 2 - 20 &&
-        mouseY > height / 2 - 80 && mouseY < height / 2 + 40) {
-        player.pet = new AttackPet(player.pos.x, player.pos.y);
-        player.attackDamage += 15;
-        finishPetSelection();
-      }
-      // 防御型宠物区域
-      else if (mouseX > width / 2 + 20 && mouseX < width / 2 + 220 &&
-        mouseY > height / 2 - 80 && mouseY < height / 2 + 40) {
-        player.pet = new DefensePet();
-        player.maxHealth += 150;
-        player.health += 150;
-        finishPetSelection();
-      }
+  // 检测鼠标点击
+  if (mouseIsPressed) {
+    if (mouseX > width / 2 - 320 && mouseX < width / 2 - 120 &&
+      mouseY > height / 2 - 80 && mouseY < height / 2 + 40) {
+      // 选择烈焰战狼
+      player.pet = new Pet1();
+      gameState = "game";
+    } else if (mouseX > width / 2 - 100 && mouseX < width / 2 + 100 &&
+      mouseY > height / 2 - 80 && mouseY < height / 2 + 40) {
+      // 选择钢铁巨龟
+      player.pet = new Pet2();
+      gameState = "game";
+    } else if (mouseX > width / 2 + 120 && mouseX < width / 2 + 320 &&
+      mouseY > height / 2 - 80 && mouseY < height / 2 + 40) {
+      // 选择生命天使
+      player.pet = new Pet3();
+      gameState = "game";
     }
   }
 }
 
 function finishPetSelection() {
   player.needsPetSelection = false;
-  if (wave === 6) {
-    wave++;
-    setTimeout(() => {
-      spawnEnemiesForWave(wave);
-    }, 500);
-  }
+  wave++;
+  spawnEnemiesForWave(wave);
   gameState = "game";
 }
 
