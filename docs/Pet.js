@@ -237,20 +237,20 @@ function showPetSelectionScreen() {
 
   // 检测鼠标点击
   if (mouseIsPressed) {
-    if (mouseX > width / 2 - 320 && mouseX < width / 2 - 120 &&
+    if (mouseX > width / 4 - 100 && mouseX < width / 4 + 100 &&
       mouseY > height / 2 - 80 && mouseY < height / 2 + 40) {
       // 选择烈焰战狼
-      player.pet = new Pet1();
+      player.pet = new AttackPet(); // 确保使用正确的类
       gameState = "game";
     } else if (mouseX > width / 2 - 100 && mouseX < width / 2 + 100 &&
       mouseY > height / 2 - 80 && mouseY < height / 2 + 40) {
       // 选择钢铁巨龟
-      player.pet = new Pet2();
+      player.pet = new DefensePet(); // 确保使用正确的类
       gameState = "game";
-    } else if (mouseX > width / 2 + 120 && mouseX < width / 2 + 320 &&
+    } else if (mouseX > width * 3 / 4 - 100 && mouseX < width * 3 / 4 + 100 &&
       mouseY > height / 2 - 80 && mouseY < height / 2 + 40) {
       // 选择生命天使
-      player.pet = new Pet3();
+      player.pet = new HealerPet(); // 确保使用正确的类
       gameState = "game";
     }
   }
