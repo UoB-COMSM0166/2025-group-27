@@ -199,6 +199,8 @@ function preload() {
   obstacle1 = loadImage("assets/images/Environment/Objects/石碑/alienObeliskTall.png");
   obstacle2 = loadImage("assets/images/Environment/Objects/石碑/cipher.png");
   bombAction = loadImage("assets/images/Items/Weapons/bomb/bomb.png");
+  // 添加水泡效果图片
+  waterBubbleImg = loadImage("assets/images/Effects/Attack Effects/bubble.png");
 }
 
 

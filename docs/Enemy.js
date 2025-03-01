@@ -1036,11 +1036,17 @@ class SlimeBoss extends Boss {
         type: "water",
         pos: this.pos.copy(),
         vel: p5.Vector.mult(rotatedDir, this.waveSpeed),
-        radius: this.waveRadius,
+        radius: this.waveRadius * 0.5, // 缩小尺寸
         duration: 90,
         slowDuration: this.slowDuration,
         slowAmount: this.slowAmount,
-        pulseTime: millis()
+        pulseTime: millis(),
+        // 更新动画相关属性
+        frameIndex: 0,         
+        frameCount: 6,         // 修正为6帧
+        frameDelay: 8,         // 略微增加延迟使动画更平滑
+        frameCounter: 0,       
+        rotation: random(TWO_PI) 
       });
     }
 
@@ -1104,6 +1110,22 @@ class SlimeBoss extends Boss {
         case "water":
           // 水波移动和脉动
           effect.pos.add(effect.vel);
+          
+          // 更新动画帧
+          if (effect.frameCounter !== undefined) {
+            effect.frameCounter++;
+            if (effect.frameCounter >= effect.frameDelay) {
+              effect.frameCounter = 0;
+              effect.frameIndex = (effect.frameIndex + 1) % effect.frameCount;
+            }
+          }
+          
+          // 旋转效果
+          if (effect.rotation !== undefined) {
+            effect.rotation += 0.02;
+          }
+          
+          // 检测碰撞
           let pulse = sin((millis() - effect.pulseTime) / 100) * 10;
           if (p5.Vector.dist(player.pos, effect.pos) < effect.radius + pulse) {
             player.speed *= effect.slowAmount;
@@ -1176,12 +1198,34 @@ class SlimeBoss extends Boss {
           break;
 
         case "water":
-          // 绘制水波效果
-          let pulse = sin((millis() - effect.pulseTime) / 100) * 10;
-          for (let r = 0; r < 3; r++) {
-            let alpha = map(r, 0, 2, 80, 20);
-            fill(0, 100, 255, alpha);
-            ellipse(effect.pos.x, effect.pos.y, (effect.radius + pulse) * (1 - r * 0.2));
+          if (waterBubbleImg) {
+            // 使用精灵表绘制动画帧
+            push();
+            imageMode(CENTER);
+            translate(effect.pos.x, effect.pos.y);
+            rotate(effect.rotation);
+            
+            // 精确计算每一帧在精灵表中的位置
+            let frameWidth = waterBubbleImg.width / 6; // 明确指定为6帧
+            let frameHeight = waterBubbleImg.height;
+            
+            // 绘制当前帧，缩小尺寸
+            image(
+              waterBubbleImg,
+              0, 0,
+              effect.radius * 1.5, effect.radius * 1.5, // 调整渲染尺寸
+              effect.frameIndex * frameWidth, 0,
+              frameWidth, frameHeight
+            );
+            pop();
+          } else {
+            // 保留原有效果作为后备
+            let pulse = sin((millis() - effect.pulseTime) / 100) * 10;
+            for (let r = 0; r < 3; r++) {
+              let alpha = map(r, 0, 2, 80, 20);
+              fill(0, 100, 255, alpha);
+              ellipse(effect.pos.x, effect.pos.y, (effect.radius + pulse) * (1 - r * 0.2));
+            }
           }
           break;
 
