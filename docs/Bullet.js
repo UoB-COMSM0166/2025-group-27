@@ -1,9 +1,6 @@
 // --- Bullet 类 ---
 class Bullet {
-  constructor(x, y, vel, type = "normal", bImage, bWidth, bHeight) {
-    this.bImage = bImage;
-    this.bWidth = bWidth;
-    this.bHeight = bHeight;
+  constructor(x, y, vel, type = "normal", bImageUp, bImageDown, bImageLeft, bImageRight, bUpWidth, bUpHeight, bLeftWidth, bLeftHeight, state) {
     this.pos = createVector(x, y);
     this.vel = vel;
     this.radius = 5;
@@ -13,11 +10,42 @@ class Bullet {
     this.bounceCount = 0;
     this.maxBounces = type === "bounce" ? 3 : 0;
     this.animations = {
-      shoot: [0, 1, 2, 3, 4, 5],
+      shoot: [0, 1, 2, 3, 4, 5, 6, 7],
     };
+    this.shootDirection;
+    if(state === "Up") {
+      this.bWidth = bUpWidth;
+      this.bHeight = bUpHeight;
+      this.bImage = bImageUp;
+      this.shootDirection = "up";
+      this.ImageWidth = 20;
+      this.ImageHeight = 80;
+    } else if (state === "Down") {
+      this.bWidth = bUpWidth;
+      this.bHeight = bUpHeight;
+      this.bImage = bImageDown;
+      this.shootDirection = "down";
+      this.ImageWidth = 20;
+      this.ImageHeight = 80;
+    } else if (state === "Left") {
+      this.bWidth = bLeftWidth;
+      this.bHeight = bLeftHeight;
+      this.bImage = bImageLeft;
+      this.shootDirection = "left";
+      this.ImageWidth = 80;
+      this.ImageHeight = 20;
+    } else if (state === "Right") {
+      this.bWidth = bLeftWidth;
+      this.bHeight = bLeftHeight;
+      this.bImage = bImageRight;
+      this.shootDirection = "right";
+      this.ImageWidth = 80;
+      this.ImageHeight = 20;
+    }
+    
     this.currentAnimation = this.animations.shoot;
     this.frameIndex = 0;
-    this.animationDelay = 6; // control animation speed
+    this.animationDelay = 20; // control animation speed
     this.animationCounter = 0;
   }
 
@@ -124,19 +152,63 @@ class Bullet {
   }
 
   display() {
-    let frameX = this.currentAnimation[this.frameIndex] % (this.bImage.width / this.bWidth) * this.bWidth;
-    let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.bImage.width / this.bWidth)) * this.bHeight;
-    if (this.type === "bounce") {
-      stroke(255, 200, 0, 100);
-      strokeWeight(2);
-      line(
-        this.pos.x - this.vel.x,
-        this.pos.y - this.vel.y,
-        this.pos.x,
-        this.pos.y
-      );
+    if(this.shootDirection === "up"){
+      let frameX = this.currentAnimation[this.frameIndex] % (this.bImage.width / this.bWidth) * this.bWidth;
+      let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.bImage.width / this.bWidth)) * this.bHeight;
+      if (this.type === "bounce") {
+        stroke(255, 200, 0, 100);
+        strokeWeight(2);
+        line(
+          this.pos.x - this.vel.x,
+          this.pos.y - this.vel.y,
+          this.pos.x,
+          this.pos.y
+        );
+      }
+      image(this.bImage, this.pos.x, this.pos.y, this.ImageWidth, this.ImageHeight, frameX / 2, frameY / 2, this.bWidth, this.bHeight);
+    } else if(this.shootDirection === "down"){
+      let frameX = this.currentAnimation[this.frameIndex] % (this.bImage.width / this.bWidth) * this.bWidth;
+      let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.bImage.width / this.bWidth)) * this.bHeight;
+      if (this.type === "bounce") {
+        stroke(255, 200, 0, 100);
+        strokeWeight(2);
+        line(
+          this.pos.x - this.vel.x,
+          this.pos.y - this.vel.y,
+          this.pos.x,
+          this.pos.y
+        );
+      }
+      image(this.bImage, this.pos.x, this.pos.y, this.ImageWidth, this.ImageHeight, frameX / 2, frameY / 2, this.bWidth, this.bHeight);
+    } else if(this.shootDirection === "left"){
+      let frameX = this.currentAnimation[this.frameIndex] % (this.bImage.width / this.bWidth) * this.bWidth;
+      let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.bImage.width / this.bWidth)) * this.bHeight;
+      if (this.type === "bounce") {
+        stroke(255, 200, 0, 100);
+        strokeWeight(2);
+        line(
+          this.pos.x - this.vel.x,
+          this.pos.y - this.vel.y,
+          this.pos.x,
+          this.pos.y
+        );
+      }
+      image(this.bImage, this.pos.x, this.pos.y, this.ImageWidth, this.ImageHeight, frameX / 2, frameY / 2, this.bWidth, this.bHeight);
+    } else if(this.shootDirection === "right"){
+      let frameX = this.currentAnimation[this.frameIndex] % (this.bImage.width / this.bWidth) * this.bWidth;
+      let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.bImage.width / this.bWidth)) * this.bHeight;
+      if (this.type === "bounce") {
+        stroke(255, 200, 0, 100);
+        strokeWeight(2);
+        line(
+          this.pos.x - this.vel.x,
+          this.pos.y - this.vel.y,
+          this.pos.x,
+          this.pos.y
+        );
+      }
+      image(this.bImage, this.pos.x, this.pos.y, this.ImageWidth, this.ImageHeight, frameX / 2, frameY / 2, this.bWidth, this.bHeight);
     }
-    image(this.bImage, this.pos.x, this.pos.y, this.bWidth * 2, this.bHeight * 2, frameX / 2, frameY / 2, this.bWidth, this.bHeight);
   }
 }
 

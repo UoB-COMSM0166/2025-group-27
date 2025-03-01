@@ -265,8 +265,8 @@ function initButtons() {
 
 // ===== 初始化角色时生成第一波敌人 =====
 function initPlayer(type) {
-  player = new Player(playerAction, 26, 26, type);
-  if (type === "melee") {
+  if (type === "gunner") {
+    player = new Player(GunnerActionUp, GunnerActionDown, GunnerActionLeft, GunnerActionRight, GunnerActionIntro, 50.75, 100, 50.75, 100, 50.75, 100, 50.75, 100, 50.75, 100, type);
     player.attackPower = 10;
     player.attackDamage = 10;
     player.attackSpeed = 500;
@@ -277,6 +277,7 @@ function initPlayer(type) {
     player.lifesteal = 0;
     player.thorns = 0;
   } else if (type === "archer") {
+    player = new Player(playerAction, 26, 26, type);
     player.attackPower = 8;
     player.attackDamage = 50;
     player.attackSpeed = 300;
@@ -292,6 +293,7 @@ function initPlayer(type) {
     player.arrowCooldown = 20;        // 冷却时间调整
     player.chargeBarScale = 0.7;      // 新增蓄力条缩放系数
   } else if (type === "knight") {
+    player = new Player(KnightActionUp, KnightActionDown, KnightActionLeft, KnightActionRight, KnightActionIntro, 50.75, 100, 50.75, 100, 43.5, 79, 50.75, 100, 50.67, 79, type);
     player.attackPower = 10;
     player.attackDamage = 100;
     player.attackSpeed = 500;
@@ -539,6 +541,7 @@ function generateInitialObstacles() {
   obstacles = [];
   const corridorWidth = 50;
   const minDistanceFromPlayer = 150;
+  const minDistanceBetweenObstacles = 200;
   const numObstacles = 6;
   let attempts = 0;
   while (obstacles.length < numObstacles && attempts < 50) {
@@ -554,13 +557,17 @@ function generateInitialObstacles() {
       attempts++;
       continue;
     }
+
     let valid = true;
     for (let obs of obstacles) {
-      if (p5.Vector.dist(createVector(x, y), obs.pos) < 120) {
+      let distance = p5.Vector.dist(createVector(x, y), obs.pos);
+      if (distance < minDistanceBetweenObstacles) {
         valid = false;
         break;
       }
     }
+
+    
     if (valid)
       obstacles.push(new Obstacle(x, y, obsWidth, obsHeight, isVertical));
     attempts++;

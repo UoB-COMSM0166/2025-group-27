@@ -167,7 +167,23 @@ function updateWeather() {
 
 // ----- p5.js 核心函数 -----
 function preload() {
-  playerAction = loadImage("assets/images/Characters/Main_Character/MinerFemale_skin.png");
+  // knight
+  KnightActionUp = loadImage("assets/images/Characters/Keyboardman/keyboardman_back.png");
+  KnightActionDown = loadImage("assets/images/Characters/Keyboardman/keyboardman_front.png");
+  KnightActionLeft = loadImage("assets/images/Characters/Keyboardman/keyboardman_left.png");
+  KnightActionRight = loadImage("assets/images/Characters/Keyboardman/keyboardman_right.png");
+  KnightActionIntro = loadImage("assets/images/Characters/Keyboardman/keyboardman_intro.png");
+  // gunner
+  GunnerActionUp = loadImage("assets/images/Characters/computerboy/computerboy_back.png");
+  GunnerActionDown = loadImage("assets/images/Characters/computerboy/computerboy_front.png");
+  GunnerActionLeft = loadImage("assets/images/Characters/computerboy/computerboy_left.png");
+  GunnerActionRight = loadImage("assets/images/Characters/computerboy/computerboy_right.png");
+  GunnerActionIntro = loadImage("assets/images/Characters/computerboy/computerboy_intro.png");
+
+  GunnerBulletAnimationUp = loadImage("assets/images/Characters/computerboy/computerboy_attack_upward.png");
+  GunnerBulletAnimationDown = loadImage("assets/images/Characters/computerboy/computerboy_attack_downward.png");
+  GunnerBulletAnimationLeft = loadImage("assets/images/Characters/computerboy/computerboy_attack_left.png");
+  GunnerBulletAnimationRight = loadImage("assets/images/Characters/computerboy/computerboy_attack_right.png");
   // bossAction 用于 BirdBoss
   bossAction = loadImage("assets/images/Characters/Enemies/Birdman/BirdBoss.png");
   featherSprite = loadImage("assets/images/Characters/Enemies/Birdman/falling_feather_yellow.png");

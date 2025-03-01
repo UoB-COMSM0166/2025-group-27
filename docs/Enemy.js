@@ -15,7 +15,7 @@ class Enemy {
 
     this.pos = createVector(0, 0);
     this.vel = createVector(0, 0);
-    this.radius = 15;
+    this.radius = 10;
     this.health = 50;
     this.maxHealth = 50;
     this.damage = 10;
