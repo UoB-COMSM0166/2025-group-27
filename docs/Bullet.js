@@ -16,14 +16,14 @@ class Bullet {
     if(state === "Up") {
       this.bWidth = bUpWidth;
       this.bHeight = bUpHeight;
-      this.bImage = bImageUp;
+      this.bImage = bImageDown;
       this.shootDirection = "up";
       this.ImageWidth = 20;
       this.ImageHeight = 80;
     } else if (state === "Down") {
       this.bWidth = bUpWidth;
       this.bHeight = bUpHeight;
-      this.bImage = bImageDown;
+      this.bImage = bImageUp;
       this.shootDirection = "down";
       this.ImageWidth = 20;
       this.ImageHeight = 80;
