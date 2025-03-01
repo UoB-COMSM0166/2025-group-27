@@ -1,21 +1,53 @@
 // ===== Player 类 =====
 class Player {
-  constructor(actionImg, chWidth, chHeight, type) {
+    constructor(actionImgUp, actionImgDown, actionImgLeft, actionImgRight, actionImgIntro, chWidthUp, chHeightUp, chWidthDown, chHeightDown,chWidthLeft, chHeightLeft,chWidthRight, chHeightRight,chWidthIntro, chHeightIntro,type) {
     // change
-    this.actionImg = actionImg;
-    this.chWidth = chWidth;
-    this.chHeight = chHeight;
+    this.actionImgUp = actionImgUp;
+    this.actionImgDown = actionImgDown;
+    this.actionImgLeft = actionImgLeft;
+    this.actionImgRight = actionImgRight;
+    this.actionImgIntro = actionImgIntro;
+    this.chWidthUp = chWidthUp;
+    this.chHeightUp = chHeightUp;
+    this.chWidthDown = chWidthDown;
+    this.chHeightDown = chHeightDown;
+    this.chWidthLeft = chWidthLeft;
+    this.chHeightLeft = chHeightLeft;
+    this.chWidthRight = chWidthRight;
+    this.chHeightRight = chHeightRight;
+    this.chWidthIntro = chWidthIntro;
+    this.chHeightIntro = chHeightIntro;
+    this.ImageWidth = 25; //**角色大小
+    this.ImageHeight = 40; //**角色大小
     this.x = width / 2;
     this.y = height / 2;
     this.pos = createVector(this.x, this.y);
     this.vel = createVector(0, 0);
-    this.animations = {
-      idle: [0, 1, 2],
-      up: [27, 28, 29, 30, 31, 32],
-      down: [9, 10, 11, 12, 13, 14],
-      left: [18, 19, 20, 21, 22, 23],
-      right: [18, 19, 20, 21, 22, 23]
-    };
+    if (type == "knight") {
+      this.animations = {
+        idle: [0, 1, 2],
+        up: [0, 1, 2, 3],
+        down: [0, 1, 2, 3],
+        left: [0, 1, 2, 3],
+        right: [0, 1, 2, 3]
+      };
+    } else if (type == "archer") {
+      this.animations = {
+        idle: [0, 1, 2],
+        up: [27, 28, 29, 30, 31, 32],
+        down: [9, 10, 11, 12, 13, 14],
+        left: [18, 19, 20, 21, 22, 23],
+        right: [18, 19, 20, 21, 22, 23]
+      };
+    } else if (type == "gunner") {
+      this.animations = {
+        idle: [0, 1, 2, 3],
+        up: [0, 1, 2, 3],
+        down: [0, 1, 2, 3],
+        left: [0, 1, 2, 3],
+        right: [0, 1, 2, 3]
+      };
+    }
     this.currentAnimation = this.animations.idle;
     this.frameIndex = 0;
     this.animationDelay = 6;
@@ -106,17 +138,17 @@ class Player {
     }
 
     for (let obs of obstacles) {
-      if (obs.collidesWith(this.pos, this.chWidth, this.chHeight)) {
+      if (obs.collidesWith(this.pos, this.ImageWidth, this.ImageHeight)) {
         // 计算 X 方向的可能移动位置
         let xOnly = createVector(this.pos.x - this.vel.x, this.pos.y);
         let yOnly = createVector(this.pos.x, this.pos.y - this.vel.y);
 
         // 优先尝试 X 方向移动
-        if (!obs.collidesWith(xOnly, this.chWidth, this.chHeight)) {
+        if (!obs.collidesWith(xOnly, this.ImageWidth, this.ImageHeight)) {
           this.pos = xOnly;
         }
         // 否则尝试 Y 方向移动
-        else if (!obs.collidesWith(yOnly, this.chWidth, this.chHeight)) {
+        else if (!obs.collidesWith(yOnly, this.ImageWidth, this.ImageHeight)) {
           this.pos = yOnly;
         }
         // 如果两个方向都碰撞，完全阻止移动
@@ -264,13 +296,13 @@ class Player {
       let newPos = p5.Vector.add(this.pos, moveVec);
       let canMove = true;
       for (let obs of obstacles) {
-        if (obs.collidesWith(newPos, this.chWidth, this.chHeight)) {
+        if (obs.collidesWith(newPos, this.ImageWidth, this.ImageHeight)) {
           let xOnly = createVector(newPos.x, this.pos.y);
           let yOnly = createVector(this.pos.x, newPos.y);
 
-          if (!obs.collidesWith(xOnly, this.chWidth, this.chHeight)) {
+          if (!obs.collidesWith(xOnly, this.ImageWidth, this.ImageHeight)) {
             newPos = xOnly; // 只在 X 方向移动
-          } else if (!obs.collidesWith(yOnly, this.chWidth, this.chHeight)) {
+          } else if (!obs.collidesWith(yOnly, this.ImageWidth, this.ImageHeight)) {
             newPos = yOnly; // 只在 Y 方向移动
           } else {
             canMove = false; // 两个方向都被阻挡，不能移动
@@ -299,9 +331,31 @@ class Player {
   shoot() {
     if (mouseIsPressed && this.fireCooldown <= 0) {
       if (this.characterType === "gunner") {
+        
+        let angle = atan2(mouseY - player.pos.y, mouseX - player.pos.x);
+        if (angle < 0) {
+          angle += TWO_PI;
+        }
+        let state;
+        if (angle> 0.25 * PI && angle < 0.75 * PI){
+          state = "Up";
+        } else if (angle> 0.75 * PI && angle < 1.25 * PI) {
+          state = "Left";
+        } else if (angle> 1.25 * PI && angle < 1.75 * PI) {
+          state = "Down";
+        } else if (angle > 1.75 * PI || angle < 0.25 * PI) {
+          state = "Right";
+        }
         // 计算角色中心
-        let centerX = this.pos.x + this.chWidth / 2;
-        let centerY = this.pos.y + this.chHeight / 2;
+        let centerX;
+        let centerY;
+        if(state === "Up" || state === "Down") {
+          centerX = this.pos.x;
+          centerY = this.pos.y - 20;
+        } else if (state === "Left" || state === "Right") {
+          centerX = this.pos.x - 20;
+          centerY = this.pos.y;
+        }
 
         // 计算朝向
         let direction = p5.Vector.sub(
@@ -311,13 +365,13 @@ class Player {
 
         // 子弹从中心发射
         let bulletStart = createVector(centerX, centerY);
-
+        
         switch (this.bulletType) {
           case "bounce":
             bullets.push(new Bullet(
               bulletStart.x, bulletStart.y,
               p5.Vector.mult(direction, 10),
-              "bounce", bombAction, 16, 16
+              "bounce", GunnerBulletAnimationUp, GunnerBulletAnimationDown, GunnerBulletAnimationLeft, GunnerBulletAnimationRight, 34.75, 100, 113.5, 30, state
             ));
             break;
           case "shotgun":
@@ -334,7 +388,7 @@ class Player {
               bullets.push(new Bullet(
                 bulletPos.x, bulletPos.y,
                 p5.Vector.mult(direction, 10),
-                "normal", bombAction, 16, 16
+                "normal", GunnerBulletAnimationUp, GunnerBulletAnimationDown, GunnerBulletAnimationLeft, GunnerBulletAnimationRight, 34.75, 100, 113.5, 30, state
               ));
             }
             break;
@@ -342,14 +396,14 @@ class Player {
             bullets.push(new Bullet(
               bulletStart.x, bulletStart.y,
               p5.Vector.mult(direction, 10),
-              "pierce", bombAction, 16, 16
+              "pierce", GunnerBulletAnimationUp, GunnerBulletAnimationDown, GunnerBulletAnimationLeft, GunnerBulletAnimationRight, 34.75, 100, 113.5, 30, state
             ));
             break;
           default:
             bullets.push(new Bullet(
               bulletStart.x, bulletStart.y,
               p5.Vector.mult(direction, 10),
-              "normal", bombAction, 16, 16
+              "normal", GunnerBulletAnimationUp, GunnerBulletAnimationDown, GunnerBulletAnimationLeft, GunnerBulletAnimationRight, 34.75, 100, 113.5, 30, state
             ));
             break;
         }
@@ -360,8 +414,8 @@ class Player {
 
         // 计算攻击方向（朝向鼠标）
         let center = createVector(
-          this.pos.x + this.chWidth / 2,
-          this.pos.y + this.chHeight / 2
+          this.pos.x + this.ImageWidth / 2,
+          this.pos.y + this.ImageHeight / 2
         );
         this.attackDirection = p5.Vector.sub(createVector(mouseX, mouseY), center).normalize();
 
@@ -380,8 +434,8 @@ class Player {
 
   detectAttack() {
     let center = createVector(
-      this.pos.x + this.chWidth / 2,
-      this.pos.y + this.chHeight / 2
+      this.pos.x + this.ImageWidth / 2,
+      this.pos.y + this.ImageHeight / 2
     );
 
     for (let i = enemies.length - 1; i >= 0; i--) {
@@ -417,8 +471,8 @@ class Player {
   }
 
   update() {
-    player.pos.x = constrain(player.pos.x, 0, width - player.chWidth);
-    player.pos.y = constrain(player.pos.y, 0, height - player.chHeight);
+    player.pos.x = constrain(player.pos.x, 0, width - player.ImageWidth);
+    player.pos.y = constrain(player.pos.y, 0, height - player.ImageHeight);
 
     if (this.isAttacking) {
       if (this.attackDuration-- <= 0) {
@@ -446,18 +500,37 @@ class Player {
   }
 
   display() {
-    let frameX = this.currentAnimation[this.frameIndex] % (this.actionImg.width / this.chWidth) * this.chWidth;
-    let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.actionImg.width / this.chWidth)) * this.chHeight;
-
-    push();
-    if (this.direction === 'left') {
-      translate(this.pos.x + this.chWidth, this.pos.y);
-      scale(-1, 1);
-      image(this.actionImg, 0, 0, this.chWidth * 2, this.chHeight * 2, frameX, frameY, this.chWidth, this.chHeight);
-    } else {
-      image(this.actionImg, this.pos.x, this.pos.y, this.chWidth * 2, this.chHeight * 2, frameX, frameY, this.chWidth, this.chHeight);
+    if (this.direction === "up") {
+      let frameX = this.currentAnimation[this.frameIndex] % (this.actionImgUp.width / this.chWidthUp) * this.chWidthUp;
+      let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.actionImgUp.width / this.chWidthUp)) * this.chHeightUp;
+      push();
+      image(this.actionImgUp, this.pos.x, this.pos.y, this.ImageWidth, this.ImageHeight, frameX, frameY, this.chWidthUp, this.chHeightUp);
+      pop();
+    } else if (this.direction === "down") {
+      let frameX = this.currentAnimation[this.frameIndex] % (this.actionImgDown.width / this.chWidthDown) * this.chWidthDown;
+      let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.actionImgDown.width / this.chWidthDown)) * this.chHeightDown;
+      push();
+      image(this.actionImgDown, this.pos.x, this.pos.y, this.ImageWidth, this.ImageHeight, frameX, frameY, this.chWidthDown, this.chHeightDown);
+      pop();
+    } else if (this.direction === "left") {
+      let frameX = this.currentAnimation[this.frameIndex] % (this.actionImgLeft.width / this.chWidthLeft) * this.chWidthLeft;
+      let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.actionImgLeft.width / this.chWidth)) * this.chHeightLeft;
+      push();
+      image(this.actionImgLeft, this.pos.x, this.pos.y, this.ImageWidth, this.ImageHeight, frameX, frameY, this.chWidthLeft, this.chHeightLeft);
+      pop();
+    } else if (this.direction === "right") {
+      let frameX = this.currentAnimation[this.frameIndex] % (this.actionImgRight.width / this.chWidthRight) * this.chWidthRight;
+      let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.actionImgRight.width / this.chWidthRight)) * this.chHeightRight;
+      push();
+      image(this.actionImgRight, this.pos.x, this.pos.y, this.ImageWidth, this.ImageHeight, frameX, frameY, this.chWidthRight, this.chHeightRight);
+      pop();
+    } else if (this.direction === "idle") {
+      let frameX = this.currentAnimation[this.frameIndex] % (this.actionImgIntro.width / this.chWidthIntro) * this.chWidthIntro;
+      let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.actionImgIntro.width / this.chWidthIntro)) * this.chHeightIntro;
+      push();
+      image(this.actionImgIntro, this.pos.x, this.pos.y, this.ImageWidth, this.ImageHeight, frameX, frameY, this.chWidthIntro, this.chHeightIntro);
+      pop();
     }
-    pop();
 
     // 攻击范围可视化
     if (this.characterType === "knight" && this.isAttacking) {
@@ -484,8 +557,8 @@ class Player {
   // 绘制攻击范围
   drawAttackArea() {
     let center = createVector(
-      this.pos.x + this.chWidth / 2,
-      this.pos.y + this.chHeight / 2
+      this.pos.x + this.ImageWidth / 2,
+      this.pos.y + this.ImageHeight / 2
     );
 
     push();
@@ -547,8 +620,8 @@ class Player {
     // 计算参数
     const chargeParams = this.calculateCharge();
     const center = createVector(
-      this.pos.x + this.chWidth / 2,
-      this.pos.y + this.chHeight / 2
+      this.pos.x + this.ImageWidth / 2,
+      this.pos.y + this.ImageHeight / 2
     );
 
     // 计算方向（朝向鼠标）
@@ -634,7 +707,7 @@ class Player {
   drawChargeBar() {
     const baseBarWidth = 80 * this.chargeBarScale; // 基准宽度
     const barHeight = 8 * this.chargeBarScale; // 动态高度
-    const posX = this.pos.x + this.chWidth / 2 - baseBarWidth / 2;
+    const posX = this.pos.x + this.ImageWidth / 2 - baseBarWidth / 2;
     const posY = this.pos.y - 30;
 
     // 动态背景框（随蓄力进度缩放）
@@ -664,7 +737,7 @@ class Player {
     textAlign(CENTER);
     text(
       `${Math.round(this.currentCharge * 100)}%`,
-      this.pos.x + this.chWidth / 2,
+      this.pos.x + this.ImageWidth / 2,
       posY - 8 * this.chargeBarScale
     );
   }
