@@ -185,6 +185,11 @@ function preload() {
   GunnerActionRight = loadImage("assets/images/Characters/computerboy/computerboy_right.png");
   GunnerActionIntro = loadImage("assets/images/Characters/computerboy/computerboy_intro.png");
 
+  GunnerAttackUp = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_upward.png");
+  GunnerAttackDown = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_downward.png");
+  GunnerAttackLeft = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_left.png");
+  GunnerAttackRight = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_right.png");
+
   GunnerBulletAnimationUp = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_upward.png");
   GunnerBulletAnimationDown = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_downward.png");
   GunnerBulletAnimationLeft = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_left.png");
