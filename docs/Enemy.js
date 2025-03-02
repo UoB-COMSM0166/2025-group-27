@@ -418,6 +418,7 @@ class Boss extends Enemy {
   }
 }
 
+
 class BirdBoss extends Boss {
   constructor(birdBossAction) {
     // 调用 Boss 构造函数
@@ -796,208 +797,36 @@ class BirdBoss extends Boss {
   }
 
   display() {
-    push();
-    
-    // 绘制元素效果 - 确保所有类型的效果都被渲染
-    for (let effect of this.elementalEffects) {
-      switch (effect.type) {
-        case "fire":
-          if (fireballImg) {
-            push();
-            imageMode(CENTER);
-            translate(effect.pos.x, effect.pos.y);
-            
-            // 计算当前帧在精灵表中的位置
-            let frameWidth = fireballImg.width / 6;
-            let frameHeight = fireballImg.height;
-            
-            // 绘制当前帧
-            let displaySize = effect.radius * 2.5;
-            
-            image(
-              fireballImg,
-              0, 0,
-              displaySize, displaySize,
-              effect.frameIndex * frameWidth, 0,
-              frameWidth, frameHeight
-            );
-            
-            // 添加辉光效果
-            drawingContext.shadowBlur = 8;
-            drawingContext.shadowColor = color(255, 120, 0, 150);
-            noFill();
-            noStroke(); // 移除边缘线，与毒液效果一致
-            ellipse(0, 0, displaySize * 0.9);
-            drawingContext.shadowBlur = 0;
-            
-            pop();
-          } else {
-            // 后备绘制方法
-            fill(255, 100, 0, 150);
-            noStroke();
-            ellipse(effect.pos.x, effect.pos.y, effect.radius * 2);
-          }
-          break;
-          
-        case "fireRing":
-          if (fireballImg) {
-            push();
-            imageMode(CENTER);
-            translate(effect.pos.x, effect.pos.y);
-            
-            // 计算当前帧在精灵表中的位置
-            let frameWidth = fireballImg.width / 6;
-            let frameHeight = fireballImg.height;
-            
-            // 绘制当前帧
-            let displaySize = effect.radius * (effect.visualScale || 2.5);
-            
-            image(
-              fireballImg,
-              0, 0,
-              displaySize, displaySize,
-              effect.frameIndex * frameWidth, 0,
-              frameWidth, frameHeight
-            );
-            
-            // 添加辉光效果
-            drawingContext.shadowBlur = 8;
-            drawingContext.shadowColor = color(255, 120, 0, 150);
-            noFill();
-            noStroke(); // 移除边缘线，与毒液效果一致
-            ellipse(0, 0, displaySize * 0.9);
-            drawingContext.shadowBlur = 0;
-            
-            pop();
-          } else {
-            // 后备绘制方法
-            fill(255, 100, 0, 150);
-            noStroke();
-            ellipse(effect.pos.x, effect.pos.y, effect.radius * 2);
-          }
-          break;
+    // 绘制 Boss
+    let frameWidth = 200;
+    let frameHeight = 160;
+    let columns = floor(this.birdBossAction.width / frameWidth);
+    let frameX = (this.currentAnimation[this.frameIndex] % columns) * frameWidth;
+    let frameY = floor(this.currentAnimation[this.frameIndex] / columns) * frameHeight;
 
-        case "water":
-          if (waterBubbleImg) {
-            push();
-            imageMode(CENTER);
-            translate(effect.pos.x, effect.pos.y);
-            
-            // 应用旋转
-            if (effect.rotation !== undefined) {
-              rotate(effect.rotation);
-            }
-            
-            // 计算当前帧在精灵表中的位置
-            let frameWidth = waterBubbleImg.width / 6;
-            let frameHeight = waterBubbleImg.height;
-            
-            // 绘制当前帧
-            let displaySize = effect.radius * 3;
-            
-            image(
-              waterBubbleImg,
-              0, 0,
-              displaySize, displaySize,
-              effect.frameIndex * frameWidth, 0,
-              frameWidth, frameHeight
-            );
-            
-            // 添加辉光效果
-            drawingContext.shadowBlur = 10;
-            drawingContext.shadowColor = color(80, 120, 255, 120);
-            noFill();
-            noStroke(); // 移除边缘线，与毒液效果一致
-            ellipse(0, 0, displaySize * 0.9);
-            drawingContext.shadowBlur = 0;
-            
-            pop();
-          } else {
-            // 后备绘制方法
-            fill(100, 150, 255, 150);
-            noStroke();
-            ellipse(effect.pos.x, effect.pos.y, effect.radius * 2);
-          }
-          break;
-          
-        case "wind":
-          // 绘制风效果
-          push();
-          for (let p of effect.particles) {
-            noStroke();
-            fill(200, 200, 255, p.life * 5);
-            ellipse(p.pos.x, p.pos.y, 5);
-          }
-          pop();
-          break;
-      }
-    }
-    
-    // 绘制毒池 - 保持当前代码
-    if (this.type === "poison" && this.poisonPools) {
-      for (let pool of this.poisonPools) {
-        if (poisonVortexImg) {
-          // 使用精灵表绘制动画帧
-          push();
-          imageMode(CENTER);
-          translate(pool.pos.x, pool.pos.y);
-          
-          // 计算当前帧在精灵表中的位置
-          let frameWidth = poisonVortexImg.width / pool.frameCount;
-          let frameHeight = poisonVortexImg.height;
-          
-          // 随着毒池扩散逐渐增大动画尺寸
-          let displaySize = pool.radius * 2 * pool.scale;
-          
-          // 绘制当前帧
-          image(
-            poisonVortexImg,
-            0, 0,
-            displaySize, displaySize,
-            pool.frameIndex * frameWidth, 0,
-            frameWidth, frameHeight
-          );
-          
-          // 添加轻微辉光效果，但不绘制边缘线
-          drawingContext.shadowBlur = 15;
-          drawingContext.shadowColor = color(0, 200, 50, 120);
-          noFill();
-          noStroke(); // 移除边缘线
-          ellipse(0, 0, displaySize * 0.9);
-          drawingContext.shadowBlur = 0;
-          
-          pop();
-        } else {
-          // 后备绘制方法
-          for (let r = 0; r < 3; r++) {
-            let alpha = map(r, 0, 2, 100, 30);
-            fill(0, 200, 0, alpha);
-            noStroke(); // 确保没有边缘线
-            ellipse(pool.pos.x, pool.pos.y, pool.radius * 2 * (1 - r * 0.2));
-          }
-        }
-      }
-    }
-
-    // 绘制Boss本体
-    tint(this.elementalColor);
-    let frameNum = this.currentAnimation[this.frameIndex];
-    let col = frameNum % this.columns;
-    let row = floor(frameNum / this.columns);
+    let drawWidth = this.size;
+    let drawHeight = this.size * (frameHeight / frameWidth);
+    let drawX = this.pos.x - drawWidth / 2;
+    let drawY = this.pos.y - drawHeight / 2;
 
     image(
-      this.slimeBossImage,
-      this.pos.x - this.size / 2,
-      this.pos.y - this.size / 2,
-      this.size,
-      this.size,
-      col * this.frameWidth,
-      row * this.frameHeight,
-      this.frameWidth,
-      this.frameHeight
+      this.birdBossAction,
+      drawX,
+      drawY,
+      drawWidth,
+      drawHeight,
+      frameX,
+      frameY,
+      frameWidth,
+      frameHeight
     );
-    noTint();
-    pop();
+
+    this.displayHealthBar();
+
+    // 绘制羽毛
+    for (let f of this.feathers) {
+      f.display();
+    }
   }
 
   displayHealthBar() {
