@@ -189,6 +189,17 @@ function preload() {
   GunnerBulletAnimationDown = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_downward.png");
   GunnerBulletAnimationLeft = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_left.png");
   GunnerBulletAnimationRight = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_right.png");
+  // archer
+  ArcherActionUp = loadImage("assets/images/Characters/mousegirl/mousegirl_back.png");
+  ArcherActionDown = loadImage("assets/images/Characters/mousegirl/mousegirl_front.png");
+  ArcherActionLeft = loadImage("assets/images/Characters/mousegirl/mousegirl_left.png");
+  ArcherActionRight = loadImage("assets/images/Characters/mousegirl/mousegirl_right.png");
+  ArcherActionIntro = loadImage("assets/images/Characters/mousegirl/mousegirl_intro.png");
+
+  ArcherActionAttackUp = loadImage("assets/images/Characters/mousegirl/attack/mousegirl_attack_upward.png");
+  ArcherActionAttackDown = loadImage("assets/images/Characters/mousegirl/attack/mousegirl_attack_downward.png");
+  ArcherActionAttackLeft = loadImage("assets/images/Characters/mousegirl/attack/mousegirl_attack_left.png");
+  ArcherActionAttackRight = loadImage("assets/images/Characters/mousegirl/attack/mousegirl_attack_right.png");
   // bossAction 用于 BirdBoss
   bossAction = loadImage("assets/images/Characters/Enemies/Birdman/BirdBoss.png");
   featherSprite = loadImage("assets/images/Characters/Enemies/Birdman/falling_feather_yellow.png");
