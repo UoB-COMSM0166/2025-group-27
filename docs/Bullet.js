@@ -152,6 +152,7 @@ class Bullet {
   }
 
   display() {
+    this.animate();
     if(this.shootDirection === "up"){
       let frameX = this.currentAnimation[this.frameIndex] % (this.bImage.width / this.bWidth) * this.bWidth;
       let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.bImage.width / this.bWidth)) * this.bHeight;
