@@ -173,6 +173,11 @@ function preload() {
   KnightActionLeft = loadImage("assets/images/Characters/Keyboardman/keyboardman_left.png");
   KnightActionRight = loadImage("assets/images/Characters/Keyboardman/keyboardman_right.png");
   KnightActionIntro = loadImage("assets/images/Characters/Keyboardman/keyboardman_intro.png");
+
+  KnightActionAttackUp = loadImage("assets/images/Characters/Keyboardman/attack/keyboardman_attack_back.png");
+  KnightActionAttackDown = loadImage("assets/images/Characters/Keyboardman/attack/keyboardman_attack_front.png");
+  KnightActionAttackLeft = loadImage("assets/images/Characters/Keyboardman/attack/keyboardman_attack_left.png");
+  KnightActionAttackRight = loadImage("assets/images/Characters/Keyboardman/attack/keyboardman_attack_right.png");
   // gunner
   GunnerActionUp = loadImage("assets/images/Characters/computerboy/computerboy_back.png");
   GunnerActionDown = loadImage("assets/images/Characters/computerboy/computerboy_front.png");
@@ -180,10 +185,10 @@ function preload() {
   GunnerActionRight = loadImage("assets/images/Characters/computerboy/computerboy_right.png");
   GunnerActionIntro = loadImage("assets/images/Characters/computerboy/computerboy_intro.png");
 
-  GunnerBulletAnimationUp = loadImage("assets/images/Characters/computerboy/computerboy_attack_upward.png");
-  GunnerBulletAnimationDown = loadImage("assets/images/Characters/computerboy/computerboy_attack_downward.png");
-  GunnerBulletAnimationLeft = loadImage("assets/images/Characters/computerboy/computerboy_attack_left.png");
-  GunnerBulletAnimationRight = loadImage("assets/images/Characters/computerboy/computerboy_attack_right.png");
+  GunnerBulletAnimationUp = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_upward.png");
+  GunnerBulletAnimationDown = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_downward.png");
+  GunnerBulletAnimationLeft = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_left.png");
+  GunnerBulletAnimationRight = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_right.png");
   // bossAction 用于 BirdBoss
   bossAction = loadImage("assets/images/Characters/Enemies/Birdman/BirdBoss.png");
   featherSprite = loadImage("assets/images/Characters/Enemies/Birdman/falling_feather_yellow.png");

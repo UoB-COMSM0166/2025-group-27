@@ -396,7 +396,7 @@ class Player {
             bullets.push(new Bullet(
               bulletStart.x, bulletStart.y,
               p5.Vector.mult(direction, 10),
-              "pierce", GunnerBulletAnimationUp, GunnerBulletAnimationDown, GunnerBulletAnimationLeft, GunnerBulletAnimationRight, 34.75, 100, 113.5, 30, state
+              "pierce", GunnerBulletAnimationUp, GunnerBulletAnimationDown, GunnerBulletAnimationLeft, GunnerBulletAnimationRight, 34.75, 80, 113.5, 30, state
             ));
             break;
           default:
