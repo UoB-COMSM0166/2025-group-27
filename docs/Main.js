@@ -218,6 +218,7 @@ function preload() {
   // 添加水泡和火焰效果图片
   waterBubbleImg = loadImage("assets/images/Effects/Attack Effects/bubble.png");
   fireballImg = loadImage("assets/images/Effects/Attack Effects/fireballProjectile_idle.png");
+  poisonVortexImg = loadImage("assets/images/Effects/Attack Effects/mummy_vortex_sheet.png");
 }
 
 
