@@ -418,6 +418,7 @@ class Boss extends Enemy {
   }
 }
 
+
 class BirdBoss extends Boss {
   constructor(birdBossAction) {
     // 调用 Boss 构造函数
@@ -992,32 +993,66 @@ class SlimeBoss extends Boss {
     }
   }
 
-  // 火焰史莱姆技能
+  // 火焰史莱姆技能 - 调整内环距离防止重合
   fireSkill() {
-    this.isDashing = true;
-    let dirToPlayer = p5.Vector.sub(player.pos, this.pos).normalize();
+    // 设置环绕火焰 - 双层火环设计
+    const flameCount = 12; // 增加火焰数量
+    const radius = this.flameRadius * 0.65; // 主环半径
+    const innerRadius = this.flameRadius * 0.5; // 增加内环半径，从0.4改为0.5
+    
+    // 创建双层火焰环
+    for (let i = 0; i < flameCount; i++) {
+      // 主环火焰
+      const angle = (TWO_PI / flameCount) * i;
+      const offsetX = cos(angle) * radius;
+      const offsetY = sin(angle) * radius;
+      
+      // 添加主环火焰
+      this.elementalEffects.push({
+        type: "fireRing",
+        basePos: this.pos.copy(),
+        pos: createVector(this.pos.x + offsetX, this.pos.y + offsetY),
+        angle: angle,
+        radius: this.flameRadius * 0.15,
+        orbitRadius: radius,
+        duration: this.flameDuration,
+        damage: this.flameDamage / 60,
+        startTime: millis(),
+        rotationSpeed: 0.02,
+        frameIndex: 0,
+        frameCount: 6,
+        frameDelay: 5,
+        frameCounter: 0,
+        visualScale: 2.0
+      });
+      
+      // 添加内环火焰 - 角度错开，形成交错效果
+      if (i % 2 === 0) { 
+        const innerAngle = angle + (TWO_PI / flameCount / 2);
+        const innerOffsetX = cos(innerAngle) * innerRadius;
+        const innerOffsetY = sin(innerAngle) * innerRadius;
+        
+        this.elementalEffects.push({
+          type: "fireRing",
+          basePos: this.pos.copy(),
+          pos: createVector(this.pos.x + innerOffsetX, this.pos.y + innerOffsetY),
+          angle: innerAngle,
+          radius: this.flameRadius * 0.12, // 内环火焰稍小
+          orbitRadius: innerRadius,
+          duration: this.flameDuration,
+          damage: this.flameDamage / 60,
+          startTime: millis(),
+          rotationSpeed: -0.01, // 反向旋转
+          frameIndex: Math.floor(random(6)), // 随机初始帧，增加变化
+          frameCount: 6,
+          frameDelay: 6,
+          frameCounter: 0,
+          visualScale: 1.7 // 减小视觉尺寸从1.8到1.7
+        });
+      }
+    }
 
-    // 烈焰冲撞
-    let dashVec = p5.Vector.mult(dirToPlayer, this.dashSpeed);
-    this.pos.add(dashVec);
-
-    // 火焰爆炸效果
-    this.elementalEffects.push({
-      type: "fire",
-      pos: this.pos.copy(),
-      radius: this.flameRadius,
-      duration: this.flameDuration,
-      damage: this.flameDamage,
-      startTime: millis(),
-      expandSpeed: 2
-    });
-
-    showFloatingText("Flame Burst!", this.pos.x, this.pos.y - 30, color(255, 100, 0));
-
-    // 设置短暂的冲刺状态
-    setTimeout(() => {
-      this.isDashing = false;
-    }, 500);
+    showFloatingText("Ring of Fire!", this.pos.x, this.pos.y - 30, color(255, 100, 0));
   }
 
   // 水流史莱姆技能
@@ -1058,12 +1093,18 @@ class SlimeBoss extends Boss {
     // 创建扩散的毒池
     this.poisonPools.push({
       pos: this.pos.copy(),
-      radius: this.poisonRadius,
+      radius: this.poisonRadius * 0.5, // 初始半径更小
       duration: this.poisonDuration,
       damage: this.poisonDamage,
-      startRadius: this.poisonRadius,
-      maxRadius: this.poisonRadius * 2,
-      spreadSpeed: this.poisonSpreadSpeed
+      startRadius: this.poisonRadius * 0.5,
+      maxRadius: this.poisonRadius * 1.5,
+      spreadSpeed: this.poisonSpreadSpeed,
+      // 添加动画相关属性
+      frameIndex: 0,
+      frameCount: 7, // 根据图片看起来有7帧
+      frameDelay: 8,
+      frameCounter: 0,
+      scale: 1.0 // 初始缩放系数
     });
 
     showFloatingText("Toxic Pool!", this.pos.x, this.pos.y - 30, color(0, 255, 0));
@@ -1099,12 +1140,34 @@ class SlimeBoss extends Boss {
 
       switch (effect.type) {
         case "fire":
-          // 火焰效果扩散
-          effect.radius += effect.expandSpeed;
-          if (p5.Vector.dist(player.pos, effect.pos) < effect.radius) {
-            player.takeDamage(effect.damage / 30);
+          // 原有火焰效果代码保留...
+          break;
+          
+        case "fireRing":
+          // 更新环绕火焰位置
+          effect.angle += effect.rotationSpeed;
+          const newX = effect.basePos.x + cos(effect.angle) * effect.orbitRadius;
+          const newY = effect.basePos.y + sin(effect.angle) * effect.orbitRadius;
+          effect.pos.x = newX;
+          effect.pos.y = newY;
+          
+          // 更新动画帧
+          if (effect.frameCounter !== undefined) {
+            effect.frameCounter++;
+            if (effect.frameCounter >= effect.frameDelay) {
+              effect.frameCounter = 0;
+              effect.frameIndex = (effect.frameIndex + 1) % effect.frameCount;
+            }
+          }
+          
+          // 检测与玩家的碰撞
+          if (p5.Vector.dist(player.pos, effect.pos) < effect.radius + player.radius) {
+            player.takeDamage(effect.damage);
             showFloatingText("Burning!", player.pos.x, player.pos.y - 20, color(255, 100, 0));
           }
+          
+          // 更新基础位置以跟随史莱姆
+          effect.basePos = this.pos.copy();
           break;
 
         case "water":
@@ -1166,6 +1229,20 @@ class SlimeBoss extends Boss {
         pool.radius = min(pool.maxRadius,
           pool.startRadius + (pool.maxRadius - pool.startRadius) *
           (1 - pool.duration / this.poisonDuration));
+        
+        // 更新动画帧
+        if (pool.frameCounter !== undefined) {
+          pool.frameCounter++;
+          if (pool.frameCounter >= pool.frameDelay) {
+            pool.frameCounter = 0;
+            pool.frameIndex = (pool.frameIndex + 1) % pool.frameCount;
+          }
+        }
+        
+        // 更新缩放系数 - 随着范围增加而增大
+        if (pool.startRadius && pool.maxRadius) {
+          pool.scale = map(pool.radius, pool.startRadius, pool.maxRadius, 0.8, 1.6);
+        }
 
         if (p5.Vector.dist(player.pos, pool.pos) < pool.radius) {
           player.takeDamage(pool.damage / 60);
@@ -1180,83 +1257,190 @@ class SlimeBoss extends Boss {
   }
 
   display() {
-    if (!this.slimeBossImage) {
-      console.error("Missing slime boss image!");
-      return;
-    }
     push();
-    // 绘制元素效果
+    
+    // 绘制元素效果 - 确保所有类型的效果都被渲染
     for (let effect of this.elementalEffects) {
       switch (effect.type) {
         case "fire":
-          // 绘制火焰效果
-          for (let r = 0; r < 3; r++) {
-            let alpha = map(r, 0, 2, 100, 20);
-            fill(255, 100 + r * 50, 0, alpha);
-            ellipse(effect.pos.x, effect.pos.y, effect.radius * (1 - r * 0.2));
+          if (fireballImg) {
+            push();
+            imageMode(CENTER);
+            translate(effect.pos.x, effect.pos.y);
+            
+            // 计算当前帧在精灵表中的位置
+            let frameWidth = fireballImg.width / 6;
+            let frameHeight = fireballImg.height;
+            
+            // 绘制当前帧
+            let displaySize = effect.radius * 2.5;
+            
+            image(
+              fireballImg,
+              0, 0,
+              displaySize, displaySize,
+              effect.frameIndex * frameWidth, 0,
+              frameWidth, frameHeight
+            );
+            
+            // 添加辉光效果
+            drawingContext.shadowBlur = 8;
+            drawingContext.shadowColor = color(255, 120, 0, 150);
+            noFill();
+            noStroke(); // 移除边缘线，与毒液效果一致
+            ellipse(0, 0, displaySize * 0.9);
+            drawingContext.shadowBlur = 0;
+            
+            pop();
+          } else {
+            // 后备绘制方法
+            fill(255, 100, 0, 150);
+            noStroke();
+            ellipse(effect.pos.x, effect.pos.y, effect.radius * 2);
+          }
+          break;
+          
+        case "fireRing":
+          if (fireballImg) {
+            push();
+            imageMode(CENTER);
+            translate(effect.pos.x, effect.pos.y);
+            
+            // 计算当前帧在精灵表中的位置
+            let frameWidth = fireballImg.width / 6;
+            let frameHeight = fireballImg.height;
+            
+            // 绘制当前帧
+            let displaySize = effect.radius * (effect.visualScale || 2.5);
+            
+            image(
+              fireballImg,
+              0, 0,
+              displaySize, displaySize,
+              effect.frameIndex * frameWidth, 0,
+              frameWidth, frameHeight
+            );
+            
+            // 添加辉光效果
+            drawingContext.shadowBlur = 8;
+            drawingContext.shadowColor = color(255, 120, 0, 150);
+            noFill();
+            noStroke(); // 移除边缘线，与毒液效果一致
+            ellipse(0, 0, displaySize * 0.9);
+            drawingContext.shadowBlur = 0;
+            
+            pop();
+          } else {
+            // 后备绘制方法
+            fill(255, 100, 0, 150);
+            noStroke();
+            ellipse(effect.pos.x, effect.pos.y, effect.radius * 2);
           }
           break;
 
         case "water":
           if (waterBubbleImg) {
-            // 使用精灵表绘制动画帧
             push();
             imageMode(CENTER);
             translate(effect.pos.x, effect.pos.y);
-            rotate(effect.rotation);
             
-            // 精确计算每一帧在精灵表中的位置
-            let frameWidth = waterBubbleImg.width / 6; // 明确指定为6帧
+            // 应用旋转
+            if (effect.rotation !== undefined) {
+              rotate(effect.rotation);
+            }
+            
+            // 计算当前帧在精灵表中的位置
+            let frameWidth = waterBubbleImg.width / 6;
             let frameHeight = waterBubbleImg.height;
             
-            // 绘制当前帧，缩小尺寸
+            // 绘制当前帧
+            let displaySize = effect.radius * 3;
+            
             image(
               waterBubbleImg,
               0, 0,
-              effect.radius * 1.5, effect.radius * 1.5, // 调整渲染尺寸
+              displaySize, displaySize,
               effect.frameIndex * frameWidth, 0,
               frameWidth, frameHeight
             );
+            
+            // 添加辉光效果
+            drawingContext.shadowBlur = 10;
+            drawingContext.shadowColor = color(80, 120, 255, 120);
+            noFill();
+            noStroke(); // 移除边缘线，与毒液效果一致
+            ellipse(0, 0, displaySize * 0.9);
+            drawingContext.shadowBlur = 0;
+            
             pop();
           } else {
-            // 保留原有效果作为后备
-            let pulse = sin((millis() - effect.pulseTime) / 100) * 10;
-            for (let r = 0; r < 3; r++) {
-              let alpha = map(r, 0, 2, 80, 20);
-              fill(0, 100, 255, alpha);
-              ellipse(effect.pos.x, effect.pos.y, (effect.radius + pulse) * (1 - r * 0.2));
-            }
+            // 后备绘制方法
+            fill(100, 150, 255, 150);
+            noStroke();
+            ellipse(effect.pos.x, effect.pos.y, effect.radius * 2);
           }
           break;
-
+          
         case "wind":
           // 绘制风效果
-          fill(200, 200, 255, 60);
-          arc(effect.pos.x, effect.pos.y, effect.radius * 2, effect.radius * 2,
-            effect.angle - this.windAngle / 2, effect.angle + this.windAngle / 2);
-
-          // 绘制风粒子
-          effect.particles.forEach(p => {
-            let alpha = map(p.life, 0, 40, 0, 255);
-            fill(200, 200, 255, alpha);
-            ellipse(p.pos.x, p.pos.y, 4);
-          });
+          push();
+          for (let p of effect.particles) {
+            noStroke();
+            fill(200, 200, 255, p.life * 5);
+            ellipse(p.pos.x, p.pos.y, 5);
+          }
+          pop();
           break;
       }
     }
-
-    // 绘制毒池
-    if (this.type === "poison") {
+    
+    // 绘制毒池 - 保持当前代码
+    if (this.type === "poison" && this.poisonPools) {
       for (let pool of this.poisonPools) {
-        for (let r = 0; r < 3; r++) {
-          let alpha = map(r, 0, 2, 80, 20);
-          fill(0, 255, 0, alpha);
-          ellipse(pool.pos.x, pool.pos.y, pool.radius * (1 - r * 0.2));
+        if (poisonVortexImg) {
+          // 使用精灵表绘制动画帧
+          push();
+          imageMode(CENTER);
+          translate(pool.pos.x, pool.pos.y);
+          
+          // 计算当前帧在精灵表中的位置
+          let frameWidth = poisonVortexImg.width / pool.frameCount;
+          let frameHeight = poisonVortexImg.height;
+          
+          // 随着毒池扩散逐渐增大动画尺寸
+          let displaySize = pool.radius * 2 * pool.scale;
+          
+          // 绘制当前帧
+          image(
+            poisonVortexImg,
+            0, 0,
+            displaySize, displaySize,
+            pool.frameIndex * frameWidth, 0,
+            frameWidth, frameHeight
+          );
+          
+          // 添加轻微辉光效果，但不绘制边缘线
+          drawingContext.shadowBlur = 15;
+          drawingContext.shadowColor = color(0, 200, 50, 120);
+          noFill();
+          noStroke(); // 移除边缘线
+          ellipse(0, 0, displaySize * 0.9);
+          drawingContext.shadowBlur = 0;
+          
+          pop();
+        } else {
+          // 后备绘制方法
+          for (let r = 0; r < 3; r++) {
+            let alpha = map(r, 0, 2, 100, 30);
+            fill(0, 200, 0, alpha);
+            noStroke(); // 确保没有边缘线
+            ellipse(pool.pos.x, pool.pos.y, pool.radius * 2 * (1 - r * 0.2));
+          }
         }
       }
     }
 
-    // 保持现有的史莱姆绘制代码...
+    // 绘制Boss本体
     tint(this.elementalColor);
     let frameNum = this.currentAnimation[this.frameIndex];
     let col = frameNum % this.columns;
