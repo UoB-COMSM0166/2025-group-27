@@ -266,7 +266,7 @@ function initButtons() {
 // ===== 初始化角色时生成第一波敌人 =====
 function initPlayer(type) {
   if (type === "gunner") {
-    player = new Player(GunnerActionUp, GunnerActionDown, GunnerActionLeft, GunnerActionRight, GunnerActionIntro, 50.75, 100, 50.75, 100, 50.75, 100, 50.75, 100, 50.75, 100, type);
+    player = new Player(GunnerActionUp, GunnerActionDown, GunnerActionLeft, GunnerActionRight, GunnerActionIntro, GunnerAttackUp, GunnerAttackDown, GunnerAttackLeft, GunnerAttackRight, 50.75, 100, 50.75, 100, 50.75, 100, 50.75, 100, 50.75, 100, 1, 1, 1, 1, 1, 1, 1, 1, type);
     player.attackPower = 10;
     player.attackDamage = 10;
     player.attackSpeed = 500;
@@ -277,7 +277,7 @@ function initPlayer(type) {
     player.lifesteal = 0;
     player.thorns = 0;
   } else if (type === "archer") {
-    player = new Player(playerAction, 26, 26, type);
+    player = new Player(ArcherActionUp, ArcherActionDown, ArcherActionLeft, ArcherActionRight, ArcherActionIntro, ArcherActionAttackUp, ArcherActionAttackDown, ArcherActionAttackLeft, ArcherActionAttackRight, 50, 100, 50, 100, 50, 100, 50, 100, 50, 100, 1, 1, 1, 1, 1, 1, 1, 1, type);
     player.attackPower = 8;
     player.attackDamage = 50;
     player.attackSpeed = 300;
@@ -293,7 +293,7 @@ function initPlayer(type) {
     player.arrowCooldown = 20;        // 冷却时间调整
     player.chargeBarScale = 0.7;      // 新增蓄力条缩放系数
   } else if (type === "knight") {
-    player = new Player(KnightActionUp, KnightActionDown, KnightActionLeft, KnightActionRight, KnightActionIntro, 50.75, 100, 50.75, 100, 43.5, 79, 50.75, 100, 50.67, 79, type);
+    player = new Player(KnightActionUp, KnightActionDown, KnightActionLeft, KnightActionRight, KnightActionIntro, KnightActionAttackUp, KnightActionAttackDown, KnightActionAttackLeft, KnightActionAttackRight, 50.75, 100, 50.75, 100, 43.5, 79, 50.75, 100, 50.67, 79, 100, 100, 100, 100, 150, 150, 150, 150, type);
     player.attackPower = 10;
     player.attackDamage = 100;
     player.attackSpeed = 500;

@@ -10,8 +10,8 @@ class Bullet {
     this.bounceCount = 0;
     this.maxBounces = type === "bounce" ? 3 : 0;
     this.animations = {
-      shoot1: [0, 1, 2, 3, 4, 5, 6, 7],
-      shoot2: [7, 6, 5, 4, 3, 2, 1, 0],
+      shoot1: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+      shoot2: [8, 7, 6, 5, 4, 3, 2, 1, 0],
     };
     this.shootDirection;
     if(state === "Up") {
@@ -37,7 +37,7 @@ class Bullet {
       this.shootDirection = "left";
       this.ImageWidth = 80;
       this.ImageHeight = 20;
-      this.currentAnimation = this.animations.shoot2;
+      this.currentAnimation = this.animations.shoot1;
     } else if (state === "Right") {
       this.bWidth = bLeftWidth;
       this.bHeight = bLeftHeight;
@@ -47,10 +47,8 @@ class Bullet {
       this.ImageHeight = 20;
       this.currentAnimation = this.animations.shoot1;
     }
-    
-    
     this.frameIndex = 0;
-    this.animationDelay = 20; // control animation speed
+    this.animationDelay = 10; // control animation speed
     this.animationCounter = 0;
   }
 
