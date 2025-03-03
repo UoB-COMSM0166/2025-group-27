@@ -168,16 +168,16 @@ function updateWeather() {
 // ----- p5.js 核心函数 -----
 function preload() {
   // knight
-  KnightActionUp = loadImage("assets/images/Characters/Keyboardman/keyboardman_back.png");
-  KnightActionDown = loadImage("assets/images/Characters/Keyboardman/keyboardman_front.png");
-  KnightActionLeft = loadImage("assets/images/Characters/Keyboardman/keyboardman_left.png");
-  KnightActionRight = loadImage("assets/images/Characters/Keyboardman/keyboardman_right.png");
-  KnightActionIntro = loadImage("assets/images/Characters/Keyboardman/keyboardman_intro.png");
+  KnightActionUp = loadImage("assets/images/Characters/keyboardman/keyboardman_back.png");
+  KnightActionDown = loadImage("assets/images/Characters/keyboardman/keyboardman_front.png");
+  KnightActionLeft = loadImage("assets/images/Characters/keyboardman/keyboardman_left.png");
+  KnightActionRight = loadImage("assets/images/Characters/keyboardman/keyboardman_right.png");
+  KnightActionIntro = loadImage("assets/images/Characters/keyboardman/keyboardman_intro.png");
 
-  KnightActionAttackUp = loadImage("assets/images/Characters/Keyboardman/attack/keyboardman_attack_back.png");
-  KnightActionAttackDown = loadImage("assets/images/Characters/Keyboardman/attack/keyboardman_attack_front.png");
-  KnightActionAttackLeft = loadImage("assets/images/Characters/Keyboardman/attack/keyboardman_attack_left.png");
-  KnightActionAttackRight = loadImage("assets/images/Characters/Keyboardman/attack/keyboardman_attack_right.png");
+  KnightActionAttackUp = loadImage("assets/images/Characters/keyboardman/attack/keyboardman_attack_back.png");
+  KnightActionAttackDown = loadImage("assets/images/Characters/keyboardman/attack/keyboardman_attack_front.png");
+  KnightActionAttackLeft = loadImage("assets/images/Characters/keyboardman/attack/keyboardman_attack_left.png");
+  KnightActionAttackRight = loadImage("assets/images/Characters/keyboardman/attack/keyboardman_attack_right.png");
   // gunner
   GunnerActionUp = loadImage("assets/images/Characters/computerboy/computerboy_back.png");
   GunnerActionDown = loadImage("assets/images/Characters/computerboy/computerboy_front.png");
@@ -217,8 +217,8 @@ function preload() {
   commonEnemyAction.up = loadImage("assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_move_up.png");
   commonEnemyAction.down = loadImage("assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_move.png");
   commonEnemyAction.side = loadImage("assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_move_side.png");
-  obstacle1 = loadImage("assets/images/Environment/Objects/石碑/alienObeliskTall.png");
-  obstacle2 = loadImage("assets/images/Environment/Objects/石碑/cipher.png");
+  obstacle1 = loadImage("assets/images/Environment/barrier1/tree1.png");
+  obstacle2 = loadImage("assets/images/Environment/barrier1/stone3.png");
   bombAction = loadImage("assets/images/Items/Weapons/bomb/bomb.png");
   // 添加水泡和火焰效果图片
   waterBubbleImg = loadImage("assets/images/Effects/Attack Effects/bubble.png");

@@ -277,19 +277,60 @@ class Player {
       return;
     }
     let moveVec = createVector(0, 0);
+    
+    let dx = mouseX - this.pos.x;
+    let dy = this.pos.y - mouseY; // 反转Y轴方向
+    let angle = atan2(dy, dx); 
+    if (angle < 0) angle += TWO_PI;
+
     if (keyIsDown(87)) { // W 上
       this.y -= this.speed;
       this.currentAnimation = this.animations.up;
       this.direction = 'up';
       moving = true;
       moveVec.y -= 1;
-
+      if (mouseIsPressed && this.characterType != "knight") {
+        if (angle >= PI/4 && angle < 3*PI/4) {       // 45°~135° → 上
+          this.currentAnimation = this.animations.up;
+          this.direction = "up";
+        } 
+        else if (angle >= 3*PI/4 && angle < 5*PI/4) { // 135°~225° → 左
+          this.currentAnimation = this.animations.left;
+          this.direction = "left";
+        } 
+        else if (angle >= 5*PI/4 && angle < 7*PI/4) { // 225°~315° → 下
+          this.currentAnimation = this.animations.down;
+          this.direction = "down";
+        } 
+        else {                                       // 315°~45° → 右
+          this.currentAnimation = this.animations.right;
+          this.direction = "right";
+        }
+      }
     } else if (keyIsDown(83)) { // S 下
       this.y += this.speed;
       this.currentAnimation = this.animations.down;
       this.direction = 'down';
       moving = true;
       moveVec.y += 1;
+      if (mouseIsPressed && this.characterType != "knight") {
+        if (angle >= PI/4 && angle < 3*PI/4) {       // 45°~135° → 上
+          this.currentAnimation = this.animations.up;
+          this.direction = "up";
+        } 
+        else if (angle >= 3*PI/4 && angle < 5*PI/4) { // 135°~225° → 左
+          this.currentAnimation = this.animations.left;
+          this.direction = "left";
+        } 
+        else if (angle >= 5*PI/4 && angle < 7*PI/4) { // 225°~315° → 下
+          this.currentAnimation = this.animations.down;
+          this.direction = "down";
+        } 
+        else {                                       // 315°~45° → 右
+          this.currentAnimation = this.animations.right;
+          this.direction = "right";
+        }
+      }
     }
 
     if (keyIsDown(65)) { // A 左
@@ -298,6 +339,24 @@ class Player {
       this.direction = 'left';
       moving = true;
       moveVec.x -= 1;
+      if (mouseIsPressed && this.characterType != "knight") {
+        if (angle >= PI/4 && angle < 3*PI/4) {       // 45°~135° → 上
+          this.currentAnimation = this.animations.up;
+          this.direction = "up";
+        } 
+        else if (angle >= 3*PI/4 && angle < 5*PI/4) { // 135°~225° → 左
+          this.currentAnimation = this.animations.left;
+          this.direction = "left";
+        } 
+        else if (angle >= 5*PI/4 && angle < 7*PI/4) { // 225°~315° → 下
+          this.currentAnimation = this.animations.down;
+          this.direction = "down";
+        } 
+        else {                                       // 315°~45° → 右
+          this.currentAnimation = this.animations.right;
+          this.direction = "right";
+        }
+      }
 
     } else if (keyIsDown(68)) { // D 右
       this.x += this.speed;
@@ -305,6 +364,24 @@ class Player {
       this.direction = 'right';
       moving = true;
       moveVec.x += 1;
+      if (mouseIsPressed && this.characterType != "knight") {
+        if (angle >= PI/4 && angle < 3*PI/4) {       // 45°~135° → 上
+          this.currentAnimation = this.animations.up;
+          this.direction = "up";
+        } 
+        else if (angle >= 3*PI/4 && angle < 5*PI/4) { // 135°~225° → 左
+          this.currentAnimation = this.animations.left;
+          this.direction = "left";
+        } 
+        else if (angle >= 5*PI/4 && angle < 7*PI/4) { // 225°~315° → 下
+          this.currentAnimation = this.animations.down;
+          this.direction = "down";
+        } 
+        else {                                       // 315°~45° → 右
+          this.currentAnimation = this.animations.right;
+          this.direction = "right";
+        }
+      }
     }
     if (!moving && !this.isAttacking) {
       this.currentAnimation = this.animations.idle;
@@ -337,6 +414,7 @@ class Player {
         this.direction = "attackright";
       }
     }
+
     this.animate();
 
     if (moveVec.mag() > 0) {
@@ -478,6 +556,8 @@ class Player {
 
         // 立即检测攻击范围内的敌人
         this.detectAttack();
+      } else if (player.characterType === "archer" && !player.isCharging) {
+        player.startCharge();
       }
       this.fireCooldown = 60 / this.fireRate;
     }
