@@ -229,6 +229,9 @@ function preload() {
   waterBubbleImg = loadImage("assets/images/Effects/Attack Effects/bubble.png");
   fireballImg = loadImage("assets/images/Effects/Attack Effects/fireballProjectile_idle.png");
   poisonVortexImg = loadImage("assets/images/Effects/Attack Effects/mummy_vortex_sheet.png");
+
+  // 加载风史莱姆的龙卷风动画
+  windTornadoImg = loadImage("assets/images/Effects/Attack Effects/bigfireAnticipation_spawn_white.png");
 }
 
 
