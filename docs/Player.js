@@ -506,7 +506,7 @@ class Player {
             bullets.push(new Bullet(
               bulletStart.x, bulletStart.y,
               p5.Vector.mult(direction, 10),
-              "bounce", GunnerBulletAnimationUp, GunnerBulletAnimationDown, GunnerBulletAnimationLeft, GunnerBulletAnimationRight, 30.889, 100, 100, 30, state
+              "bounce", Bup, Bdown, Bleft, Bright, state
             ));
             break;
           case "shotgun":
@@ -523,7 +523,7 @@ class Player {
               bullets.push(new Bullet(
                 bulletPos.x, bulletPos.y,
                 p5.Vector.mult(direction, 10),
-                "normal", GunnerBulletAnimationUp, GunnerBulletAnimationDown, GunnerBulletAnimationLeft, GunnerBulletAnimationRight, 30.889, 100, 100, 30, state
+                "normal", Bup, Bdown, Bleft, Bright, state
               ));
             }
             break;
@@ -531,14 +531,14 @@ class Player {
             bullets.push(new Bullet(
               bulletStart.x, bulletStart.y,
               p5.Vector.mult(direction, 10),
-              "pierce", GunnerBulletAnimationUp, GunnerBulletAnimationDown, GunnerBulletAnimationLeft, GunnerBulletAnimationRight, 30.889, 100, 100, 30, state
+              "pierce", Bup, Bdown, Bleft, Bright, state
             ));
             break;
           default:
             bullets.push(new Bullet(
               bulletStart.x, bulletStart.y,
               p5.Vector.mult(direction, 10),
-              "normal", GunnerBulletAnimationUp, GunnerBulletAnimationDown, GunnerBulletAnimationLeft, GunnerBulletAnimationRight, 30.889, 100, 100, 30, state
+              "normal", Bup, Bdown, Bleft, Bright, state
             ));
             break;
         }

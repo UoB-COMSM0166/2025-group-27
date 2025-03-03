@@ -1,6 +1,6 @@
 // --- Bullet 类 ---
 class Bullet {
-  constructor(x, y, vel, type = "normal", bImageUp, bImageDown, bImageLeft, bImageRight, bUpWidth, bUpHeight, bLeftWidth, bLeftHeight, state) {
+  constructor(x, y, vel, type = "normal", bImageUp, bImageDown, bImageLeft, bImageRight, state) {
     this.pos = createVector(x, y);
     this.vel = vel;
     this.radius = 5;
@@ -9,44 +9,37 @@ class Bullet {
     this.pierceCount = type === "pierce" ? 3 : 0;
     this.bounceCount = 0;
     this.maxBounces = type === "bounce" ? 3 : 0;
-    this.animations = {
-      shoot1: [0, 1, 2, 3, 4, 5, 6, 7, 8],
-      shoot2: [8, 7, 6, 5, 4, 3, 2, 1, 0],
-    };
     this.shootDirection;
     if(state === "Up") {
-      this.bWidth = bUpWidth;
-      this.bHeight = bUpHeight;
       this.bImage = bImageDown;
       this.shootDirection = "up";
       this.ImageWidth = 20;
       this.ImageHeight = 80;
-      this.currentAnimation = this.animations.shoot2;
+      this.bWidth = 30;
+      this.bHeight = 100;
     } else if (state === "Down") {
-      this.bWidth = bUpWidth;
-      this.bHeight = bUpHeight;
       this.bImage = bImageUp;
       this.shootDirection = "down";
       this.ImageWidth = 20;
       this.ImageHeight = 80;
-      this.currentAnimation = this.animations.shoot2;
+      this.bWidth = 30;
+      this.bHeight = 100;
     } else if (state === "Left") {
-      this.bWidth = bLeftWidth;
-      this.bHeight = bLeftHeight;
       this.bImage = bImageLeft;
       this.shootDirection = "left";
       this.ImageWidth = 80;
       this.ImageHeight = 20;
-      this.currentAnimation = this.animations.shoot1;
+      this.bWidth = 100;
+      this.bHeight = 30;
     } else if (state === "Right") {
-      this.bWidth = bLeftWidth;
-      this.bHeight = bLeftHeight;
       this.bImage = bImageRight;
       this.shootDirection = "right";
       this.ImageWidth = 80;
       this.ImageHeight = 20;
-      this.currentAnimation = this.animations.shoot1;
+      this.bWidth = 100;
+      this.bHeight = 30;
     }
+
     this.frameIndex = 0;
     this.animationDelay = 10; // control animation speed
     this.animationCounter = 0;
@@ -146,73 +139,21 @@ class Bullet {
     return true;
   }
 
-  animate() {
-    this.animationCounter++;
-    if (this.animationCounter >= this.animationDelay) {
-      this.animationCounter = 0;
-      this.frameIndex = (this.frameIndex + 1) % this.currentAnimation.length;
-    }
-  }
 
   display() {
-    this.animate();
-    if(this.shootDirection === "up"){
-      let frameX = this.currentAnimation[this.frameIndex] % (this.bImage.width / this.bWidth) * this.bWidth;
-      let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.bImage.width / this.bWidth)) * this.bHeight;
-      if (this.type === "bounce") {
-        stroke(255, 200, 0, 100);
-        strokeWeight(2);
-        line(
-          this.pos.x - this.vel.x,
-          this.pos.y - this.vel.y,
-          this.pos.x,
-          this.pos.y
-        );
-      }
-      image(this.bImage, this.pos.x, this.pos.y, this.ImageWidth, this.ImageHeight, frameX / 2, frameY / 2, this.bWidth, this.bHeight);
-    } else if(this.shootDirection === "down"){
-      let frameX = this.currentAnimation[this.frameIndex] % (this.bImage.width / this.bWidth) * this.bWidth;
-      let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.bImage.width / this.bWidth)) * this.bHeight;
-      if (this.type === "bounce") {
-        stroke(255, 200, 0, 100);
-        strokeWeight(2);
-        line(
-          this.pos.x - this.vel.x,
-          this.pos.y - this.vel.y,
-          this.pos.x,
-          this.pos.y
-        );
-      }
-      image(this.bImage, this.pos.x, this.pos.y, this.ImageWidth, this.ImageHeight, frameX / 2, frameY / 2, this.bWidth, this.bHeight);
-    } else if(this.shootDirection === "left"){
-      let frameX = this.currentAnimation[this.frameIndex] % (this.bImage.width / this.bWidth) * this.bWidth;
-      let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.bImage.width / this.bWidth)) * this.bHeight;
-      if (this.type === "bounce") {
-        stroke(255, 200, 0, 100);
-        strokeWeight(2);
-        line(
-          this.pos.x - this.vel.x,
-          this.pos.y - this.vel.y,
-          this.pos.x,
-          this.pos.y
-        );
-      }
-      image(this.bImage, this.pos.x, this.pos.y, this.ImageWidth, this.ImageHeight, frameX / 2, frameY / 2, this.bWidth, this.bHeight);
-    } else if(this.shootDirection === "right"){
-      let frameX = this.currentAnimation[this.frameIndex] % (this.bImage.width / this.bWidth) * this.bWidth;
-      let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.bImage.width / this.bWidth)) * this.bHeight;
-      if (this.type === "bounce") {
-        stroke(255, 200, 0, 100);
-        strokeWeight(2);
-        line(
-          this.pos.x - this.vel.x,
-          this.pos.y - this.vel.y,
-          this.pos.x,
-          this.pos.y
-        );
-      }
-      image(this.bImage, this.pos.x, this.pos.y, this.ImageWidth, this.ImageHeight, frameX / 2, frameY / 2, this.bWidth, this.bHeight);
-    }
+    push();
+    translate(this.pos.x, this.pos.y);
+    image(
+      this.bImage,
+      0, 0,
+      this.ImageWidth,
+      this.ImageHeight,
+      0,
+      0,
+      this.bImage.width,
+      this.bImage.height
+    );
+  pop();
   }
 }
 

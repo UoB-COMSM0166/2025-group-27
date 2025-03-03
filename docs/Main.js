@@ -194,6 +194,11 @@ function preload() {
   GunnerBulletAnimationDown = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_downward.png");
   GunnerBulletAnimationLeft = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_left.png");
   GunnerBulletAnimationRight = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_right.png");
+
+  Bup = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_upward.gif");
+  Bdown = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_downward.gif");
+  Bleft = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_left.gif");
+  Bright = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_right.gif");
   // archer
   ArcherActionUp = loadImage("assets/images/Characters/mousegirl/mousegirl_back.png");
   ArcherActionDown = loadImage("assets/images/Characters/mousegirl/mousegirl_front.png");
