@@ -32,9 +32,6 @@ function mousePressed() {
   }  
 
   if (gameState === "game") {
-    if (player.characterType === "archer" && !player.isCharging) {
-      player.startCharge();
-    }
     if (pauseButton.contains(mouseX, mouseY)) {
       pauseButton.action();
       return;
