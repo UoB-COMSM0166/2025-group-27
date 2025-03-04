@@ -238,8 +238,11 @@ function preload() {
   summonBatImage = loadImage("./assets/candidate_images/characters/pets/bat/summonBat_idle.png");
   summonBatAttackImage = loadImage("./assets/candidate_images/characters/pets/bat/summonBat_rangedAttack_side.png");
 
-  // 加载鸟Boss毒池特效图片 - 更新为新的图片路径和名称
+  // 加载鸟Boss毒池特效图片
   poisonPoolEffectImg = loadImage("./assets/candidate_images/effects/skill_effects/drip/waterSplashLava_new.png");
+  
+  // 加载鸟Boss蛛丝技能特效图片
+  webEffectImg = loadImage("./assets/candidate_images/effects/attack_effects/acidProjectile2.png");
 }
 
 

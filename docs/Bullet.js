@@ -191,11 +191,74 @@ class WebProjectile extends EnemyBullet {
   constructor(x, y, vel) {
     super(x, y, vel);
     this.radius = 10;
+    
+    // 添加动画属性
+    this.frameIndex = 0;
+    this.frameCount = 6; // acidProjectile2图片有6帧
+    this.frameDelay = 6;
+    this.frameCounter = 0;
+  }
+
+  update() {
+    // 更新位置
+    this.pos.add(this.vel);
+    
+    // 更新动画帧
+    this.frameCounter++;
+    if (this.frameCounter >= this.frameDelay) {
+      this.frameCounter = 0;
+      this.frameIndex = (this.frameIndex + 1) % this.frameCount;
+    }
+    
+    return !(this.pos.x < 0 || this.pos.x > width || this.pos.y < 0 || this.pos.y > height);
   }
 
   display() {
-    fill(200, 200, 200, 150);
-    ellipse(this.pos.x, this.pos.y, this.radius * 2);
+    // 使用特效图片渲染
+    if (typeof webEffectImg !== 'undefined' && webEffectImg) {
+      try {
+        push();
+        imageMode(CENTER);
+        
+        // 计算当前帧在精灵表中的位置
+        let frameWidth = webEffectImg.width / this.frameCount;
+        let frameHeight = webEffectImg.height;
+        
+        // 禁用平滑，保留像素感
+        drawingContext.imageSmoothingEnabled = false;
+        
+        // 绘制当前帧
+        let displaySize = this.radius * 2.5;
+        
+        // 根据移动方向旋转图像
+        let angle = this.vel.heading() + HALF_PI;
+        translate(this.pos.x, this.pos.y);
+        rotate(angle);
+        
+        image(
+          webEffectImg,
+          0, 
+          0,
+          displaySize, 
+          displaySize * 1.2, // 稍微拉长
+          this.frameIndex * frameWidth, 
+          0,
+          frameWidth, 
+          frameHeight
+        );
+        
+        drawingContext.imageSmoothingEnabled = true;
+        pop();
+      } catch (e) {
+        // 后备渲染方法
+        fill(200, 200, 200, 150);
+        ellipse(this.pos.x, this.pos.y, this.radius * 2);
+      }
+    } else {
+      // 默认渲染方法
+      fill(200, 200, 200, 150);
+      ellipse(this.pos.x, this.pos.y, this.radius * 2);
+    }
   }
 }
 
