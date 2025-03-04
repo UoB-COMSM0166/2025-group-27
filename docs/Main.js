@@ -213,6 +213,7 @@ function preload() {
   // bossAction 用于 BirdBoss
   bossAction = loadImage("./assets/candidate_images/characters/enemies/birdman/BirdBoss.png");
   featherSprite = loadImage("./assets/candidate_images/characters/enemies/birdman/falling_feather_yellow.png");
+  // adjustment
 
   slimeBossImage = loadImage("./assets/candidate_images/effects/skill_effects/drip/cell_sphere/boss_slime_blue.png");
   slimeBoss2Image = loadImage("./assets/candidate_images/effects/skill_effects/drip/cell_sphere/boss_slime.png");
