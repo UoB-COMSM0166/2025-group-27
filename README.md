@@ -1,7 +1,7 @@
 # 2025-group-27
 2025 COMSM0166 group 27
 
-## Your Game
+## Glitchwood
 
 Link to your game [PLAY HERE](https://uob-comsm0166.github.io/2025-group-27/)
 

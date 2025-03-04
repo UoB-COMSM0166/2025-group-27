@@ -246,6 +246,8 @@ function preload() {
   arrowsound = loadSound("./assets/candidate_sounds/player_attack_sounds/arrow.ogg");
   gunsound = loadSound("./assets/candidate_sounds/player_attack_sounds/gun.ogg");
   keyboardsound = loadSound("./assets/candidate_sounds/player_attack_sounds/keyboard.ogg");
+  // 加载鸟Boss毒池特效图片 - 更新为新的图片路径和名称
+  poisonPoolEffectImg = loadImage("./assets/candidate_images/effects/skill_effects/drip/waterSplashLava_new.png");
 }
 
 
