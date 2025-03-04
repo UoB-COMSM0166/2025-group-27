@@ -131,8 +131,8 @@ function handleGameplay(now) {
           tint(255, 255, 255, alpha);
         }
         
-        // 调整尺寸参数，使图像更清晰但更小
-        let displaySize = trail.radius * 1.8; // 从2.2倍减小到1.8倍
+        // 调整尺寸参数，使特效更大更清晰
+        let displaySize = trail.radius * 2.2; // 从1.8倍增加到2.2倍
         
         image(
           poisonPoolEffectImg,

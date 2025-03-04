@@ -731,15 +731,15 @@ class BirdBoss extends Boss {
         
         poisonTrails.push({
           pos: poisonPos,
-          radius: 35,  // 从45减小到35
+          radius: 40,  // 从35增加到40
           startTime: millis(),
           duration: 4000,
-          // 添加动画属性
+          // 更新动画属性 - 从6帧改为4帧
           frameIndex: 0,
-          frameCount: 6,
-          frameDelay: 6,
+          frameCount: 4,  // 新图片有4帧
+          frameDelay: 8,
           frameCounter: 0,
-          // 添加颜色调整
+          // 保留颜色调整
           colorMod: color(255, 200, 50, 220)
         });
       }
