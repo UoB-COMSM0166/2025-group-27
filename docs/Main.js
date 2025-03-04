@@ -240,6 +240,12 @@ function preload() {
 
   // 加载鸟Boss毒池特效图片
   poisonPoolEffectImg = loadImage("./assets/candidate_images/effects/skill_effects/drip/waterSplashLava.png");
+  
+  //sound相关
+  //playerAttacksound
+  arrowsound = loadSound("./assets/candidate_sounds/player_attack_sounds/arrow.ogg");
+  gunsound = loadSound("./assets/candidate_sounds/player_attack_sounds/gun.ogg");
+  keyboardsound = loadSound("./assets/candidate_sounds/player_attack_sounds/keyboard.ogg");
 }
 
 
