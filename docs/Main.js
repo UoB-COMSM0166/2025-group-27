@@ -231,7 +231,7 @@ function preload() {
   poisonVortexImg = loadImage("./assets/candidate_images/effects/attack_effects/mummy_vortex_sheet.png");
 
   // 加载风史莱姆的龙卷风动画
-  windTornadoImg = loadImage("./assets/candidate_images/effects/attack_effects/bigfireAnticipation_spawn_white.png");
+  windTornadoImg = loadImage("./assets/candidate_images/effects/attack_effects/bigFireAnticipation_spawn_white.png");
 
   //宠物一
   summonBatImage = loadImage("./assets/candidate_images/characters/pets/bat/summonBat_idle.png");
