@@ -237,6 +237,9 @@ function preload() {
   //宠物一
   summonBatImage = loadImage("./assets/candidate_images/characters/pets/bat/summonBat_idle.png");
   summonBatAttackImage = loadImage("./assets/candidate_images/characters/pets/bat/summonBat_rangedAttack_side.png");
+
+  // 加载鸟Boss毒池特效图片
+  poisonPoolEffectImg = loadImage("./assets/candidate_images/effects/skill_effects/drip/waterSplashLava.png");
 }
 
 
