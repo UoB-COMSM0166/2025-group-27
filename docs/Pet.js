@@ -21,6 +21,15 @@ class AttackPet extends BasePet {
     this.attackCooldown = 0;
     this.orbitRadius = 30;
     this.angle = 0;
+    this.idleImage = summonBatImage;
+    this.attackImage = summonBatAttackImage;
+    this.currentImage = this.idleImage;
+    this.frameIndex = 0;
+    this.totalFrames = 4;
+    this.frameWidth = this.currentImage.width / this.totalFrames;
+    this.frameDelay = 10;
+    this.frameCounter = 0;
+    this.isAttacking = false;
   }
 
   follow(player) {
@@ -48,19 +57,33 @@ class AttackPet extends BasePet {
     if (closest && record < this.attackRange && this.attackCooldown <= 0) {
       closest.hit(this.attackDamage);
       this.attackCooldown = 30;
+      this.isAttacking = true;
       showFloatingText("⚔️", this.pos.x, this.pos.y, color(255, 200, 0));
     }
   }
 
   display() {
-    push();
-    fill(255, 200, 0);
-    noStroke();
-    translate(this.pos.x, this.pos.y);
-    rotate(frameCount * 0.1);
-    triangle(-10, 0, 0, -15, 10, 0);
-    triangle(-10, 0, 0, 15, 10, 0);
-    pop();
+    this.frameCounter++;
+    if (this.frameCounter >= this.frameDelay) {
+      this.frameCounter = 0;
+      this.frameIndex = (this.frameIndex + 1) % this.totalFrames;
+    }
+
+    this.currentImage = this.isAttacking ? this.attackImage : this.idleImage;
+    this.frameWidth = this.currentImage.width / this.totalFrames;
+
+    if (this.currentImage) {
+      let sx = this.frameIndex * this.frameWidth;
+      let sy = 0;
+      push();
+      imageMode(CENTER);
+      image(this.currentImage, this.pos.x, this.pos.y, 35, 35, sx, sy, this.frameWidth, this.currentImage.height);
+      pop();
+    }
+
+    if (this.isAttacking) {
+      this.isAttacking = false;
+    }
   }
 
   update(player) {

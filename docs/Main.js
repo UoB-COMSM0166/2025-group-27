@@ -232,6 +232,10 @@ function preload() {
 
   // 加载风史莱姆的龙卷风动画
   windTornadoImg = loadImage("assets/images/Effects/Attack Effects/bigfireAnticipation_spawn_white.png");
+
+  //宠物一
+  summonBatImage = loadImage("assets/images/Characters/Pets/Bat/summonBat_idle.png");
+  summonBatAttackImage = loadImage("assets/images/Characters/Pets/Bat/summonBat_rangedAttack_side.png");
 }
 
 
