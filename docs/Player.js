@@ -1,6 +1,6 @@
 // ===== Player 类 =====
 class Player {
-    constructor(actionImgUp, actionImgDown, actionImgLeft, actionImgRight, actionImgIntro, AttackImageUp, AttackImageDown, AttackImageLeft, AttackImageRight, chWidthUp, chHeightUp, chWidthDown, chHeightDown,chWidthLeft, chHeightLeft,chWidthRight, chHeightRight,chWidthIntro, chHeightIntro, attackWidthUp, attackHeightUp, attackWidthDown, attackHeightDown, attackWidthLeft, attackHeightLeft, attackWidthRight, attackHeightRight, type) {
+  constructor(actionImgUp, actionImgDown, actionImgLeft, actionImgRight, actionImgIntro, AttackImageUp, AttackImageDown, AttackImageLeft, AttackImageRight, chWidthUp, chHeightUp, chWidthDown, chHeightDown, chWidthLeft, chHeightLeft, chWidthRight, chHeightRight, chWidthIntro, chHeightIntro, attackWidthUp, attackHeightUp, attackWidthDown, attackHeightDown, attackWidthLeft, attackHeightLeft, attackWidthRight, attackHeightRight, type) {
     // change
     this.actionImgUp = actionImgUp;
     this.actionImgDown = actionImgDown;
@@ -277,10 +277,10 @@ class Player {
       return;
     }
     let moveVec = createVector(0, 0);
-    
+
     let dx = mouseX - this.pos.x;
     let dy = this.pos.y - mouseY; // 反转Y轴方向
-    let angle = atan2(dy, dx); 
+    let angle = atan2(dy, dx);
     if (angle < 0) angle += TWO_PI;
 
     if (keyIsDown(87)) { // W 上
@@ -290,18 +290,18 @@ class Player {
       moving = true;
       moveVec.y -= 1;
       if (mouseIsPressed && this.characterType != "knight") {
-        if (angle >= PI/4 && angle < 3*PI/4) {       // 45°~135° → 上
+        if (angle >= PI / 4 && angle < 3 * PI / 4) {       // 45°~135° → 上
           this.currentAnimation = this.animations.up;
           this.direction = "up";
-        } 
-        else if (angle >= 3*PI/4 && angle < 5*PI/4) { // 135°~225° → 左
+        }
+        else if (angle >= 3 * PI / 4 && angle < 5 * PI / 4) { // 135°~225° → 左
           this.currentAnimation = this.animations.left;
           this.direction = "left";
-        } 
-        else if (angle >= 5*PI/4 && angle < 7*PI/4) { // 225°~315° → 下
+        }
+        else if (angle >= 5 * PI / 4 && angle < 7 * PI / 4) { // 225°~315° → 下
           this.currentAnimation = this.animations.down;
           this.direction = "down";
-        } 
+        }
         else {                                       // 315°~45° → 右
           this.currentAnimation = this.animations.right;
           this.direction = "right";
@@ -314,18 +314,18 @@ class Player {
       moving = true;
       moveVec.y += 1;
       if (mouseIsPressed && this.characterType != "knight") {
-        if (angle >= PI/4 && angle < 3*PI/4) {       // 45°~135° → 上
+        if (angle >= PI / 4 && angle < 3 * PI / 4) {       // 45°~135° → 上
           this.currentAnimation = this.animations.up;
           this.direction = "up";
-        } 
-        else if (angle >= 3*PI/4 && angle < 5*PI/4) { // 135°~225° → 左
+        }
+        else if (angle >= 3 * PI / 4 && angle < 5 * PI / 4) { // 135°~225° → 左
           this.currentAnimation = this.animations.left;
           this.direction = "left";
-        } 
-        else if (angle >= 5*PI/4 && angle < 7*PI/4) { // 225°~315° → 下
+        }
+        else if (angle >= 5 * PI / 4 && angle < 7 * PI / 4) { // 225°~315° → 下
           this.currentAnimation = this.animations.down;
           this.direction = "down";
-        } 
+        }
         else {                                       // 315°~45° → 右
           this.currentAnimation = this.animations.right;
           this.direction = "right";
@@ -340,18 +340,18 @@ class Player {
       moving = true;
       moveVec.x -= 1;
       if (mouseIsPressed && this.characterType != "knight") {
-        if (angle >= PI/4 && angle < 3*PI/4) {       // 45°~135° → 上
+        if (angle >= PI / 4 && angle < 3 * PI / 4) {       // 45°~135° → 上
           this.currentAnimation = this.animations.up;
           this.direction = "up";
-        } 
-        else if (angle >= 3*PI/4 && angle < 5*PI/4) { // 135°~225° → 左
+        }
+        else if (angle >= 3 * PI / 4 && angle < 5 * PI / 4) { // 135°~225° → 左
           this.currentAnimation = this.animations.left;
           this.direction = "left";
-        } 
-        else if (angle >= 5*PI/4 && angle < 7*PI/4) { // 225°~315° → 下
+        }
+        else if (angle >= 5 * PI / 4 && angle < 7 * PI / 4) { // 225°~315° → 下
           this.currentAnimation = this.animations.down;
           this.direction = "down";
-        } 
+        }
         else {                                       // 315°~45° → 右
           this.currentAnimation = this.animations.right;
           this.direction = "right";
@@ -365,18 +365,18 @@ class Player {
       moving = true;
       moveVec.x += 1;
       if (mouseIsPressed && this.characterType != "knight") {
-        if (angle >= PI/4 && angle < 3*PI/4) {       // 45°~135° → 上
+        if (angle >= PI / 4 && angle < 3 * PI / 4) {       // 45°~135° → 上
           this.currentAnimation = this.animations.up;
           this.direction = "up";
-        } 
-        else if (angle >= 3*PI/4 && angle < 5*PI/4) { // 135°~225° → 左
+        }
+        else if (angle >= 3 * PI / 4 && angle < 5 * PI / 4) { // 135°~225° → 左
           this.currentAnimation = this.animations.left;
           this.direction = "left";
-        } 
-        else if (angle >= 5*PI/4 && angle < 7*PI/4) { // 225°~315° → 下
+        }
+        else if (angle >= 5 * PI / 4 && angle < 7 * PI / 4) { // 225°~315° → 下
           this.currentAnimation = this.animations.down;
           this.direction = "down";
-        } 
+        }
         else {                                       // 315°~45° → 右
           this.currentAnimation = this.animations.right;
           this.direction = "right";
@@ -391,24 +391,24 @@ class Player {
     if (this.characterType === "knight" && mouseIsPressed) {
       let dx = mouseX - this.pos.x;
       let dy = this.pos.y - mouseY; // 反转Y轴方向
-      let angle = atan2(dy, dx); 
+      let angle = atan2(dy, dx);
 
       // 角度规范化到0~2π
       if (angle < 0) angle += TWO_PI;
       console.log("angle: " + angle);
       // 使用新的角度区间判断
-      if (angle >= PI/4 && angle < 3*PI/4) {       // 45°~135° → 上
+      if (angle >= PI / 4 && angle < 3 * PI / 4) {       // 45°~135° → 上
         this.currentAnimation = this.animations.attackup;
         this.direction = "attackup";
-      } 
-      else if (angle >= 3*PI/4 && angle < 5*PI/4) { // 135°~225° → 左
+      }
+      else if (angle >= 3 * PI / 4 && angle < 5 * PI / 4) { // 135°~225° → 左
         this.currentAnimation = this.animations.attackleft;
         this.direction = "attackleft";
-      } 
-      else if (angle >= 5*PI/4 && angle < 7*PI/4) { // 225°~315° → 下
+      }
+      else if (angle >= 5 * PI / 4 && angle < 7 * PI / 4) { // 225°~315° → 下
         this.currentAnimation = this.animations.attackdown;
         this.direction = "attackdown";
-      } 
+      }
       else {                                       // 315°~45° → 右
         this.currentAnimation = this.animations.attackright;
         this.direction = "attackright";
@@ -472,11 +472,11 @@ class Player {
           angle += TWO_PI;
         }
         let state;
-        if (angle> 0.25 * PI && angle < 0.75 * PI){
+        if (angle > 0.25 * PI && angle < 0.75 * PI) {
           state = "Up";
-        } else if (angle> 0.75 * PI && angle < 1.25 * PI) {
+        } else if (angle > 0.75 * PI && angle < 1.25 * PI) {
           state = "Left";
-        } else if (angle> 1.25 * PI && angle < 1.75 * PI) {
+        } else if (angle > 1.25 * PI && angle < 1.75 * PI) {
           state = "Down";
         } else if (angle > 1.75 * PI || angle < 0.25 * PI) {
           state = "Right";
@@ -484,7 +484,7 @@ class Player {
         // 计算角色中心
         let centerX;
         let centerY;
-        if(state === "Up" || state === "Down") {
+        if (state === "Up" || state === "Down") {
           centerX = this.pos.x;
           centerY = this.pos.y - 20;
         } else if (state === "Left" || state === "Right") {
@@ -500,7 +500,7 @@ class Player {
 
         // 子弹从中心发射
         let bulletStart = createVector(centerX, centerY);
-        
+
         switch (this.bulletType) {
           case "bounce":
             bullets.push(new Bullet(
@@ -641,66 +641,66 @@ class Player {
   }
 
   display() {
-    if(this.characterType === "knight") {
-    if (this.isAttacking === false) {
-      if (this.direction === "up") {
-        let frameX = this.currentAnimation[this.frameIndex] % (this.actionImgUp.width / this.chWidthUp) * this.chWidthUp;
-        let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.actionImgUp.width / this.chWidthUp)) * this.chHeightUp;
-        push();
-        image(this.actionImgUp, this.pos.x, this.pos.y, this.ImageWidth, this.ImageHeight, frameX, frameY, this.chWidthUp, this.chHeightUp);
-        pop();
-      } else if (this.direction === "down") {
-        let frameX = this.currentAnimation[this.frameIndex] % (this.actionImgDown.width / this.chWidthDown) * this.chWidthDown;
-        let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.actionImgDown.width / this.chWidthDown)) * this.chHeightDown;
-        push();
-        image(this.actionImgDown, this.pos.x, this.pos.y, this.ImageWidth, this.ImageHeight, frameX, frameY, this.chWidthDown, this.chHeightDown);
-        pop();
-      } else if (this.direction === "left") {
-        let frameX = this.currentAnimation[this.frameIndex] % (this.actionImgLeft.width / this.chWidthLeft) * this.chWidthLeft;
-        let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.actionImgLeft.width / this.chWidth)) * this.chHeightLeft;
-        push();
-        image(this.actionImgLeft, this.pos.x, this.pos.y, this.ImageWidth, this.ImageHeight, frameX, frameY, this.chWidthLeft, this.chHeightLeft);
-        pop();
-      } else if (this.direction === "right") {
-        let frameX = this.currentAnimation[this.frameIndex] % (this.actionImgRight.width / this.chWidthRight) * this.chWidthRight;
-        let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.actionImgRight.width / this.chWidthRight)) * this.chHeightRight;
-        push();
-        image(this.actionImgRight, this.pos.x, this.pos.y, this.ImageWidth, this.ImageHeight, frameX, frameY, this.chWidthRight, this.chHeightRight);
-        pop();
-      } else if (this.direction === "idle") {
-        let frameX = this.currentAnimation[this.frameIndex] % (this.actionImgIntro.width / this.chWidthIntro) * this.chWidthIntro;
-        let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.actionImgIntro.width / this.chWidthIntro)) * this.chHeightIntro;
-        push();
-        image(this.actionImgIntro, this.pos.x, this.pos.y, this.ImageWidth, this.ImageHeight, frameX, frameY, this.chWidthIntro, this.chHeightIntro);
-        pop();
+    if (this.characterType === "knight") {
+      if (this.isAttacking === false) {
+        if (this.direction === "up") {
+          let frameX = this.currentAnimation[this.frameIndex] % (this.actionImgUp.width / this.chWidthUp) * this.chWidthUp;
+          let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.actionImgUp.width / this.chWidthUp)) * this.chHeightUp;
+          push();
+          image(this.actionImgUp, this.pos.x, this.pos.y, this.ImageWidth, this.ImageHeight, frameX, frameY, this.chWidthUp, this.chHeightUp);
+          pop();
+        } else if (this.direction === "down") {
+          let frameX = this.currentAnimation[this.frameIndex] % (this.actionImgDown.width / this.chWidthDown) * this.chWidthDown;
+          let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.actionImgDown.width / this.chWidthDown)) * this.chHeightDown;
+          push();
+          image(this.actionImgDown, this.pos.x, this.pos.y, this.ImageWidth, this.ImageHeight, frameX, frameY, this.chWidthDown, this.chHeightDown);
+          pop();
+        } else if (this.direction === "left") {
+          let frameX = this.currentAnimation[this.frameIndex] % (this.actionImgLeft.width / this.chWidthLeft) * this.chWidthLeft;
+          let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.actionImgLeft.width / this.chWidth)) * this.chHeightLeft;
+          push();
+          image(this.actionImgLeft, this.pos.x, this.pos.y, this.ImageWidth, this.ImageHeight, frameX, frameY, this.chWidthLeft, this.chHeightLeft);
+          pop();
+        } else if (this.direction === "right") {
+          let frameX = this.currentAnimation[this.frameIndex] % (this.actionImgRight.width / this.chWidthRight) * this.chWidthRight;
+          let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.actionImgRight.width / this.chWidthRight)) * this.chHeightRight;
+          push();
+          image(this.actionImgRight, this.pos.x, this.pos.y, this.ImageWidth, this.ImageHeight, frameX, frameY, this.chWidthRight, this.chHeightRight);
+          pop();
+        } else if (this.direction === "idle") {
+          let frameX = this.currentAnimation[this.frameIndex] % (this.actionImgIntro.width / this.chWidthIntro) * this.chWidthIntro;
+          let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.actionImgIntro.width / this.chWidthIntro)) * this.chHeightIntro;
+          push();
+          image(this.actionImgIntro, this.pos.x, this.pos.y, this.ImageWidth, this.ImageHeight, frameX, frameY, this.chWidthIntro, this.chHeightIntro);
+          pop();
+        }
+      } else {
+        if (this.characterType === "knight" && this.direction === "attackup") {
+          let frameX = this.currentAnimation[this.frameIndex] % (this.attackImgUp.width / this.attackWidthUp) * this.attackWidthUp;
+          let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.attackImgUp.width / this.attackWidthUp)) * this.attackHeightUp;
+          push();
+          image(this.attackImgUp, this.pos.x - 20, this.pos.y, this.aImageWidth, this.aImageHeight, frameX, frameY, this.attackWidthUp, this.attackHeightUp);
+          pop();
+        } else if (this.characterType === "knight" && this.direction === "attackdown") {
+          let frameX = this.currentAnimation[this.frameIndex] % (this.attackImgDown.width / this.attackWidthDown) * this.attackWidthDown;
+          let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.attackImgDown.width / this.attackWidthDown)) * this.attackHeightDown;
+          push();
+          image(this.attackImgDown, this.pos.x - 20, this.pos.y, this.aImageWidth, this.aImageHeight, frameX, frameY, this.attackWidthDown, this.attackHeightDown);
+          pop();
+        } else if (this.characterType === "knight" && this.direction === "attackleft") {
+          let frameX = this.currentAnimation[this.frameIndex] % (this.attackImgLeft.width / this.attackWidthLeft) * this.attackWidthLeft;
+          let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.attackImgLeft.width / this.attackWidthLeft)) * this.attackHeightLeft;
+          push();
+          image(this.attackImgLeft, this.pos.x - 50, this.pos.y + 20, this.aaImageWidth, this.aaImageHeight, frameX, frameY, this.attackWidthLeft, this.attackHeightLeft);
+          pop();
+        } else if (this.characterType === "knight" && this.direction === "attackright") {
+          let frameX = this.currentAnimation[this.frameIndex] % (this.attackImgRight.width / this.attackWidthRight) * this.attackWidthRight;
+          let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.attackImgRight.width / this.attackWidthRight)) * this.attackHeightRight;
+          push();
+          image(this.attackImgRight, this.pos.x, this.pos.y + 20, this.aaImageWidth, this.aaImageHeight, frameX, frameY, this.attackWidthRight, this.attackHeightRight);
+          pop();
+        }
       }
-    } else {
-      if (this.characterType === "knight" && this.direction === "attackup") {
-        let frameX = this.currentAnimation[this.frameIndex] % (this.attackImgUp.width / this.attackWidthUp) * this.attackWidthUp;
-        let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.attackImgUp.width / this.attackWidthUp)) * this.attackHeightUp;
-        push();
-        image(this.attackImgUp, this.pos.x-20, this.pos.y, this.aImageWidth, this.aImageHeight, frameX, frameY, this.attackWidthUp, this.attackHeightUp);
-        pop();
-      } else if (this.characterType === "knight" && this.direction === "attackdown") {
-        let frameX = this.currentAnimation[this.frameIndex] % (this.attackImgDown.width / this.attackWidthDown) * this.attackWidthDown;
-        let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.attackImgDown.width / this.attackWidthDown)) * this.attackHeightDown;
-        push();
-        image(this.attackImgDown, this.pos.x-20, this.pos.y, this.aImageWidth, this.aImageHeight, frameX, frameY, this.attackWidthDown, this.attackHeightDown);
-        pop();
-      } else if (this.characterType === "knight" && this.direction === "attackleft") {
-        let frameX = this.currentAnimation[this.frameIndex] % (this.attackImgLeft.width / this.attackWidthLeft) * this.attackWidthLeft;
-        let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.attackImgLeft.width / this.attackWidthLeft)) * this.attackHeightLeft;
-        push();
-        image(this.attackImgLeft, this.pos.x-50, this.pos.y+20, this.aaImageWidth, this.aaImageHeight, frameX, frameY, this.attackWidthLeft, this.attackHeightLeft);
-        pop();
-      } else if (this.characterType === "knight" && this.direction === "attackright") {
-        let frameX = this.currentAnimation[this.frameIndex] % (this.attackImgRight.width / this.attackWidthRight) * this.attackWidthRight;
-        let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.attackImgRight.width / this.attackWidthRight)) * this.attackHeightRight;
-        push();
-        image(this.attackImgRight, this.pos.x, this.pos.y+20, this.aaImageWidth, this.aaImageHeight, frameX, frameY, this.attackWidthRight, this.attackHeightRight);
-        pop();
-      }
-    }
     } else {
       if (this.direction === "up") {
         let frameX = this.currentAnimation[this.frameIndex] % (this.actionImgUp.width / this.chWidthUp) * this.chWidthUp;
@@ -749,6 +749,12 @@ class Player {
         this.calculateCharge();
         this.drawChargeBar();
       }
+    }
+
+    if (this.currentImage) {
+      let frameX = this.frameIndex * this.frameWidth;
+      let frameY = 0;
+      image(this.currentImage, this.pos.x, this.pos.y, this.frameWidth, this.currentImage.height, frameX, frameY, this.frameWidth, this.currentImage.height);
     }
 
     // 显示宠物
@@ -830,13 +836,13 @@ class Player {
     // 计算方向（朝向鼠标）
     const target = createVector(mouseX, mouseY);
     const direction = p5.Vector.sub(target, center).normalize();
-    
+
     let angle = atan2(mouseY - player.pos.y, mouseX - player.pos.x);
     if (angle < 0) {
       angle += TWO_PI;
-      }
+    }
     let state;
-    if (angle> 0.25 * PI && angle < 0.75 * PI){
+    if (angle > 0.25 * PI && angle < 0.75 * PI) {
       state = "v";
       this.arrows.push(new Arrow(
         center.x, center.y,
@@ -846,8 +852,8 @@ class Player {
         chargeParams.size,
         ArcherActionAttackDown,
         state
-    ));
-    } else if (angle> 0.75 * PI && angle < 1.25 * PI) {
+      ));
+    } else if (angle > 0.75 * PI && angle < 1.25 * PI) {
       state = "h";
       this.arrows.push(new Arrow(
         center.x, center.y,
@@ -858,7 +864,7 @@ class Player {
         ArcherActionAttackLeft,
         state
       ));
-    } else if (angle> 1.25 * PI && angle < 1.75 * PI) {
+    } else if (angle > 1.25 * PI && angle < 1.75 * PI) {
       state = "v";
       this.arrows.push(new Arrow(
         center.x, center.y,
@@ -882,7 +888,7 @@ class Player {
       ));
     }
 
-    
+
 
     // 重置状态
     this.isCharging = false;

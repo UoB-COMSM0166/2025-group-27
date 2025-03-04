@@ -168,67 +168,74 @@ function updateWeather() {
 // ----- p5.js 核心函数 -----
 function preload() {
   // knight
-  KnightActionUp = loadImage("assets/images/Characters/keyboardman/keyboardman_back.png");
-  KnightActionDown = loadImage("assets/images/Characters/keyboardman/keyboardman_front.png");
-  KnightActionLeft = loadImage("assets/images/Characters/keyboardman/keyboardman_left.png");
-  KnightActionRight = loadImage("assets/images/Characters/keyboardman/keyboardman_right.png");
-  KnightActionIntro = loadImage("assets/images/Characters/keyboardman/keyboardman_intro.png");
+  KnightActionUp = loadImage("./assets/images/Characters/keyboardman/keyboardman_back.png");
+  KnightActionDown = loadImage("./assets/images/Characters/keyboardman/keyboardman_front.png");
+  KnightActionLeft = loadImage("./assets/images/Characters/keyboardman/keyboardman_left.png");
+  KnightActionRight = loadImage("./assets/images/Characters/keyboardman/keyboardman_right.png");
+  KnightActionIntro = loadImage("./assets/images/Characters/keyboardman/keyboardman_intro.png");
 
-  KnightActionAttackUp = loadImage("assets/images/Characters/keyboardman/attack/keyboardman_attack_back.png");
-  KnightActionAttackDown = loadImage("assets/images/Characters/keyboardman/attack/keyboardman_attack_front.png");
-  KnightActionAttackLeft = loadImage("assets/images/Characters/keyboardman/attack/keyboardman_attack_left.png");
-  KnightActionAttackRight = loadImage("assets/images/Characters/keyboardman/attack/keyboardman_attack_right.png");
+  KnightActionAttackUp = loadImage("./assets/images/Characters/keyboardman/attack/keyboardman_attack_back.png");
+  KnightActionAttackDown = loadImage("./assets/images/Characters/keyboardman/attack/keyboardman_attack_front.png");
+  KnightActionAttackLeft = loadImage("./assets/images/Characters/keyboardman/attack/keyboardman_attack_left.png");
+  KnightActionAttackRight = loadImage("./assets/images/Characters/keyboardman/attack/keyboardman_attack_right.png");
   // gunner
-  GunnerActionUp = loadImage("assets/images/Characters/computerboy/computerboy_back.png");
-  GunnerActionDown = loadImage("assets/images/Characters/computerboy/computerboy_front.png");
-  GunnerActionLeft = loadImage("assets/images/Characters/computerboy/computerboy_left.png");
-  GunnerActionRight = loadImage("assets/images/Characters/computerboy/computerboy_right.png");
-  GunnerActionIntro = loadImage("assets/images/Characters/computerboy/computerboy_intro.png");
+  GunnerActionUp = loadImage("./assets/images/Characters/computerboy/computerboy_back.png");
+  GunnerActionDown = loadImage("./assets/images/Characters/computerboy/computerboy_front.png");
+  GunnerActionLeft = loadImage("./assets/images/Characters/computerboy/computerboy_left.png");
+  GunnerActionRight = loadImage("./assets/images/Characters/computerboy/computerboy_right.png");
+  GunnerActionIntro = loadImage("./assets/images/Characters/computerboy/computerboy_intro.png");
 
-  GunnerAttackUp = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_upward.png");
-  GunnerAttackDown = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_downward.png");
-  GunnerAttackLeft = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_left.png");
-  GunnerAttackRight = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_right.png");
+  GunnerAttackUp = loadImage("./assets/images/Characters/computerboy/attack/computerboy_attack_upward.png");
+  GunnerAttackDown = loadImage("./assets/images/Characters/computerboy/attack/computerboy_attack_downward.png");
+  GunnerAttackLeft = loadImage("./assets/images/Characters/computerboy/attack/computerboy_attack_left.png");
+  GunnerAttackRight = loadImage("./assets/images/Characters/computerboy/attack/computerboy_attack_right.png");
 
-  GunnerBulletAnimationUp = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_upward.png");
-  GunnerBulletAnimationDown = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_downward.png");
-  GunnerBulletAnimationLeft = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_left.png");
-  GunnerBulletAnimationRight = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_right.png");
+  GunnerBulletAnimationUp = loadImage("./assets/images/Characters/computerboy/attack/computerboy_attack_upward.png");
+  GunnerBulletAnimationDown = loadImage("./assets/images/Characters/computerboy/attack/computerboy_attack_downward.png");
+  GunnerBulletAnimationLeft = loadImage("./assets/images/Characters/computerboy/attack/computerboy_attack_left.png");
+  GunnerBulletAnimationRight = loadImage("./assets/images/Characters/computerboy/attack/computerboy_attack_right.png");
 
-  Bup = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_upward.gif");
-  Bdown = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_downward.gif");
-  Bleft = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_left.gif");
-  Bright = loadImage("assets/images/Characters/computerboy/attack/computerboy_attack_right.gif");
+  Bup = loadImage("./assets/images/Characters/computerboy/attack/computerboy_attack_upward.gif");
+  Bdown = loadImage("./assets/images/Characters/computerboy/attack/computerboy_attack_downward.gif");
+  Bleft = loadImage("./assets/images/Characters/computerboy/attack/computerboy_attack_left.gif");
+  Bright = loadImage("./assets/images/Characters/computerboy/attack/computerboy_attack_right.gif");
   // archer
-  ArcherActionUp = loadImage("assets/images/Characters/mousegirl/mousegirl_back.png");
-  ArcherActionDown = loadImage("assets/images/Characters/mousegirl/mousegirl_front.png");
-  ArcherActionLeft = loadImage("assets/images/Characters/mousegirl/mousegirl_left.png");
-  ArcherActionRight = loadImage("assets/images/Characters/mousegirl/mousegirl_right.png");
-  ArcherActionIntro = loadImage("assets/images/Characters/mousegirl/mousegirl_intro.png");
+  ArcherActionUp = loadImage("./assets/images/Characters/mousegirl/mousegirl_back.png");
+  ArcherActionDown = loadImage("./assets/images/Characters/mousegirl/mousegirl_front.png");
+  ArcherActionLeft = loadImage("./assets/images/Characters/mousegirl/mousegirl_left.png");
+  ArcherActionRight = loadImage("./assets/images/Characters/mousegirl/mousegirl_right.png");
+  ArcherActionIntro = loadImage("./assets/images/Characters/mousegirl/mousegirl_intro.png");
 
-  ArcherActionAttackUp = loadImage("assets/images/Characters/mousegirl/attack/mousegirl_attack_upward.png");
-  ArcherActionAttackDown = loadImage("assets/images/Characters/mousegirl/attack/mousegirl_attack_downward.png");
-  ArcherActionAttackLeft = loadImage("assets/images/Characters/mousegirl/attack/mousegirl_attack_left.png");
-  ArcherActionAttackRight = loadImage("assets/images/Characters/mousegirl/attack/mousegirl_attack_right.png");
+  ArcherActionAttackUp = loadImage("./assets/images/Characters/mousegirl/attack/mousegirl_attack_upward.png");
+  ArcherActionAttackDown = loadImage("./assets/images/Characters/mousegirl/attack/mousegirl_attack_downward.png");
+  ArcherActionAttackLeft = loadImage("./assets/images/Characters/mousegirl/attack/mousegirl_attack_left.png");
+  ArcherActionAttackRight = loadImage("./assets/images/Characters/mousegirl/attack/mousegirl_attack_right.png");
   // bossAction 用于 BirdBoss
-  bossAction = loadImage("assets/images/Characters/Enemies/Birdman/BirdBoss.png");
-  featherSprite = loadImage("assets/images/Characters/Enemies/Birdman/falling_feather_yellow.png");
+  bossAction = loadImage("./assets/images/Characters/Enemies/Birdman/BirdBoss.png");
+  featherSprite = loadImage("./assets/images/Characters/Enemies/Birdman/falling_feather_yellow.png");
 
-  slimeBossImage = loadImage("assets/images/Effects/ Skill Effects/Drip/cell_sphere/boss_slime_blue.png");
-  slimeBoss2Image = loadImage("assets/images/Effects/ Skill Effects/Drip/cell_sphere/boss_slime.png");
-  //spiderBossAction = loadImage("assets/images/Characters/Enemies/SpiderBoss/SpiderBoss.png");
+  slimeBossImage = loadImage("./assets/images/Effects/ Skill Effects/Drip/cell_sphere/boss_slime_blue.png");
+  slimeBoss2Image = loadImage("./assets/images/Effects/ Skill Effects/Drip/cell_sphere/boss_slime.png");
+  //spiderBossAction = loadImage("./assets/images/Characters/Enemies/SpiderBoss/SpiderBoss.png");
 
-  commonEnemyAction.idle = loadImage("assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_idleEmote1.png");
-  commonEnemyAction.up = loadImage("assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_move_up.png");
-  commonEnemyAction.down = loadImage("assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_move.png");
-  commonEnemyAction.side = loadImage("assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_move_side.png");
-  obstacle1 = loadImage("assets/images/Environment/barrier1/tree1.png");
-  obstacle2 = loadImage("assets/images/Environment/barrier1/stone3.png");
-  bombAction = loadImage("assets/images/Items/Weapons/bomb/bomb.png");
+  commonEnemyAction.idle = loadImage("./assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_idleEmote1.png");
+  commonEnemyAction.up = loadImage("./assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_move_up.png");
+  commonEnemyAction.down = loadImage("./assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_move.png");
+  commonEnemyAction.side = loadImage("./assets/images/Characters/Enemies/Birdman_Imp/cavelingSkirmisher_move_side.png");
+  obstacle1 = loadImage("./assets/images/Environment/barrier1/tree1.png");
+  obstacle2 = loadImage("./assets/images/Environment/barrier1/stone3.png");
+  bombAction = loadImage("./assets/images/Items/Weapons/bomb/bomb.png");
   // 添加水泡和火焰效果图片
-  waterBubbleImg = loadImage("assets/images/Effects/Attack Effects/bubble.png");
-  fireballImg = loadImage("assets/images/Effects/Attack Effects/fireballProjectile_idle.png");
-  poisonVortexImg = loadImage("assets/images/Effects/Attack Effects/mummy_vortex_sheet.png");
+  waterBubbleImg = loadImage("./assets/images/Effects/Attack Effects/bubble.png");
+  fireballImg = loadImage("./assets/images/Effects/Attack Effects/fireballProjectile_idle.png");
+  poisonVortexImg = loadImage("./assets/images/Effects/Attack Effects/mummy_vortex_sheet.png");
+
+  // 加载风史莱姆的龙卷风动画
+  windTornadoImg = loadImage("./assets/images/Effects/Attack Effects/bigfireAnticipation_spawn_white.png");
+
+  //宠物一
+  summonBatImage = loadImage("./assets/images/Characters/Pets/Bat/summonBat_idle.png");
+  summonBatAttackImage = loadImage("./assets/images/Characters/Pets/Bat/summonBat_rangedAttack_side.png");
 }
 
 

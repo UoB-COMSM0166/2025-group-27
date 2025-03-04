@@ -715,10 +715,10 @@ function generateUpgradeOptions() {
 }
 
 // ===== 根据当前波数生成敌人 =====
-function spawnEnemiesForWave(currentWave) {
+function spawnEnemiesForWave(wave) {
   enemies = [];
 
-  if (currentWave === 3) {
+  if (wave === 3) {
     let boss1 = new SlimeBoss(slimeBossImage, "fire");
     let boss2 = new SlimeBoss(slimeBossImage, "water");
     let boss3 = new SlimeBoss(slimeBoss2Image, "poison");
@@ -736,7 +736,7 @@ function spawnEnemiesForWave(currentWave) {
     bossActive = true;
   }
 
-  else if (currentWave === 6) {
+  else if (wave === 6) {
     // 生成 BirdBoss
     let bossPos = getValidSpawnPosition();
     let boss = new BirdBoss(bossAction);
@@ -751,7 +751,7 @@ function spawnEnemiesForWave(currentWave) {
     bossActive = true;
   }
 
-  else if (currentWave === 9) {  // 新增第9波
+  else if (wave === 9) {  // 新增第9波
     let boss = new SpiderBoss(true, "spiderBoss", commonEnemyAction, 40, 40);
     boss.pos = getValidSpawnPosition();
     enemies.push(boss);
@@ -761,7 +761,7 @@ function spawnEnemiesForWave(currentWave) {
 
   else {
     // 普通敌人生成逻辑
-    let baseEnemyCount = Math.floor(6 + currentWave * 0.8);
+    let baseEnemyCount = Math.floor(6 + wave * 0.8);
     for (let i = 0; i < baseEnemyCount; i++) {
       let isElite = random() < 0.2;
       let enemyType = random();
@@ -1244,4 +1244,26 @@ function setupVictoryButtons() {
       spawnEnemiesForWave(wave);
     })
   ];
+}
+
+// 添加一个新函数来生成多个Boss并分散它们
+function spawnMultipleElementalBosses() {
+  const bossTypes = ["fire", "water", "poison", "wind"];
+  const positions = [
+    {x: -100, y: -100}, // 左上
+    {x: 100, y: -100},  // 右上
+    {x: -100, y: 100},  // 左下
+    {x: 100, y: 100}    // 右下
+  ];
+  
+  for (let i = 0; i < bossTypes.length; i++) {
+    const boss = new SlimeBoss(slimeBossImage, bossTypes[i]);
+    boss.pos = createVector(
+      width / 2 + positions[i].x, 
+      height / 2 + positions[i].y
+    );
+    enemies.push(boss);
+  }
+  
+  bossActive = true;
 }
