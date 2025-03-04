@@ -354,7 +354,7 @@ function initPlayer(type) {
     player.arrowCooldown = 20;        // 冷却时间调整
     player.chargeBarScale = 0.7;      // 新增蓄力条缩放系数
   } else if (type === "knight") {
-    player = new Player(KnightActionUp, KnightActionDown, KnightActionLeft, KnightActionRight, KnightActionIntro, KnightActionAttackUp, KnightActionAttackDown, KnightActionAttackLeft, KnightActionAttackRight, 50.75, 100, 50.75, 100, 43.5, 79, 50.75, 100, 50.67, 79, 100, 100, 100, 150, 150, 150, 150, type);
+    player = new Player(KnightActionUp, KnightActionDown, KnightActionLeft, KnightActionRight, KnightActionIntro, KnightActionAttackUp, KnightActionAttackDown, KnightActionAttackLeft, KnightActionAttackRight, 50.75, 100, 50.75, 100, 43.5, 79, 50.75, 100, 50.67, 79, 100, 100, 100, 150, 150, 150, 150, 150, type);
     player.attackPower = 10;
     player.attackDamage = 100;
     player.attackSpeed = 500;

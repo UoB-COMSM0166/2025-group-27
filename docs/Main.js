@@ -238,7 +238,12 @@ function preload() {
   summonBatImage = loadImage("./assets/candidate_images/characters/pets/bat/summonBat_idle.png");
   summonBatAttackImage = loadImage("./assets/candidate_images/characters/pets/bat/summonBat_rangedAttack_side.png");
 
-  // 加载鸟Boss毒池特效图片
+  //sound相关
+  //playerAttacksound
+  arrowsound = loadSound("./assets/candidate_sounds/player_attack_sounds/arrow.ogg");
+  gunsound = loadSound("./assets/candidate_sounds/player_attack_sounds/gun.ogg");
+  keyboardsound = loadSound("./assets/candidate_sounds/player_attack_sounds/keyboard.ogg");
+  // 加载鸟Boss毒池特效图片 - 更新为新的图片路径和名称
   poisonPoolEffectImg = loadImage("./assets/candidate_images/effects/skill_effects/drip/waterSplashLava_new.png");
   
   // 加载鸟Boss蛛丝技能特效图片

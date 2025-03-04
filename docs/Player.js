@@ -491,7 +491,7 @@ class Player {
           centerX = this.pos.x - 20;
           centerY = this.pos.y;
         }
-
+        gunsound.play();
         // 计算朝向
         let direction = p5.Vector.sub(
           createVector(mouseX, mouseY),
@@ -570,6 +570,7 @@ class Player {
   }
 
   detectAttack() {
+    keyboardsound.play();
     let center = createVector(
       this.pos.x + this.ImageWidth / 2,
       this.pos.y + this.ImageHeight / 2
@@ -836,6 +837,8 @@ class Player {
     // 计算方向（朝向鼠标）
     const target = createVector(mouseX, mouseY);
     const direction = p5.Vector.sub(target, center).normalize();
+
+    arrowsound.play();
 
     let angle = atan2(mouseY - player.pos.y, mouseX - player.pos.x);
     if (angle < 0) {
