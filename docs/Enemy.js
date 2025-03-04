@@ -845,7 +845,32 @@ class SlimeBoss extends Boss {
     this.speed = 2.5;
     this.size = 120;
     this.isActive = true;
-    this.pos = createVector(width / 2, height / 2); // 确保初始化位置
+    
+    // 根据Boss类型设置位置偏移
+    let offsetX = 0;
+    let offsetY = 0;
+    
+    switch(type) {
+      case "fire":
+        offsetX = -80;
+        offsetY = -80;
+        break;
+      case "water":
+        offsetX = 80;
+        offsetY = -80;
+        break;
+      case "poison":
+        offsetX = -80;
+        offsetY = 80;
+        break;
+      case "wind":
+        offsetX = 80;
+        offsetY = 80;
+        break;
+    }
+    
+    // 设置位置（中心位置 + 偏移）
+    this.pos = createVector(width / 2 + offsetX, height / 2 + offsetY);
 
     // 动画相关
     this.slimeBossImage = slimeBossImage;
@@ -909,11 +934,16 @@ class SlimeBoss extends Boss {
 
   getElementalColor(type) {
     switch (type) {
-      case "fire": return color(255, 100, 0);
-      case "water": return color(0, 100, 255);
-      case "poison": return color(0, 255, 0);
-      case "wind": return color(200, 200, 255);
-      default: return color(255);
+      case "fire":
+        return color(255, 60, 60, 220);    // 炽热红（带轻微灼烧透明感）
+      case "water":
+        return color(135, 206, 250, 200);    // 淡蓝（类似水的半透明效果）
+      case "poison":
+        return color(148, 0, 211, 180);     // 毒液紫（带荧光效果）
+      case "wind":
+        return color(245, 245, 245, 220);   // 纯白（带气态模糊效果）
+      default:
+        return color(255);
     }
   }
 
@@ -1110,26 +1140,43 @@ class SlimeBoss extends Boss {
     showFloatingText("Toxic Pool!", this.pos.x, this.pos.y - 30, color(0, 255, 0));
   }
 
-  // 疾风史莱姆技能
+  // 疾风史莱姆技能 - 调整帧数和尺寸
   windSkill() {
+    // 获取朝向玩家的角度
     let angleToPlayer = atan2(player.pos.y - this.pos.y, player.pos.x - this.pos.x);
-
-    this.elementalEffects.push({
-      type: "wind",
-      pos: this.pos.copy(),
-      angle: angleToPlayer,
-      radius: this.windRadius,
-      duration: this.windDuration,
-      force: this.windForce,
-      startTime: millis(),
-      particles: Array(20).fill().map(() => ({
+    
+    // 创建三道龙卷风，扇形分布
+    for (let i = -1; i <= 1; i++) {
+      // 在基础角度上添加偏移，创建扇形效果
+      let tornadoAngle = angleToPlayer + i * PI/6; // 每个龙卷风间隔30度
+      
+      this.elementalEffects.push({
+        type: "wind",
         pos: this.pos.copy(),
-        vel: p5.Vector.random2D().mult(random(2, 5)),
-        life: random(20, 40)
-      }))
-    });
+        angle: tornadoAngle,
+        radius: this.windRadius * 0.6, // 减小半径
+        duration: this.windDuration,
+        force: this.windForce,
+        startTime: millis(),
+        // 风的粒子效果
+        particles: Array(20).fill().map(() => ({
+          pos: this.pos.copy(),
+          vel: p5.Vector.random2D().mult(random(2, 5)),
+          life: random(20, 40)
+        })),
+        // 龙卷风动画属性
+        frameIndex: 0,
+        frameCount: 12,         // 修正为12帧
+        frameDelay: 4,          // 动画速度
+        frameCounter: 0,
+        scale: 0.8,             // 减小缩放系数
+        // 龙卷风移动属性
+        moveSpeed: 3,           // 移动速度
+        moveDirection: p5.Vector.fromAngle(tornadoAngle).mult(3) // 移动方向
+      });
+    }
 
-    showFloatingText("Wind Gust!", this.pos.x, this.pos.y - 30, color(200, 200, 255));
+    showFloatingText("Tornado Blast!", this.pos.x, this.pos.y - 30, color(200, 200, 255));
   }
 
   updateElementalEffects() {
@@ -1198,18 +1245,57 @@ class SlimeBoss extends Boss {
           break;
 
         case "wind":
-          // 更新风效果粒子
+          // 更新龙卷风位置 - 向前移动
+          if (effect.moveDirection) {
+            effect.pos.add(effect.moveDirection);
+          }
+          
+          // 更新动画帧
+          if (effect.frameCounter !== undefined) {
+            effect.frameCounter++;
+            if (effect.frameCounter >= effect.frameDelay) {
+              effect.frameCounter = 0;
+              effect.frameIndex = (effect.frameIndex + 1) % effect.frameCount;
+            }
+          }
+          
+          // 更新龙卷风粒子效果
           effect.particles.forEach(p => {
             p.pos.add(p.vel);
             p.life--;
           });
           effect.particles = effect.particles.filter(p => p.life > 0);
+          
+          // 添加新的粒子以保持效果
+          if (effect.particles.length < 10) {
+            for (let j = 0; j < 3; j++) {
+              effect.particles.push({
+                pos: effect.pos.copy().add(random(-30, 30), random(-30, 30)),
+                vel: p5.Vector.fromAngle(effect.angle + random(-0.5, 0.5)).mult(random(2, 5)),
+                life: random(10, 20)
+              });
+            }
+          }
 
-          let playerInRange = p5.Vector.dist(player.pos, effect.pos) < effect.radius;
-          if (playerInRange) {
-            let pushDir = p5.Vector.fromAngle(effect.angle).mult(effect.force);
+          // 检测是否影响玩家
+          let playerDist = p5.Vector.dist(player.pos, effect.pos);
+          if (playerDist < effect.radius) {
+            // 计算推力方向和强度（距离中心越近推力越大）
+            let pushStrength = map(playerDist, 0, effect.radius, effect.force, effect.force * 0.3);
+            let pushDir = p5.Vector.fromAngle(effect.angle).mult(pushStrength);
             player.pos.add(pushDir);
             showFloatingText("Blown Away!", player.pos.x, player.pos.y - 20, color(200, 200, 255));
+          }
+          
+          // 检测是否影响玩家子弹
+          for (let j = bullets.length - 1; j >= 0; j--) {
+            let bullet = bullets[j];
+            let bulletDist = p5.Vector.dist(bullet.pos, effect.pos);
+            if (bulletDist < effect.radius) {
+              // 为子弹添加反向推力
+              let bulletPush = p5.Vector.fromAngle(effect.angle).mult(1.5);
+              bullet.vel.add(bulletPush);
+            }
           }
           break;
       }
@@ -1382,12 +1468,46 @@ class SlimeBoss extends Boss {
           break;
           
         case "wind":
-          // 绘制风效果
+          if (windTornadoImg && effect.frameIndex !== undefined) {
+            // 绘制龙卷风动画
+            push();
+            imageMode(CENTER);
+            translate(effect.pos.x, effect.pos.y);
+            rotate(effect.angle); // 旋转到正确方向
+            
+            // 计算当前帧在精灵表中的位置 - 修正为12帧
+            let frameWidth = windTornadoImg.width / effect.frameCount;
+            let frameHeight = windTornadoImg.height;
+            
+            // 绘制当前帧 - 减小尺寸
+            let displaySize = effect.radius * (effect.scale || 0.8);
+            
+            image(
+              windTornadoImg,
+              0, 0,
+              displaySize, displaySize,
+              effect.frameIndex * frameWidth, 0,
+              frameWidth, frameHeight
+            );
+            
+            // 添加辉光效果
+            drawingContext.shadowBlur = 15;
+            drawingContext.shadowColor = color(255, 255, 255, 150);
+            noFill();
+            noStroke();
+            ellipse(0, 0, displaySize * 0.6); // 减小辉光尺寸
+            drawingContext.shadowBlur = 0;
+            
+            pop();
+          }
+          
+          // 绘制风效果粒子
           push();
           for (let p of effect.particles) {
+            let particleAlpha = map(p.life, 0, 40, 50, 200);
+            fill(255, 255, 255, particleAlpha);
             noStroke();
-            fill(200, 200, 255, p.life * 5);
-            ellipse(p.pos.x, p.pos.y, 5);
+            ellipse(p.pos.x, p.pos.y, 4);
           }
           pop();
           break;
