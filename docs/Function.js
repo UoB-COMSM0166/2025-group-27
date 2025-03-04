@@ -94,15 +94,76 @@ function handleGameplay(now) {
   // 处理毒气伤害效果
   for (let i = poisonTrails.length - 1; i >= 0; i--) {
     let trail = poisonTrails[i];
+    
+    // 更新动画帧
+    if (trail.frameCounter !== undefined) {
+      trail.frameCounter++;
+      if (trail.frameCounter >= trail.frameDelay) {
+        trail.frameCounter = 0;
+        trail.frameIndex = (trail.frameIndex + 1) % trail.frameCount;
+      }
+    }
+    
     if (millis() - trail.startTime > trail.duration) {
       poisonTrails.splice(i, 1);
       continue;
     }
 
-    let alpha = map(millis() - trail.startTime, 0, 3000, 255, 0);
-    fill(0, 200, 0, alpha * 0.3);
-    noStroke();
-    ellipse(trail.pos.x, trail.pos.y, trail.radius * 2);
+    // 绘制毒池动画
+    if (typeof poisonPoolEffectImg !== 'undefined' && poisonPoolEffectImg && trail.frameIndex !== undefined) {
+      try {
+        push();
+        drawingContext.filter = 'contrast(1.2) brightness(1.1)';
+        imageMode(CENTER);
+        
+        // 计算当前帧在精灵表中的位置
+        let frameWidth = poisonPoolEffectImg.width / trail.frameCount;
+        let frameHeight = poisonPoolEffectImg.height;
+        
+        // 调整渲染质量
+        drawingContext.imageSmoothingEnabled = false; // 禁用平滑，保留像素感
+        
+        // 减小透明度衰减速度，保持更长时间的清晰度
+        let alpha = map(millis() - trail.startTime, 0, trail.duration * 0.7, 255, 100);
+        if (trail.colorMod) {
+          tint(red(trail.colorMod), green(trail.colorMod), blue(trail.colorMod), alpha);
+        } else {
+          tint(255, 255, 255, alpha);
+        }
+        
+        // 调整尺寸参数，使图像更清晰但更小
+        let displaySize = trail.radius * 1.8; // 从2.2倍减小到1.8倍
+        
+        image(
+          poisonPoolEffectImg,
+          trail.pos.x, 
+          trail.pos.y,
+          displaySize, 
+          displaySize,
+          trail.frameIndex * frameWidth, 
+          0,
+          frameWidth, 
+          frameHeight
+        );
+        
+        noTint();
+        drawingContext.imageSmoothingEnabled = true; // 恢复默认设置
+        drawingContext.filter = 'none';
+        pop();
+      } catch (e) {
+        // 后备绘制方法
+        let alpha = map(millis() - trail.startTime, 0, 3000, 255, 0);
+        fill(0, 200, 0, alpha * 0.3);
+        noStroke();
+        ellipse(trail.pos.x, trail.pos.y, trail.radius * 2);
+      }
+    } else {
+      // 默认绘制方法
+      let alpha = map(millis() - trail.startTime, 0, 3000, 255, 0);
+      fill(0, 200, 0, alpha * 0.3);
+      noStroke();
+      ellipse(trail.pos.x, trail.pos.y, trail.radius * 2);
+    }
 
     if (p5.Vector.dist(player.pos, trail.pos) < trail.radius) {
       player.takeDamage(0.5);
@@ -293,7 +354,7 @@ function initPlayer(type) {
     player.arrowCooldown = 20;        // 冷却时间调整
     player.chargeBarScale = 0.7;      // 新增蓄力条缩放系数
   } else if (type === "knight") {
-    player = new Player(KnightActionUp, KnightActionDown, KnightActionLeft, KnightActionRight, KnightActionIntro, KnightActionAttackUp, KnightActionAttackDown, KnightActionAttackLeft, KnightActionAttackRight, 50.75, 100, 50.75, 100, 43.5, 79, 50.75, 100, 50.67, 79, 100, 100, 100, 100, 150, 150, 150, 150, type);
+    player = new Player(KnightActionUp, KnightActionDown, KnightActionLeft, KnightActionRight, KnightActionIntro, KnightActionAttackUp, KnightActionAttackDown, KnightActionAttackLeft, KnightActionAttackRight, 50.75, 100, 50.75, 100, 43.5, 79, 50.75, 100, 50.67, 79, 100, 100, 100, 150, 150, 150, 150, type);
     player.attackPower = 10;
     player.attackDamage = 100;
     player.attackSpeed = 500;

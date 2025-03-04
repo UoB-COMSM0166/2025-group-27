@@ -723,18 +723,28 @@ class BirdBoss extends Boss {
 
   performPoisonAttack() {
     if (this.trailCounter >= 20) {
+      // 在四个方向创建毒池
       for (let i = 0; i < 4; i++) {
         let angle = (i * PI) / 2;
         let offset = createVector(cos(angle) * 40, sin(angle) * 40);
         let poisonPos = p5.Vector.add(this.pos, offset);
+        
         poisonTrails.push({
           pos: poisonPos,
-          radius: 40,
+          radius: 35,  // 从45减小到35
           startTime: millis(),
           duration: 4000,
+          // 添加动画属性
+          frameIndex: 0,
+          frameCount: 6,
+          frameDelay: 6,
+          frameCounter: 0,
+          // 添加颜色调整
+          colorMod: color(255, 200, 50, 220)
         });
       }
       this.trailCounter = 0;
+      showFloatingText("Poison Splash!", this.pos.x, this.pos.y - 30, color(0, 255, 0));
     }
   }
 
