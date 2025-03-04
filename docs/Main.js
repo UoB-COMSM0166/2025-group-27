@@ -211,17 +211,17 @@ function preload() {
   ArcherActionAttackLeft = loadImage("./assets/selected_images/characters/mousegirl/attack/mousegirl_attack_left.png");
   ArcherActionAttackRight = loadImage("./assets/selected_images/characters/mousegirl/attack/mousegirl_attack_right.png");
   // bossAction 用于 BirdBoss
-  bossAction = loadImage("./assets/candidate_images/characters/enemies/Birdman/BirdBoss.png");
+  bossAction = loadImage("./assets/candidate_images/characters/enemies/birdman/BirdBoss.png");
   featherSprite = loadImage("./assets/candidate_images/characters/enemies/Birdman/falling_feather_yellow.png");
 
   slimeBossImage = loadImage("./assets/candidate_images/effects/skill_effects/drip/cell_sphere/boss_slime_blue.png");
   slimeBoss2Image = loadImage("./assets/candidate_images/effects/skill_effects/drip/cell_sphere/boss_slime.png");
   //spiderBossAction = loadImage("./assets/images/Characters/Enemies/SpiderBoss/SpiderBoss.png");
 
-  commonEnemyAction.idle = loadImage("./assets/candidate_images/characters/enemies/Birdman_Imp/cavelingSkirmisher_idleEmote1.png");
-  commonEnemyAction.up = loadImage("./assets/candidate_images/characters/enemies/Birdman_Imp/cavelingSkirmisher_move_up.png");
-  commonEnemyAction.down = loadImage("./assets/candidate_images/characters/enemies/Birdman_Imp/cavelingSkirmisher_move.png");
-  commonEnemyAction.side = loadImage("./assets/candidate_images/characters/enemies/Birdman_Imp/cavelingSkirmisher_move_side.png");
+  commonEnemyAction.idle = loadImage("./assets/candidate_images/characters/enemies/birdman_imp/cavelingSkirmisher_idleEmote1.png");
+  commonEnemyAction.up = loadImage("./assets/candidate_images/characters/enemies/birdman_imp/cavelingSkirmisher_move_up.png");
+  commonEnemyAction.down = loadImage("./assets/candidate_images/characters/enemies/birdman_imp/cavelingSkirmisher_move.png");
+  commonEnemyAction.side = loadImage("./assets/candidate_images/characters/enemies/birdman_imp/cavelingSkirmisher_move_side.png");
   obstacle1 = loadImage("./assets/selected_images/barrier/level_1/tree1.png");
   obstacle2 = loadImage("./assets/selected_images/barrier/level_1/stone3.png");
   bombAction = loadImage("./assets/candidate_images/items/weapons/bomb/bomb.png");
