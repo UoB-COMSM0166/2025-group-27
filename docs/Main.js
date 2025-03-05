@@ -15,6 +15,10 @@ let lastTerrainChange = 0;
 let feathers = [];
 let featherSprite;
 const borderOffset = 10;
+//亮度以及音量
+let volumeSlider;
+let backButton;
+let volume;   // 默认音量
 
 // 暂停按钮和暂停时间
 let pauseButton;
@@ -257,6 +261,7 @@ function preload() {
 
 function setup() {
   createCanvas(1062, 600);
+  volume = 0.5;
   gameStartTime = millis();
   generateInitialObstacles();
   initButtons();
@@ -278,6 +283,10 @@ function draw() {
   updateWeather();
   noStroke();
   strokeWeight(1);
+
+  arrowsound.setVolume(volume);
+  gunsound.setVolume(volume);
+  keyboardsound.setVolume(volume);
 
   switch (gameState) {
     case "mainMenu":
@@ -304,6 +313,9 @@ function draw() {
       break;
     case "victory":
       displayVictoryScreen();
+      break;
+    case "setting":
+      displaySettingPage();
       break;
   }
 
