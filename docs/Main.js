@@ -253,6 +253,18 @@ function preload() {
   foxAttackLeft = loadImage("./assets/selected_images/pets/fox/fox_attack_left.png");
   foxAttackRight = loadImage("./assets/selected_images/pets/fox/fox_attack_right.png");
 
+  //宠物二
+  cowMoveBack = loadImage("./assets/selected_images/pets/cow/cow_move_back.png");
+  cowMoveFront = loadImage("./assets/selected_images/pets/cow/cow_move_front.png");
+  cowMoveLeft = loadImage("./assets/selected_images/pets/cow/cow_move_left.png");
+  cowMoveRight = loadImage("./assets/selected_images/pets/cow/cow_move_right.png");
+
+  //宠物三
+  fairyMoveBack = loadImage("./assets/selected_images/pets/fairy/fairy_move_back.png");
+  fairyMoveFront = loadImage("./assets/selected_images/pets/fairy/fairy_move_front.png");
+  fairyMoveLeft = loadImage("./assets/selected_images/pets/fairy/fairy_move_left.png");
+  fairyMoveRight = loadImage("./assets/selected_images/pets/fairy/fairy_move_right.png");
+
 
   //sound相关
   //playerAttacksound

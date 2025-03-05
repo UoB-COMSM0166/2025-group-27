@@ -142,19 +142,29 @@ class AttackPet extends BasePet {
   }
 }
 
-// === 防御型宠物：钢铁巨龟 ===
+// 宠物二
 class DefensePet extends BasePet {
   constructor() {
     super();
+    // 原有功能变量
     this.shieldCharge = 0;
     this.isShieldActive = false;
     this.shieldDuration = 90;
     this.shieldTimer = 0;
     this.shieldChargeInterval = 15000;
     this.lastShieldTime = 0;
+
+    // 新增动画相关变量（假设每个动画精灵表包含4帧）
+    this.frameIndex = 0;
+    this.frameCounter = 0;
+    this.frameDelay = 10;
+    this.totalFrames = 4;
+    // 默认初始图片：这里选择向前走的图片作为默认状态
+    this.currentImage = cowMoveFront;
   }
 
   follow(player) {
+    // 宠物跟随目标位置（这里保持原有逻辑）
     const target = p5.Vector.add(player.pos, createVector(30, 20));
     this.pos.lerp(target, 0.1);
   }
@@ -191,7 +201,7 @@ class DefensePet extends BasePet {
   }
 
   display() {
-    // 显示护盾效果
+    // 若处于护盾状态，先绘制护盾效果
     if (this.isShieldActive) {
       push();
       fill(0, 200, 255, 50);
@@ -200,40 +210,79 @@ class DefensePet extends BasePet {
       pop();
     }
 
-    // 显示宠物本体
-    fill(0, 150, 255);
-    ellipse(this.pos.x, this.pos.y, this.radius * 2);
+    // 更新动画帧计数
+    this.frameCounter++;
+    if (this.frameCounter >= this.frameDelay) {
+      this.frameCounter = 0;
+      this.frameIndex = (this.frameIndex + 1) % this.totalFrames;
+    }
 
-    // 显示充能进度
+    // 根据主角运动方向选择当前图片
+    if (player.vel.x > 0) {
+      this.currentImage = cowMoveRight;
+    } else if (player.vel.x < 0) {
+      this.currentImage = cowMoveLeft;
+    } else if (player.vel.y > 0) {
+      this.currentImage = cowMoveFront;
+    } else if (player.vel.y < 0) {
+      this.currentImage = cowMoveBack;
+    }
+
+    // 绘制动画精灵（关键帧切割）
+    if (this.currentImage) {
+      let sx = this.frameIndex * (this.currentImage.width / this.totalFrames);
+      push();
+      imageMode(CENTER);
+      image(
+        this.currentImage,
+        this.pos.x,
+        this.pos.y,
+        35, 35,
+        sx,
+        0,
+        this.currentImage.width / this.totalFrames,
+        this.currentImage.height
+      );
+      pop();
+    }
+
+    // 如果未处于护盾激活状态，显示充能进度（可选）
     if (!this.isShieldActive) {
       push();
       textSize(12);
       fill(255);
       textAlign(CENTER);
-      text(
-        `${floor((millis() - this.lastShieldTime) / this.shieldChargeInterval * 100)}%`,
-        this.pos.x,
-        this.pos.y + 25
-      );
+      let progress = floor(((millis() - this.lastShieldTime) / this.shieldChargeInterval) * 100);
+      text(`${progress}%`, this.pos.x, this.pos.y + 25);
       pop();
     }
   }
 }
+
 
 // === 治疗型宠物：生命天使 ===
 class HealerPet extends BasePet {
   constructor() {
     super();
     this.healAmount = 0.4; // 每秒回复量
-    this.healTick = 0; // 计时器
+    this.healTick = 0;     // 计时器
     this.healInterval = 60; // 每60帧（约1秒）治疗一次
-    // 视觉效果相关
+
+    // 视觉效果相关变量：用于环绕动画
     this.angle = 0;
-    this.orbitRadius = 30; // 环绕半径
+    this.orbitRadius = 30;
+
+    // 新增动画相关变量（假设精灵表有4帧）
+    this.frameIndex = 0;
+    this.frameCounter = 0;
+    this.frameDelay = 10;
+    this.totalFrames = 4;
+    // 默认初始图片（使用向前走的图片作为默认状态）
+    this.currentImage = fairyMoveFront;
   }
 
   follow(player) {
-    // 让宠物以圆形轨迹环绕玩家
+    // 环绕玩家运动（保持原有逻辑）
     this.angle += 0.02;
     const orbitX = player.pos.x + cos(this.angle) * this.orbitRadius;
     const orbitY = player.pos.y + sin(this.angle) * this.orbitRadius;
@@ -243,7 +292,7 @@ class HealerPet extends BasePet {
   update(player) {
     this.follow(player);
 
-    // 治疗计时
+    // 每隔 healInterval 帧为主角治疗一次
     this.healTick++;
     if (this.healTick >= this.healInterval) {
       this.healTick = 0;
@@ -260,27 +309,52 @@ class HealerPet extends BasePet {
   }
 
   display() {
+    // 可选：绘制治疗光环效果
     push();
-    // 绘制治疗光环效果
     noFill();
     stroke(0, 255, 150, 100);
     strokeWeight(2);
     ellipse(this.pos.x, this.pos.y, this.radius * 2);
-
-    // 绘制宠物本体
-    fill(0, 255, 150);
-    noStroke();
-    beginShape();
-    for (let i = 0; i < 5; i++) {
-      let angle = TWO_PI * i / 5 - PI / 2;
-      let x = this.pos.x + cos(angle) * this.radius;
-      let y = this.pos.y + sin(angle) * this.radius;
-      vertex(x, y);
-    }
-    endShape(CLOSE);
     pop();
+
+    // 更新动画帧计数
+    this.frameCounter++;
+    if (this.frameCounter >= this.frameDelay) {
+      this.frameCounter = 0;
+      this.frameIndex = (this.frameIndex + 1) % this.totalFrames;
+    }
+
+    // 根据主角运动方向选择当前图片
+    if (player.vel.x > 0) {
+      this.currentImage = fairyMoveRight;
+    } else if (player.vel.x < 0) {
+      this.currentImage = fairyMoveLeft;
+    } else if (player.vel.y > 0) {
+      this.currentImage = fairyMoveFront;
+    } else if (player.vel.y < 0) {
+      this.currentImage = fairyMoveBack;
+    }
+
+    // 绘制动画精灵（关键帧切割）
+    if (this.currentImage) {
+      let sx = this.frameIndex * (this.currentImage.width / this.totalFrames);
+      push();
+      imageMode(CENTER);
+      image(
+        this.currentImage,
+        this.pos.x,
+        this.pos.y,
+        35, 35,
+        sx,
+        0,
+        this.currentImage.width / this.totalFrames,
+        this.currentImage.height
+      );
+      pop();
+    }
   }
 }
+
 
 // 修改showPetSelectionScreen函数中的判断条件
 function showPetSelectionScreen() {
