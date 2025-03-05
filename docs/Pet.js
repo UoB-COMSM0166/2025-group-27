@@ -10,7 +10,7 @@ class BasePet {
   display() { }
 }
 
-// === 攻击型宠物：烈焰战狼 ===
+// 宠物一
 class AttackPet extends BasePet {
   constructor(x, y) {
     super();
@@ -21,15 +21,18 @@ class AttackPet extends BasePet {
     this.attackCooldown = 0;
     this.orbitRadius = 30;
     this.angle = 0;
-    this.idleImage = summonBatImage;
-    this.attackImage = summonBatAttackImage;
+    this.idleImage = foxMoveFront;
+    this.attackImage = foxAttackFront;
     this.currentImage = this.idleImage;
     this.frameIndex = 0;
     this.totalFrames = 4;
-    this.frameWidth = this.currentImage.width / this.totalFrames;
     this.frameDelay = 10;
     this.frameCounter = 0;
     this.isAttacking = false;
+
+    this.attackCooldown = 0;
+    this.isAttacking = false;
+    this.attackTimer = 0;
   }
 
   follow(player) {
@@ -39,6 +42,16 @@ class AttackPet extends BasePet {
       player.pos.y + sin(this.angle) * this.orbitRadius
     );
     this.pos.lerp(targetPos, 0.1);
+
+    if (player.vel.x > 0) {
+      this.currentImage = foxMoveRight;
+    } else if (player.vel.x < 0) {
+      this.currentImage = foxMoveLeft;
+    } else if (player.vel.y > 0) {
+      this.currentImage = foxMoveFront;
+    } else if (player.vel.y < 0) {
+      this.currentImage = foxMoveBack;
+    }
   }
 
   attack(enemies) {
@@ -58,6 +71,17 @@ class AttackPet extends BasePet {
       closest.hit(this.attackDamage);
       this.attackCooldown = 30;
       this.isAttacking = true;
+      this.attackTimer = 10;
+
+      if (player.vel.x > 0) {
+        this.currentImage = foxAttackRight;
+      } else if (player.vel.x < 0) {
+        this.currentImage = foxAttackLeft;
+      } else if (player.vel.y > 0) {
+        this.currentImage = foxAttackFront;
+      } else if (player.vel.y < 0) {
+        this.currentImage = foxAttackBack;
+      }
       showFloatingText("⚔️", this.pos.x, this.pos.y, color(255, 200, 0));
     }
   }
@@ -69,25 +93,51 @@ class AttackPet extends BasePet {
       this.frameIndex = (this.frameIndex + 1) % this.totalFrames;
     }
 
-    this.currentImage = this.isAttacking ? this.attackImage : this.idleImage;
-    this.frameWidth = this.currentImage.width / this.totalFrames;
+    // 如果不是攻击状态，才根据玩家移动方向更新图片
+    if (!this.isAttacking) {
+      if (player.vel.x > 0) {
+        this.currentImage = foxMoveRight;
+      } else if (player.vel.x < 0) {
+        this.currentImage = foxMoveLeft;
+      } else if (player.vel.y > 0) {
+        this.currentImage = foxMoveFront;
+      } else if (player.vel.y < 0) {
+        this.currentImage = foxMoveBack;
+      }
+    }
 
+    // 绘制当前图片（无论是攻击还是跟随状态）
     if (this.currentImage) {
-      let sx = this.frameIndex * this.frameWidth;
-      let sy = 0;
+      let sx = this.frameIndex * (this.currentImage.width / this.totalFrames);
       push();
       imageMode(CENTER);
-      image(this.currentImage, this.pos.x, this.pos.y, 35, 35, sx, sy, this.frameWidth, this.currentImage.height);
+      image(
+        this.currentImage,
+        this.pos.x,
+        this.pos.y,
+        35,
+        35,
+        sx,
+        0,
+        this.currentImage.width / this.totalFrames,
+        this.currentImage.height
+      );
       pop();
     }
 
-    if (this.isAttacking) {
+    if (this.attackTimer > 0) {
+      this.attackTimer--;
+    } else {
       this.isAttacking = false;
     }
   }
 
+
   update(player) {
-    this.follow(player);
+    // 如果正在攻击，则不要更新跟随状态（或分开处理）
+    if (!this.isAttacking) {
+      this.follow(player);
+    }
     this.attack(enemies);
   }
 }
@@ -263,7 +313,7 @@ function showPetSelectionScreen() {
     if (mouseX > width / 4 - 100 && mouseX < width / 4 + 100 &&
       mouseY > height / 2 - 80 && mouseY < height / 2 + 40) {
       // 选择烈焰战狼
-      player.pet = new AttackPet(); // 确保使用正确的类
+      player.pet = new AttackPet(player.pos.x, player.pos.y); // 确保使用正确的类
       gameState = "game";
     } else if (mouseX > width / 2 - 100 && mouseX < width / 2 + 100 &&
       mouseY > height / 2 - 80 && mouseY < height / 2 + 40) {

@@ -239,8 +239,16 @@ function preload() {
   windTornadoImg = loadImage("./assets/candidate_images/effects/attack_effects/bigFireAnticipation_spawn_white.png");
 
   //宠物一
-  summonBatImage = loadImage("./assets/candidate_images/characters/pets/bat/summonBat_idle.png");
-  summonBatAttackImage = loadImage("./assets/candidate_images/characters/pets/bat/summonBat_rangedAttack_side.png");
+  foxMoveBack = loadImage("./assets/selected_images/pets/fox/fox_move_back.png");
+  foxMoveFront = loadImage("./assets/selected_images/pets/fox/fox_move_front.png");
+  foxMoveLeft = loadImage("./assets/selected_images/pets/fox/fox_move_left.png");
+  foxMoveRight = loadImage("./assets/selected_images/pets/fox/fox_move_right.png");
+
+  foxAttackBack = loadImage("./assets/selected_images/pets/fox/fox_attack_back.png");
+  foxAttackFront = loadImage("./assets/selected_images/pets/fox/fox_attack_front.png");
+  foxAttackLeft = loadImage("./assets/selected_images/pets/fox/fox_attack_left.png");
+  foxAttackRight = loadImage("./assets/selected_images/pets/fox/fox_attack_right.png");
+
 
   //sound相关
   //playerAttacksound
@@ -249,7 +257,7 @@ function preload() {
   keyboardsound = loadSound("./assets/candidate_sounds/player_attack_sounds/keyboard.ogg");
   // 加载鸟Boss毒池特效图片 - 更新为新的图片路径和名称
   poisonPoolEffectImg = loadImage("./assets/candidate_images/effects/skill_effects/drip/waterSplashLava_new.png");
-  
+
   // 加载鸟Boss蛛丝技能特效图片
   webEffectImg = loadImage("./assets/candidate_images/effects/attack_effects/acidProjectile2.png");
 }
