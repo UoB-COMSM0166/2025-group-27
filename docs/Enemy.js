@@ -16,10 +16,22 @@ class Enemy {
     this.pos = createVector(0, 0);
     this.vel = createVector(0, 0);
     this.radius = 10;
-    this.health = 50;
+    if(difficult == "hard"){
+      this.health = 80;
+    } else {
+      this.health = 50;
+    }
     this.maxHealth = 50;
-    this.damage = 10;
-    this.speed = 2;
+    if(difficult == "hard"){
+      this.damage = 30;
+    } else {
+      this.damage = 10;
+    }
+    if(difficult == "hard"){
+      this.speed = 10;
+    } else {
+      this.speed = 2;
+    }
     this.knockbackResist = 0.5;
     this.isElite = isElite;
     this.expValue = 10;
@@ -28,6 +40,9 @@ class Enemy {
     this.attackSpeed = 1;
     this.type = enemyType;
     this.invulnerableTime = 0;
+    this.imageUp = this.enemyAction.up;
+    this.imageDown = this.enemyAction.down;
+    this.imageSide = this.enemyAction.side;
 
     // 添加碰撞盒尺寸
     this.collisionWidth = this.enWidth || this.radius * 2;
@@ -114,14 +129,26 @@ class Enemy {
       if (canMove) {
         this.pos = nextPos;
         // 更新朝向
-        let dx = nextPos.x - this.pos.x;
-        let dy = nextPos.y - this.pos.y;
-        if (abs(dx) > abs(dy)) {
-          this.direction = dx > 0 ? 'right' : 'left';
-          this.currentAction = this.enemyAction.side;
-        } else {
-          this.direction = dy > 0 ? 'down' : 'up';
-          this.currentAction = this.enemyAction[this.direction];
+        let dx = player.pos.x - this.pos.x;
+        let dy = this.pos.y - player.pos.y; // 反转Y轴方向
+        let angle = atan2(dy, dx);
+        if (angle < 0) angle += TWO_PI;
+
+        if (angle >= PI / 4 && angle < 3 * PI / 4) {       // 45°~135° → 上
+          this.currentAction = this.imageUp;
+          this.direction = "up";
+        }
+        else if (angle >= 3 * PI / 4 && angle < 5 * PI / 4) { // 135°~225° → 左
+          this.currentAction = this.imageSide;
+          this.direction = "left";
+        }
+        else if (angle >= 5 * PI / 4 && angle < 7 * PI / 4) { // 225°~315° → 下
+          this.currentAction = this.imageDown;
+          this.direction = "down";
+        }
+        else {                                       // 315°~45° → 右
+          this.currentAction = this.imageSide;
+          this.direction = "right";
         }
       }
     }

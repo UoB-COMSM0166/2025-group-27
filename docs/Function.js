@@ -1,5 +1,11 @@
 // ===== 核心游戏逻辑 =====
 function handleGameplay(now) {
+  if(wave<=5){
+    image(level1map,0,0,1062,600);
+  } else if (wave>5 && wave <=10){
+    image(level2map,0,0,1062,600);
+  }
+
   // 玩家相关操作
   player.move();
   player.shoot();
@@ -262,14 +268,23 @@ function initButtons() {
       loadSavedGame();
       gameState = "game"; // 从暂停改为直接进入游戏
     }),
-    new Button(width / 2 - 75, baseY, 150, 40, "Start Game", () => {
+    new Button(width / 2 - 75, baseY, 150, 40, "Start Game(easy)", () => {
       savedGame = null;
       wave = 1; // 重置波数
       normalEnemiesDefeated = 0; // 重置击杀数
       bossDefeated = 0;
       gameState = "menu";
+      difficult = "easy";
     }),
-    new Button(width / 2 - 75, baseY + 50, 150, 40, "Quit Game", () =>
+    new Button(width / 2 - 75, baseY + 50, 150, 40, "Start Game(hard)", () => {
+      savedGame = null;
+      wave = 1; // 重置波数
+      normalEnemiesDefeated = 0; // 重置击杀数
+      bossDefeated = 0;
+      gameState = "menu";
+      difficult = "hard";
+    }),
+    new Button(width / 2 - 75, baseY + 100, 150, 40, "Quit Game", () =>
       noLoop()
     ),
   ];
@@ -543,7 +558,7 @@ function displayMainMenu() {
     visibleButtons = visibleButtons.concat(mainMenuButtons);
   } else {
     // 没有存档时只显示"开始游戏"和"退出游戏"
-    visibleButtons.push(mainMenuButtons[1], mainMenuButtons[2]);
+    visibleButtons.push(mainMenuButtons[1], mainMenuButtons[2], mainMenuButtons[3]);
   }
 
   // 修复2：统一渲染逻辑
@@ -609,8 +624,8 @@ function generateInitialObstacles() {
     let x = random(width * 0.1, width * 0.9);
     let y = random(height * 0.1, height * 0.9);
     let isVertical = random() < 0.5;
-    let obsWidth = isVertical ? corridorWidth : random(100, 200);
-    let obsHeight = isVertical ? random(100, 200) : corridorWidth;
+    let obsWidth = isVertical ? corridorWidth : random(80, 150);
+    let obsHeight = isVertical ? random(80, 150) : corridorWidth;
     if (
       player &&
       p5.Vector.dist(createVector(x, y), player.pos) < minDistanceFromPlayer
@@ -822,7 +837,12 @@ function spawnEnemiesForWave(wave) {
 
   else {
     // 普通敌人生成逻辑
-    let baseEnemyCount = Math.floor(6 + wave * 0.8);
+    let baseEnemyCount;
+    if(difficult == "hard"){
+      baseEnemyCount = Math.floor(6 + wave * 1.1);
+    } else {
+      baseEnemyCount = Math.floor(6 + wave * 0.8);
+    }
     for (let i = 0; i < baseEnemyCount; i++) {
       let isElite = random() < 0.2;
       let enemyType = random();

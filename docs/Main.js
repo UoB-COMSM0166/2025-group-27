@@ -1,4 +1,5 @@
 // ===== 全局变量 =====
+let difficult; //难度
 let player;
 let bullets = [];
 let enemyBullets = [];
@@ -167,6 +168,9 @@ function updateWeather() {
 
 // ----- p5.js 核心函数 -----
 function preload() {
+  // maps
+  level1map = loadImage("./assets/selected_images/maps/level1.png");
+  level2map = loadImage("./assets/selected_images/maps/level2.png");
   // knight
   KnightActionUp = loadImage("./assets/selected_images/characters/keyboardman/keyboardman_back.png");
   KnightActionDown = loadImage("./assets/selected_images/characters/keyboardman/keyboardman_front.png");
@@ -252,7 +256,7 @@ function preload() {
 
 
 function setup() {
-  createCanvas(800, 600);
+  createCanvas(1062, 600);
   gameStartTime = millis();
   generateInitialObstacles();
   initButtons();
