@@ -558,7 +558,7 @@ function displayMainMenu() {
     visibleButtons = visibleButtons.concat(mainMenuButtons);
   } else {
     // 没有存档时只显示"开始游戏"和"退出游戏"
-    visibleButtons.push(mainMenuButtons[1], mainMenuButtons[2], mainMenuButtons[3]);
+    visibleButtons.push(mainMenuButtons[1], mainMenuButtons[2], mainMenuButtons[3], mainMenuButtons[4]);
   }
 
   // 修复2：统一渲染逻辑
