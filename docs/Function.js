@@ -284,7 +284,10 @@ function initButtons() {
       gameState = "menu";
       difficult = "hard";
     }),
-    new Button(width / 2 - 75, baseY + 100, 150, 40, "Quit Game", () =>
+    new Button(width / 2 - 75, baseY + 100, 150, 40, "Setting", () => {
+      gameState = "setting";
+    }),
+    new Button(width / 2 - 75, baseY + 150, 150, 40, "Quit Game", () =>
       noLoop()
     ),
   ];
@@ -476,6 +479,45 @@ function displayAttributes() {
   pop();
 }
 
+function displaySettingPage() {
+  // 每次进入设置页面时显示控件
+  if (!volumeSlider) {
+    // 首次进入时创建设置元素
+    volumeSlider = createSlider(0, 1, volume, 0.1);
+    volumeSlider.position(width / 2 - 100, 200);
+
+    backButton = createButton('Save and Return');
+    backButton.position(width / 2 - 50, 300);
+    backButton.mousePressed(() => {
+      gameState = 'mainMenu'; // 返回主菜单
+      hideSettingsElements(); // 隐藏设置控件
+    });
+  } else {
+    // 非首次进入时显示控件
+    showSettingsElements();
+  }
+
+  // 实时更新全局变量
+  volume = volumeSlider.value();
+
+  // 绘制设置界面文字
+  fill(0);
+  textSize(20);
+  text('Volume', width / 2 - 150, 220);
+}
+
+// 显示设置控件
+function showSettingsElements() {
+  volumeSlider.show();
+  backButton.show();
+}
+
+// 隐藏设置控件
+function hideSettingsElements() {
+  volumeSlider.hide();
+  backButton.hide();
+}
+
 // === 显示Boss血条 ===
 function displayBossHealthBar() {
   // 只计算活跃的Boss
@@ -558,7 +600,7 @@ function displayMainMenu() {
     visibleButtons = visibleButtons.concat(mainMenuButtons);
   } else {
     // 没有存档时只显示"开始游戏"和"退出游戏"
-    visibleButtons.push(mainMenuButtons[1], mainMenuButtons[2], mainMenuButtons[3]);
+    visibleButtons.push(mainMenuButtons[1], mainMenuButtons[2], mainMenuButtons[3], mainMenuButtons[4]);
   }
 
   // 修复2：统一渲染逻辑
