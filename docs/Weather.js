@@ -24,6 +24,7 @@ function applyWeatherEffects(now) {
           lightningChain[i].y
         );
         noStroke();
+        image(lightningpic,lightningChain[i].x - 30, lightningChain[i].y - 30,50,50);
       }
       // 对玩家造成闪电伤害
       if (p5.Vector.dist(player.pos, lightningChain[i]) < 50) {
