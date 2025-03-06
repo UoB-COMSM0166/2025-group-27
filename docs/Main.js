@@ -83,7 +83,7 @@ class Snowflake {
   constructor() {
     this.x = random(width);
     this.y = random(-50, -10);
-    this.size = random(2, 5);
+    this.size = random(8, 20);
     this.speed = random(0.5, 1.5);
   }
   update() {
@@ -96,7 +96,8 @@ class Snowflake {
   display() {
     noStroke();
     fill(255, 255, 255, 200);
-    ellipse(this.x, this.y, this.size);
+    image(snowflakepic, this.x,this.y,this.size,this.size);
+    // ellipse(this.x, this.y, this.size);
   }
 }
 let snowflakes = [];
@@ -127,6 +128,7 @@ function drawLightningFlash() {
     push();
     fill(255, 255, 255, 200);
     rect(0, 0, width, height);
+    image(lightningpic,width/2,height/2,150,150);
     pop();
   }
 }
@@ -175,6 +177,10 @@ function preload() {
   // maps
   level1map = loadImage("./assets/selected_images/maps/level1.png");
   level2map = loadImage("./assets/selected_images/maps/level2.png");
+  // weather
+  snowflakepic = loadImage("./assets/selected_images/weather/flake.gif");
+  lightningpic = loadImage("./assets/selected_images/weather/lightning.gif");
+
   // knight
   KnightActionUp = loadImage("./assets/selected_images/characters/keyboardman/keyboardman_back.png");
   KnightActionDown = loadImage("./assets/selected_images/characters/keyboardman/keyboardman_front.png");
@@ -377,7 +383,6 @@ function draw() {
 function drawPlayerStats() {
   // 检查 player 对象是否已定义
   if (!player) {
-    console.warn("Player object is not defined.");
     return;
   }
 
