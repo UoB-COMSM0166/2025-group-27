@@ -96,7 +96,7 @@ class Snowflake {
   display() {
     noStroke();
     fill(255, 255, 255, 200);
-    image(snowflakepic, this.x,this.y,this.size,this.size);
+    image(snowflakepic, this.x, this.y, this.size, this.size);
     // ellipse(this.x, this.y, this.size);
   }
 }
@@ -128,7 +128,7 @@ function drawLightningFlash() {
     push();
     fill(255, 255, 255, 200);
     rect(0, 0, width, height);
-    image(lightningpic,width/2,height/2,150,150);
+    image(lightningpic, width / 2, height / 2, 150, 150);
     pop();
   }
 }
@@ -264,6 +264,7 @@ function preload() {
   cowMoveFront = loadImage("./assets/selected_images/pets/cow/cow_move_front.png");
   cowMoveLeft = loadImage("./assets/selected_images/pets/cow/cow_move_left.png");
   cowMoveRight = loadImage("./assets/selected_images/pets/cow/cow_move_right.png");
+  cowSkillEffect = loadImage("./assets/candidate_images/effects/skill_effects/drip/flame/blue_fire.png");
 
   //宠物三
   fairyMoveBack = loadImage("./assets/selected_images/pets/fairy/fairy_move_back.png");
@@ -282,17 +283,17 @@ function preload() {
 
   // 加载鸟Boss蛛丝技能特效图片
   webEffectImg = loadImage("./assets/candidate_images/effects/attack_effects/acidProjectile2.png");
-  
+
   // 加载虫子Boss动画图片
   bugBossSide = loadImage("./assets/candidate_images/characters/enemies/ghost_imp/summonSkeleton_move_side.png");
   bugBossUp = loadImage("./assets/candidate_images/characters/enemies/ghost_imp/summonSkeleton_move_up.png");
   bugBossDown = loadImage("./assets/candidate_images/characters/enemies/ghost_imp/summonSkeleton_move.png");
-  
+
   // 加载Bug Boss攻击动画
   bugBossAttackDown = loadImage("./assets/candidate_images/characters/enemies/ghost_imp/summonSkeleton_attack.png");
   bugBossAttackUp = loadImage("./assets/candidate_images/characters/enemies/ghost_imp/summonSkeleton_attack_up.png");
   bugBossAttackSide = loadImage("./assets/candidate_images/characters/enemies/ghost_imp/summonSkeleton_attack_side.png");
-  
+
   // 加载幽冥鬼火图片
   ghostFireImg = loadImage("./assets/candidate_images/effects/skill_effects/drip/flame/blue_fire.png");
 }

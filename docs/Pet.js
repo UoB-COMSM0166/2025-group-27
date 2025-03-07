@@ -146,40 +146,50 @@ class AttackPet extends BasePet {
 class DefensePet extends BasePet {
   constructor() {
     super();
-    // 原有功能变量
+    // 原有属性
     this.shieldCharge = 0;
     this.isShieldActive = false;
-    this.shieldDuration = 90;
+    this.shieldDuration = 90;            // 90帧约1.5秒（60fps情况下）
     this.shieldTimer = 0;
-    this.shieldChargeInterval = 15000;
+    this.shieldChargeInterval = 15000;   // 每15秒触发一次
     this.lastShieldTime = 0;
 
-    // 新增动画相关变量（假设每个动画精灵表包含4帧）
+    // 动画属性（假设精灵表有4帧）
     this.frameIndex = 0;
     this.frameCounter = 0;
     this.frameDelay = 10;
     this.totalFrames = 4;
-    // 默认初始图片：这里选择向前走的图片作为默认状态
     this.currentImage = cowMoveFront;
+
+    // 新增：控制宠物是否显示的标志
+    this.petVisible = true;
+
+    // 特效动画变量
+    this.effectFrameIndex = 0;
+    this.effectFrameCounter = 0;
+    this.effectFrameDelay = 5;
+    this.totalEffectFrames = 6;
+
   }
 
   follow(player) {
-    // 宠物跟随目标位置（这里保持原有逻辑）
-    const target = p5.Vector.add(player.pos, createVector(30, 20));
-    this.pos.lerp(target, 0.1);
+    // 当宠物可见时跟随玩家；护盾激活期间宠物消失，不更新位置
+    if (this.petVisible) {
+      const target = p5.Vector.add(player.pos, createVector(30, 20));
+      this.pos.lerp(target, 0.1);
+    }
   }
 
   update(player) {
-    this.follow(player);
-
+    // 如果护盾没有激活，则进行跟随及检测是否触发护盾
     if (!this.isShieldActive) {
+      this.follow(player);
       if (millis() - this.lastShieldTime > this.shieldChargeInterval) {
         this.activateShield(player);
         this.lastShieldTime = millis();
       }
-    }
-
-    if (this.isShieldActive) {
+    } else {
+      // 护盾激活期间，计时器递减
       this.shieldTimer--;
       if (this.shieldTimer <= 0) {
         this.deactivateShield(player);
@@ -189,35 +199,54 @@ class DefensePet extends BasePet {
 
   activateShield(player) {
     this.isShieldActive = true;
-    this.shieldTimer = this.shieldDuration;
+    this.shieldTimer = this.shieldDuration; // 设置护盾持续时间
     player.invincible = true;
+    this.petVisible = false;  // 护盾激活时宠物消失
     showFloatingText("护盾激活!", player.pos.x, player.pos.y - 40, color(0, 200, 255));
   }
 
   deactivateShield(player) {
     this.isShieldActive = false;
     player.invincible = false;
+    this.petVisible = true;   // 护盾结束，宠物重新出现
     showFloatingText("护盾消失", player.pos.x, player.pos.y - 40, color(100));
   }
 
   display() {
-    // 若处于护盾状态，先绘制护盾效果
+    // 如果护盾处于激活状态，则不绘制宠物，而是在玩家周围绘制护盾效果
     if (this.isShieldActive) {
       push();
-      fill(0, 200, 255, 50);
-      stroke(0, 150, 255);
-      ellipse(this.pos.x, this.pos.y, 40);
+      imageMode(CENTER);
+      // 计算玩家中心位置
+      let shieldX = player.pos.x + player.ImageWidth / 2;
+      let shieldY = player.pos.y + player.ImageHeight / 2;
+      // 设定护盾直径
+      let shieldDiameter = max(player.ImageWidth, player.ImageHeight) + 40;
+
+      // 更新特效动画帧
+      this.effectFrameCounter++;
+      if (this.effectFrameCounter >= this.effectFrameDelay) {
+        this.effectFrameCounter = 0;
+        this.effectFrameIndex = (this.effectFrameIndex + 1) % this.totalEffectFrames;
+      }
+      // 计算当前帧的x偏移
+      let sx = this.effectFrameIndex * (cowSkillEffect.width / this.totalEffectFrames);
+      image(cowSkillEffect, shieldX, shieldY, shieldDiameter, shieldDiameter,
+        sx, 0, cowSkillEffect.width / this.totalEffectFrames, cowSkillEffect.height);
       pop();
+      return;
     }
 
-    // 更新动画帧计数
+
+
+    // 正常状态下更新动画帧
     this.frameCounter++;
     if (this.frameCounter >= this.frameDelay) {
       this.frameCounter = 0;
       this.frameIndex = (this.frameIndex + 1) % this.totalFrames;
     }
 
-    // 根据主角运动方向选择当前图片
+    // 根据玩家运动方向选择宠物动画图片
     if (player.vel.x > 0) {
       this.currentImage = cowMoveRight;
     } else if (player.vel.x < 0) {
@@ -228,7 +257,7 @@ class DefensePet extends BasePet {
       this.currentImage = cowMoveBack;
     }
 
-    // 绘制动画精灵（关键帧切割）
+    // 绘制宠物动画（利用精灵表关键帧切割）
     if (this.currentImage) {
       let sx = this.frameIndex * (this.currentImage.width / this.totalFrames);
       push();
@@ -246,7 +275,7 @@ class DefensePet extends BasePet {
       pop();
     }
 
-    // 如果未处于护盾激活状态，显示充能进度（可选）
+    // 如果需要还可以绘制充能进度（这里可选，不影响护盾功能）
     if (!this.isShieldActive) {
       push();
       textSize(12);
@@ -259,8 +288,7 @@ class DefensePet extends BasePet {
   }
 }
 
-
-// === 治疗型宠物：生命天使 ===
+// 宠物三
 class HealerPet extends BasePet {
   constructor() {
     super();
