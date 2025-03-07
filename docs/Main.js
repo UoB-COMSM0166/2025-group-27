@@ -288,6 +288,11 @@ function preload() {
   bugBossUp = loadImage("./assets/candidate_images/characters/enemies/ghost_imp/summonSkeleton_move_up.png");
   bugBossDown = loadImage("./assets/candidate_images/characters/enemies/ghost_imp/summonSkeleton_move.png");
   
+  // 加载Bug Boss攻击动画
+  bugBossAttackDown = loadImage("./assets/candidate_images/characters/enemies/ghost_imp/summonSkeleton_attack.png");
+  bugBossAttackUp = loadImage("./assets/candidate_images/characters/enemies/ghost_imp/summonSkeleton_attack_up.png");
+  bugBossAttackSide = loadImage("./assets/candidate_images/characters/enemies/ghost_imp/summonSkeleton_attack_side.png");
+  
   // 加载幽冥鬼火图片
   ghostFireImg = loadImage("./assets/candidate_images/effects/skill_effects/drip/flame/blue_fire.png");
 }

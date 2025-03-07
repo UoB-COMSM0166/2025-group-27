@@ -1623,7 +1623,7 @@ class SlimeBoss extends Boss {
   }
 }
 
-// === 更新BugBoss类 ===
+// === 改进BugBoss类，添加疾风裂爪技能 ===
 class BugBoss extends Enemy {
   constructor() {
     // 从Enemy继承
@@ -1643,6 +1643,19 @@ class BugBoss extends Enemy {
     this.ghostFireCooldown = 0;
     this.ghostFireInterval = 300; // 5秒一次
     
+    // 疾风裂爪技能
+    this.rapidClawCooldown = 180; // 初始冷却时间
+    this.rapidClawInterval = 450; // 7.5秒一次
+    this.isRapidClawActive = false; // 是否正在施放技能
+    this.rapidClawStage = 0; // 当前是第几次攻击(0-2)
+    this.attackAnimationTime = 0; // 攻击动画计时
+    this.attackAnimationDuration = 20; // 减少到20帧(原来是30)
+    this.attackDamageTime = 10; // 减少到10帧(原来是15)
+    this.attackDelay = 5; // 减少到5帧(原来是10)
+    this.attackDelayCounter = 0; // 攻击延迟计时器
+    this.baseClawDamage = 30; // 基础伤害
+    this.baseClawRange = 80; // 基础范围
+    
     // 动画属性
     this.frameIndex = 0;
     this.frameDelay = 8;
@@ -1660,11 +1673,31 @@ class BugBoss extends Enemy {
       down: bugBossDown
     };
     
-    // 设置初始鬼火冷却时间为随机值，避免一开始就释放技能
+    // 攻击动画图片
+    this.attackImages = {
+      left: bugBossAttackSide,
+      right: bugBossAttackSide,
+      up: bugBossAttackUp,
+      down: bugBossAttackDown
+    };
+    
+    // 设置初始技能冷却时间为随机值
     this.ghostFireCooldown = random(60, 120);
+    this.rapidClawCooldown = random(120, 240);
   }
   
   update() {
+    // 更新无敌时间
+    if (this.invulnerableTime > 0) {
+      this.invulnerableTime--;
+    }
+    
+    // 判断是否正在施放疾风裂爪技能
+    if (this.isRapidClawActive) {
+      this.updateRapidClawAttack();
+      return; // 在技能期间不执行普通更新
+    }
+    
     // 更新动画
     this.frameCounter++;
     if (this.frameCounter >= this.frameDelay) {
@@ -1714,36 +1747,223 @@ class BugBoss extends Enemy {
       this.ghostFireCooldown--;
     }
     
+    // 疾风裂爪技能
+    if (this.rapidClawCooldown <= 0) {
+      this.startRapidClawAttack();
+      this.rapidClawCooldown = this.rapidClawInterval;
+    } else {
+      this.rapidClawCooldown--;
+    }
+    
     // 处理碰撞
     this.resolveCollision();
+  }
+  
+  // 启动疾风裂爪攻击
+  startRapidClawAttack() {
+    showFloatingText("疾风裂爪!", this.pos.x, this.pos.y - 40, color(255, 100, 100), 20);
+    this.isRapidClawActive = true;
+    this.rapidClawStage = 0;
+    this.attackAnimationTime = 0;
+    this.teleportToPlayer();
+  }
+  
+  // 瞬移到玩家附近
+  teleportToPlayer() {
+    // 计算玩家方向
+    let dirToPlayer = p5.Vector.sub(player.pos, this.pos);
     
-    // 更新无敌时间
-    if (this.invulnerableTime > 0) {
-      this.invulnerableTime--;
+    // 更新朝向
+    if (Math.abs(dirToPlayer.x) > Math.abs(dirToPlayer.y)) {
+      this.direction = dirToPlayer.x > 0 ? 'right' : 'left';
+    } else {
+      this.direction = dirToPlayer.y > 0 ? 'down' : 'up';
     }
-  }
-  
-  // 释放幽冥鬼火技能
-  castGhostFire() {
-    // 在Boss周围生成6个鬼火
-    for (let i = 0; i < 6; i++) {
-      let angle = TWO_PI * i / 6;
-      let radius = 50;
-      let x = this.pos.x + cos(angle) * radius;
-      let y = this.pos.y + sin(angle) * radius;
+    
+    // 瞬移到玩家附近的位置
+    let teleportDistance = 80;
+    let teleportDirection = dirToPlayer.copy().normalize().mult(teleportDistance);
+    this.pos = p5.Vector.add(player.pos, teleportDirection.mult(-1)); // 反方向
+    
+    // 添加瞬移特效
+    for (let i = 0; i < 15; i++) {
+      let angle = random(TWO_PI);
+      let distance = random(10, 30);
+      let x = this.pos.x + cos(angle) * distance;
+      let y = this.pos.y + sin(angle) * distance;
       
-      // 创建并添加到全局数组
-      enemyBullets.push(new GhostFire(x, y));
+      poisonTrails.push({
+        pos: createVector(x, y),
+        radius: random(10, 20),
+        startTime: millis(),
+        duration: random(500, 1000)
+      });
     }
   }
   
-  // 添加display方法
+  // 处理疾风裂爪攻击
+  updateRapidClawAttack() {
+    if (this.attackDelayCounter > 0) {
+      // 在攻击之间的延迟
+      this.attackDelayCounter--;
+      return;
+    }
+    
+    this.attackAnimationTime++;
+    
+    // 检查是否应该造成伤害
+    if (this.attackAnimationTime === this.attackDamageTime) {
+      this.performRapidClawDamage();
+    }
+    
+    // 检查当前攻击动画是否结束
+    if (this.attackAnimationTime >= this.attackAnimationDuration) {
+      this.attackAnimationTime = 0;
+      this.rapidClawStage++;
+      
+      // 如果已经完成所有三次攻击，结束技能
+      if (this.rapidClawStage >= 3) {
+        this.isRapidClawActive = false;
+        return;
+      }
+      
+      // 在继续下一次攻击前添加延迟
+      this.attackDelayCounter = this.attackDelay;
+      // 瞬移到玩家附近做下一次攻击
+      this.teleportToPlayer();
+    }
+    
+    // 更新攻击动画帧
+    let totalFramesInAttack = 6; // 攻击动画总帧数
+    this.frameIndex = Math.floor((this.attackAnimationTime / this.attackAnimationDuration) * totalFramesInAttack);
+    if (this.frameIndex >= totalFramesInAttack) this.frameIndex = totalFramesInAttack - 1;
+  }
+  
+  // 执行疾风裂爪伤害
+  performRapidClawDamage() {
+    // 根据攻击阶段增加伤害和范围
+    let stageDamage = this.baseClawDamage * (1 + this.rapidClawStage * 0.5);
+    let stageRange = this.baseClawRange * (1 + this.rapidClawStage * 0.5); // 增加范围增长系数(原来是0.2)
+    
+    // 根据方向确定攻击区域
+    let attackArea = this.calculateAttackArea(stageRange);
+    let hitPlayerSuccess = this.checkPlayerInAttackArea(attackArea);
+    
+    if (hitPlayerSuccess) {
+      player.takeDamage(stageDamage);
+      showFloatingText("-" + stageDamage, player.pos.x, player.pos.y - 20, color(255, 0, 0));
+      
+      // 攻击效果
+      for (let i = 0; i < 8; i++) {
+        let angle = random(TWO_PI);
+        let distance = random(10, 30);
+        let x = player.pos.x + cos(angle) * distance;
+        let y = player.pos.y + sin(angle) * distance;
+        
+        poisonTrails.push({
+          pos: createVector(x, y),
+          radius: random(5, 15),
+          startTime: millis(),
+          duration: random(300, 800)
+        });
+      }
+    }
+    
+    // 可视化攻击区域，根据阶段增加特效数量
+    this.visualizeAttackArea(attackArea, this.rapidClawStage + 6); // 增加特效数量
+  }
+  
+  // 计算攻击区域
+  calculateAttackArea(range) {
+    let area = {};
+    
+    switch(this.direction) {
+      case 'left':
+        area = {
+          x: this.pos.x - range/2,
+          y: this.pos.y - range/4,
+          w: range,
+          h: range/2
+        };
+        break;
+      case 'right':
+        area = {
+          x: this.pos.x - range/2,
+          y: this.pos.y - range/4,
+          w: range,
+          h: range/2
+        };
+        break;
+      case 'up':
+        area = {
+          x: this.pos.x - range/4,
+          y: this.pos.y - range/2,
+          w: range/2,
+          h: range
+        };
+        break;
+      case 'down':
+        area = {
+          x: this.pos.x - range/4,
+          y: this.pos.y - range/2,
+          w: range/2,
+          h: range
+        };
+        break;
+    }
+    
+    return area;
+  }
+  
+  // 检查玩家是否在攻击区域内
+  checkPlayerInAttackArea(area) {
+    // 简化为圆形检测
+    let center = createVector(area.x + area.w/2, area.y + area.h/2);
+    let radius = max(area.w, area.h)/2;
+    
+    let dist = p5.Vector.dist(center, player.pos);
+    return dist < radius + player.radius;
+  }
+  
+  // 可视化攻击区域（仅用于调试）
+  visualizeAttackArea(area, slashCount = 6) {
+    // 添加攻击轨迹特效
+    let angleOffset = this.direction === 'left' || this.direction === 'right' ? 0 : HALF_PI;
+    
+    // 根据攻击阶段增加特效范围
+    let length = area.w * (0.8 + this.rapidClawStage * 0.3); // 增加特效范围
+    
+    for (let i = 0; i < slashCount; i++) {
+      let angle = map(i, 0, slashCount-1, -PI/3, PI/3) + angleOffset; // 增加扇形范围
+      if (this.direction === 'left') angle += PI;
+      
+      let x = this.pos.x + cos(angle) * length/2;
+      let y = this.pos.y + sin(angle) * length/2;
+      
+      poisonTrails.push({
+        pos: createVector(x, y),
+        radius: 10 + this.rapidClawStage * 5, // 增加特效大小
+        startTime: millis(),
+        duration: 300
+      });
+    }
+  }
+  
+  // 显示方法 - 根据当前状态选择不同的绘制方式
   display() {
     push();
     imageMode(CENTER);
     
-    // 选择当前方向的图像
-    let currentImage = this.customImages[this.direction];
+    // 根据当前状态选择合适的图像
+    let currentImage;
+    
+    if (this.isRapidClawActive) {
+      // 使用攻击动画
+      currentImage = this.attackImages[this.direction];
+    } else {
+      // 使用移动动画
+      currentImage = this.customImages[this.direction];
+    }
     
     // 计算当前帧位置
     let frameWidth = currentImage.width / this.totalFrames;
@@ -1756,7 +1976,7 @@ class BugBoss extends Enemy {
       image(
         currentImage, 
         0, 0, 
-        this.radius * 2, this.radius * 2,
+        this.radius * 2.5, this.radius * 2.5, // 稍微放大
         this.frameIndex * frameWidth, 0, 
         frameWidth, frameHeight
       );
@@ -1764,7 +1984,7 @@ class BugBoss extends Enemy {
       image(
         currentImage, 
         this.pos.x, this.pos.y, 
-        this.radius * 2, this.radius * 2,
+        this.radius * 2.5, this.radius * 2.5, // 稍微放大
         this.frameIndex * frameWidth, 0, 
         frameWidth, frameHeight
       );
@@ -1772,11 +1992,14 @@ class BugBoss extends Enemy {
     
     pop();
     
-    // 显示血条(修改为直接绘制)
+    // 显示血条
     this.displayHealthBar();
   }
   
-  // 添加自己的血条显示方法
+  // 其他方法保持不变 (displayHealthBar, castGhostFire等)
+  // ...
+  
+  // 添加缺失的displayHealthBar方法
   displayHealthBar() {
     // 确保设置全局Boss状态
     bossActive = true;
@@ -1791,5 +2014,19 @@ class BugBoss extends Enemy {
     fill(255, 0, 0);
     rect(width/2 - 200, 50, 400 * healthPercent, 20);
     pop();
+  }
+  
+  // 添加缺失的castGhostFire方法
+  castGhostFire() {
+    // 在Boss周围生成6个鬼火
+    for (let i = 0; i < 6; i++) {
+      let angle = TWO_PI * i / 6;
+      let radius = 50;
+      let x = this.pos.x + cos(angle) * radius;
+      let y = this.pos.y + sin(angle) * radius;
+      
+      // 创建并添加到全局数组
+      enemyBullets.push(new GhostFire(x, y));
+    }
   }
 }
