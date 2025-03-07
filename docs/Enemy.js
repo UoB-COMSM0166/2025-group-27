@@ -1,7 +1,7 @@
 // ===== Enemy 类 =====
 class Enemy {
   constructor(isElite = false, enemyType = "normal", enemyAction, enWidth, enHeight) {
-    this.enemyAction = enemyAction;
+    this.enemyAction = enemyAction || {};
     this.enWidth = enWidth || 22;  // 确保有默认值
     this.enHeight = enHeight || 22;
     this.x = width / 2;
@@ -10,7 +10,7 @@ class Enemy {
     this.enDelay = 6;
     this.enCounter = 0;
     this.direction = 'idle';
-    this.currentAction = this.enemyAction.idle;
+    this.currentAction = this.enemyAction.idle || null;
     this.framesPerDirection = 4;
 
     this.pos = createVector(0, 0);
@@ -1623,46 +1623,173 @@ class SlimeBoss extends Boss {
   }
 }
 
-// === 在Boss类下方添加SpiderBoss ===
-class SpiderBoss extends Boss {
-  constructor(isElite = true, enemyType = "boss", enemyAction, enWidth, enHeight) {
-    super(isElite, enemyType, enemyAction, enWidth, enHeight);
+// === 更新BugBoss类 ===
+class BugBoss extends Enemy {
+  constructor() {
+    // 从Enemy继承
+    super(true, "boss", commonEnemyAction, 40, 40);
+    
+    // 基本属性
     this.health = 800;
     this.maxHealth = 800;
-    this.size = 50;
+    this.radius = 30;
     this.speed = 2;
-    this.webCooldown = 0;
-    this.trailInterval = 30;
-    this.trailCounter = 0;
-  }
-
-  update() {
-    super.update();
+    this.damage = 20;
+    this.attackRange = 100;
+    this.expValue = 100;
+    this.isBoss = true; // 确保标记为Boss
     
-    // 简单追踪玩家
-    let direction = p5.Vector.sub(player.pos, this.pos).normalize().mult(this.speed);
-    this.pos.add(direction);
-
-    // 毒气路径
-    this.trailCounter++;
-    if (this.trailCounter >= this.trailInterval) {
-      poisonTrails.push({
-        pos: this.pos.copy(),
-        radius: 40,
-        startTime: millis(),
-        duration: 3000
-      });
-      this.trailCounter = 0;
+    // 幽冥鬼火技能
+    this.ghostFireCooldown = 0;
+    this.ghostFireInterval = 300; // 5秒一次
+    
+    // 动画属性
+    this.frameIndex = 0;
+    this.frameDelay = 8;
+    this.frameCounter = 0;
+    this.totalFrames = 6;
+    
+    // 当前朝向
+    this.direction = 'down';
+    
+    // 为了方便处理不同方向的显示
+    this.customImages = {
+      left: bugBossSide,
+      right: bugBossSide,
+      up: bugBossUp,
+      down: bugBossDown
+    };
+    
+    // 设置初始鬼火冷却时间为随机值，避免一开始就释放技能
+    this.ghostFireCooldown = random(60, 120);
+  }
+  
+  update() {
+    // 更新动画
+    this.frameCounter++;
+    if (this.frameCounter >= this.frameDelay) {
+      this.frameCounter = 0;
+      this.frameIndex = (this.frameIndex + 1) % this.totalFrames;
     }
-
-    // 蛛网射击
-    if (this.webCooldown <= 0) {
-      let toPlayer = p5.Vector.sub(player.pos, this.pos).normalize();
-      let webVel = toPlayer.mult(4);
-      enemyBullets.push(new WebProjectile(this.pos.x, this.pos.y, webVel));
-      this.webCooldown = 180;
+    
+    // 追踪玩家
+    let dirToPlayer = p5.Vector.sub(player.pos, this.pos);
+    
+    // 根据移动方向设置朝向
+    if (Math.abs(dirToPlayer.x) > Math.abs(dirToPlayer.y)) {
+      this.direction = dirToPlayer.x > 0 ? 'right' : 'left';
     } else {
-      this.webCooldown--;
+      this.direction = dirToPlayer.y > 0 ? 'down' : 'up';
     }
+    
+    // 根据距离调整行为
+    let distToPlayer = dirToPlayer.mag();
+    if (distToPlayer < this.attackRange) {
+      // 在攻击范围内，减速移动
+      dirToPlayer.normalize().mult(this.speed * 0.5);
+      
+      // 近距离攻击玩家
+      if (this.attackCooldown <= 0) {
+        player.takeDamage(this.damage);
+        this.attackCooldown = 60;
+        showFloatingText("Attack!", this.pos.x, this.pos.y - 30, color(255, 0, 0));
+      } else {
+        this.attackCooldown--;
+      }
+    } else {
+      // 正常移动
+      dirToPlayer.normalize().mult(this.speed);
+    }
+    
+    // 应用移动
+    this.vel = dirToPlayer;
+    this.pos.add(this.vel);
+    
+    // 幽冥鬼火技能
+    if (this.ghostFireCooldown <= 0) {
+      this.castGhostFire();
+      this.ghostFireCooldown = this.ghostFireInterval;
+      showFloatingText("幽冥鬼火!", this.pos.x, this.pos.y - 40, color(70, 180, 255), 20);
+    } else {
+      this.ghostFireCooldown--;
+    }
+    
+    // 处理碰撞
+    this.resolveCollision();
+    
+    // 更新无敌时间
+    if (this.invulnerableTime > 0) {
+      this.invulnerableTime--;
+    }
+  }
+  
+  // 释放幽冥鬼火技能
+  castGhostFire() {
+    // 在Boss周围生成6个鬼火
+    for (let i = 0; i < 6; i++) {
+      let angle = TWO_PI * i / 6;
+      let radius = 50;
+      let x = this.pos.x + cos(angle) * radius;
+      let y = this.pos.y + sin(angle) * radius;
+      
+      // 创建并添加到全局数组
+      enemyBullets.push(new GhostFire(x, y));
+    }
+  }
+  
+  // 添加display方法
+  display() {
+    push();
+    imageMode(CENTER);
+    
+    // 选择当前方向的图像
+    let currentImage = this.customImages[this.direction];
+    
+    // 计算当前帧位置
+    let frameWidth = currentImage.width / this.totalFrames;
+    let frameHeight = currentImage.height;
+    
+    // 翻转左方向的图像
+    if (this.direction === 'left') {
+      translate(this.pos.x, this.pos.y);
+      scale(-1, 1);
+      image(
+        currentImage, 
+        0, 0, 
+        this.radius * 2, this.radius * 2,
+        this.frameIndex * frameWidth, 0, 
+        frameWidth, frameHeight
+      );
+    } else {
+      image(
+        currentImage, 
+        this.pos.x, this.pos.y, 
+        this.radius * 2, this.radius * 2,
+        this.frameIndex * frameWidth, 0, 
+        frameWidth, frameHeight
+      );
+    }
+    
+    pop();
+    
+    // 显示血条(修改为直接绘制)
+    this.displayHealthBar();
+  }
+  
+  // 添加自己的血条显示方法
+  displayHealthBar() {
+    // 确保设置全局Boss状态
+    bossActive = true;
+    
+    // 在全局范围显示Boss血条
+    push();
+    fill(100, 100, 100, 200);
+    rect(width/2 - 200, 50, 400, 20);
+    
+    // 计算血量百分比
+    let healthPercent = this.health / this.maxHealth;
+    fill(255, 0, 0);
+    rect(width/2 - 200, 50, 400 * healthPercent, 20);
+    pop();
   }
 }

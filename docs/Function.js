@@ -43,16 +43,23 @@ function handleGameplay(now) {
     let enemy = enemies[j];
     enemy.update();
     enemy.display();
-    if (enemy.isBoss && enemy.health <= 0) {
+    
+    // 检查是否为已击败的Boss(包括BugBoss)
+    if ((enemy.isBoss || enemy instanceof BugBoss) && enemy.health <= 0) {
       bossesDefeated++;
       enemies.splice(j, 1);
-
+      bossActive = false; // 确保重置bossActive状态
+      
+      console.log("Boss defeated, current wave:", wave); // 调试日志
+      
+      // 处理第6波的特殊情况
       if (wave === 6) {
         player.needsPetSelection = true;
         gameState = "petSelection";
         return;
       }
-
+      
+      // 处理第10波的胜利情况
       if (wave === 10) {
         gameState = "victory";
         finalStats = {
@@ -65,29 +72,19 @@ function handleGameplay(now) {
         };
         return;
       }
+      
+      // 由于已经击败了当前波次的Boss，加载下一波
+      wave++;
+      showFloatingText("Wave " + wave, width / 2, height / 2, color(255, 255, 0), 40);
+      spawnEnemiesForWave(wave);
     }
   }
 
   // 更新并显示敌人子弹，同时检测与玩家的碰撞
   enemyBullets = enemyBullets.filter((bullet) => {
-    if (bullet.update()) {
-      bullet.display();
-      if (
-        p5.Vector.dist(bullet.pos, player.pos) <
-        player.radius + bullet.radius
-      ) {
-        if (bullet instanceof WebProjectile) {
-          player.isWebbed = true;
-          player.webDuration = 120;
-          showFloatingText("Frozen!", player.pos.x, player.pos.y - player.radius - 10, color(0, 200, 255));
-        } else {
-          player.takeDamage(bullet.damage);
-        }
-        return false;
-      }
-      return true;
-    }
-    return false;
+    bullet.update();
+    bullet.display();
+    return bullet.isActive; // 过滤掉已经不活跃的子弹
   });
 
   // 更新经验球
@@ -869,11 +866,13 @@ function spawnEnemiesForWave(wave) {
     bossActive = true;
   }
 
-  else if (wave === 9) {  // 新增第9波
-    let boss = new SpiderBoss(true, "spiderBoss", commonEnemyAction, 40, 40);
-    boss.pos = getValidSpawnPosition();
+  else if (wave === 9) {  // 第9波
+    console.log("生成第9波boss");  // 调试日志
+    let bossPos = getValidSpawnPosition();
+    let boss = new BugBoss();
+    boss.pos = bossPos;
     enemies.push(boss);
-    showFloatingText("Spider Boss Appears!", width / 2, height / 2 - 40, color(0, 255, 0));
+    showFloatingText("Bug Boss Appears!", width / 2, height / 2 - 40, color(0, 255, 0));
     bossActive = true;
   }
 

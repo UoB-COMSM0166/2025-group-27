@@ -282,6 +282,14 @@ function preload() {
 
   // 加载鸟Boss蛛丝技能特效图片
   webEffectImg = loadImage("./assets/candidate_images/effects/attack_effects/acidProjectile2.png");
+  
+  // 加载虫子Boss动画图片
+  bugBossSide = loadImage("./assets/candidate_images/characters/enemies/ghost_imp/summonSkeleton_move_side.png");
+  bugBossUp = loadImage("./assets/candidate_images/characters/enemies/ghost_imp/summonSkeleton_move_up.png");
+  bugBossDown = loadImage("./assets/candidate_images/characters/enemies/ghost_imp/summonSkeleton_move.png");
+  
+  // 加载幽冥鬼火图片
+  ghostFireImg = loadImage("./assets/candidate_images/effects/skill_effects/drip/flame/blue_fire.png");
 }
 
 

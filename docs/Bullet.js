@@ -262,4 +262,115 @@ class WebProjectile extends EnemyBullet {
   }
 }
 
+// --- GhostFire类 ---
+class GhostFire {
+  constructor(x, y) {
+    this.pos = createVector(x, y);
+    this.vel = createVector(0, 0);
+    this.acc = createVector(0, 0);
+    this.maxSpeed = 2.5; // 增加速度(原来是1.5)
+    this.maxForce = 0.15; // 提高转向灵敏度(原来是0.05)
+    this.radius = 15;
+    this.damage = 20;
+    this.isActive = true;
+    
+    // 动画相关
+    this.frameIndex = 0;
+    this.totalFrames = 5; // 5帧动画
+    this.frameDelay = 8;
+    this.frameCounter = 0;
+    
+    // 光亮效果
+    this.glowRadius = 30;
+    this.glowAlpha = 150;
+  }
+  
+  // 追踪目标
+  seek(target) {
+    // 计算期望速度方向
+    let desired = p5.Vector.sub(target, this.pos);
+    desired.normalize();
+    desired.mult(this.maxSpeed);
+    
+    // 计算转向力
+    let steer = p5.Vector.sub(desired, this.vel);
+    steer.limit(this.maxForce);
+    return steer;
+  }
+  
+  update() {
+    // 更新动画
+    this.frameCounter++;
+    if (this.frameCounter >= this.frameDelay) {
+      this.frameCounter = 0;
+      this.frameIndex = (this.frameIndex + 1) % this.totalFrames;
+    }
+    
+    // 追踪玩家
+    let steer = this.seek(player.pos);
+    this.acc.add(steer);
+    
+    // 应用物理运动
+    this.vel.add(this.acc);
+    this.vel.limit(this.maxSpeed);
+    this.pos.add(this.vel);
+    this.acc.mult(0);
+    
+    // 检测与玩家碰撞
+    let d = dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y);
+    if (d < this.radius + player.radius) {
+      player.takeDamage(this.damage);
+      showFloatingText("-" + this.damage, player.pos.x, player.pos.y - 20, color(255, 100, 100));
+      this.isActive = false;
+    }
+    
+    // 检测与障碍物碰撞
+    for (let obs of obstacles) {
+      if (obs.collidesWith(this.pos, this.radius * 2, this.radius * 2)) {
+        this.isActive = false;
+        // 碰撞时产生粒子效果
+        for (let i = 0; i < 8; i++) {
+          let angle = random(TWO_PI);
+          let speed = random(1, 3);
+          let offset = random(5, 15);
+          
+          poisonTrails.push({
+            pos: createVector(
+              this.pos.x + cos(angle) * offset,
+              this.pos.y + sin(angle) * offset
+            ),
+            radius: 15,
+            startTime: millis(),
+            duration: 1000
+          });
+        }
+        break;
+      }
+    }
+  }
+  
+  display() {
+    push();
+    imageMode(CENTER);
+    
+    // 仅绘制火焰图片
+    let frameWidth = ghostFireImg.width / this.totalFrames;
+    let frameHeight = ghostFireImg.height;
+    
+    image(
+      ghostFireImg,
+      this.pos.x,
+      this.pos.y,
+      this.radius * 2.5,
+      this.radius * 2.5,
+      this.frameIndex * frameWidth,
+      0,
+      frameWidth,
+      frameHeight
+    );
+    
+    pop();
+  }
+}
+
 
