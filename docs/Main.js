@@ -1,4 +1,5 @@
 // ===== 全局变量 =====
+let difficult; //难度
 let player;
 let bullets = [];
 let enemyBullets = [];
@@ -14,6 +15,10 @@ let lastTerrainChange = 0;
 let feathers = [];
 let featherSprite;
 const borderOffset = 10;
+//亮度以及音量
+let volumeSlider;
+let backButton;
+let volume;   // 默认音量
 
 // 暂停按钮和暂停时间
 let pauseButton;
@@ -78,7 +83,7 @@ class Snowflake {
   constructor() {
     this.x = random(width);
     this.y = random(-50, -10);
-    this.size = random(2, 5);
+    this.size = random(8, 20);
     this.speed = random(0.5, 1.5);
   }
   update() {
@@ -91,7 +96,8 @@ class Snowflake {
   display() {
     noStroke();
     fill(255, 255, 255, 200);
-    ellipse(this.x, this.y, this.size);
+    image(snowflakepic, this.x,this.y,this.size,this.size);
+    // ellipse(this.x, this.y, this.size);
   }
 }
 let snowflakes = [];
@@ -122,6 +128,7 @@ function drawLightningFlash() {
     push();
     fill(255, 255, 255, 200);
     rect(0, 0, width, height);
+    image(lightningpic,width/2,height/2,150,150);
     pop();
   }
 }
@@ -167,6 +174,13 @@ function updateWeather() {
 
 // ----- p5.js 核心函数 -----
 function preload() {
+  // maps
+  level1map = loadImage("./assets/selected_images/maps/level1.png");
+  level2map = loadImage("./assets/selected_images/maps/level2.png");
+  // weather
+  snowflakepic = loadImage("./assets/selected_images/weather/flake.gif");
+  lightningpic = loadImage("./assets/selected_images/weather/lightning.gif");
+
   // knight
   KnightActionUp = loadImage("./assets/selected_images/characters/keyboardman/keyboardman_back.png");
   KnightActionDown = loadImage("./assets/selected_images/characters/keyboardman/keyboardman_front.png");
@@ -235,16 +249,53 @@ function preload() {
   windTornadoImg = loadImage("./assets/candidate_images/effects/attack_effects/bigFireAnticipation_spawn_white.png");
 
   //宠物一
-  summonBatImage = loadImage("./assets/candidate_images/characters/pets/bat/summonBat_idle.png");
-  summonBatAttackImage = loadImage("./assets/candidate_images/characters/pets/bat/summonBat_rangedAttack_side.png");
+  foxMoveBack = loadImage("./assets/selected_images/pets/fox/fox_move_back.png");
+  foxMoveFront = loadImage("./assets/selected_images/pets/fox/fox_move_front.png");
+  foxMoveLeft = loadImage("./assets/selected_images/pets/fox/fox_move_left.png");
+  foxMoveRight = loadImage("./assets/selected_images/pets/fox/fox_move_right.png");
 
-  // 加载鸟Boss毒池特效图片 
-  poisonPoolEffectImg = loadImage("./assets/candidate_images/effects/skilleffects/drip/waterSplashLava_new.png");
+  foxAttackBack = loadImage("./assets/selected_images/pets/fox/fox_attack_back.png");
+  foxAttackFront = loadImage("./assets/selected_images/pets/fox/fox_attack_front.png");
+  foxAttackLeft = loadImage("./assets/selected_images/pets/fox/fox_attack_left.png");
+  foxAttackRight = loadImage("./assets/selected_images/pets/fox/fox_attack_right.png");
+
+  //宠物二
+  cowMoveBack = loadImage("./assets/selected_images/pets/cow/cow_move_back.png");
+  cowMoveFront = loadImage("./assets/selected_images/pets/cow/cow_move_front.png");
+  cowMoveLeft = loadImage("./assets/selected_images/pets/cow/cow_move_left.png");
+  cowMoveRight = loadImage("./assets/selected_images/pets/cow/cow_move_right.png");
+
+  //宠物三
+  fairyMoveBack = loadImage("./assets/selected_images/pets/fairy/fairy_move_back.png");
+  fairyMoveFront = loadImage("./assets/selected_images/pets/fairy/fairy_move_front.png");
+  fairyMoveLeft = loadImage("./assets/selected_images/pets/fairy/fairy_move_left.png");
+  fairyMoveRight = loadImage("./assets/selected_images/pets/fairy/fairy_move_right.png");
+
+
+  //sound相关
+  //playerAttacksound
+  arrowsound = loadSound("./assets/candidate_sounds/player_attack_sounds/arrow.ogg");
+  gunsound = loadSound("./assets/candidate_sounds/player_attack_sounds/gun.ogg");
+  keyboardsound = loadSound("./assets/candidate_sounds/player_attack_sounds/keyboard.ogg");
+  // 加载鸟Boss毒池特效图片 - 更新为新的图片路径和名称
+  poisonPoolEffectImg = loadImage("./assets/candidate_images/effects/skill_effects/drip/waterSplashLava_new.png");
+
+  // 加载鸟Boss蛛丝技能特效图片
+  webEffectImg = loadImage("./assets/candidate_images/effects/attack_effects/acidProjectile2.png");
+  
+  // 加载虫子Boss动画图片
+  bugBossSide = loadImage("./assets/candidate_images/characters/enemies/ghost_imp/summonSkeleton_move_side.png");
+  bugBossUp = loadImage("./assets/candidate_images/characters/enemies/ghost_imp/summonSkeleton_move_up.png");
+  bugBossDown = loadImage("./assets/candidate_images/characters/enemies/ghost_imp/summonSkeleton_move.png");
+  
+  // 加载幽冥鬼火图片
+  ghostFireImg = loadImage("./assets/candidate_images/effects/skill_effects/drip/flame/blue_fire.png");
 }
 
 
 function setup() {
-  createCanvas(800, 600);
+  createCanvas(1062, 600);
+  volume = 0.5;
   gameStartTime = millis();
   generateInitialObstacles();
   initButtons();
@@ -266,6 +317,10 @@ function draw() {
   updateWeather();
   noStroke();
   strokeWeight(1);
+
+  arrowsound.setVolume(volume);
+  gunsound.setVolume(volume);
+  keyboardsound.setVolume(volume);
 
   switch (gameState) {
     case "mainMenu":
@@ -292,6 +347,9 @@ function draw() {
       break;
     case "victory":
       displayVictoryScreen();
+      break;
+    case "setting":
+      displaySettingPage();
       break;
   }
 
@@ -333,7 +391,6 @@ function draw() {
 function drawPlayerStats() {
   // 检查 player 对象是否已定义
   if (!player) {
-    console.warn("Player object is not defined.");
     return;
   }
 
