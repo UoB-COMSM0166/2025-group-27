@@ -70,6 +70,7 @@ let victoryButtons = [];
 function drawHeatHaze() {
   push();
   noStroke();
+  image(sunpic,0,0,1062,600);
   for (let y = 0; y < height; y += 5) {
     let offset = map(noise(y * 0.01, millis() * 0.002), 0, 1, -10, 10);
     fill(255, 200, 200, 30);
@@ -180,6 +181,7 @@ function preload() {
   // weather
   snowflakepic = loadImage("./assets/selected_images/weather/flake.gif");
   lightningpic = loadImage("./assets/selected_images/weather/lightning.gif");
+  sunpic = loadImage("./assets/selected_images/weather/sun_yellow.gif");
 
   // knight
   KnightActionUp = loadImage("./assets/selected_images/characters/keyboardman/keyboardman_back.png");

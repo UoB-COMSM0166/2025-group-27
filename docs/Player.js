@@ -136,6 +136,12 @@ class Player {
     this.arrows = []; // 存储箭矢
     this.chargeBarScale = 0.7;
 
+    // Archer 相关升级属性
+    this.arrowPierce = false; // 箭矢是否穿透
+    this.arrowSplit = false; // 箭矢是否散射
+    this.doubleShot = false; // 是否双发
+    this.lifesteal = 0; // 攻击回血比例
+
     // 添加宠物相关属性
     this.invincible = false; // 无敌状态(用于防御型宠物)
     this.invincibleFlash = 0; // 无敌闪烁效果
@@ -264,6 +270,19 @@ class Player {
         break;
       case "passive":
         this.passiveSkills.push(upgrade.value);
+        break;
+      // Archer 相关升级
+      case "arrowPierce":
+        this.arrowPierce = true;
+        break;
+      case "arrowSplit":
+        this.arrowSplit = true;
+        break;
+      case "doubleShot":
+        this.doubleShot = true;
+        break;
+      case "lifesteal":
+        this.lifesteal = 0.1; // 攻击回血比例
         break;
     }
     choosingUpgrade = false;
@@ -556,8 +575,14 @@ class Player {
 
         // 立即检测攻击范围内的敌人
         this.detectAttack();
-      } else if (player.characterType === "archer" && !player.isCharging) {
-        player.startCharge();
+      } else if (this.characterType === "archer" && !this.isCharging) {
+        // 开始蓄力
+        this.startCharge();
+        // 攻击回血
+        if (this.unlockedUpgrades.has("lifesteal")) {
+          this.health = min(this.health + this.attackDamage * 0.1, this.maxHealth);
+        }
+
       }
       this.fireCooldown = 60 / this.fireRate;
     }
@@ -854,7 +879,9 @@ class Player {
         chargeParams.damage,
         chargeParams.size,
         ArcherActionAttackDown,
-        state
+        state,
+        this.arrowPierce,
+        this.arrowSplit
       ));
     } else if (angle > 0.75 * PI && angle < 1.25 * PI) {
       state = "h";
@@ -865,7 +892,9 @@ class Player {
         chargeParams.damage,
         chargeParams.size,
         ArcherActionAttackLeft,
-        state
+        state,
+        this.arrowPierce,
+        this.arrowSplit
       ));
     } else if (angle > 1.25 * PI && angle < 1.75 * PI) {
       state = "v";
@@ -876,7 +905,9 @@ class Player {
         chargeParams.damage,
         chargeParams.size,
         ArcherActionAttackUp,
-        state
+        state,
+        this.arrowPierce,
+        this.arrowSplit
       ));
     } else if (angle > 1.75 * PI || angle < 0.25 * PI) {
       state = "h";
@@ -887,11 +918,11 @@ class Player {
         chargeParams.damage,
         chargeParams.size,
         ArcherActionAttackRight,
-        state
+        state,
+        this.arrowPierce,
+        this.arrowSplit
       ));
     }
-
-
 
     // 重置状态
     this.isCharging = false;
@@ -902,6 +933,7 @@ class Player {
   updateArrows() {
     for (let i = this.arrows.length - 1; i >= 0; i--) {
       let arrow = this.arrows[i];
+      
       // 添加速度衰减模拟空气阻力
       arrow.vel.mult(0.99);
 
@@ -925,20 +957,24 @@ class Player {
         // 使用矢量距离计算
         let distVec = p5.Vector.sub(arrow.pos, enemyCenter);
         if (distVec.mag() < enemy.enHeight * 1.0) { // 增加碰撞范围
-          let isCrit = random() < this.critRate;
-          let finalDamage = isCrit ?
-            arrow.damage * this.critDamage :
-            arrow.damage;
-          let killed = enemy.hit(finalDamage);
-          if (killed) {
-            enemies.splice(j, 1);
-            if (enemy instanceof Boss) {
-              bossDefeated++;
-              bossDefeatedCount++;
+          if (arrow.handleCollision(enemy)) {
+            let isCrit = random() < this.critRate;
+            let finalDamage = isCrit ?
+                arrow.damage * this.critDamage :
+                arrow.damage;
+            if(this.doubleShot) {
+              finalDamage = finalDamage * 2;
             }
-            normalEnemiesDefeated++;
-            this.gainExp(enemy.expValue);
-          }
+            let killed = enemy.hit(finalDamage);
+            if (killed) {
+                enemies.splice(j, 1);
+                if (enemy instanceof Boss) {
+                    bossDefeated++;
+                    bossDefeatedCount++;
+                }
+                normalEnemiesDefeated++;
+                this.gainExp(enemy.expValue);
+            }
 
           // 生命偷取
           if (this.lifesteal > 0) {
@@ -947,10 +983,16 @@ class Player {
               this.health + finalDamage * this.lifesteal
             );
           }
-
-          arrow.isActive = false;
+          // 处理穿透和散射
+          if (!arrow.canPierce) {
+            arrow.isActive = false;
+          }
+          if (arrow.canSplit) {
+            arrow.split();
+          }
           break;
         }
+      }
       }
 
       if (!arrow.isActive) {
