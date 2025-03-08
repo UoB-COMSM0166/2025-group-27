@@ -193,7 +193,6 @@ function preload() {
   // weather
   snowflakepic = loadImage("./assets/selected_images/weather/flake.gif");
   lightningpic = loadImage("./assets/selected_images/weather/lightning.gif");
-  sunpic = loadImage("./assets/selected_images/weather/sun_yellow.png");
 
   // knight
   KnightActionUp = loadImage("./assets/selected_images/characters/keyboardman/keyboardman_back.png");
@@ -278,7 +277,8 @@ function preload() {
   cowMoveFront = loadImage("./assets/selected_images/pets/cow/cow_move_front.png");
   cowMoveLeft = loadImage("./assets/selected_images/pets/cow/cow_move_left.png");
   cowMoveRight = loadImage("./assets/selected_images/pets/cow/cow_move_right.png");
-  cowSkillEffect = loadImage("./assets/candidate_images/effects/skill_effects/drip/flame/blue_fire.png");
+  cowCover = loadImage("./assets/selected_images/pets/cow/cover.png");
+
 
   //宠物三
   fairyMoveBack = loadImage("./assets/selected_images/pets/fairy/fairy_move_back.png");
@@ -310,9 +310,6 @@ function preload() {
 
   // 加载幽冥鬼火图片
   ghostFireImg = loadImage("./assets/candidate_images/effects/skill_effects/drip/flame/blue_fire.png");
-  
-  // 加载疾风裂爪特效图片
-  clawEffectImage = loadImage("./assets/candidate_images/effects/skill_effects/drip/flame/TorchFire_blue_idle.png");
 }
 
 
