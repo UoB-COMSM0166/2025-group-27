@@ -112,23 +112,8 @@ function handleGameplay(now) {
       continue;
     }
 
-    // 绘制特效
-    if (trail.isClawEffect && ghostFireImg) {
-      // 绘制疾风裂爪特效
-      push();
-      imageMode(CENTER);
-      let frameWidth = ghostFireImg.width / trail.frameCount;
-      let frameHeight = ghostFireImg.height;
-      
-      image(ghostFireImg,
-        trail.pos.x, trail.pos.y,
-        trail.radius * 2, trail.radius * 2,
-        trail.frameIndex * frameWidth, 0,
-        frameWidth, frameHeight
-      );
-      pop();
-    } else if (typeof poisonPoolEffectImg !== 'undefined' && poisonPoolEffectImg && trail.frameIndex !== undefined) {
-      // 原有的毒池特效代码保持不变
+    // 绘制毒池动画
+    if (typeof poisonPoolEffectImg !== 'undefined' && poisonPoolEffectImg && trail.frameIndex !== undefined) {
       try {
         push();
         drawingContext.filter = 'contrast(1.2) brightness(1.1)';
@@ -139,8 +124,9 @@ function handleGameplay(now) {
         let frameHeight = poisonPoolEffectImg.height;
         
         // 调整渲染质量
-        drawingContext.imageSmoothingEnabled = false;
+        drawingContext.imageSmoothingEnabled = false; // 禁用平滑，保留像素感
         
+        // 减小透明度衰减速度，保持更长时间的清晰度
         let alpha = map(millis() - trail.startTime, 0, trail.duration * 0.7, 255, 100);
         if (trail.colorMod) {
           tint(red(trail.colorMod), green(trail.colorMod), blue(trail.colorMod), alpha);
@@ -148,7 +134,8 @@ function handleGameplay(now) {
           tint(255, 255, 255, alpha);
         }
         
-        let displaySize = trail.radius * 2.2;
+        // 调整尺寸参数，使特效更大更清晰
+        let displaySize = trail.radius * 2.2; // 从1.8倍增加到2.2倍
         
         image(
           poisonPoolEffectImg,
@@ -163,12 +150,22 @@ function handleGameplay(now) {
         );
         
         noTint();
-        drawingContext.imageSmoothingEnabled = true;
+        drawingContext.imageSmoothingEnabled = true; // 恢复默认设置
         drawingContext.filter = 'none';
         pop();
       } catch (e) {
-        continue;
+        // 后备绘制方法
+        let alpha = map(millis() - trail.startTime, 0, 3000, 255, 0);
+        fill(0, 200, 0, alpha * 0.3);
+        noStroke();
+        ellipse(trail.pos.x, trail.pos.y, trail.radius * 2);
       }
+    } else {
+      // 默认绘制方法
+      let alpha = map(millis() - trail.startTime, 0, 3000, 255, 0);
+      fill(0, 200, 0, alpha * 0.3);
+      noStroke();
+      ellipse(trail.pos.x, trail.pos.y, trail.radius * 2);
     }
 
     if (p5.Vector.dist(player.pos, trail.pos) < trail.radius) {
@@ -733,9 +730,7 @@ function drawUpgradeScreen() {
 
 // ===== 升级选项 =====
 function generateUpgradeOptions() {
-  let allUpgrades;
-  if(player.characterType == "gunner" || player.characterType == "knight"){
-    allUpgrades = [
+  const allUpgrades = [
     {
       type: "health",
       name: "生命提升",
@@ -824,57 +819,6 @@ function generateUpgradeOptions() {
       oneTime: true,
     },
   ];
-  } else if (player.characterType == "archer") {
-    allUpgrades = [
-      {
-        type: "health",
-        name: "生命提升",
-        value: 25,
-        description: "增加25点生命值上限",
-      },
-      {
-        type: "attack",
-        name: "攻击力提升",
-        value: 5,
-        description: "增加5点攻击力",
-      },
-      {
-        type: "arrowPierce",
-        name: "穿透箭矢",
-        value: "pierce",
-        description: "箭矢可以穿透敌人",
-        oneTime: true,
-      },
-      {
-        type: "arrowSplit",
-        name: "散射箭矢",
-        value: "split",
-        description: "箭矢在命中敌人后会散射一次",
-        oneTime: true,
-      },
-      {
-        type: "doubleShot",
-        name: "双发箭矢",
-        value: "double",
-        description: "一次射出两发箭矢，双倍伤害！",
-        oneTime: true,
-      },
-      {
-        type: "lifesteal",
-        name: "攻击回血",
-        value: "lifesteal",
-        description: "攻击时恢复生命值",
-        oneTime: true,
-      },
-      {
-        type: "autoCharge",
-        name: "自动蓄力",
-        value: "autoCharge",
-        description: "不攻击时自动蓄力",
-        oneTime: true,
-      },
-    ];
-  }
   upgradeOptions = [];
   let availableUpgrades = allUpgrades.filter((upg) => {
     // 确保使用Set的has方法
@@ -889,27 +833,6 @@ function generateUpgradeOptions() {
     let index = floor(random(availableUpgrades.length));
     upgradeOptions.push(availableUpgrades[index]);
     availableUpgrades.splice(index, 1);
-  }
-}
-
-function updateArrows() {
-  for (let i = arrows.length - 1; i >= 0; i--) {
-    let arrow = arrows[i];
-    arrow.update();
-    arrow.display();
-
-    // 检测箭矢与敌人的碰撞
-    for (let j = enemies.length - 1; j >= 0; j--) {
-      let enemy = enemies[j];
-      if (arrow.pos.dist(enemy.pos) < enemy.size) {
-        if (arrow.handleCollision(enemy)) {
-          // 如果箭矢没有穿透，销毁箭矢
-          arrows.splice(i, 1);
-        }
-        arrow.split(); // 处理散射
-        break;
-      }
-    }
   }
 }
 
