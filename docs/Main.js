@@ -393,10 +393,17 @@ function draw() {
     displayAttributes();
   }
 
-  // 叠加当前天气效果（不改变原始背景色）
+  // 叠加当前天气效果
   drawWeatherEffects();
 
-  // 显示当前天气文本（调试用）
+  // 在最后渲染BugBoss的雾气效果，确保它在所有其他内容之上
+  for (let enemy of enemies) {
+    if (enemy instanceof BugBoss && enemy.fogOpacity > 0) {
+      enemy.drawFogEffect();
+    }
+  }
+
+  // 显示当前天气文本
   textSize(16);
   fill(255);
   text("当前天气：" + weather, 70, height - 10);

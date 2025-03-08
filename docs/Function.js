@@ -276,26 +276,6 @@ function handleGameplay(now) {
 
   // ★ 调用天气效果函数，应用天气效果 ★
   applyWeatherEffects(now);
-
-  // 叠加当前天气效果
-  drawWeatherEffects();
-
-  // 在所有内容之上渲染BugBoss的雾气效果
-  for (let enemy of enemies) {
-    if (enemy instanceof BugBoss) {
-      // 检查是否处于遮蔽视野状态
-      if (enemy.isVisionBlocked) {
-        enemy.fogOpacity = min(enemy.fogOpacity + enemy.fogTransitionSpeed, enemy.maxFogOpacity);
-      } else {
-        enemy.fogOpacity = max(enemy.fogOpacity - enemy.fogTransitionSpeed, 0);
-      }
-      
-      // 如果有雾气效果，就绘制
-      if (enemy.fogOpacity > 0) {
-        enemy.drawFogEffect();
-      }
-    }
-  }
 }
 
 
