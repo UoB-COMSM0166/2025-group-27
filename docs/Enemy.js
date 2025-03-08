@@ -1641,11 +1641,11 @@ class BugBoss extends Enemy {
     
     // 幽冥鬼火技能
     this.ghostFireCooldown = 0;
-    this.ghostFireInterval = 300; // 5秒一次
+    this.ghostFireInterval = 150; // 从300减半到150 (2.5秒一次)
     
     // 疾风裂爪技能
-    this.rapidClawCooldown = 180; // 初始冷却时间
-    this.rapidClawInterval = 450; // 7.5秒一次
+    this.rapidClawCooldown = 90; // 从180减半到90
+    this.rapidClawInterval = 225; // 从450减半到225 (3.75秒一次)
     this.isRapidClawActive = false; // 是否正在施放技能
     this.rapidClawStage = 0; // 当前是第几次攻击(0-2)
     this.attackAnimationTime = 0; // 攻击动画计时
@@ -1687,9 +1687,9 @@ class BugBoss extends Enemy {
     
     // 遮蔽视野技能相关属性
     this.visionBlockCooldown = 0;
-    this.visionBlockInterval = 600; // 10秒一次
+    this.visionBlockInterval = 300; // 从600减半到300 (5秒一次)
     this.isVisionBlocked = false;
-    this.visionBlockDuration = 180; // 持续5秒
+    this.visionBlockDuration = 180; // 持续3秒
     this.visionBlockTimer = 0;
     this.fogRadius = 150; // 玩家可见范围半径
     this.fogOpacity = 0; // 雾气不透明度

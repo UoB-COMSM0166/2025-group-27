@@ -310,6 +310,9 @@ function preload() {
 
   // 加载幽冥鬼火图片
   ghostFireImg = loadImage("./assets/candidate_images/effects/skill_effects/drip/flame/blue_fire.png");
+  
+  // 加载鬼火消失特效
+  ghostDeathEffect = loadImage("./assets/candidate_images/effects/death_effects/blood_burst/AmoebaSplat2.png");
 }
 
 

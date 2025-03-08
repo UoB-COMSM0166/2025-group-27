@@ -158,11 +158,38 @@ function handleGameplay(now) {
         continue;
       }
     } else {
-      // 默认绘制方法
-      let alpha = map(millis() - trail.startTime, 0, 3000, 255, 0);
-      fill(0, 200, 0, alpha * 0.3);
-      noStroke();
-      ellipse(trail.pos.x, trail.pos.y, trail.radius * 2);
+      // 使用死亡特效动画替代绿色圆圈
+      push();
+      imageMode(CENTER);
+      
+      // 计算当前帧在精灵表中的位置
+      let frameWidth = ghostDeathEffect.width / 4; // 4帧动画
+      let frameHeight = ghostDeathEffect.height;
+      
+      // 计算当前帧索引
+      let progress = (millis() - trail.startTime) / trail.duration;
+      let frameIndex = floor(progress * 4); // 4帧动画
+      frameIndex = constrain(frameIndex, 0, 3);
+      
+      // 计算透明度
+      let alpha = map(millis() - trail.startTime, 0, trail.duration, 255, 0);
+      tint(255, alpha);
+      
+      // 绘制特效
+      image(
+        ghostDeathEffect,
+        trail.pos.x,
+        trail.pos.y,
+        trail.radius * 3,
+        trail.radius * 3,
+        frameIndex * frameWidth,
+        0,
+        frameWidth,
+        frameHeight
+      );
+      
+      noTint();
+      pop();
     }
 
     if (p5.Vector.dist(player.pos, trail.pos) < trail.radius) {
@@ -250,10 +277,23 @@ function handleGameplay(now) {
   // ★ 调用天气效果函数，应用天气效果 ★
   applyWeatherEffects(now);
 
-  // 在绘制完所有游戏对象后，检查并绘制BugBoss的雾气效果
+  // 叠加当前天气效果
+  drawWeatherEffects();
+
+  // 在所有内容之上渲染BugBoss的雾气效果
   for (let enemy of enemies) {
-    if (enemy instanceof BugBoss && enemy.fogOpacity > 0) {
-      enemy.drawFogEffect();
+    if (enemy instanceof BugBoss) {
+      // 检查是否处于遮蔽视野状态
+      if (enemy.isVisionBlocked) {
+        enemy.fogOpacity = min(enemy.fogOpacity + enemy.fogTransitionSpeed, enemy.maxFogOpacity);
+      } else {
+        enemy.fogOpacity = max(enemy.fogOpacity - enemy.fogTransitionSpeed, 0);
+      }
+      
+      // 如果有雾气效果，就绘制
+      if (enemy.fogOpacity > 0) {
+        enemy.drawFogEffect();
+      }
     }
   }
 }
