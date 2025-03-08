@@ -296,6 +296,9 @@ function preload() {
 
   // 加载幽冥鬼火图片
   ghostFireImg = loadImage("./assets/candidate_images/effects/skill_effects/drip/flame/blue_fire.png");
+  
+  // 加载疾风裂爪特效图片
+  clawEffectImage = loadImage("./assets/candidate_images/effects/skill_effects/drip/flame/TorchFire_blue_idle.png");
 }
 
 
