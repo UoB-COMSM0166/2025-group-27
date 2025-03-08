@@ -52,7 +52,7 @@ function mousePressed() {
 }
 
 function mouseReleased() {
-  if (player.characterType === "archer") {
+  if (player.characterType === "archer" && player.autoCharge == false) {
     player.releaseArrow();
   }
 }

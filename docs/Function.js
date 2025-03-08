@@ -859,7 +859,7 @@ function generateUpgradeOptions() {
         type: "doubleShot",
         name: "双发箭矢",
         value: "double",
-        description: "一次性射出两发箭矢",
+        description: "一次射出两发箭矢，双倍伤害！",
         oneTime: true,
       },
       {
@@ -867,6 +867,13 @@ function generateUpgradeOptions() {
         name: "攻击回血",
         value: "lifesteal",
         description: "攻击时恢复生命值",
+        oneTime: true,
+      },
+      {
+        type: "autoCharge",
+        name: "自动蓄力",
+        value: "autoCharge",
+        description: "不攻击时自动蓄力",
         oneTime: true,
       },
     ];
