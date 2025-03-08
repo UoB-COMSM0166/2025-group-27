@@ -113,14 +113,14 @@ function handleGameplay(now) {
     }
 
     // 绘制特效
-    if (trail.isClawEffect && clawEffectImage) {
+    if (trail.isClawEffect && ghostFireImg) {
       // 绘制疾风裂爪特效
       push();
       imageMode(CENTER);
-      let frameWidth = clawEffectImage.width / trail.frameCount;
-      let frameHeight = clawEffectImage.height;
+      let frameWidth = ghostFireImg.width / trail.frameCount;
+      let frameHeight = ghostFireImg.height;
       
-      image(clawEffectImage,
+      image(ghostFireImg,
         trail.pos.x, trail.pos.y,
         trail.radius * 2, trail.radius * 2,
         trail.frameIndex * frameWidth, 0,
@@ -139,9 +139,8 @@ function handleGameplay(now) {
         let frameHeight = poisonPoolEffectImg.height;
         
         // 调整渲染质量
-        drawingContext.imageSmoothingEnabled = false; // 禁用平滑，保留像素感
+        drawingContext.imageSmoothingEnabled = false;
         
-        // 减小透明度衰减速度，保持更长时间的清晰度
         let alpha = map(millis() - trail.startTime, 0, trail.duration * 0.7, 255, 100);
         if (trail.colorMod) {
           tint(red(trail.colorMod), green(trail.colorMod), blue(trail.colorMod), alpha);
@@ -149,8 +148,7 @@ function handleGameplay(now) {
           tint(255, 255, 255, alpha);
         }
         
-        // 调整尺寸参数，使特效更大更清晰
-        let displaySize = trail.radius * 2.2; // 从1.8倍增加到2.2倍
+        let displaySize = trail.radius * 2.2;
         
         image(
           poisonPoolEffectImg,
@@ -165,11 +163,10 @@ function handleGameplay(now) {
         );
         
         noTint();
-        drawingContext.imageSmoothingEnabled = true; // 恢复默认设置
+        drawingContext.imageSmoothingEnabled = true;
         drawingContext.filter = 'none';
         pop();
       } catch (e) {
-        // 不再显示绿色圆圈作为后备
         continue;
       }
     }
