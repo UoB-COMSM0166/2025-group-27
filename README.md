@@ -260,6 +260,28 @@ The sequence diagram illustrates interactions between game components in various
 
 ---
 
+## Evaluation
+
+#### 1. Qualitative Evaluation
+To comprehensively evaluate our game design, we conducted a qualitative evaluation. During the evaluation process, we selected five users for in-depth interviews, focusing on the following aspects:
+**User Experience**.
+**Game Difficulty**.
+**Interactivity**.
+Through these interviews, we gathered valuable feedback. Most users reported that the L1 (easy) difficulty was relatively relaxed and suitable for beginners. However, at the L2 (hard) difficulty, players felt that there were too many monsters, the bosses were too difficult to defeat, and the presence of air walls was quite severe, affecting movement, positioning, and the ability to defeat enemies. As a result, they found it very difficult to pass the second level. They expressed the need for some hints or guidance to progress through it successfully.
+These qualitative evaluations helped us identify pain points in the user experience, especially at the L2 difficulty level. Based on user feedback, the development team decided to add more hints and guidance to help players better adapt to different difficulty settings.
+
+#### 2. Quantitative Evaluation
+To further quantify the game experience, we conducted a quantitative evaluation using the NASA TLX and System Usability Scale (SUS) to measure the workload and usability of the game. Ten users participated in our evaluation test, and each user filled out these two questionnaires after playing the game at both L1 (easy) and L2 (hard) difficulty levels.
+**NASA TLX Scores**.
+At the L1 (easy) difficulty, users generally reported a lower workload, particularly in the dimensions of mental demand and effort. The average Mental Demand score for L1 was 60, while at L2 (hard), it significantly increased to 80. Other dimensions such as Physical Demand and Frustration showed similar trends, indicating that as the difficulty increased, players experienced higher physical exertion and emotional stress. At L2, users’ Frustration scores were generally higher, indicating an increase in frustration at the higher difficulty.
+**System Usability Scale (SUS)**.
+We used the Wilcoxon Signed Rank Test to compare the evaluation data between the two difficulty levels, calculating the significance differences in the NASA TLX and SUS scores for L1 and L2. The analysis revealed that while there was a significant difference in workload between L1 and L2, the usability ratings showed only a small difference, indicating that the game maintained a relatively consistent user experience across both difficulty levels.
+
+#### Conclusion
+Through this evaluation, we gained insights into the game design from both qualitative and quantitative perspectives. The qualitative evaluation helped us improve the difficulty design and user experience, while the quantitative evaluation provided concrete data to verify the workload and usability at different difficulty levels. Through a reasonable code testing strategy, we ensured the stability and performance of the game. In the future, we will continue to optimize the game based on the evaluation results, ensuring that players enjoy a better gaming experience.
+
+---
+
 ## Project Report
 
 ### Introduction
