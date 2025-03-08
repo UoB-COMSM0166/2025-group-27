@@ -18,7 +18,6 @@ class AttackPet extends BasePet {
     this.attackRange = 40;
     this.attackDamage = 15;
     this.speed = 4;
-    this.attackCooldown = 0;
     this.orbitRadius = 30;
     this.angle = 0;
     this.idleImage = foxMoveFront;
@@ -29,9 +28,7 @@ class AttackPet extends BasePet {
     this.frameDelay = 10;
     this.frameCounter = 0;
     this.isAttacking = false;
-
     this.attackCooldown = 0;
-    this.isAttacking = false;
     this.attackTimer = 0;
   }
 
@@ -39,7 +36,7 @@ class AttackPet extends BasePet {
     this.angle += 0.05;
     const targetPos = createVector(
       player.pos.x + cos(this.angle) * this.orbitRadius,
-      player.pos.y + sin(this.angle) * this.orbitRadius
+      player.pos.y + player.ImageHeight - (35 / 2)
     );
     this.pos.lerp(targetPos, 0.1);
 
@@ -71,7 +68,7 @@ class AttackPet extends BasePet {
       closest.hit(this.attackDamage);
       this.attackCooldown = 30;
       this.isAttacking = true;
-      this.attackTimer = 10;
+      this.attackTimer = 15;
 
       if (player.vel.x > 0) {
         this.currentImage = foxAttackRight;
@@ -106,17 +103,22 @@ class AttackPet extends BasePet {
       }
     }
 
+    let drawSize = this.isAttacking ? 45 : 35;
+    push();
+    imageMode(CENTER);
+    if (this.isAttacking) {
+      tint(255, 150, 150);
+    }
+
     // 绘制当前图片（无论是攻击还是跟随状态）
     if (this.currentImage) {
       let sx = this.frameIndex * (this.currentImage.width / this.totalFrames);
-      push();
-      imageMode(CENTER);
       image(
         this.currentImage,
         this.pos.x,
         this.pos.y,
-        35,
-        35,
+        drawSize,
+        drawSize,
         sx,
         0,
         this.currentImage.width / this.totalFrames,
