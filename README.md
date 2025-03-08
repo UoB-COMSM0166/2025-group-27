@@ -264,9 +264,9 @@ The sequence diagram illustrates interactions between game components in various
 
 #### 1. Qualitative Evaluation
 To comprehensively evaluate our game design, we conducted a qualitative evaluation. During the evaluation process, we selected five users for in-depth interviews, focusing on the following aspects:
-**User Experience**.
-**Game Difficulty**.
-**Interactivity**.
+- **User Experience**.
+- **Game Difficulty**.
+- **Interactivity**.
 Through these interviews, we gathered valuable feedback. Most users reported that the L1 (easy) difficulty was relatively relaxed and suitable for beginners. However, at the L2 (hard) difficulty, players felt that there were too many monsters, the bosses were too difficult to defeat, and the presence of air walls was quite severe, affecting movement, positioning, and the ability to defeat enemies. As a result, they found it very difficult to pass the second level. They expressed the need for some hints or guidance to progress through it successfully.
 These qualitative evaluations helped us identify pain points in the user experience, especially at the L2 difficulty level. Based on user feedback, the development team decided to add more hints and guidance to help players better adapt to different difficulty settings.
 
