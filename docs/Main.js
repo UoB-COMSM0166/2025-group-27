@@ -181,7 +181,7 @@ function preload() {
   // weather
   snowflakepic = loadImage("./assets/selected_images/weather/flake.gif");
   lightningpic = loadImage("./assets/selected_images/weather/lightning.gif");
-  sunpic = loadImage("./assets/selected_images/weather/sun_yellow.gif");
+  sunpic = loadImage("./assets/selected_images/weather/sun_yellow.png");
 
   // knight
   KnightActionUp = loadImage("./assets/selected_images/characters/keyboardman/keyboardman_back.png");
