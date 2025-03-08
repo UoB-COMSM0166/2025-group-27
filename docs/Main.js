@@ -55,6 +55,8 @@ let choosingPotion = false;
 let potionButtons = [];
 // 波数提示动画（可选效果）
 let waveTextAnimation = 0;
+// 热气动画控制
+let currentFrame = 0;
 // 调试标记
 const debug = false;
 let mainMenuButtons = [];
@@ -68,14 +70,25 @@ let victoryButtons = [];
 // ----- 天气效果绘制 -----
 // 热天效果：利用噪声生成水平条纹模拟热浪扭曲效果
 function drawHeatHaze() {
+  let allImage;
+  let frameWidth, frameHeight;
+  let totalFrames = 16;
+  allImage = sunpic;
+  frameWidth = allImage.width / totalFrames; // 计算单帧宽度
+  frameHeight = allImage.height;
+  let sx = currentFrame * frameWidth;
   push();
   noStroke();
+  image(allImage, 0, 0, 1062, 600, sx, 0, frameWidth, frameHeight);
   for (let y = 0; y < height; y += 5) {
     let offset = map(noise(y * 0.01, millis() * 0.002), 0, 1, -10, 10);
     fill(255, 200, 200, 30);
     rect(offset, y, width, 5);
   }
   pop();
+  if (frameCount % 6 === 0) { // 每6帧切换一次
+    currentFrame = (currentFrame + 1) % totalFrames;
+  }
 }
 
 // 冰雪效果：粒子系统模拟雪花飘落

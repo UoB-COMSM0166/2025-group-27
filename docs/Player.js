@@ -141,6 +141,7 @@ class Player {
     this.arrowSplit = false; // 箭矢是否散射
     this.doubleShot = false; // 是否双发
     this.lifesteal = 0; // 攻击回血比例
+    this.autoCharge = false; //自动蓄力
 
     // 添加宠物相关属性
     this.invincible = false; // 无敌状态(用于防御型宠物)
@@ -283,6 +284,9 @@ class Player {
         break;
       case "lifesteal":
         this.lifesteal = 0.1; // 攻击回血比例
+        break;
+      case "autoCharge":
+        this.autoCharge = true;
         break;
     }
     choosingUpgrade = false;
@@ -484,6 +488,16 @@ class Player {
 
   // 修改子弹发射逻辑
   shoot() {
+    if(!mouseIsPressed && this.characterType == "archer" && this.autoCharge == true){
+      this.startCharge();
+      // 攻击回血
+      if (this.unlockedUpgrades.has("lifesteal")) {
+        this.health = min(this.health + this.attackDamage * 0.1, this.maxHealth);
+      }
+    }
+    if(mouseIsPressed && this.characterType == "archer" && this.autoCharge == true){
+      this.releaseArrow();
+    }
     if (mouseIsPressed && this.fireCooldown <= 0) {
       if (this.characterType === "gunner") {
         let angle = atan2(mouseY - player.pos.y, mouseX - player.pos.x);
@@ -575,14 +589,13 @@ class Player {
 
         // 立即检测攻击范围内的敌人
         this.detectAttack();
-      } else if (this.characterType === "archer" && !this.isCharging) {
+      } else if (this.characterType === "archer" && !this.isCharging && this.autoCharge == false) {
         // 开始蓄力
         this.startCharge();
         // 攻击回血
         if (this.unlockedUpgrades.has("lifesteal")) {
           this.health = min(this.health + this.attackDamage * 0.1, this.maxHealth);
         }
-
       }
       this.fireCooldown = 60 / this.fireRate;
     }
