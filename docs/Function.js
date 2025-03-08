@@ -112,8 +112,23 @@ function handleGameplay(now) {
       continue;
     }
 
-    // 绘制毒池动画
-    if (typeof poisonPoolEffectImg !== 'undefined' && poisonPoolEffectImg && trail.frameIndex !== undefined) {
+    // 绘制特效
+    if (trail.isClawEffect && clawEffectImage) {
+      // 绘制疾风裂爪特效
+      push();
+      imageMode(CENTER);
+      let frameWidth = clawEffectImage.width / trail.frameCount;
+      let frameHeight = clawEffectImage.height;
+      
+      image(clawEffectImage,
+        trail.pos.x, trail.pos.y,
+        trail.radius * 2, trail.radius * 2,
+        trail.frameIndex * frameWidth, 0,
+        frameWidth, frameHeight
+      );
+      pop();
+    } else if (typeof poisonPoolEffectImg !== 'undefined' && poisonPoolEffectImg && trail.frameIndex !== undefined) {
+      // 原有的毒池特效代码保持不变
       try {
         push();
         drawingContext.filter = 'contrast(1.2) brightness(1.1)';
@@ -154,18 +169,9 @@ function handleGameplay(now) {
         drawingContext.filter = 'none';
         pop();
       } catch (e) {
-        // 后备绘制方法
-        let alpha = map(millis() - trail.startTime, 0, 3000, 255, 0);
-        fill(0, 200, 0, alpha * 0.3);
-        noStroke();
-        ellipse(trail.pos.x, trail.pos.y, trail.radius * 2);
+        // 不再显示绿色圆圈作为后备
+        continue;
       }
-    } else {
-      // 默认绘制方法
-      let alpha = map(millis() - trail.startTime, 0, 3000, 255, 0);
-      fill(0, 200, 0, alpha * 0.3);
-      noStroke();
-      ellipse(trail.pos.x, trail.pos.y, trail.radius * 2);
     }
 
     if (p5.Vector.dist(player.pos, trail.pos) < trail.radius) {
