@@ -252,6 +252,13 @@ function handleGameplay(now) {
 
   // ★ 调用天气效果函数，应用天气效果 ★
   applyWeatherEffects(now);
+
+  // 在绘制完所有游戏对象后，检查并绘制BugBoss的雾气效果
+  for (let enemy of enemies) {
+    if (enemy instanceof BugBoss && enemy.fogOpacity > 0) {
+      enemy.drawFogEffect();
+    }
+  }
 }
 
 

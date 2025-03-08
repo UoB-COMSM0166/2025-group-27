@@ -1684,6 +1684,17 @@ class BugBoss extends Enemy {
     // 设置初始技能冷却时间为随机值
     this.ghostFireCooldown = random(60, 120);
     this.rapidClawCooldown = random(120, 240);
+    
+    // 遮蔽视野技能相关属性
+    this.visionBlockCooldown = 0;
+    this.visionBlockInterval = 600; // 10秒一次
+    this.isVisionBlocked = false;
+    this.visionBlockDuration = 180; // 持续5秒
+    this.visionBlockTimer = 0;
+    this.fogRadius = 150; // 玩家可见范围半径
+    this.fogOpacity = 0; // 雾气不透明度
+    this.maxFogOpacity = 180; // 最大不透明度
+    this.fogTransitionSpeed = 10; // 雾气渐变速度
   }
   
   update() {
@@ -1757,6 +1768,29 @@ class BugBoss extends Enemy {
     
     // 处理碰撞
     this.resolveCollision();
+    
+    // 更新遮蔽视野技能
+    if (this.visionBlockCooldown <= 0 && !this.isVisionBlocked) {
+      this.castVisionBlock();
+      this.visionBlockCooldown = this.visionBlockInterval;
+      showFloatingText("Shrouding Roar!", this.pos.x, this.pos.y - 40, color(100, 100, 255));
+    } else {
+      this.visionBlockCooldown--;
+    }
+
+    // 处理遮蔽视野效果
+    if (this.isVisionBlocked) {
+      // 增加雾气不透明度直到最大值
+      this.fogOpacity = min(this.fogOpacity + this.fogTransitionSpeed, this.maxFogOpacity);
+      
+      this.visionBlockTimer--;
+      if (this.visionBlockTimer <= 0) {
+        this.isVisionBlocked = false;
+      }
+    } else {
+      // 减少雾气不透明度直到0
+      this.fogOpacity = max(this.fogOpacity - this.fogTransitionSpeed, 0);
+    }
   }
   
   // 启动疾风裂爪攻击
@@ -1994,6 +2028,11 @@ class BugBoss extends Enemy {
     
     // 显示血条
     this.displayHealthBar();
+    
+    // 绘制雾气效果
+    if (this.fogOpacity > 0) {
+      this.drawFogEffect();
+    }
   }
   
   // 其他方法保持不变 (displayHealthBar, castGhostFire等)
@@ -2028,5 +2067,41 @@ class BugBoss extends Enemy {
       // 创建并添加到全局数组
       enemyBullets.push(new GhostFire(x, y));
     }
+  }
+
+  // 施放遮蔽视野技能
+  castVisionBlock() {
+    this.isVisionBlocked = true;
+    this.visionBlockTimer = this.visionBlockDuration;
+  }
+
+  // 在display方法后添加绘制雾气效果
+  drawFogEffect() {
+    if (this.fogOpacity <= 0) return;
+
+    push();
+    // 创建径向渐变遮罩
+    let gradient = drawingContext.createRadialGradient(
+      player.pos.x, player.pos.y, 0,
+      player.pos.x, player.pos.y, this.fogRadius
+    );
+    
+    // 设置渐变颜色停止点
+    gradient.addColorStop(0, `rgba(40, 40, 60, 0)`);
+    gradient.addColorStop(0.7, `rgba(40, 40, 60, ${this.fogOpacity * 0.5/255})`);
+    gradient.addColorStop(1, `rgba(40, 40, 60, ${this.fogOpacity/255})`);
+    
+    // 应用渐变
+    drawingContext.fillStyle = gradient;
+    
+    // 创建模糊效果
+    drawingContext.filter = 'blur(30px)';
+    
+    // 绘制全屏遮罩
+    rect(0, 0, width, height);
+    
+    // 重置滤镜
+    drawingContext.filter = 'none';
+    pop();
   }
 }
