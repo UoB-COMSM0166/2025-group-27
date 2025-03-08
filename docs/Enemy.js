@@ -1630,8 +1630,8 @@ class BugBoss extends Enemy {
     super(true, "boss", commonEnemyAction, 40, 40);
     
     // 基本属性
-    this.health = 800;
-    this.maxHealth = 800;
+    this.health = 800;  // 设置血量为800
+    this.maxHealth = 800;  // 最大血量也设为800
     this.radius = 30;
     this.speed = 2;
     this.damage = 20;
@@ -1695,6 +1695,10 @@ class BugBoss extends Enemy {
     this.fogOpacity = 0; // 雾气不透明度
     this.maxFogOpacity = 180; // 最大不透明度
     this.fogTransitionSpeed = 10; // 雾气渐变速度
+    
+    // 添加疾风裂爪动画相关属性
+    this.clawEffectFrames = 6; // 特效动画总帧数
+    this.clawEffectDelay = 4; // 特效动画帧延迟
   }
   
   update() {
@@ -1968,7 +1972,7 @@ class BugBoss extends Enemy {
     let length = area.w * (0.8 + this.rapidClawStage * 0.3); // 增加特效范围
     
     for (let i = 0; i < slashCount; i++) {
-      let angle = map(i, 0, slashCount-1, -PI/3, PI/3) + angleOffset; // 增加扇形范围
+      let angle = map(i, 0, slashCount-1, -PI/3, PI/3) + angleOffset;
       if (this.direction === 'left') angle += PI;
       
       let x = this.pos.x + cos(angle) * length/2;
@@ -1978,7 +1982,12 @@ class BugBoss extends Enemy {
         pos: createVector(x, y),
         radius: 10 + this.rapidClawStage * 5, // 增加特效大小
         startTime: millis(),
-        duration: 300
+        duration: 300,
+        frameIndex: 0, // 当前动画帧
+        frameCounter: 0, // 帧计数器
+        frameCount: this.clawEffectFrames, // 总帧数
+        frameDelay: this.clawEffectDelay, // 帧延迟
+        isClawEffect: true // 标记这是疾风裂爪特效
       });
     }
   }

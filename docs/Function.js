@@ -150,15 +150,12 @@ function handleGameplay(now) {
         );
         
         noTint();
-        drawingContext.imageSmoothingEnabled = true; // 恢复默认设置
+        drawingContext.imageSmoothingEnabled = true;
         drawingContext.filter = 'none';
         pop();
       } catch (e) {
-        // 后备绘制方法
-        let alpha = map(millis() - trail.startTime, 0, 3000, 255, 0);
-        fill(0, 200, 0, alpha * 0.3);
-        noStroke();
-        ellipse(trail.pos.x, trail.pos.y, trail.radius * 2);
+        // 移除后备的绿色圆圈显示，直接继续
+        continue;
       }
     } else {
       // 默认绘制方法
