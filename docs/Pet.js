@@ -168,7 +168,7 @@ class DefensePet extends BasePet {
     this.effectFrameIndex = 0;
     this.effectFrameCounter = 0;
     this.effectFrameDelay = 5;
-    this.totalEffectFrames = 6;
+    this.totalEffectFrames = 4;
 
   }
 
@@ -230,9 +230,9 @@ class DefensePet extends BasePet {
         this.effectFrameIndex = (this.effectFrameIndex + 1) % this.totalEffectFrames;
       }
       // 计算当前帧的x偏移
-      let sx = this.effectFrameIndex * (cowSkillEffect.width / this.totalEffectFrames);
-      image(cowSkillEffect, shieldX, shieldY, shieldDiameter, shieldDiameter,
-        sx, 0, cowSkillEffect.width / this.totalEffectFrames, cowSkillEffect.height);
+      let sx = this.effectFrameIndex * (cowCover.width / this.totalEffectFrames);
+      image(cowCover, shieldX, shieldY, shieldDiameter, shieldDiameter,
+        sx, 0, cowCover.width / this.totalEffectFrames, cowCover.height);
       pop();
       return;
     }
