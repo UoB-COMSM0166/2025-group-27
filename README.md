@@ -2,6 +2,7 @@
 2025 COMSM0166 group 27
 
 ## Glitchwood
+![Glitchwood_Poster](docs/assets/selected_images/poster/Glitchwood.png)
 
 Link to your game [PLAY HERE](https://uob-comsm0166.github.io/2025-group-27/)
 
