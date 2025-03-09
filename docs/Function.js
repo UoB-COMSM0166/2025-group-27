@@ -6,8 +6,10 @@ let deathAnimations = []; // 追踪所有正在播放的死亡动画
 function handleGameplay(now) {
   if(wave<=5){
     image(level1map,0,0,1062,600);
-  } else if (wave>5 && wave <=10){
+  } else if (wave>5 && wave <= 10){
     image(level2map,0,0,1062,600);
+  } else if (wave>10 && wave <= 15){
+    image(level3map,0,0,1062,600);
   }
 
   // 玩家相关操作
@@ -50,7 +52,7 @@ function handleGameplay(now) {
     
     // 检查是否为已击败的Boss(包括BugBoss)
     if ((enemy.isBoss || enemy instanceof BugBoss) && enemy.health <= 0) {
-      bossesDefeated++;
+      bossDefeated++;
       enemies.splice(j, 1);
       bossActive = false; // 确保重置bossActive状态
       
@@ -290,10 +292,12 @@ function initButtons() {
 
   mainMenuButtons = [
     new Button(width / 2 - 75, baseY - 50, 150, 40, "Resume Game", () => {
+      buttonsound.play();
       loadSavedGame();
       gameState = "game"; // 从暂停改为直接进入游戏
     }),
     new Button(width / 2 - 75, baseY, 150, 40, "Start Game(easy)", () => {
+      buttonsound.play();
       savedGame = null;
       wave = 1; // 重置波数
       normalEnemiesDefeated = 0; // 重置击杀数
@@ -302,6 +306,7 @@ function initButtons() {
       difficult = "easy";
     }),
     new Button(width / 2 - 75, baseY + 50, 150, 40, "Start Game(hard)", () => {
+      buttonsound.play();
       savedGame = null;
       wave = 1; // 重置波数
       normalEnemiesDefeated = 0; // 重置击杀数
@@ -310,33 +315,40 @@ function initButtons() {
       difficult = "hard";
     }),
     new Button(width / 2 - 75, baseY + 100, 150, 40, "Setting", () => {
+      buttonsound.play();
       gameState = "setting";
     }),
-    new Button(width / 2 - 75, baseY + 150, 150, 40, "Quit Game", () =>
+    new Button(width / 2 - 75, baseY + 150, 150, 40, "Quit Game", () => {
+      buttonsound.play();
       noLoop()
-    ),
+}),
   ];
 
   charSelectButtons = [
-    new Button(width / 2 - 100, baseY - 30, 200, 40, "Gunner", () =>
+    new Button(width / 2 - 100, baseY - 30, 200, 40, "Gunner", () => {
+      buttonsound.play();
       initPlayer("gunner")
-    ),
+}),
     new Button(
       width / 2 - 100,
       baseY + 30,
       200,
       40,
       "Archer", // 间距从+20改为+30
-      () => initPlayer("archer")
-    ),
+      () => {
+        buttonsound.play();
+        initPlayer("archer")
+}),
     new Button(
       width / 2 - 100,
       baseY + 90,
       200,
       40,
       "Knight",
-      () => initPlayer("knight")
-    ),
+      () => {
+        buttonsound.play();
+        initPlayer("knight")
+}),
   ];
 
   pauseButtons = [
@@ -346,9 +358,12 @@ function initButtons() {
       150,
       40,
       "Resume Game",
-      () => (gameState = "game")
-    ),
+      () => {
+        buttonsound.play();
+        (gameState = "game")
+}),
     new Button(width / 2 - 75, baseY + 60, 150, 40, "Main Menu", () => {
+      buttonsound.play();
       savedGame = {
         ...savedGame,
         wave: wave, // 新增保存波数
@@ -514,6 +529,7 @@ function displaySettingPage() {
     backButton = createButton('Save and Return');
     backButton.position(width / 2 - 50, 300);
     backButton.mousePressed(() => {
+      buttonsound.play();
       gameState = 'mainMenu'; // 返回主菜单
       hideSettingsElements(); // 隐藏设置控件
     });
@@ -1493,9 +1509,11 @@ function displayVictoryScreen() {
 function setupVictoryButtons() {
   victoryButtons = [
     new Button(width / 2 - 120, height - 100, 100, 40, "Main Menu", () => {
+      buttonsound.play();
       gameState = "mainMenu";
     }),
     new Button(width / 2 + 20, height - 100, 100, 40, "Endless Mode", () => {
+      buttonsound.play();
       gameState = "game";
       wave = 11;
       spawnEnemiesForWave(wave);

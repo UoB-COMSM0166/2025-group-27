@@ -190,6 +190,7 @@ function preload() {
   // maps
   level1map = loadImage("./assets/selected_images/maps/level1.png");
   level2map = loadImage("./assets/selected_images/maps/level2.png");
+  level3map = loadImage("./assets/selected_images/maps/level3.png");
   // weather
   snowflakepic = loadImage("./assets/selected_images/weather/flake.gif");
   lightningpic = loadImage("./assets/selected_images/weather/lightning.gif");
@@ -288,6 +289,8 @@ function preload() {
 
 
   //sound相关
+  //UI声音
+  buttonsound = loadSound("./assets/candidate_sounds/ui_sound/buttonsound.ogg");
   //playerAttacksound
   arrowsound = loadSound("./assets/candidate_sounds/player_attack_sounds/arrow.ogg");
   gunsound = loadSound("./assets/candidate_sounds/player_attack_sounds/gun.ogg");
@@ -350,6 +353,7 @@ function draw() {
   gunsound.setVolume(volume);
   keyboardsound.setVolume(volume);
   thundersound.setVolume(volume);
+  buttonsound.setVolume(volume);
 
   switch (gameState) {
     case "mainMenu":
