@@ -864,10 +864,43 @@ function spawnEnemiesForWave(wave) {
     let boss4 = new SlimeBoss(slimeBoss2Image, "wind");
 
     // 设置不同位置
-    boss1.pos = createVector(width / 2 - 200, height / 2 - 70);
-    boss2.pos = createVector(width / 2 + 10, height / 2 - 10);
-    boss3.pos = createVector(width / 2 - 120, height / 2 - 50);
+    boss1.pos = createVector(width / 2 - 200, height / 2 - 270);
+    boss2.pos = createVector(width / 2 + 210, height / 2 - 210);
+    boss3.pos = createVector(width / 2 - 220, height / 2 + 150);
     boss4.pos = createVector(width / 2 + 60, height / 2 - 190);
+
+  
+    boss1.skillDelay = 60;
+    boss1.skillCooldown = Math.floor(Math.random() * boss1.skillDelay);
+
+    boss2.skillDelay = 180;
+    boss2.skillCooldown = Math.floor(Math.random() * boss2.skillDelay);
+
+    boss3.skillDelay = 300;
+    boss3.skillCooldown = Math.floor(Math.random() * boss3.skillDelay);
+
+    boss4.skillDelay = 240;
+    boss4.skillCooldown = Math.floor(Math.random() * boss4.skillDelay);
+
+    // 移动距离
+    boss1.moveDistance1 = 40;
+    boss1.moveDistance2 = 60;
+
+    boss2.moveDistance1 = 30; 
+    boss2.moveDistance2 = 40;
+
+    boss3.moveDistance1 = 15;  
+    boss3.moveDistance2 = 20;
+
+    boss4.moveDistance1 = 55;  
+    boss4.moveDistance2 = 45;
+
+     // 错开起跳
+    boss1.initialStopDelay = 0;     
+    boss2.initialStopDelay = 500;    
+    boss3.initialStopDelay = 800;   
+    boss4.initialStopDelay = 1200;   
+
 
     enemies.push(boss1, boss2, boss3, boss4);
 

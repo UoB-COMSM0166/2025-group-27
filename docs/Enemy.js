@@ -454,9 +454,9 @@ class BirdBoss extends Boss {
     this.feathers = [];
 
     // Boss 属性设置（可根据需求调整数值）
-    this.health = 600;
-    this.maxHealth = 600;
-    this.size = 100;
+    this.health = 800;
+    this.maxHealth = 800;
+    this.size = 200;
     this.speed = 2.5;
     this.attackRange = 150;
     this.attackSpeed = 1.5;
@@ -619,9 +619,9 @@ class BirdBoss extends Boss {
 
       this.patternTimer++;
       if (this.patternTimer > 180) {  // 从240降到180
-        this.attackPattern = (this.attackPattern + 1) % 5;
+        this.attackPattern = (this.attackPattern + 1) % 2;
         this.patternTimer = 0;
-        let patternNames = ["Web Attack", "Dash Attack", "Poison Attack", "Web Wall", "Summon"];
+        let patternNames = ["Dash Attack", "Poison Attack"];
         showFloatingText(patternNames[this.attackPattern], this.pos.x, this.pos.y - 40, color(255, 255, 0));
       }
 
@@ -671,85 +671,27 @@ class BirdBoss extends Boss {
   executeAttackPattern(dirToPlayer) {
     switch (this.attackPattern) {
       case 0:
-        this.performWebAttack(dirToPlayer);
-        break;
-      case 1:
         this.performDashAttack();
         break;
-      case 2:
+      case 1:
         this.performPoisonAttack();
         break;
-      case 3:
-        this.performWebWallAttack(dirToPlayer);
-        break;
-      case 4:
-        this.performSummonAttack();
-        break;
+
     }
   }
 
-  performWebAttack(dirToPlayer) {
-    if (this.webCooldown <= 0) {
-      for (let i = -2; i <= 2; i++) {
-        let angle = i * 0.3;
-        let rotatedDir = createVector(
-          dirToPlayer.x * cos(angle) - dirToPlayer.y * sin(angle),
-          dirToPlayer.x * sin(angle) + dirToPlayer.y * cos(angle)
-        );
-        let webVel = p5.Vector.mult(rotatedDir, 6);
-        enemyBullets.push(new WebProjectile(this.pos.x, this.pos.y, webVel));
-      }
-      this.webCooldown = 100;
-    }
-  }
-
-  performSummonAttack() {
-    if (this.summonCooldown <= 0) {
-      let bulletCount = 8;
-      for (let i = 0; i < bulletCount; i++) {
-        let angle = (TWO_PI / bulletCount) * i;
-        let bulletVel = p5.Vector.fromAngle(angle).mult(5);
-        // 创建并加入 enemyBullets
-        let bullet = new EnemyBullet(this.pos.x, this.pos.y, bulletVel);
-        enemyBullets.push(bullet);
-      }
-
-      this.summonCooldown = 50;
-      showFloatingText("Radial Attack!", this.pos.x, this.pos.y - 30, color(255, 100, 255));
-    }
-  }
-
-
-  performWebWallAttack(dirToPlayer) {
-    if (this.webWallCooldown > 0) return;
-    let perpDir = createVector(-dirToPlayer.y, dirToPlayer.x);
-    let segmentCount = 5;
-    let spacing = 20;
-
-    for (let i = -Math.floor(segmentCount / 2); i <= Math.floor(segmentCount / 2); i++) {
-      let offset = p5.Vector.mult(perpDir, i * spacing);
-      let spawnPos = p5.Vector.add(this.pos, offset);
-
-      let bulletVel = p5.Vector.mult(dirToPlayer, 5);
-      let web = new WebProjectile(spawnPos.x, spawnPos.y, bulletVel);
-      enemyBullets.push(web);
-    }
-
-    this.webWallCooldown = 180;
-    showFloatingText("Web Wall!", this.pos.x, this.pos.y - 30, color(255, 100, 255));
-  }
 
   performDashAttack() {
     if (this.dashCooldown <= 0 && !this.isDashing) {
       this.isDashing = true;
-      this.dashDuration = 30;
-      this.dashCooldown = 180;
+      this.dashDuration = 20;
+      this.dashCooldown = 120;
       showFloatingText("Dash Attack!", this.pos.x, this.pos.y - 30, color(255, 100, 0));
     }
   }
 
   performPoisonAttack() {
-    if (this.trailCounter >= 20) {
+    if (this.trailCounter >= 10) {
       // 在四个方向创建毒池
       for (let i = 0; i < 4; i++) {
         let angle = (i * PI) / 2;
@@ -758,7 +700,7 @@ class BirdBoss extends Boss {
         
         poisonTrails.push({
           pos: poisonPos,
-          radius: 40,  // 从35增加到40
+          radius: 20,  // 从35增加到40
           startTime: millis(),
           duration: 4000,
           // 更新动画属性 - 从6帧改为4帧
@@ -777,7 +719,7 @@ class BirdBoss extends Boss {
 
   performMeleeAttack() {
     player.takeDamage(this.meleeDamage);
-    this.meleeAttackCooldown = 45;
+    this.meleeAttackCooldown = 15;
     showFloatingText("Melee Attack!", this.pos.x, this.pos.y - 30, color(255, 0, 0));
   }
 
@@ -787,6 +729,7 @@ class BirdBoss extends Boss {
       this.pos.add(p5.Vector.mult(dirToPlayer, this.dashSpeed));
     } else {
       this.isDashing = false;
+      this.dashDuration = 0;  
     }
   }
 
@@ -921,6 +864,15 @@ class SlimeBoss extends Boss {
     this.animationDelay = 6;
     this.animationCounter = 0;
 
+    // 移动距离属性
+    this.moveDistance1 = 1;  
+    this.moveDistance2 = 1;  
+
+    // 记录生成时间与初始停止时间（外部可修改 initialStopDelay）
+    this.spawnTime = millis();
+    this.initialStopDelay = 0; 
+    
+
     // 移动相关
     this.movedFrame15 = false;
     this.movedFrame16 = false;
@@ -996,31 +948,37 @@ class SlimeBoss extends Boss {
     if (!this.isActive || !player) return;
 
     try {
+      
+      if (millis() - this.spawnTime < this.initialStopDelay) {
+        return;
+      }
       // 更新动画
       this.animate();
       let currentFrame = this.currentAnimation[this.frameIndex];
 
-      // 计算到玩家的方向
-      let dirToPlayer = p5.Vector.sub(player.pos, this.pos).normalize();
+ 
+    // 计算朝向玩家的单位向量
+    let dirToPlayer = p5.Vector.sub(player.pos, this.pos).normalize();
 
-      // 基本移动逻辑
-      if (!this.isDashing) {
-        if (currentFrame === 14 && !this.movedFrame15) {
-          let moveVec = p5.Vector.mult(dirToPlayer, 30);
-          this.pos.add(moveVec);
-          this.movedFrame15 = true;
-        } else if (currentFrame !== 14) {
-          this.movedFrame15 = false;
-        }
-
-        if (currentFrame === 15 && !this.movedFrame16) {
-          let moveVec = p5.Vector.mult(dirToPlayer, 80);
-          this.pos.add(moveVec);
-          this.movedFrame16 = true;
-        } else if (currentFrame !== 15) {
-          this.movedFrame16 = false;
-        }
+    // 基本移动逻辑：在特定动画帧触发移动
+    if (!this.isDashing) {
+      if (currentFrame === 15 && !this.movedFrame15) {
+        let moveVec = p5.Vector.mult(dirToPlayer, this.moveDistance1);
+        this.pos.add(moveVec);
+        this.movedFrame15 = true;
+      } else if (currentFrame !== 15) {
+        this.movedFrame15 = false;
       }
+
+      if (currentFrame === 16 && !this.movedFrame16) {
+        let moveVec = p5.Vector.mult(dirToPlayer, this.moveDistance2);
+        this.pos.add(moveVec);
+        this.movedFrame16 = true;
+      } else if (currentFrame !== 16) {
+        this.movedFrame16 = false;
+      }
+    }
+
 
       // 更新技能冷却
       if (this.skillCooldown > 0) {
@@ -1347,11 +1305,9 @@ class SlimeBoss extends Boss {
       for (let i = this.poisonPools.length - 1; i >= 0; i--) {
         let pool = this.poisonPools[i];
         pool.duration--;
-
-        // 毒池扩散
-        pool.radius = min(pool.maxRadius,
-          pool.startRadius + (pool.maxRadius - pool.startRadius) *
-          (1 - pool.duration / this.poisonDuration));
+    
+        // 毒池扩散：每帧以固定速度扩展半径，直到达到最大值
+        pool.radius = min(pool.maxRadius, pool.radius + pool.spreadSpeed);
         
         // 更新动画帧
         if (pool.frameCounter !== undefined) {
@@ -1366,17 +1322,19 @@ class SlimeBoss extends Boss {
         if (pool.startRadius && pool.maxRadius) {
           pool.scale = map(pool.radius, pool.startRadius, pool.maxRadius, 0.8, 1.6);
         }
-
+    
+        // 检测玩家是否在毒池范围内
         if (p5.Vector.dist(player.pos, pool.pos) < pool.radius) {
           player.takeDamage(pool.damage / 60);
           showFloatingText("Poisoned!", player.pos.x, player.pos.y - 20, color(0, 255, 0));
         }
-
+    
         if (pool.duration <= 0) {
           this.poisonPools.splice(i, 1);
         }
       }
     }
+    
   }
 
   display() {
