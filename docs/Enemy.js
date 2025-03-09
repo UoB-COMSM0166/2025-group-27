@@ -12,6 +12,11 @@ class Enemy {
     this.direction = 'idle';
     this.currentAction = this.enemyAction.idle || null;
     this.framesPerDirection = 4;
+    this.deathFrame = 0;
+    this.isDying = false;
+    this.dead = false;
+    this.gainExp = false;
+    this.attackDetect = true;
 
     this.pos = createVector(0, 0);
     this.vel = createVector(0, 0);
@@ -72,7 +77,20 @@ class Enemy {
     }
   }
 
+  startDeathEffect() {
+    this.isDying = true;
+    this.deathFrame = 0;
+    this.effectStartTime = millis(); // 必须初始化时间戳
+  }
+
+  shouldRemove() {
+    return this.isDying && this.deathFrame >= 4;
+  }
+
   update() {
+    if(this.health <= 0) {
+      this.attackDetect = false;
+    }
     if (this.invulnerableTime > 0) {
       this.invulnerableTime--;
     }
@@ -236,7 +254,7 @@ class Enemy {
   display() {
     let healthBarWidth = 30,
       healthBarHeight = 4;
-    let healthPercentage = this.health / this.maxHealth;
+      let healthPercentage = Math.max(0, Math.min(1, this.health / this.maxHealth));
     fill(255, 0, 0);
     rect(
       this.pos.x - healthBarWidth / 2,

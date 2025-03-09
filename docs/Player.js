@@ -616,6 +616,7 @@ class Player {
 
     for (let i = enemies.length - 1; i >= 0; i--) {
       let enemy = enemies[i];
+      if(enemy.attackDetect){
       let enemyPos = enemy.pos.copy().add(enemy.size / 2, enemy.size / 2);
       let toEnemy = p5.Vector.sub(enemyPos, center);
       let distance = toEnemy.mag();
@@ -628,13 +629,20 @@ class Player {
 
           let killed = enemy.hit(damage);  // 计算伤害
           if (killed) {
-            enemies.splice(i, 1);  // 确保从数组中移除
+            enemy.startDeathEffect();
             if (enemy instanceof Boss) {
               bossDefeated++;
               bossDefeatedCount++;
             }
             normalEnemiesDefeated++;
-            player.gainExp(enemy.expValue);
+            if(enemy.gainExp == false) {
+              player.gainExp(enemy.expValue);
+              enemy.gainExp = true;
+            }
+            
+            if(enemy.dead){
+              enemies.splice(i, 1);
+            }
           }
 
           // 生命偷取效果
@@ -643,6 +651,7 @@ class Player {
           }
         }
       }
+    }
     }
   }
 
@@ -962,6 +971,7 @@ class Player {
       // 精确碰撞检测
       for (let j = enemies.length - 1; j >= 0; j--) {
         let enemy = enemies[j];
+        if(enemy.attackDetect){
         let enemyCenter = createVector(
           enemy.pos.x + enemy.enWidth * 0.5,
           enemy.pos.y + enemy.enHeight * 0.5
@@ -980,13 +990,21 @@ class Player {
             }
             let killed = enemy.hit(finalDamage);
             if (killed) {
-                enemies.splice(j, 1);
+              enemy.startDeathEffect();
+                
                 if (enemy instanceof Boss) {
                     bossDefeated++;
                     bossDefeatedCount++;
                 }
                 normalEnemiesDefeated++;
-                this.gainExp(enemy.expValue);
+                if(enemy.gainExp == false) {
+                  player.gainExp(enemy.expValue);
+                  enemy.gainExp = true;
+                }
+                
+                if(enemy.dead){
+                  enemies.splice(j, 1);
+                }
             }
 
           // 生命偷取
@@ -1005,6 +1023,7 @@ class Player {
           }
           break;
         }
+      }
       }
       }
 

@@ -165,7 +165,7 @@ function updateWeather() {
   let currentTime = millis();
 
   // 每隔 60000 毫秒重新随机选择天气
-  if (currentTime - lastWeatherChange > 60000) {
+  if (currentTime - lastWeatherChange > 30000) {
     let weatherOptions = ["normal", "hot", "snowy", "thunderstorm"];
     weather = random(weatherOptions);
     lastWeatherChange = currentTime;
@@ -292,6 +292,8 @@ function preload() {
   arrowsound = loadSound("./assets/candidate_sounds/player_attack_sounds/arrow.ogg");
   gunsound = loadSound("./assets/candidate_sounds/player_attack_sounds/gun.ogg");
   keyboardsound = loadSound("./assets/candidate_sounds/player_attack_sounds/keyboard.ogg");
+  //天气sound
+  thundersound = loadSound("./assets/candidate_sounds/player_attack_sounds/thunder.ogg")
   // 加载鸟Boss毒池特效图片 - 更新为新的图片路径和名称
   poisonPoolEffectImg = loadImage("./assets/candidate_images/effects/skill_effects/drip/waterSplashLava_new.png");
 
@@ -313,6 +315,9 @@ function preload() {
   
   // 加载鬼火消失特效
   ghostDeathEffect = loadImage("./assets/candidate_images/effects/death_effects/blood_burst/AmoebaSplat2.png");
+
+  //死亡效果
+  deathEffect1 = loadImage("./assets/candidate_images/effects/death_effects/blood_burst/Bloodsplatt.png");
 }
 
 
@@ -344,6 +349,7 @@ function draw() {
   arrowsound.setVolume(volume);
   gunsound.setVolume(volume);
   keyboardsound.setVolume(volume);
+  thundersound.setVolume(volume);
 
   switch (gameState) {
     case "mainMenu":
@@ -392,6 +398,19 @@ function draw() {
   if (showAttributes) {
     displayAttributes();
   }
+  
+  enemies.forEach(enemy => {
+    if (enemy.isDying) {
+      updateDeathEffect(enemy);
+    }
+  });
+
+  enemies.forEach(enemy => {
+    if (enemy.health<=0 && enemy.dead) {
+      let index = enemies.indexOf(enemy);
+      enemies.splice(index,1);
+    }
+  });
 
   // 叠加当前天气效果
   drawWeatherEffects();

@@ -47,14 +47,15 @@ class Bullet {
 
   update() {
     this.pos.add(this.vel);
-
+    
     // 检测敌人碰撞
     for (let i = enemies.length - 1; i >= 0; i--) {
       let enemy = enemies[i];
+      if(enemy.attackDetect){
       if (p5.Vector.dist(this.pos, enemy.pos) < enemy.radius + this.radius) {
         let killed = enemy.hit(this.damage);
         if (killed) {
-          enemies.splice(i, 1);
+          enemy.startDeathEffect();
           if (enemy instanceof Boss) {
             // 检查是否是 Boss
             bossDefeated++;
@@ -65,7 +66,14 @@ class Bullet {
             }
           }
           normalEnemiesDefeated++;
-          player.gainExp(enemy.expValue);
+          if(enemy.gainExp == false) {
+            player.gainExp(enemy.expValue);
+            enemy.gainExp = true;
+          }
+          
+          if(enemy.dead){
+            enemies.splice(i, 1);
+          }
         }
         if (this.type === "pierce") {
           this.pierceCount--;
@@ -74,6 +82,7 @@ class Bullet {
           return false;
         }
       }
+    }
     }
 
     // 检测障碍物碰撞

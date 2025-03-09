@@ -1,3 +1,7 @@
+let currentFrame1 = 0;
+let animationDone = false;
+let deathAnimations = []; // 追踪所有正在播放的死亡动画
+
 // ===== 核心游戏逻辑 =====
 function handleGameplay(now) {
   if(wave<=5){
@@ -747,7 +751,9 @@ function drawUpgradeScreen() {
 
 // ===== 升级选项 =====
 function generateUpgradeOptions() {
-  const allUpgrades = [
+  let allUpgrades;
+   if(player.characterType == "gunner" || player.characterType == "knight"){
+     allUpgrades = [
     {
       type: "health",
       name: "生命提升",
@@ -835,7 +841,58 @@ function generateUpgradeOptions() {
       description: "受击时反弹伤害",
       oneTime: true,
     },
-  ];
+  ]
+  } else if (player.characterType == "archer") {
+    allUpgrades = [
+      {
+        type: "health",
+        name: "生命提升",
+        value: 25,
+        description: "增加25点生命值上限",
+      },
+      {
+        type: "attack",
+        name: "攻击力提升",
+        value: 5,
+        description: "增加5点攻击力",
+      },
+      {
+        type: "arrowPierce",
+        name: "穿透箭矢",
+        value: "pierce",
+        description: "箭矢可以穿透敌人",
+        oneTime: true,
+      },
+      {
+        type: "arrowSplit",
+        name: "散射箭矢",
+        value: "split",
+        description: "箭矢在命中敌人后会散射一次",
+        oneTime: true,
+      },
+      {
+        type: "doubleShot",
+        name: "双发箭矢",
+        value: "double",
+        description: "一次射出两发箭矢，双倍伤害！",
+        oneTime: true,
+      },
+      {
+        type: "lifesteal",
+        name: "攻击回血",
+        value: "lifesteal",
+        description: "攻击时恢复生命值",
+        oneTime: true,
+      },
+      {
+        type: "autoCharge",
+        name: "自动蓄力",
+        value: "autoCharge",
+        description: "不攻击时自动蓄力",
+        oneTime: true,
+      },
+    ];
+  }
   upgradeOptions = [];
   let availableUpgrades = allUpgrades.filter((upg) => {
     // 确保使用Set的has方法
@@ -850,6 +907,27 @@ function generateUpgradeOptions() {
     let index = floor(random(availableUpgrades.length));
     upgradeOptions.push(availableUpgrades[index]);
     availableUpgrades.splice(index, 1);
+  }
+}
+
+function updateArrows() {
+  for (let i = arrows.length - 1; i >= 0; i--) {
+    let arrow = arrows[i];
+    arrow.update();
+    arrow.display();
+
+    // 检测箭矢与敌人的碰撞
+    for (let j = enemies.length - 1; j >= 0; j--) {
+      let enemy = enemies[j];
+      if (arrow.pos.dist(enemy.pos) < enemy.size) {
+        if (arrow.handleCollision(enemy)) {
+          // 如果箭矢没有穿透，销毁箭矢
+          arrows.splice(i, 1);
+        }
+        arrow.split(); // 处理散射
+        break;
+      }
+    }
   }
 }
 
@@ -1445,4 +1523,44 @@ function spawnMultipleElementalBosses() {
   }
   
   bossActive = true;
+}
+
+function updateDeathEffect(enemy) {
+  const FRAME_DURATION = 80;
+  
+  // 初始化时间戳（保险措施）
+  if (!enemy.effectStartTime) {
+    enemy.effectStartTime = millis();
+  }
+
+  // 计算进度
+  const elapsed = millis() - enemy.effectStartTime;
+  enemy.deathFrame = floor(elapsed / FRAME_DURATION);
+
+  // 结束处理
+  if (enemy.deathFrame >= 4) {
+    enemy.isDying = false;
+    enemy.dead = true;
+    enemy.attackDetect = false;
+    let index = enemies.indexOf(enemy);
+    enemies.splice(index,1);
+    
+    // 执行完成回调
+    if (enemy.onEffectComplete) {
+      enemy.onEffectComplete();
+    }
+    return;
+  }
+
+  // 绘制逻辑保持不变
+  const frameWidth = deathEffect1.width / 4;
+  push();
+  image(deathEffect1, 
+    enemy.pos.x - 20, 
+    enemy.pos.y - 20,
+    60, 80,
+    enemy.deathFrame * frameWidth, 0,
+    frameWidth, deathEffect1.height
+  );
+  pop();
 }

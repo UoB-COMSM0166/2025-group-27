@@ -13,17 +13,7 @@ function applyWeatherEffects(now) {
     for (let i = 0; i < lightningChain.length; i++) {
       let alpha = map(i, 0, lightningChain.length - 1, 255, 100);
       fill(255, 255, 0, alpha * 0.4);
-      ellipse(lightningChain[i].x, lightningChain[i].y, 100);
       if (i > 0) {
-        stroke(255, 255, 0, alpha);
-        strokeWeight(2);
-        drawLightning(
-          lightningChain[i - 1].x,
-          lightningChain[i - 1].y,
-          lightningChain[i].x,
-          lightningChain[i].y
-        );
-        noStroke();
         image(lightningpic,lightningChain[i].x - 30, lightningChain[i].y - 30,50,50);
       }
       // 对玩家造成闪电伤害
@@ -65,15 +55,4 @@ function applyWeatherEffects(now) {
       lastLightningTime = now;
     }
   }
-}
-
-function drawLightning(x1, y1, x2, y2) {
-  let midX = (x1 + x2) / 2;
-  let midY = (y1 + y2) / 2;
-  let offset = random(-30, 30);
-  beginShape();
-  vertex(x1, y1);
-  vertex(midX + offset, midY + offset);
-  vertex(x2, y2);
-  endShape();
 }
