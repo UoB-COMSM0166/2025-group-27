@@ -39,10 +39,24 @@ class Obstacle {
   }
 
   display() {
+    if(wave <= 5){
     if(this.isVertical){
       image(obstacle1, this.pos.x, this.pos.y, this.width, this.height);
     } else{
       image(obstacle2, this.pos.x, this.pos.y, this.width, this.height);
+    }
+    } else if(wave>5 && wave<=10){
+      if(this.isVertical){
+        image(obstacle3, this.pos.x, this.pos.y, this.width, this.height);
+      } else{
+        image(obstacle, this.pos.x, this.pos.y, this.width, this.height);
+      }
+    } else {
+      if(this.isVertical){
+        image(obstacle1, this.pos.x, this.pos.y, this.width, this.height);
+      } else{
+        image(obstacle2, this.pos.x, this.pos.y, this.width, this.height);
+      }
     }
   }
 

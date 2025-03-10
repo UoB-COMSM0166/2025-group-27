@@ -37,6 +37,20 @@ function handleGameplay(now) {
     }
     return false;
   });
+  
+  if(wave == 5 || wave == 10 || wave == 15) {
+    obstacleBuild == false;
+  }
+  if(wave == 5 && !obstacleBuild){
+    obstacles = [];
+    generateInitialObstacles();
+  } else if(wave == 10 && !obstacleBuild){
+    obstacles = [];
+    generateInitialObstacles();
+  } else if(!obstacleBuild){
+    obstacles = [];
+    generateInitialObstacles();
+  }
 
   // 更新并显示障碍物
   obstacles.forEach((obs) => {
@@ -725,6 +739,7 @@ function generateInitialObstacles() {
         break;
       }
     }
+    obstacleBuild = true;
 
     
     if (valid)
