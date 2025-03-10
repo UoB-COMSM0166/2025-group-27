@@ -287,9 +287,9 @@ At the L1 (easy) difficulty, users generally reported a lower workload, particul
 
 We used the Wilcoxon Signed Rank Test to compare the evaluation data between the two difficulty levels, calculating the significance differences in the NASA TLX and SUS scores for L1 and L2. The analysis revealed that while there was a significant difference in workload between L1 and L2, the usability ratings showed only a small difference, indicating that the game maintained a relatively consistent user experience across both difficulty levels.
 
-![L1](https://github.com/user-attachments/assets/8948a52e-1e4a-4508-92e4-35c48f34d816)
+![L1](https://github.com/user-attachments/assets/925e05b2-e862-4e1b-9786-8f38dd1fac45)
 
-![L2](https://github.com/user-attachments/assets/bc92c5a2-a583-4a82-bf60-1a1f25ddc221)
+![L2](https://github.com/user-attachments/assets/7263cf0b-1bda-4787-964c-b5155d597a63)
 
 #### Conclusion
 Through this evaluation, we gained insights into the game design from both qualitative and quantitative perspectives. The qualitative evaluation helped us improve the difficulty design and user experience, while the quantitative evaluation provided concrete data to verify the workload and usability at different difficulty levels. Through a reasonable code testing strategy, we ensured the stability and performance of the game. In the future, we will continue to optimize the game based on the evaluation results, ensuring that players enjoy a better gaming experience.
