@@ -54,6 +54,12 @@ class AttackPet extends BasePet {
   attack(enemies) {
     this.attackCooldown--;
 
+    let detectionRange = player.ImageWidth * 3;
+    let playerCenter = createVector(
+      player.pos.x + player.ImageWidth / 2,
+      player.pos.y + player.ImageHeight / 2
+    );
+
     let closest = null;
     let record = Infinity;
     for (const enemy of enemies) {
@@ -64,7 +70,7 @@ class AttackPet extends BasePet {
       }
     }
 
-    if (closest && record < this.attackRange && this.attackCooldown <= 0) {
+    if (closest && record < detectionRange && this.attackCooldown <= 0) {
       closest.hit(this.attackDamage);
       this.attackCooldown = 30;
       this.isAttacking = true;
