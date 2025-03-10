@@ -18,7 +18,6 @@ function handleGameplay(now) {
   player.update();
   player.display();
 
-
   //更新并绘制羽毛
   feathers = feathers.filter((feather) => {
     if (!feather.update()) {
@@ -1112,13 +1111,31 @@ function spawnEnemiesForWave(wave) {
       let enemyType = random();
       let enemy;
       let pos = getValidSpawnPosition();
-
+      
+      if (wave<=5){
       if (enemyType < 0.4) {
         enemy = new Enemy(isElite, "normal", commonEnemyAction, 18, 22);
       } else if (enemyType < 0.75) {
         enemy = new Enemy(isElite, "ranged", commonEnemyAction, 18, 22);
       } else {
         enemy = new Enemy(isElite, "exploding", commonEnemyAction, 18, 22);
+      }
+      } else if(wave>5 && wave<=10){
+        if (enemyType < 0.4) {
+          enemy = new Enemy(isElite, "normal", commonEnemyAction1, 20, 20, 5, 8, 8, 8);
+        } else if (enemyType < 0.75) {
+          enemy = new Enemy(isElite, "ranged", commonEnemyAction1, 20, 20, 5, 8, 8, 8);
+        } else {
+          enemy = new Enemy(isElite, "exploding", commonEnemyAction1, 20, 20, 5, 8, 8, 8);
+        }
+      } else if(wave>10){
+        if (enemyType < 0.4) {
+          enemy = new Enemy(isElite, "normal", commonEnemyAction1, 18, 22);
+        } else if (enemyType < 0.75) {
+          enemy = new Enemy(isElite, "ranged", commonEnemyAction1, 18, 22);
+        } else {
+          enemy = new Enemy(isElite, "exploding", commonEnemyAction1, 18, 22);
+        }
       }
 
       if (enemy) {
