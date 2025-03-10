@@ -1,6 +1,6 @@
 // ===== Enemy 类 =====
 class Enemy {
-  constructor(isElite = false, enemyType = "normal", enemyAction, enWidth, enHeight) {
+  constructor(isElite = false, enemyType = "normal", enemyAction, enWidth, enHeight, idleNum = 6, upNum = 6, downNum = 6, sideNum = 6) {
     this.enemyAction = enemyAction || {};
     this.enWidth = enWidth || 22;  // 确保有默认值
     this.enHeight = enHeight || 22;
@@ -17,6 +17,10 @@ class Enemy {
     this.dead = false;
     this.gainExp = false;
     this.attackDetect = true;
+    this.sideNum = sideNum;
+    this.idleNum = idleNum;
+    this.upNum = upNum;
+    this.downNum = downNum;
 
     this.pos = createVector(0, 0);
     this.vel = createVector(0, 0);
@@ -155,18 +159,22 @@ class Enemy {
         if (angle >= PI / 4 && angle < 3 * PI / 4) {       // 45°~135° → 上
           this.currentAction = this.imageUp;
           this.direction = "up";
+          this.enDelay = this.upNum;
         }
         else if (angle >= 3 * PI / 4 && angle < 5 * PI / 4) { // 135°~225° → 左
           this.currentAction = this.imageSide;
           this.direction = "left";
+          this.enDelay = this.sideNum;
         }
         else if (angle >= 5 * PI / 4 && angle < 7 * PI / 4) { // 225°~315° → 下
           this.currentAction = this.imageDown;
           this.direction = "down";
+          this.enDelay = this.downNum;
         }
         else {                                       // 315°~45° → 右
           this.currentAction = this.imageSide;
           this.direction = "right";
+          this.enDelay = this.sideNum;
         }
       }
     }

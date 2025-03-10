@@ -42,6 +42,7 @@ let passiveSkills = [];
 let coins = 0;
 let usedBossTypes = [];
 let commonEnemyAction = {};
+let commonEnemyAction1 = {};
 // 以下变量属于扩展（UI、统计等）
 let savedGame = null;
 let normalEnemiesDefeated = 0;
@@ -256,11 +257,18 @@ function preload() {
   bossMusic1 = loadSound("./assets/candidate_sounds/Music/bossmusic.ogg");
   bossMusic2 = loadSound("./assets/candidate_sounds/Music/Snake_Boss.ogg");
   bossMusic3 = loadSound("./assets/candidate_sounds/Music/Final_Boss_Phase_1.ogg");
-
+  //1~5关敌人
   commonEnemyAction.idle = loadImage("./assets/candidate_images/characters/enemies/birdman_imp/cavelingSkirmisher_idleEmote1.png");
   commonEnemyAction.up = loadImage("./assets/candidate_images/characters/enemies/birdman_imp/cavelingSkirmisher_move_up.png");
   commonEnemyAction.down = loadImage("./assets/candidate_images/characters/enemies/birdman_imp/cavelingSkirmisher_move.png");
   commonEnemyAction.side = loadImage("./assets/candidate_images/characters/enemies/birdman_imp/cavelingSkirmisher_move_side.png");
+  //6~10关敌人
+  commonEnemyAction1.idle = loadImage("./assets/candidate_images/characters/enemies/whitehaired_imp/infectedCaveling_idle.png");
+  commonEnemyAction1.up = loadImage("./assets/candidate_images/characters/enemies/whitehaired_imp/infectedCaveling_move_up.png");
+  commonEnemyAction1.down = loadImage("./assets/candidate_images/characters/enemies/whitehaired_imp/infectedCaveling_move.png");
+  commonEnemyAction1.side = loadImage("./assets/candidate_images/characters/enemies/whitehaired_imp/infectedCaveling_move_side.png");
+  //11~15关敌人
+
   obstacle1 = loadImage("./assets/selected_images/barrier/level_1/tree1.png");
   obstacle2 = loadImage("./assets/selected_images/barrier/level_1/stone3.png");
   obstacle3 = loadImage("./assets/selected_images/barrier/level_2/alienObeliskTall.png");
