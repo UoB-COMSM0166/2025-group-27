@@ -1130,11 +1130,11 @@ function spawnEnemiesForWave(wave) {
         }
       } else if(wave>10){
         if (enemyType < 0.4) {
-          enemy = new Enemy(isElite, "normal", commonEnemyAction1, 18, 22);
+          enemy = new Enemy(isElite, "normal", commonEnemyAction2, 18, 18, 5, 6, 6, 6);
         } else if (enemyType < 0.75) {
-          enemy = new Enemy(isElite, "ranged", commonEnemyAction1, 18, 22);
+          enemy = new Enemy(isElite, "ranged", commonEnemyAction2, 18, 18, 5, 6, 6, 6);
         } else {
-          enemy = new Enemy(isElite, "exploding", commonEnemyAction1, 18, 22);
+          enemy = new Enemy(isElite, "exploding", commonEnemyAction2, 18, 18, 5, 6, 6, 6);
         }
       }
 

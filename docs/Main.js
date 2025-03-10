@@ -43,6 +43,7 @@ let coins = 0;
 let usedBossTypes = [];
 let commonEnemyAction = {};
 let commonEnemyAction1 = {};
+let commonEnemyAction2 = {};
 // 以下变量属于扩展（UI、统计等）
 let savedGame = null;
 let normalEnemiesDefeated = 0;
@@ -268,6 +269,10 @@ function preload() {
   commonEnemyAction1.down = loadImage("./assets/candidate_images/characters/enemies/whitehaired_imp/infectedCaveling_move.png");
   commonEnemyAction1.side = loadImage("./assets/candidate_images/characters/enemies/whitehaired_imp/infectedCaveling_move_side.png");
   //11~15关敌人
+  commonEnemyAction2.idle = loadImage("./assets/candidate_images/characters/enemies/scythe_imp/hat_scythe_mini_monste_1/caveling_gingerbread_idle.png");
+  commonEnemyAction2.up = loadImage("./assets/candidate_images/characters/enemies/scythe_imp/hat_scythe_mini_monste_1/caveling_gingerbread_move_up.png");
+  commonEnemyAction2.down = loadImage("./assets/candidate_images/characters/enemies/scythe_imp/hat_scythe_mini_monste_1/caveling_gingerbread_move.png");
+  commonEnemyAction2.side = loadImage("./assets/candidate_images/characters/enemies/scythe_imp/hat_scythe_mini_monste_1/caveling_gingerbread_move_side.png");
 
   obstacle1 = loadImage("./assets/selected_images/barrier/level_1/tree1.png");
   obstacle2 = loadImage("./assets/selected_images/barrier/level_1/stone3.png");
