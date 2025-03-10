@@ -952,6 +952,19 @@ function spawnEnemiesForWave(wave) {
   enemies = [];
 
   if (wave === 3) {
+    // Boss 关 1：SlimeBoss
+    // 停止普通波音乐
+    if (normalMusic12 && normalMusic12.isPlaying()) { normalMusic12.stop(); }
+    if (normalMusic45 && normalMusic45.isPlaying()) { normalMusic45.stop(); }
+    if (normalMusic78 && normalMusic78.isPlaying()) { normalMusic78.stop(); }
+    // 停止其他 Boss 音乐
+    if (bossMusic2 && bossMusic2.isPlaying()) { bossMusic2.stop(); }
+    if (bossMusic3 && bossMusic3.isPlaying()) { bossMusic3.stop(); }
+    // 播放 Boss 音乐
+    if (bossMusic1 && !bossMusic1.isPlaying()) {
+      bossMusic1.play();
+    }
+
     let boss1 = new SlimeBoss(slimeBossImage, "fire");
     let boss2 = new SlimeBoss(slimeBossImage, "water");
     let boss3 = new SlimeBoss(slimeBoss2Image, "poison");
@@ -963,7 +976,6 @@ function spawnEnemiesForWave(wave) {
     boss3.pos = createVector(width / 2 - 220, height / 2 + 150);
     boss4.pos = createVector(width / 2 + 60, height / 2 - 190);
 
-  
     boss1.skillDelay = 60;
     boss1.skillCooldown = Math.floor(Math.random() * boss1.skillDelay);
 
@@ -989,35 +1001,54 @@ function spawnEnemiesForWave(wave) {
     boss4.moveDistance1 = 55;  
     boss4.moveDistance2 = 45;
 
-     // 错开起跳
+    // 错开起跳
     boss1.initialStopDelay = 0;     
     boss2.initialStopDelay = 500;    
     boss3.initialStopDelay = 800;   
     boss4.initialStopDelay = 1200;   
-
 
     enemies.push(boss1, boss2, boss3, boss4);
 
     showFloatingText("Elemental Slime Bosses Appear!", width / 2, height / 2 - 40, color(0, 255, 0));
     bossActive = true;
   }
-
+  
   else if (wave === 6) {
+    // Boss 关 2：BirdBoss
+    // 停止普通波音乐
+    if (normalMusic12 && normalMusic12.isPlaying()) { normalMusic12.stop(); }
+    if (normalMusic45 && normalMusic45.isPlaying()) { normalMusic45.stop(); }
+    if (normalMusic78 && normalMusic78.isPlaying()) { normalMusic78.stop(); }
+    // 停止其他 Boss 音乐
+    if (bossMusic1 && bossMusic1.isPlaying()) { bossMusic1.stop(); }
+    if (bossMusic3 && bossMusic3.isPlaying()) { bossMusic3.stop(); }
+    // 播放 Boss 音乐
+    if (bossMusic2 && !bossMusic2.isPlaying()) {
+      bossMusic2.play();
+    }
+
     // 生成 BirdBoss
     let bossPos = getValidSpawnPosition();
     let boss = new BirdBoss(bossAction);
     boss.pos = bossPos;
     enemies.push(boss);
-    showFloatingText(
-      "Bird Boss Appears!",
-      width / 2,
-      height / 2 - 40,
-      color(0, 255, 0)
-    );
+    showFloatingText("Bird Boss Appears!", width / 2, height / 2 - 40, color(0, 255, 0));
     bossActive = true;
   }
+  
+  else if (wave === 9) {  // Boss 关 3：BugBoss
+    // 停止普通波音乐
+    if (normalMusic12 && normalMusic12.isPlaying()) { normalMusic12.stop(); }
+    if (normalMusic45 && normalMusic45.isPlaying()) { normalMusic45.stop(); }
+    if (normalMusic78 && normalMusic78.isPlaying()) { normalMusic78.stop(); }
+    // 停止其他 Boss 音乐
+    if (bossMusic1 && bossMusic1.isPlaying()) { bossMusic1.stop(); }
+    if (bossMusic2 && bossMusic2.isPlaying()) { bossMusic2.stop(); }
+    // 播放 Boss 音乐
+    if (bossMusic3 && !bossMusic3.isPlaying()) {
+      bossMusic3.play();
+    }
 
-  else if (wave === 9) {  // 第9波
     console.log("生成第9波boss");  // 调试日志
     let bossPos = getValidSpawnPosition();
     let boss = new BugBoss();
@@ -1026,11 +1057,37 @@ function spawnEnemiesForWave(wave) {
     showFloatingText("Bug Boss Appears!", width / 2, height / 2 - 40, color(0, 255, 0));
     bossActive = true;
   }
-
+  
   else {
     // 普通敌人生成逻辑
+    // 停止所有 Boss 音乐
+    if (bossMusic1 && bossMusic1.isPlaying()) { bossMusic1.stop(); }
+    if (bossMusic2 && bossMusic2.isPlaying()) { bossMusic2.stop(); }
+    if (bossMusic3 && bossMusic3.isPlaying()) { bossMusic3.stop(); }
+    
+    // 根据 wave 数值播放对应的普通敌人背景音乐
+    if (wave === 1 || wave === 2) {
+      if (normalMusic45 && normalMusic45.isPlaying()) { normalMusic45.stop(); }
+      if (normalMusic78 && normalMusic78.isPlaying()) { normalMusic78.stop(); }
+      if (normalMusic12 && !normalMusic12.isPlaying()) {
+        normalMusic12.play();
+      }
+    } else if (wave === 4 || wave === 5) {
+      if (normalMusic12 && normalMusic12.isPlaying()) { normalMusic12.stop(); }
+      if (normalMusic78 && normalMusic78.isPlaying()) { normalMusic78.stop(); }
+      if (normalMusic45 && !normalMusic45.isPlaying()) {
+        normalMusic45.play();
+      }
+    } else if (wave === 7 || wave === 8) {
+      if (normalMusic12 && normalMusic12.isPlaying()) { normalMusic12.stop(); }
+      if (normalMusic45 && normalMusic45.isPlaying()) { normalMusic45.stop(); }
+      if (normalMusic78 && !normalMusic78.isPlaying()) {
+        normalMusic78.play();
+      }
+    }
+    
     let baseEnemyCount;
-    if(difficult == "hard"){
+    if (difficult == "hard") {
       baseEnemyCount = Math.floor(6 + wave * 1.1);
     } else {
       baseEnemyCount = Math.floor(6 + wave * 0.8);
@@ -1057,6 +1114,7 @@ function spawnEnemiesForWave(wave) {
     bossActive = false;
   }
 }
+
 
 
 // 新增函数：获取有效的生成位置

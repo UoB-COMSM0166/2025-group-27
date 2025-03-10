@@ -247,6 +247,15 @@ function preload() {
   slimeBoss2Image = loadImage("./assets/candidate_images/effects/skill_effects/drip/cell_sphere/boss_slime.png");
   //spiderBossAction = loadImage("./assets/images/Characters/Enemies/SpiderBoss/SpiderBoss.png");
 
+  // 加载普通敌人背景音乐
+  normalMusic12 = loadSound("./assets/candidate_sounds/Music/Sea_Biome_1.ogg");
+  normalMusic45 = loadSound("./assets/candidate_sounds/Music/Stone_Biome_2_R1.ogg");
+  normalMusic78 = loadSound("./assets/candidate_sounds/Music/Mold_Dungeon_v6.ogg");
+
+  bossMusic1 = loadSound("./assets/candidate_sounds/Music/bossmusic.ogg");
+  bossMusic2 = loadSound("./assets/candidate_sounds/Music/Snake_Boss.ogg");
+  bossMusic3 = loadSound("./assets/candidate_sounds/Music/Final_Boss_Phase_1.ogg");
+
   commonEnemyAction.idle = loadImage("./assets/candidate_images/characters/enemies/birdman_imp/cavelingSkirmisher_idleEmote1.png");
   commonEnemyAction.up = loadImage("./assets/candidate_images/characters/enemies/birdman_imp/cavelingSkirmisher_move_up.png");
   commonEnemyAction.down = loadImage("./assets/candidate_images/characters/enemies/birdman_imp/cavelingSkirmisher_move.png");

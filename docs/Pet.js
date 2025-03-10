@@ -177,7 +177,7 @@ class DefensePet extends BasePet {
   follow(player) {
     // 当宠物可见时跟随玩家；护盾激活期间宠物消失，不更新位置
     if (this.petVisible) {
-      const target = p5.Vector.add(player.pos, createVector(30, 20));
+      const target = p5.Vector.add(player.pos, createVector(80, 60));
       this.pos.lerp(target, 0.1);
     }
   }
