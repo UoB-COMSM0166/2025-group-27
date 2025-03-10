@@ -226,10 +226,10 @@ function preload() {
   GunnerBulletAnimationLeft = loadImage("./assets/selected_images/characters/computerboy/attack/computerboy_attack_left.png");
   GunnerBulletAnimationRight = loadImage("./assets/selected_images/characters/computerboy/attack/computerboy_attack_right.png");
 
-  Bup = loadImage("./assets/selected_images/characters/computerboy/attack/computerboy_attack_upward.gif");
-  Bdown = loadImage("./assets/selected_images/characters/computerboy/attack/computerboy_attack_downward.gif");
-  Bleft = loadImage("./assets/selected_images/characters/computerboy/attack/computerboy_attack_left.gif");
-  Bright = loadImage("./assets/selected_images/characters/computerboy/attack/computerboy_attack_right.gif");
+  Bup = loadImage("./assets/selected_images/characters/computerboy/attack/galaxiteProjectile_up.png");
+  Bdown = loadImage("./assets/selected_images/characters/computerboy/attack/galaxiteProjectile_down.png");
+  Bleft = loadImage("./assets/selected_images/characters/computerboy/attack/galaxiteProjectile_left.png");
+  Bright = loadImage("./assets/selected_images/characters/computerboy/attack/galaxiteProjectile_right.png");
   // archer
   ArcherActionUp = loadImage("./assets/selected_images/characters/mousegirl/mousegirl_back.png");
   ArcherActionDown = loadImage("./assets/selected_images/characters/mousegirl/mousegirl_front.png");
@@ -318,7 +318,7 @@ function preload() {
   buttonsound = loadSound("./assets/candidate_sounds/ui_sound/buttonsound.ogg");
   //playerAttacksound
   arrowsound = loadSound("./assets/candidate_sounds/player_attack_sounds/arrow.ogg");
-  gunsound = loadSound("./assets/candidate_sounds/player_attack_sounds/gun.ogg");
+  gunsound = loadSound("./assets/candidate_sounds/player_attack_sounds/gun1.ogg");
   keyboardsound = loadSound("./assets/candidate_sounds/player_attack_sounds/keyboard.ogg");
   //天气sound
   thundersound = loadSound("./assets/candidate_sounds/player_attack_sounds/thunder.ogg")
@@ -379,6 +379,12 @@ function draw() {
   keyboardsound.setVolume(volume);
   thundersound.setVolume(volume);
   buttonsound.setVolume(volume);
+  bossMusic1.setVolume(volume);
+  bossMusic2.setVolume(volume);
+  bossMusic3.setVolume(volume);
+  normalMusic12.setVolume(volume);
+  normalMusic45.setVolume(volume);
+  normalMusic78.setVolume(volume);
 
   switch (gameState) {
     case "mainMenu":

@@ -14,27 +14,27 @@ class Bullet {
       this.bImage = bImageDown;
       this.shootDirection = "up";
       this.ImageWidth = 20;
-      this.ImageHeight = 80;
+      this.ImageHeight = 40;
       this.bWidth = 30;
       this.bHeight = 100;
     } else if (state === "Down") {
       this.bImage = bImageUp;
       this.shootDirection = "down";
       this.ImageWidth = 20;
-      this.ImageHeight = 80;
+      this.ImageHeight = 40;
       this.bWidth = 30;
       this.bHeight = 100;
     } else if (state === "Left") {
       this.bImage = bImageLeft;
       this.shootDirection = "left";
-      this.ImageWidth = 80;
+      this.ImageWidth = 40;
       this.ImageHeight = 20;
       this.bWidth = 100;
       this.bHeight = 30;
     } else if (state === "Right") {
       this.bImage = bImageRight;
       this.shootDirection = "right";
-      this.ImageWidth = 80;
+      this.ImageWidth = 40;
       this.ImageHeight = 20;
       this.bWidth = 100;
       this.bHeight = 30;
