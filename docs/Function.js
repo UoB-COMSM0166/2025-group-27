@@ -302,6 +302,7 @@ function handleGameplay(now) {
 // ===== 角色选择和按钮初始化 =====
 function initButtons() {
   const baseY = height / 2 - 30;
+  const baseX = width / 2 - 30;
 
   mainMenuButtons = [
     new Button(width / 2 - 75, baseY - 50, 150, 40, "Resume Game", () => {
@@ -338,14 +339,14 @@ function initButtons() {
   ];
 
   charSelectButtons = [
-    new Button(width / 2 - 100, baseY - 30, 200, 40, "Gunner", () => {
+    new Button(baseX - 300, height / 2 + 200, 100, 40, "Gunner", () => {
       buttonsound.play();
       initPlayer("gunner")
 }),
     new Button(
-      width / 2 - 100,
-      baseY + 30,
-      200,
+      baseX,
+      height / 2 + 200,
+      100,
       40,
       "Archer", // 间距从+20改为+30
       () => {
@@ -353,9 +354,9 @@ function initButtons() {
         initPlayer("archer")
 }),
     new Button(
-      width / 2 - 100,
-      baseY + 90,
-      200,
+      baseX + 300,
+      height / 2 + 200,
+      100,
       40,
       "Knight",
       () => {
@@ -662,16 +663,10 @@ function displayMainMenu() {
 }
 
 function displayStoryPage1() {
-  fill(255);
-  rect(0, 0, width, height);
-  noStroke();
-  textAlign(CENTER, CENTER);
-  textSize(50);
-  fill(255,0,0);
-  text("Story", width / 2, height / 2);
+  image(story1, 0, 0, width, height);
 
-  buttonW = 200;
-  buttonH = 60;
+  buttonW = 100;
+  buttonH = 30;
   buttonX = width - buttonW - 20; // 距离右侧 20 像素
   buttonY = height - buttonH - 20; // 距离底部 20 像素
   fill(0, 0, 255); // 按钮颜色（蓝色）
@@ -683,16 +678,10 @@ function displayStoryPage1() {
 }
 
 function displayStoryPage2() {
-  fill(125);
-  rect(0, 0, width, height);
-  noStroke();
-  textAlign(CENTER, CENTER);
-  textSize(50);
-  fill(255,0,0);
-  text("Story", width / 2, height / 2);
+  image(story2, 0, 0, width, height);
 
-  buttonW = 200;
-  buttonH = 60;
+  buttonW = 100;
+  buttonH = 30;
   buttonX = width - buttonW - 20; // 距离右侧 20 像素
   buttonY = height - buttonH - 20; // 距离底部 20 像素
   fill(0, 0, 255); // 按钮颜色（蓝色）
@@ -704,31 +693,35 @@ function displayStoryPage2() {
 }
 
 function displayStoryPage3() {
-  fill(0);
-  rect(0, 0, width, height);
-  noStroke();
-  textAlign(CENTER, CENTER);
-  textSize(50);
-  fill(255,0,0);
-  text("Story", width / 2, height / 2);
+  image(story3, 0, 0, width, height);
 
-  buttonW = 200;
-  buttonH = 60;
+  buttonW = 100;
+  buttonH = 30;
   buttonX = width - buttonW - 20; // 距离右侧 20 像素
   buttonY = height - buttonH - 20; // 距离底部 20 像素
   fill(0, 0, 255); // 按钮颜色（蓝色）
   rect(buttonX, buttonY, buttonW, buttonH, 10); // 圆角按钮
 
   fill(255); // 文字颜色（白色）
-  textSize(30);
-  text("Next", buttonX + buttonW / 2, buttonY + buttonH / 2);
+  textSize(15);
+  text("Start journey!", buttonX + buttonW / 2, buttonY + buttonH / 2);
 }
 
 function displayCharacterSelection() {
   fill(255);
   textSize(24);
   textAlign(CENTER, CENTER);
-  text("Choose Your Character", width / 2, height / 3);
+  text("Choose Your Character", width / 2, height / 4 - 50);
+  image(gunnerpic, width / 2 - 325, height / 2 - 100, 100, 200);
+  textSize(16);
+  fill(255,255,0);
+  text("Why not turn the PC into a laser cannon?", width / 2 - 310, height / 2 + 150);
+  image(archerpic, width / 2 - 25, height / 2 - 100, 100, 200);
+  text("Pull that mouse cable like a longbow", width / 2 + 10, height / 2 + 150);
+  image(knightpic, width / 2 + 275, height / 2 - 100, 100, 200);
+  text("Swing that keyboard like a battle axe", width / 2 + 310, height / 2 + 150);
+
+
   charSelectButtons.forEach((btn) => btn.display());
 }
 

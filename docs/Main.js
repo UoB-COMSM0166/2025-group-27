@@ -195,6 +195,14 @@ function preload() {
   level1map = loadImage("./assets/selected_images/maps/level1.png");
   level2map = loadImage("./assets/selected_images/maps/level2.png");
   level3map = loadImage("./assets/selected_images/maps/level3.png");
+  // story
+  story1 = loadImage("./assets/selected_images/story/story1.png");
+  story2 = loadImage("./assets/selected_images/story/story2.png");
+  story3 = loadImage("./assets/selected_images/story/story3.png");
+  // display Character
+  gunnerpic = loadImage("./assets/selected_images/characters/computerboy/computerboy.png");
+  archerpic = loadImage("./assets/selected_images/characters/mousegirl/mousegirl.png");
+  knightpic = loadImage("./assets/selected_images/characters/keyboardman/keyboardman.png");
   // weather
   snowflakepic = loadImage("./assets/selected_images/weather/flake.gif");
   lightningpic = loadImage("./assets/selected_images/weather/lightning.gif");
