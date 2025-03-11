@@ -1,4 +1,17 @@
 // ===== 鼠标与键盘事件 =====
+function mouseClicked() {
+  if (gameState == "story1" && mouseX > buttonX && mouseX < buttonX + buttonW &&
+    mouseY > buttonY && mouseY < buttonY + buttonH) {
+    gameState = "story2";
+  } else if (gameState == "story2" && mouseX > buttonX && mouseX < buttonX + buttonW &&
+    mouseY > buttonY && mouseY < buttonY + buttonH) {
+    gameState = "story3";
+  } else if (gameState == "story3" && mouseX > buttonX && mouseX < buttonX + buttonW &&
+    mouseY > buttonY && mouseY < buttonY + buttonH) {
+    gameState = "game";
+  }
+}
+
 function mousePressed() {
   if (gameState === "upgrading") {
     for (let i = 0; i < upgradeOptions.length; i++) {

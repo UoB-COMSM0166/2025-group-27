@@ -351,7 +351,7 @@ function preload() {
 
 
 function setup() {
-  createCanvas(1062, 600);
+  createCanvas(1062, 600); //要调整这个的话请按比例缩放！
   volume = 0.5;
   gameStartTime = millis();
   generateInitialObstacles();
@@ -415,6 +415,15 @@ function draw() {
       break;
     case "setting":
       displaySettingPage();
+      break;
+    case "story1":
+      displayStoryPage1();
+      break;
+    case "story2":
+      displayStoryPage2();
+      break;
+    case "story3":
+      displayStoryPage3();
       break;
   }
 
