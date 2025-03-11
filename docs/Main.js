@@ -495,7 +495,7 @@ function drawPlayerStats() {
   if (!player) {
     return;
   }
-
+  if(gameState == "game"){
   // 血条
   const healthBarWidth = 200;
   const healthBarHeight = 20;
@@ -529,6 +529,7 @@ function drawPlayerStats() {
     10 + expBarWidth / 2,
     40 + expBarHeight / 2
   );
+}
 }
 
 // 修改角色选择后的流程

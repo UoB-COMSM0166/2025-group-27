@@ -576,6 +576,7 @@ function hideSettingsElements() {
 // === 显示Boss血条 ===
 function displayBossHealthBar() {
   // 只计算活跃的Boss
+  if(gameState == "game"){
   let activeBosses = enemies.filter(e => e instanceof Boss && e.isActive);
   if (activeBosses.length === 0) {
     bossActive = false;
@@ -642,6 +643,7 @@ function displayBossHealthBar() {
       );
     });
   }
+}
 }
 
 // ===== 其他UI函数 =====
