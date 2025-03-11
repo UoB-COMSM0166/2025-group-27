@@ -316,7 +316,7 @@ function initButtons() {
       wave = 1; // 重置波数
       normalEnemiesDefeated = 0; // 重置击杀数
       bossDefeated = 0;
-      gameState = "menu";
+      gameState = "story1";
       difficult = "easy";
     }),
     new Button(width / 2 - 75, baseY + 50, 150, 40, "Start Game(hard)", () => {
@@ -325,7 +325,7 @@ function initButtons() {
       wave = 1; // 重置波数
       normalEnemiesDefeated = 0; // 重置击杀数
       bossDefeated = 0;
-      gameState = "menu";
+      gameState = "story1";
       difficult = "hard";
     }),
     new Button(width / 2 - 75, baseY + 100, 150, 40, "Setting", () => {
@@ -443,7 +443,7 @@ function initPlayer(type) {
   generateInitialObstacles();
 
   spawnEnemiesForWave(wave);
-  gameState = "story1";
+  gameState = "game";
 }
 
 // display函数

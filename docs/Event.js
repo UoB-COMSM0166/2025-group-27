@@ -8,7 +8,7 @@ function mouseClicked() {
     gameState = "story3";
   } else if (gameState == "story3" && mouseX > buttonX && mouseX < buttonX + buttonW &&
     mouseY > buttonY && mouseY < buttonY + buttonH) {
-    gameState = "game";
+    gameState = "menu";
   }
 }
 

@@ -200,9 +200,9 @@ function preload() {
   story2 = loadImage("./assets/selected_images/story/story2.png");
   story3 = loadImage("./assets/selected_images/story/story3.png");
   // display Character
-  gunnerpic = loadImage("./assets/selected_images/characters/computerboy/computerboy.png");
-  archerpic = loadImage("./assets/selected_images/characters/mousegirl/mousegirl.png");
-  knightpic = loadImage("./assets/selected_images/characters/keyboardman/keyboardman.png");
+  gunnerpic = loadImage("./assets/selected_images/characters/intro/computerboy_intro.gif");
+  archerpic = loadImage("./assets/selected_images/characters/intro/mousegirl_intro.gif");
+  knightpic = loadImage("./assets/selected_images/characters/intro/keyboardman_intro.gif");
   // weather
   snowflakepic = loadImage("./assets/selected_images/weather/flake.gif");
   lightningpic = loadImage("./assets/selected_images/weather/lightning.gif");
