@@ -442,7 +442,7 @@ function initPlayer(type) {
   generateInitialObstacles();
 
   spawnEnemiesForWave(wave);
-  gameState = "game";
+  gameState = "story1";
 }
 
 // display函数
@@ -659,6 +659,69 @@ function displayMainMenu() {
 
   // 修复2：统一渲染逻辑
   visibleButtons.forEach((btn) => btn.display());
+}
+
+function displayStoryPage1() {
+  fill(255);
+  rect(0, 0, width, height);
+  noStroke();
+  textAlign(CENTER, CENTER);
+  textSize(50);
+  fill(255,0,0);
+  text("Story", width / 2, height / 2);
+
+  buttonW = 200;
+  buttonH = 60;
+  buttonX = width - buttonW - 20; // 距离右侧 20 像素
+  buttonY = height - buttonH - 20; // 距离底部 20 像素
+  fill(0, 0, 255); // 按钮颜色（蓝色）
+  rect(buttonX, buttonY, buttonW, buttonH, 10); // 圆角按钮
+
+  fill(255); // 文字颜色（白色）
+  textSize(30);
+  text("Next", buttonX + buttonW / 2, buttonY + buttonH / 2);
+}
+
+function displayStoryPage2() {
+  fill(125);
+  rect(0, 0, width, height);
+  noStroke();
+  textAlign(CENTER, CENTER);
+  textSize(50);
+  fill(255,0,0);
+  text("Story", width / 2, height / 2);
+
+  buttonW = 200;
+  buttonH = 60;
+  buttonX = width - buttonW - 20; // 距离右侧 20 像素
+  buttonY = height - buttonH - 20; // 距离底部 20 像素
+  fill(0, 0, 255); // 按钮颜色（蓝色）
+  rect(buttonX, buttonY, buttonW, buttonH, 10); // 圆角按钮
+
+  fill(255); // 文字颜色（白色）
+  textSize(30);
+  text("Next", buttonX + buttonW / 2, buttonY + buttonH / 2);
+}
+
+function displayStoryPage3() {
+  fill(0);
+  rect(0, 0, width, height);
+  noStroke();
+  textAlign(CENTER, CENTER);
+  textSize(50);
+  fill(255,0,0);
+  text("Story", width / 2, height / 2);
+
+  buttonW = 200;
+  buttonH = 60;
+  buttonX = width - buttonW - 20; // 距离右侧 20 像素
+  buttonY = height - buttonH - 20; // 距离底部 20 像素
+  fill(0, 0, 255); // 按钮颜色（蓝色）
+  rect(buttonX, buttonY, buttonW, buttonH, 10); // 圆角按钮
+
+  fill(255); // 文字颜色（白色）
+  textSize(30);
+  text("Next", buttonX + buttonW / 2, buttonY + buttonH / 2);
 }
 
 function displayCharacterSelection() {
