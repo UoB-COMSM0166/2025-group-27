@@ -305,12 +305,12 @@ function initButtons() {
   const baseX = width / 2 - 30;
 
   mainMenuButtons = [
-    new Button(width / 2 - 75, baseY - 50, 150, 40, "Resume Game", () => {
+    new Button(width / 2 - 100, baseY - 50, 200, 40, "Resume Game", () => {
       buttonsound.play();
       loadSavedGame();
       gameState = "game"; // 从暂停改为直接进入游戏
     }),
-    new Button(width / 2 - 75, baseY, 150, 40, "Start Game(easy)", () => {
+    new Button(width / 2 - 100, baseY, 200, 40, "Start Game(easy)", () => {
       buttonsound.play();
       savedGame = null;
       wave = 1; // 重置波数
@@ -319,7 +319,7 @@ function initButtons() {
       gameState = "story1";
       difficult = "easy";
     }),
-    new Button(width / 2 - 75, baseY + 50, 150, 40, "Start Game(hard)", () => {
+    new Button(width / 2 - 100, baseY + 50, 200, 40, "Start Game(hard)", () => {
       buttonsound.play();
       savedGame = null;
       wave = 1; // 重置波数
@@ -328,25 +328,25 @@ function initButtons() {
       gameState = "story1";
       difficult = "hard";
     }),
-    new Button(width / 2 - 75, baseY + 100, 150, 40, "Setting", () => {
+    new Button(width / 2 - 100, baseY + 100, 200, 40, "Setting", () => {
       buttonsound.play();
       gameState = "setting";
     }),
-    new Button(width / 2 - 75, baseY + 150, 150, 40, "Quit Game", () => {
+    new Button(width / 2 - 100, baseY + 150, 200, 40, "Quit Game", () => {
       buttonsound.play();
       noLoop()
 }),
   ];
 
   charSelectButtons = [
-    new Button(baseX - 300, height / 2 + 200, 100, 40, "Gunner", () => {
+    new Button(baseX - 375, height / 2 + 200, 200, 40, "Gunner", () => {
       buttonsound.play();
       initPlayer("gunner")
 }),
     new Button(
-      baseX,
+      baseX - 75,
       height / 2 + 200,
-      100,
+      200,
       40,
       "Archer", // 间距从+20改为+30
       () => {
@@ -354,9 +354,9 @@ function initButtons() {
         initPlayer("archer")
 }),
     new Button(
-      baseX + 300,
+      baseX + 225,
       height / 2 + 200,
-      100,
+      200,
       40,
       "Knight",
       () => {
@@ -369,14 +369,14 @@ function initButtons() {
     new Button(
       width / 2 - 75,
       baseY,
-      150,
+      200,
       40,
       "Resume Game",
       () => {
         buttonsound.play();
         (gameState = "game")
 }),
-    new Button(width / 2 - 75, baseY + 60, 150, 40, "Main Menu", () => {
+    new Button(width / 2 - 75, baseY + 60, 200, 40, "Main Menu", () => {
       buttonsound.play();
       savedGame = {
         ...savedGame,
@@ -714,13 +714,13 @@ function displayCharacterSelection() {
   textSize(24);
   textAlign(CENTER, CENTER);
   text("Choose Your Character", width / 2, height / 4 - 50);
-  image(gunnerpic, width / 2 - 325, height / 2 - 100, 100, 200);
+  image(gunnerpic, width / 2 - 350, height / 2 - 100, 100, 200);
   textSize(16);
   fill(255,255,0);
   text("Why not turn the PC into a laser cannon?", width / 2 - 310, height / 2 + 150);
-  image(archerpic, width / 2 - 25, height / 2 - 100, 100, 200);
+  image(archerpic, width / 2 - 50, height / 2 - 100, 100, 200);
   text("Pull that mouse cable like a longbow", width / 2 + 10, height / 2 + 150);
-  image(knightpic, width / 2 + 275, height / 2 - 100, 100, 200);
+  image(knightpic, width / 2 + 250, height / 2 - 100, 100, 200);
   text("Swing that keyboard like a battle axe", width / 2 + 310, height / 2 + 150);
 
 

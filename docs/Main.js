@@ -474,11 +474,12 @@ function draw() {
       enemy.drawFogEffect();
     }
   }
-
+  if(gameState == "game"){
   // 显示当前天气文本
   textSize(16);
   fill(255);
   text("Weather：" + weather, 70, height - 10);
+  }
 
   // === 添加血条和经验条 ===
   drawPlayerStats();
