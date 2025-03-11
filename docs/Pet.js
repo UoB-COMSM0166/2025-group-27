@@ -1,4 +1,4 @@
-// === 宠物基类 ===
+// pet
 class BasePet {
   constructor() {
     this.pos = createVector(0, 0);
@@ -10,7 +10,7 @@ class BasePet {
   display() { }
 }
 
-// 宠物一
+// pet 1
 class AttackPet extends BasePet {
   constructor(x, y) {
     super();
@@ -96,7 +96,6 @@ class AttackPet extends BasePet {
       this.frameIndex = (this.frameIndex + 1) % this.totalFrames;
     }
 
-    // 如果不是攻击状态，才根据玩家移动方向更新图片
     if (!this.isAttacking) {
       if (player.vel.x > 0) {
         this.currentImage = foxMoveRight;
@@ -116,7 +115,6 @@ class AttackPet extends BasePet {
       tint(255, 150, 150);
     }
 
-    // 绘制当前图片（无论是攻击还是跟随状态）
     if (this.currentImage) {
       let sx = this.frameIndex * (this.currentImage.width / this.totalFrames);
       image(
@@ -142,7 +140,6 @@ class AttackPet extends BasePet {
 
 
   update(player) {
-    // 如果正在攻击，则不要更新跟随状态（或分开处理）
     if (!this.isAttacking) {
       this.follow(player);
     }
@@ -150,29 +147,25 @@ class AttackPet extends BasePet {
   }
 }
 
-// 宠物二
+// pet 2
 class DefensePet extends BasePet {
   constructor() {
     super();
-    // 原有属性
     this.shieldCharge = 0;
     this.isShieldActive = false;
-    this.shieldDuration = 90;            // 90帧约1.5秒（60fps情况下）
+    this.shieldDuration = 90;
     this.shieldTimer = 0;
-    this.shieldChargeInterval = 15000;   // 每15秒触发一次
+    this.shieldChargeInterval = 15000;
     this.lastShieldTime = 0;
 
-    // 动画属性（假设精灵表有4帧）
+
     this.frameIndex = 0;
     this.frameCounter = 0;
     this.frameDelay = 10;
     this.totalFrames = 4;
     this.currentImage = cowMoveFront;
-
-    // 新增：控制宠物是否显示的标志
     this.petVisible = true;
 
-    // 特效动画变量
     this.effectFrameIndex = 0;
     this.effectFrameCounter = 0;
     this.effectFrameDelay = 5;
@@ -181,7 +174,6 @@ class DefensePet extends BasePet {
   }
 
   follow(player) {
-    // 当宠物可见时跟随玩家；护盾激活期间宠物消失，不更新位置
     if (this.petVisible) {
       const target = p5.Vector.add(player.pos, createVector(80, 60));
       this.pos.lerp(target, 0.1);
@@ -189,7 +181,6 @@ class DefensePet extends BasePet {
   }
 
   update(player) {
-    // 如果护盾没有激活，则进行跟随及检测是否触发护盾
     if (!this.isShieldActive) {
       this.follow(player);
       if (millis() - this.lastShieldTime > this.shieldChargeInterval) {
@@ -197,7 +188,6 @@ class DefensePet extends BasePet {
         this.lastShieldTime = millis();
       }
     } else {
-      // 护盾激活期间，计时器递减
       this.shieldTimer--;
       if (this.shieldTimer <= 0) {
         this.deactivateShield(player);
@@ -207,37 +197,32 @@ class DefensePet extends BasePet {
 
   activateShield(player) {
     this.isShieldActive = true;
-    this.shieldTimer = this.shieldDuration; // 设置护盾持续时间
+    this.shieldTimer = this.shieldDuration;
     player.invincible = true;
-    this.petVisible = false;  // 护盾激活时宠物消失
-    showFloatingText("护盾激活!", player.pos.x, player.pos.y - 40, color(0, 200, 255));
+    this.petVisible = false;
+    showFloatingText("Shield activation!", player.pos.x, player.pos.y - 40, color(0, 200, 255));
   }
 
   deactivateShield(player) {
     this.isShieldActive = false;
     player.invincible = false;
-    this.petVisible = true;   // 护盾结束，宠物重新出现
-    showFloatingText("护盾消失", player.pos.x, player.pos.y - 40, color(100));
+    this.petVisible = true;
+    showFloatingText("Shield disappearing", player.pos.x, player.pos.y - 40, color(100));
   }
 
   display() {
-    // 如果护盾处于激活状态，则不绘制宠物，而是在玩家周围绘制护盾效果
     if (this.isShieldActive) {
       push();
       imageMode(CENTER);
-      // 计算玩家中心位置
       let shieldX = player.pos.x + player.ImageWidth / 2;
       let shieldY = player.pos.y + player.ImageHeight / 2;
-      // 设定护盾直径
       let shieldDiameter = max(player.ImageWidth, player.ImageHeight) + 40;
 
-      // 更新特效动画帧
       this.effectFrameCounter++;
       if (this.effectFrameCounter >= this.effectFrameDelay) {
         this.effectFrameCounter = 0;
         this.effectFrameIndex = (this.effectFrameIndex + 1) % this.totalEffectFrames;
       }
-      // 计算当前帧的x偏移
       let sx = this.effectFrameIndex * (cowCover.width / this.totalEffectFrames);
       image(cowCover, shieldX, shieldY, shieldDiameter, shieldDiameter,
         sx, 0, cowCover.width / this.totalEffectFrames, cowCover.height);
@@ -245,16 +230,12 @@ class DefensePet extends BasePet {
       return;
     }
 
-
-
-    // 正常状态下更新动画帧
     this.frameCounter++;
     if (this.frameCounter >= this.frameDelay) {
       this.frameCounter = 0;
       this.frameIndex = (this.frameIndex + 1) % this.totalFrames;
     }
 
-    // 根据玩家运动方向选择宠物动画图片
     if (player.vel.x > 0) {
       this.currentImage = cowMoveRight;
     } else if (player.vel.x < 0) {
@@ -265,7 +246,6 @@ class DefensePet extends BasePet {
       this.currentImage = cowMoveBack;
     }
 
-    // 绘制宠物动画（利用精灵表关键帧切割）
     if (this.currentImage) {
       let sx = this.frameIndex * (this.currentImage.width / this.totalFrames);
       push();
@@ -283,7 +263,6 @@ class DefensePet extends BasePet {
       pop();
     }
 
-    // 如果需要还可以绘制充能进度（这里可选，不影响护盾功能）
     if (!this.isShieldActive) {
       push();
       textSize(12);
@@ -296,29 +275,23 @@ class DefensePet extends BasePet {
   }
 }
 
-// 宠物三
+// pet 3
 class HealerPet extends BasePet {
   constructor() {
     super();
-    this.healAmount = 0.4; // 每秒回复量
-    this.healTick = 0;     // 计时器
-    this.healInterval = 60; // 每60帧（约1秒）治疗一次
-
-    // 视觉效果相关变量：用于环绕动画
+    this.healAmount = 0.4;
+    this.healTick = 0;
+    this.healInterval = 60;
     this.angle = 0;
     this.orbitRadius = 30;
-
-    // 新增动画相关变量（假设精灵表有4帧）
     this.frameIndex = 0;
     this.frameCounter = 0;
     this.frameDelay = 10;
     this.totalFrames = 4;
-    // 默认初始图片（使用向前走的图片作为默认状态）
     this.currentImage = fairyMoveFront;
   }
 
   follow(player) {
-    // 环绕玩家运动（保持原有逻辑）
     this.angle += 0.02;
     const orbitX = player.pos.x + cos(this.angle) * this.orbitRadius;
     const orbitY = player.pos.y + sin(this.angle) * this.orbitRadius;
@@ -327,8 +300,6 @@ class HealerPet extends BasePet {
 
   update(player) {
     this.follow(player);
-
-    // 每隔 healInterval 帧为主角治疗一次
     this.healTick++;
     if (this.healTick >= this.healInterval) {
       this.healTick = 0;
@@ -345,7 +316,6 @@ class HealerPet extends BasePet {
   }
 
   display() {
-    // 可选：绘制治疗光环效果
     push();
     noFill();
     stroke(0, 255, 150, 100);
@@ -353,14 +323,12 @@ class HealerPet extends BasePet {
     ellipse(this.pos.x, this.pos.y, this.radius * 2);
     pop();
 
-    // 更新动画帧计数
     this.frameCounter++;
     if (this.frameCounter >= this.frameDelay) {
       this.frameCounter = 0;
       this.frameIndex = (this.frameIndex + 1) % this.totalFrames;
     }
 
-    // 根据主角运动方向选择当前图片
     if (player.vel.x > 0) {
       this.currentImage = fairyMoveRight;
     } else if (player.vel.x < 0) {
@@ -371,7 +339,6 @@ class HealerPet extends BasePet {
       this.currentImage = fairyMoveBack;
     }
 
-    // 绘制动画精灵（关键帧切割）
     if (this.currentImage) {
       let sx = this.frameIndex * (this.currentImage.width / this.totalFrames);
       push();
@@ -391,49 +358,48 @@ class HealerPet extends BasePet {
   }
 }
 
-
-// 修改showPetSelectionScreen函数中的判断条件
 function showPetSelectionScreen() {
-  background(0, 150);
+  background(0, 180);
 
   fill(255);
-  textSize(32);
+  textSize(36);
   textAlign(CENTER, CENTER);
-  text("选择你的战斗伙伴！", width / 2, height / 4);
+  text("Choose your combat partner!", width / 2, height / 6);
 
-  // 绘制三个宠物选项
-  fill(200);
-  rect(width / 4 - 100, height / 2 - 80, 200, 120, 10);
-  rect(width / 2 - 100, height / 2 - 80, 200, 120, 10);
-  rect(width * 3 / 4 - 100, height / 2 - 80, 200, 120, 10);
+  let boxWidth = 220;
+  let boxHeight = 140;
+  let yOffset = height / 2 - 60;
+
+  fill(50, 50, 50, 200);
+  rect(width / 4 - boxWidth / 2, yOffset, boxWidth, boxHeight, 15);
+  rect(width / 2 - boxWidth / 2, yOffset, boxWidth, boxHeight, 15);
+  rect(width * 3 / 4 - boxWidth / 2, yOffset, boxWidth, boxHeight, 15);
 
   fill(255);
-  textSize(20);
-  text("烈焰战狼", width / 4, height / 2 - 40);
-  text("钢铁巨龟", width / 2, height / 2 - 40);
-  text("生命天使", width * 3 / 4, height / 2 - 40);
+  textSize(24);
+  text("Blaze 🔥", width / 4, yOffset + 30);
+  text("Aegis 🛡️", width / 2, yOffset + 30);
+  text("Aurora ✨", width * 3 / 4, yOffset + 30);
 
-  textSize(14);
-  text("自动攻击最近敌人\n+15 攻击伤害", width / 4, height / 2);
-  text("定期提供护盾\n+150 最大生命值", width / 2, height / 2);
-  text("持续回复生命值\n每秒恢复0.4生命", width * 3 / 4, height / 2);
+  textSize(16);
+  fill(255, 230);
+  text("Auto-attacks nearby enemies", width / 4, yOffset + 70);
+  text("Gives a 1.5s shield every 15s", width / 2, yOffset + 70);
+  text("Heals 0.4 HP per second", width * 3 / 4, yOffset + 70);
 
-  // 检测鼠标点击
+
   if (mouseIsPressed) {
-    if (mouseX > width / 4 - 100 && mouseX < width / 4 + 100 &&
-      mouseY > height / 2 - 80 && mouseY < height / 2 + 40) {
-      // 选择烈焰战狼
-      player.pet = new AttackPet(player.pos.x, player.pos.y); // 确保使用正确的类
+    if (mouseX > width / 4 - boxWidth / 2 && mouseX < width / 4 + boxWidth / 2 &&
+      mouseY > yOffset && mouseY < yOffset + boxHeight) {
+      player.pet = new AttackPet(player.pos.x, player.pos.y);
       gameState = "game";
-    } else if (mouseX > width / 2 - 100 && mouseX < width / 2 + 100 &&
-      mouseY > height / 2 - 80 && mouseY < height / 2 + 40) {
-      // 选择钢铁巨龟
-      player.pet = new DefensePet(); // 确保使用正确的类
+    } else if (mouseX > width / 2 - boxWidth / 2 && mouseX < width / 2 + boxWidth / 2 &&
+      mouseY > yOffset && mouseY < yOffset + boxHeight) {
+      player.pet = new DefensePet();
       gameState = "game";
-    } else if (mouseX > width * 3 / 4 - 100 && mouseX < width * 3 / 4 + 100 &&
-      mouseY > height / 2 - 80 && mouseY < height / 2 + 40) {
-      // 选择生命天使
-      player.pet = new HealerPet(); // 确保使用正确的类
+    } else if (mouseX > width * 3 / 4 - boxWidth / 2 && mouseX < width * 3 / 4 + boxWidth / 2 &&
+      mouseY > yOffset && mouseY < yOffset + boxHeight) {
+      player.pet = new HealerPet();
       gameState = "game";
     }
   }
