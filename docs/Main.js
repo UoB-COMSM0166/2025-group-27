@@ -166,7 +166,7 @@ function drawWeatherEffects() {
 // 如果选择的是特殊天气（hot, snowy, thunderstorm），则持续效果为20秒，之后自动恢复为 normal
 function updateWeather() {
   let currentTime = millis();
-
+  if(gameState == "game"){
   // 每隔 60000 毫秒重新随机选择天气
   if (currentTime - lastWeatherChange > 30000) {
     let weatherOptions = ["normal", "hot", "snowy", "thunderstorm"];
@@ -181,6 +181,7 @@ function updateWeather() {
       lastLightningTime = currentTime;
     }
   }
+}
 
   // 如果当前天气为特殊天气且持续超过20秒，则自动恢复为 normal
   if (weather !== "normal" && currentTime - weatherStartTime > 20000) {
@@ -460,7 +461,7 @@ function draw() {
   // 显示当前天气文本
   textSize(16);
   fill(255);
-  text("当前天气：" + weather, 70, height - 10);
+  text("Weather：" + weather, 70, height - 10);
 
   // === 添加血条和经验条 ===
   drawPlayerStats();
