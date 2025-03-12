@@ -911,7 +911,7 @@ class SlimeBoss extends Boss {
 
     // 技能相关
     this.skillCooldown = 180;
-    this.skillDelay = 180;
+    this.skillDelay = 300;
 
     // 元素技能属性
     this.initElementalProperties(type);
@@ -1010,8 +1010,16 @@ class SlimeBoss extends Boss {
       if (this.skillCooldown > 0) {
         this.skillCooldown--;
       } else {
+        // 添加调试信息
+        console.log("Fire Slime casting skill, setting cooldown to:", this.skillDelay);
+        
         this.useElementalSkill();
         this.skillCooldown = this.skillDelay;
+        
+        // 强制延长冷却时间，确保技能不会频繁释放
+        if (this.type === "fire") {
+          this.skillDelay = Math.max(180, this.skillDelay); // 至少3秒冷却
+        }
       }
 
       // 更新元素效果
@@ -1046,10 +1054,15 @@ class SlimeBoss extends Boss {
 
   // 火焰史莱姆技能 - 调整内环距离防止重合
   fireSkill() {
+    console.log("Fire skill triggered, current cooldown:", this.skillCooldown);
+    
     // 设置环绕火焰 - 双层火环设计
     const flameCount = 12; // 增加火焰数量
     const radius = this.flameRadius * 0.65; // 主环半径
     const innerRadius = this.flameRadius * 0.5; // 增加内环半径，从0.4改为0.5
+    
+    // 首先清除任何现有的fireRing效果，防止叠加
+    this.elementalEffects = this.elementalEffects.filter(effect => effect.type !== "fireRing");
     
     // 创建双层火焰环
     for (let i = 0; i < flameCount; i++) {
@@ -1057,6 +1070,9 @@ class SlimeBoss extends Boss {
       const angle = (TWO_PI / flameCount) * i;
       const offsetX = cos(angle) * radius;
       const offsetY = sin(angle) * radius;
+      
+      // 确保所有火焰效果都有有效的duration值
+      const flameDuration = this.flameDuration || 90; // 提供默认值以防止undefined
       
       // 添加主环火焰
       this.elementalEffects.push({
@@ -1066,7 +1082,7 @@ class SlimeBoss extends Boss {
         angle: angle,
         radius: this.flameRadius * 0.15,
         orbitRadius: radius,
-        duration: this.flameDuration,
+        duration: flameDuration, // 使用安全的duration值
         damage: this.flameDamage / 60,
         startTime: millis(),
         rotationSpeed: 0.02,
@@ -1074,7 +1090,8 @@ class SlimeBoss extends Boss {
         frameCount: 6,
         frameDelay: 5,
         frameCounter: 0,
-        visualScale: 2.0
+        visualScale: 2.0,
+        creationTime: millis() // 添加创建时间戳以供安全检查
       });
       
       // 添加内环火焰 - 角度错开，形成交错效果
@@ -1201,16 +1218,37 @@ class SlimeBoss extends Boss {
   }
 
   updateElementalEffects() {
+    const now = millis();
+    const MAX_EFFECT_LIFETIME = 10000; // 最大10秒生命期作为安全措施
+    
     // 更新所有元素效果
     for (let i = this.elementalEffects.length - 1; i >= 0; i--) {
       let effect = this.elementalEffects[i];
+      
+      // 安全检查1: 检查duration是否为非数字或未定义
+      if (typeof effect.duration !== 'number') {
+        console.log("Found effect with invalid duration:", effect.type);
+        this.elementalEffects.splice(i, 1);
+        continue;
+      }
+      
+      // 安全检查2: 检查是否超过最大生命期
+      if (effect.creationTime && now - effect.creationTime > MAX_EFFECT_LIFETIME) {
+        console.log("Force removing long-lived effect:", effect.type);
+        this.elementalEffects.splice(i, 1);
+        continue;
+      }
+      
+      // 安全检查3: 正常duration检查
+      if (effect.duration <= 0) {
+        this.elementalEffects.splice(i, 1);
+        continue;
+      }
+      
+      // 然后才递减duration
       effect.duration--;
-
+      
       switch (effect.type) {
-        case "fire":
-          // 原有火焰效果代码保留...
-          break;
-          
         case "fireRing":
           // 更新环绕火焰位置
           effect.angle += effect.rotationSpeed;
@@ -1319,10 +1357,6 @@ class SlimeBoss extends Boss {
             }
           }
           break;
-      }
-
-      if (effect.duration <= 0) {
-        this.elementalEffects.splice(i, 1);
       }
     }
 
