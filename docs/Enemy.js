@@ -647,8 +647,6 @@ class BirdBoss extends Boss {
       if (this.patternTimer > 180) {  // 从240降到180
         this.attackPattern = (this.attackPattern + 1) % 2;
         this.patternTimer = 0;
-        let patternNames = ["Dash Attack", "Poison Attack"];
-        showFloatingText(patternNames[this.attackPattern], this.pos.x, this.pos.y - 40, color(255, 255, 0));
       }
 
 
@@ -657,7 +655,6 @@ class BirdBoss extends Boss {
         this.enrageTimer = 300;
         this.speed *= 1.5;
         this.damage *= 1.5;
-        showFloatingText("Boss Enraged!", this.pos.x, this.pos.y - 40, color(255, 0, 0));
       }
 
       let distToPlayer = p5.Vector.dist(this.pos, player.pos);
@@ -712,7 +709,6 @@ class BirdBoss extends Boss {
       this.isDashing = true;
       this.dashDuration = 20;
       this.dashCooldown = 120;
-      showFloatingText("Dash Attack!", this.pos.x, this.pos.y - 30, color(255, 100, 0));
     }
   }
 
@@ -739,14 +735,12 @@ class BirdBoss extends Boss {
         });
       }
       this.trailCounter = 0;
-      showFloatingText("Poison Splash!", this.pos.x, this.pos.y - 30, color(0, 255, 0));
     }
   }
 
   performMeleeAttack() {
     player.takeDamage(this.meleeDamage);
     this.meleeAttackCooldown = 15;
-    showFloatingText("Melee Attack!", this.pos.x, this.pos.y - 30, color(255, 0, 0));
   }
 
   handleDashing(dirToPlayer) {
@@ -837,6 +831,36 @@ class BirdBoss extends Boss {
 
   displayHealthBar() {
     displayBossHealthBar();
+  }
+
+  featherAttack() {
+    // 减少羽毛行数从4行到2行
+    const rows = 2; // 从4改为2
+    const feathersPerRow = 8; // 每行的羽毛数量
+    const rowSpacing = 40; // 行间距
+    
+    for (let row = 0; row < rows; row++) {
+      for (let i = 0; i < feathersPerRow; i++) {
+        // 只有在当前羽毛数量未达到上限时才生成新羽毛
+        if (feathers.length < MAX_FEATHERS) {
+          const angle = (TWO_PI / feathersPerRow) * i;
+          const xOffset = cos(angle) * 100;
+          const yOffset = row * rowSpacing;
+          
+          const feather = new Feather(
+            this.pos.x + xOffset,
+            this.pos.y + yOffset,
+            featherSprite
+          );
+          
+          // 调整羽毛的速度和方向
+          const vel = createVector(0, 2 + row * 0.5); // 后排羽毛速度稍快
+          feather.vel = vel;
+          
+          feathers.push(feather);
+        }
+      }
+    }
   }
 }
 
@@ -1119,8 +1143,6 @@ class SlimeBoss extends Boss {
         });
       }
     }
-
-    showFloatingText("Ring of Fire!", this.pos.x, this.pos.y - 30, color(255, 100, 0));
   }
 
   // 水流史莱姆技能
@@ -1152,8 +1174,6 @@ class SlimeBoss extends Boss {
         rotation: random(TWO_PI) 
       });
     }
-
-    showFloatingText("Water Waves!", this.pos.x, this.pos.y - 30, color(0, 100, 255));
   }
 
   // 毒液史莱姆技能
@@ -1174,8 +1194,6 @@ class SlimeBoss extends Boss {
       frameCounter: 0,
       scale: 1.0 // 初始缩放系数
     });
-
-    showFloatingText("Toxic Pool!", this.pos.x, this.pos.y - 30, color(0, 255, 0));
   }
 
   // 疾风史莱姆技能 - 调整帧数和尺寸
@@ -1213,8 +1231,6 @@ class SlimeBoss extends Boss {
         moveDirection: p5.Vector.fromAngle(tornadoAngle).mult(3) // 移动方向
       });
     }
-
-    showFloatingText("Tornado Blast!", this.pos.x, this.pos.y - 30, color(200, 200, 255));
   }
 
   updateElementalEffects() {
@@ -1638,6 +1654,36 @@ class SlimeBoss extends Boss {
 
   displayHealthBar() {
     displayBossHealthBar();
+  }
+
+  featherAttack() {
+    // 减少羽毛行数从4行到2行
+    const rows = 2; // 从4改为2
+    const feathersPerRow = 8; // 每行的羽毛数量
+    const rowSpacing = 40; // 行间距
+    
+    for (let row = 0; row < rows; row++) {
+      for (let i = 0; i < feathersPerRow; i++) {
+        // 只有在当前羽毛数量未达到上限时才生成新羽毛
+        if (feathers.length < MAX_FEATHERS) {
+          const angle = (TWO_PI / feathersPerRow) * i;
+          const xOffset = cos(angle) * 100;
+          const yOffset = row * rowSpacing;
+          
+          const feather = new Feather(
+            this.pos.x + xOffset,
+            this.pos.y + yOffset,
+            featherSprite
+          );
+          
+          // 调整羽毛的速度和方向
+          const vel = createVector(0, 2 + row * 0.5); // 后排羽毛速度稍快
+          feather.vel = vel;
+          
+          feathers.push(feather);
+        }
+      }
+    }
   }
 }
 

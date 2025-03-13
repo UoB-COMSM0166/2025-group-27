@@ -2,6 +2,9 @@ let currentFrame1 = 0;
 let animationDone = false;
 let deathAnimations = []; // 追踪所有正在播放的死亡动画
 
+// 在全局变量区域添加最大羽毛数量限制
+const MAX_FEATHERS = 50; // 将最大羽毛数量从100降到50
+
 // ===== 核心游戏逻辑 =====
 function handleGameplay(now) {
   if(wave<=5){
@@ -20,6 +23,11 @@ function handleGameplay(now) {
 
   //更新并绘制羽毛
   feathers = feathers.filter((feather) => {
+    // 如果羽毛数量超过限制，移除最早的羽毛
+    if (feathers.length > MAX_FEATHERS) {
+      return false;
+    }
+    
     if (!feather.update()) {
       return false; // 超出屏幕等条件，移除
     }
