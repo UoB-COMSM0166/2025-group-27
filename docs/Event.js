@@ -65,8 +65,11 @@ function mousePressed() {
 }
 
 function mouseReleased() {
-  if (player.characterType === "archer" && player.autoCharge == false) {
-    player.releaseArrow();
+  // 确保 player 存在且游戏状态正确
+  if (player && gameState === "game") {
+    if (player.characterType === "archer" && player.autoCharge == false) {
+      player.releaseArrow();
+    }
   }
 }
 

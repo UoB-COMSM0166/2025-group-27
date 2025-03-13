@@ -152,17 +152,26 @@ class Bullet {
   display() {
     push();
     translate(this.pos.x, this.pos.y);
-    image(
-      this.bImage,
-      0, 0,
-      this.ImageWidth,
-      this.ImageHeight,
-      0,
-      0,
-      this.bImage.width,
-      this.bImage.height
-    );
-  pop();
+    
+    // 添加图片存在性检查
+    if (this.bImage && typeof this.bImage !== 'undefined') {
+      image(
+        this.bImage,
+        0, 0,
+        this.ImageWidth,
+        this.ImageHeight,
+        0,
+        0,
+        this.bImage.width,
+        this.bImage.height
+      );
+    } else {
+      // 如果图片未加载，显示一个基础形状
+      fill(255);
+      noStroke();
+      ellipse(0, 0, this.radius * 2);
+    }
+    pop();
   }
 }
 
