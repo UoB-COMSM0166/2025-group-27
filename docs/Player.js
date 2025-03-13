@@ -113,14 +113,31 @@ class Player {
 
     // 对于Knight类型的player
     this.isAttacking = false;
-    this.attackAngle = 60; // 攻击角度
-    this.attackRange = 50; // 攻击距离
+    this.attackAngle = 90; // 攻击角度
+    this.attackRange = 80; // 攻击距离
     this.attackDuration = 8; // 攻击持续时间
     this.attackCooldown = 30; // 攻击冷却时间
     this.currentAttackCooldown = 0;
     this.attackFrames = 5; // 总攻击帧数
     this.currentAttackFrame = 0; // 当前攻击帧
     this.attackAnimationSpeed = 3; // 每3帧切换一次
+    this.knightType = "normal";
+    this.reborn = false;
+    this.spinningSlash = false;
+    this.dash = false;
+
+    this.dashing = false; // 疾走状态
+    this.dashDuration = 0; // 疾走剩余时间
+    this.dashCooldown = 0; // 疾走冷却
+    this.dashSpeedMultiplier = 1.8; // 疾走速度倍率
+    this.canAttack = true; // 能否攻击
+    
+    this.spinningSlashCooldown = 0; // 旋风劈冷却
+    this.spinningSlashRange = 80; // 旋风劈范围
+    
+    this.rebornUsed = false; // 是否使用过复活
+    this.giantMode = false; // 巨人模式
+    this.berserkerMode = false; // 狂战士模式
 
     // 对于Archer类型的player
     this.arrowDamage = 20; // 基础伤害
@@ -151,6 +168,14 @@ class Player {
   }
 
   takeDamage(amount) {
+    if(this.reborn){
+    if (this.health > 10 && (this.health - amount) <= 10 && !this.rebornUsed) {
+      this.health = 100; // 复活并恢复100生命
+      this.rebornUsed = true;
+      showFloatingText("Reborn!", this.pos.x, this.pos.y - 20, color(255, 215, 0));
+      return;
+    }
+  }
     if (this.invincible) return; // 无敌时免疫伤害
     let actual = amount * (1 - this.defense * 0.1);
     this.health -= actual;
@@ -288,11 +313,267 @@ class Player {
       case "autoCharge":
         this.autoCharge = true;
         break;
+      // knight 相关升级
+      case "healthBoostAndLifeSteal":
+        this.knightType = "giant";
+        this.lifesteal = 0.2;
+        this.maxHealth = 300;
+        break;
+      case "berserker":
+        this.knightType = "berserker";
+        this.berserkerMode = true;
+        this.critRate = 0.5;
+        this.critDamage = 2.0;
+        break;
+      case "reborn":
+        this.reborn = true;
+        break;
+      case "fastWalk":
+        this.dash = true;
+        break;
+      case "spinningSlash":
+        this.spinningSlash = true;
+        break;
     }
     choosingUpgrade = false;
   }
 
+  performSpinningSlash() {
+    if (this.spinningSlashCooldown <= 0 && this.canAttack) {
+      this.spinningSlashCooldown = 600; // 10秒冷却
+      enemies.forEach(enemy => {
+        const d = dist(this.pos.x, this.pos.y, enemy.pos.x, enemy.pos.y);
+        if (d < this.spinningSlashRange) {
+          const isCrit = random() < this.critRate;
+          const damage = isCrit ? 
+            this.attackDamage * this.critDamage : 
+            this.attackDamage;
+            let killed = enemy.hit(damage);  // 计算伤害
+            if (killed) {
+              enemy.startDeathEffect();
+              if (enemy instanceof Boss) {
+                bossDefeated++;
+                bossDefeatedCount++;
+              }
+              normalEnemiesDefeated++;
+              if(enemy.gainExp == false) {
+                player.gainExp(enemy.expValue);
+                enemy.gainExp = true;
+              }
+              
+              if(enemy.dead){
+                enemies.splice(i, 1);
+              }
+            }
+  
+            // 生命偷取效果
+            if (this.lifesteal > 0) {
+              this.health = min(this.maxHealth, this.health + damage * this.lifesteal);
+            }
+        }
+      });
+    }
+  }
+
   move() {
+    if(this.characterType == "knight" && this.dash){
+  if (this.dashCooldown <= 0 && keyIsDown(16)) { // 16 是 Shift 键的键码
+    this.dashing = true;
+    this.dashDuration = 90; // 疾走持续 30 帧（0.5 秒）
+    this.dashCooldown = 180; // 疾走冷却 3 秒（60 帧/秒）
+    this.canAttack = false; // 疾走期间不能攻击
+  }
+
+  let currentSpeed = this.speed;
+  if (this.dashing) {
+    currentSpeed *= this.dashSpeedMultiplier; // 疾走时速度提升
+    this.dashDuration--;
+    if (this.dashDuration <= 0) {
+      this.dashing = false;
+      this.canAttack = true; // 疾走结束后恢复攻击能力
+    }
+  }
+
+  let moving = false;
+  if (this.isWebbed) {
+    this.webDuration--;
+    if (this.webDuration <= 0) this.isWebbed = false;
+    return;
+  }
+
+  let moveVec = createVector(0, 0);
+
+  let dx = mouseX - this.pos.x;
+  let dy = this.pos.y - mouseY; // 反转 Y 轴方向
+  let angle = atan2(dy, dx);
+  if (angle < 0) angle += TWO_PI;
+
+  // ++++ 使用 currentSpeed 替代 this.speed ++++
+  if (keyIsDown(87)) { // W 上
+    this.y -= currentSpeed;
+    this.currentAnimation = this.animations.up;
+    this.direction = 'up';
+    moving = true;
+    moveVec.y -= 1;
+    if (mouseIsPressed && this.characterType != "knight") {
+      if (angle >= PI / 4 && angle < 3 * PI / 4) {       // 45°~135° → 上
+        this.currentAnimation = this.animations.up;
+        this.direction = "up";
+      }
+      else if (angle >= 3 * PI / 4 && angle < 5 * PI / 4) { // 135°~225° → 左
+        this.currentAnimation = this.animations.left;
+        this.direction = "left";
+      }
+      else if (angle >= 5 * PI / 4 && angle < 7 * PI / 4) { // 225°~315° → 下
+        this.currentAnimation = this.animations.down;
+        this.direction = "down";
+      }
+      else {                                       // 315°~45° → 右
+        this.currentAnimation = this.animations.right;
+        this.direction = "right";
+      }
+    }
+  } else if (keyIsDown(83)) { // S 下
+    this.y += currentSpeed;
+    this.currentAnimation = this.animations.down;
+    this.direction = 'down';
+    moving = true;
+    moveVec.y += 1;
+    if (mouseIsPressed && this.characterType != "knight") {
+      if (angle >= PI / 4 && angle < 3 * PI / 4) {       // 45°~135° → 上
+        this.currentAnimation = this.animations.up;
+        this.direction = "up";
+      }
+      else if (angle >= 3 * PI / 4 && angle < 5 * PI / 4) { // 135°~225° → 左
+        this.currentAnimation = this.animations.left;
+        this.direction = "left";
+      }
+      else if (angle >= 5 * PI / 4 && angle < 7 * PI / 4) { // 225°~315° → 下
+        this.currentAnimation = this.animations.down;
+        this.direction = "down";
+      }
+      else {                                       // 315°~45° → 右
+        this.currentAnimation = this.animations.right;
+        this.direction = "right";
+      }
+    }
+  }
+
+  if (keyIsDown(65)) { // A 左
+    this.x -= currentSpeed;
+    this.currentAnimation = this.animations.left;
+    this.direction = 'left';
+    moving = true;
+    moveVec.x -= 1;
+    if (mouseIsPressed && this.characterType != "knight") {
+      if (angle >= PI / 4 && angle < 3 * PI / 4) {       // 45°~135° → 上
+        this.currentAnimation = this.animations.up;
+        this.direction = "up";
+      }
+      else if (angle >= 3 * PI / 4 && angle < 5 * PI / 4) { // 135°~225° → 左
+        this.currentAnimation = this.animations.left;
+        this.direction = "left";
+      }
+      else if (angle >= 5 * PI / 4 && angle < 7 * PI / 4) { // 225°~315° → 下
+        this.currentAnimation = this.animations.down;
+        this.direction = "down";
+      }
+      else {                                       // 315°~45° → 右
+        this.currentAnimation = this.animations.right;
+        this.direction = "right";
+      }
+    }
+  } else if (keyIsDown(68)) { // D 右
+    this.x += currentSpeed;
+    this.currentAnimation = this.animations.right;
+    this.direction = 'right';
+    moving = true;
+    moveVec.x += 1;
+    if (mouseIsPressed && this.characterType != "knight") {
+      if (angle >= PI / 4 && angle < 3 * PI / 4) {       // 45°~135° → 上
+        this.currentAnimation = this.animations.up;
+        this.direction = "up";
+      }
+      else if (angle >= 3 * PI / 4 && angle < 5 * PI / 4) { // 135°~225° → 左
+        this.currentAnimation = this.animations.left;
+        this.direction = "left";
+      }
+      else if (angle >= 5 * PI / 4 && angle < 7 * PI / 4) { // 225°~315° → 下
+        this.currentAnimation = this.animations.down;
+        this.direction = "down";
+      }
+      else {                                       // 315°~45° → 右
+        this.currentAnimation = this.animations.right;
+        this.direction = "right";
+      }
+    }
+  }
+
+  if (!moving && !this.isAttacking) {
+    this.currentAnimation = this.animations.idle;
+    this.direction = 'idle';
+  }
+
+  if (this.characterType === "knight" && mouseIsPressed) {
+    let dx = mouseX - this.pos.x;
+    let dy = this.pos.y - mouseY; // 反转 Y 轴方向
+    let angle = atan2(dy, dx);
+
+    // 角度规范化到 0~2π
+    if (angle < 0) angle += TWO_PI;
+    console.log("angle: " + angle);
+    // 使用新的角度区间判断
+    if (angle >= PI / 4 && angle < 3 * PI / 4 && !this.dashing) {       // 45°~135° → 上
+      this.currentAnimation = this.animations.attackup;
+      this.direction = "attackup";
+    }
+    else if (angle >= 3 * PI / 4 && angle < 5 * PI / 4 && !this.dashing) { // 135°~225° → 左
+      this.currentAnimation = this.animations.attackleft;
+      this.direction = "attackleft";
+    }
+    else if (angle >= 5 * PI / 4 && angle < 7 * PI / 4 && !this.dashing) { // 225°~315° → 下
+      this.currentAnimation = this.animations.attackdown;
+      this.direction = "attackdown";
+    }
+    else {
+      if(!this.dashing){                                     // 315°~45° → 右
+      this.currentAnimation = this.animations.attackright;
+      this.direction = "attackright";
+      }
+    }
+  }
+
+  this.animate();
+
+  if (moveVec.mag() > 0) {
+    moveVec.setMag(currentSpeed); // 使用 currentSpeed
+    this.vel = moveVec.copy();
+    let newPos = p5.Vector.add(this.pos, moveVec);
+    let canMove = true;
+    for (let obs of obstacles) {
+      if (obs.collidesWith(newPos, this.ImageWidth, this.ImageHeight)) {
+        let xOnly = createVector(newPos.x, this.pos.y);
+        let yOnly = createVector(this.pos.x, newPos.y);
+
+        if (!obs.collidesWith(xOnly, this.ImageWidth, this.ImageHeight)) {
+          newPos = xOnly; // 只在 X 方向移动
+        } else if (!obs.collidesWith(yOnly, this.ImageWidth, this.ImageHeight)) {
+          newPos = yOnly; // 只在 Y 方向移动
+        } else {
+          canMove = false; // 两个方向都被阻挡，不能移动
+        }
+        break;
+      }
+    }
+    if (canMove) {
+      this.pos = newPos;
+      this.pos.x = constrain(this.pos.x, 0, width);
+      this.pos.y = constrain(this.pos.y, 0, height);
+    }
+  }
+  this.resolveCollision();
+  
+    } else {
     let moving = false;
     if (this.isWebbed) {
       this.webDuration--;
@@ -468,6 +749,7 @@ class Player {
     }
     this.resolveCollision();
   }
+  }
 
   animate() {
     this.animationCounter++;
@@ -575,7 +857,7 @@ class Player {
             ));
             break;
         }
-      } else if (this.characterType === "knight" && !this.isAttacking) {
+      } else if (this.characterType === "knight" && !this.isAttacking && this.dashing == false) {
         this.isAttacking = true;
         this.currentAttackFrame = 0;
         this.currentAttackCooldown = this.attackCooldown;
@@ -617,7 +899,7 @@ class Player {
     for (let i = enemies.length - 1; i >= 0; i--) {
       let enemy = enemies[i];
       if(enemy.attackDetect){
-      let enemyPos = enemy.pos.copy().add(enemy.size / 2, enemy.size / 2);
+      let enemyPos = enemy.pos.copy();
       let toEnemy = p5.Vector.sub(enemyPos, center);
       let distance = toEnemy.mag();
 
@@ -636,7 +918,7 @@ class Player {
             }
             normalEnemiesDefeated++;
             if(enemy.gainExp == false) {
-              player.gainExp(enemy.expValue);
+              this.gainExp(enemy.expValue);
               enemy.gainExp = true;
             }
             
@@ -656,6 +938,15 @@ class Player {
   }
 
   update() {
+    if (this.dashCooldown > 0) this.dashCooldown--;
+
+    if (this.spinningSlashCooldown > 0) this.spinningSlashCooldown--;
+
+    if (this.berserkerMode) {
+      this.critRate = 0.5;
+      this.critDamage = 2.0;
+    }
+
     if (this.isAttacking) {
       if (frameCount % this.attackAnimationSpeed === 0) {
         if (this.currentAttackFrame < this.attackFrames - 1) {
@@ -739,13 +1030,13 @@ class Player {
           let frameX = this.currentAnimation[this.frameIndex] % (this.attackImgLeft.width / this.attackWidthLeft) * this.attackWidthLeft;
           let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.attackImgLeft.width / this.attackWidthLeft)) * this.attackHeightLeft;
           push();
-          image(this.attackImgLeft, this.pos.x - 50, this.pos.y + 20, this.aaImageWidth, this.aaImageHeight, frameX, frameY, this.attackWidthLeft, this.attackHeightLeft);
+          image(this.attackImgLeft, this.pos.x - 50, this.pos.y, this.aaImageWidth, this.aaImageHeight, frameX, frameY, this.attackWidthLeft, this.attackHeightLeft);
           pop();
         } else if (this.characterType === "knight" && this.direction === "attackright") {
           let frameX = this.currentAnimation[this.frameIndex] % (this.attackImgRight.width / this.attackWidthRight) * this.attackWidthRight;
           let frameY = Math.floor(this.currentAnimation[this.frameIndex] / (this.attackImgRight.width / this.attackWidthRight)) * this.attackHeightRight;
           push();
-          image(this.attackImgRight, this.pos.x, this.pos.y + 20, this.aaImageWidth, this.aaImageHeight, frameX, frameY, this.attackWidthRight, this.attackHeightRight);
+          image(this.attackImgRight, this.pos.x, this.pos.y, this.aaImageWidth, this.aaImageHeight, frameX, frameY, this.attackWidthRight, this.attackHeightRight);
           pop();
         }
       }
@@ -783,10 +1074,7 @@ class Player {
       }
     }
 
-    // 攻击范围可视化
-    if (this.characterType === "knight" && this.isAttacking) {
-      this.drawAttackArea();
-    }
+
 
     if (this.characterType === "archer") {
       // 显示箭矢
@@ -809,35 +1097,6 @@ class Player {
     if (this.pet) {
       this.pet.display();
     }
-  }
-
-  // 绘制攻击范围
-  drawAttackArea() {
-    let center = createVector(
-      this.pos.x + this.ImageWidth / 2,
-      this.pos.y + this.ImageHeight / 2
-    );
-
-    push();
-    translate(center.x, center.y);
-    rotate(this.attackDirection.heading());
-
-    // 绘制攻击扇形
-    noFill();
-    stroke(255, 200, 0, 150);
-    strokeWeight(2);
-    arc(0, 0,
-      this.attackRange * 2,
-      this.attackRange * 2,
-      -radians(this.attackAngle / 2),
-      radians(this.attackAngle / 2)
-    );
-
-    // 绘制攻击方向线
-    stroke(255, 100, 0, 200);
-    line(0, 0, this.attackRange, 0);
-
-    pop();
   }
 
   // Archer相关函数

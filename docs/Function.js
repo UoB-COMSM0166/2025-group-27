@@ -842,7 +842,7 @@ function drawUpgradeScreen() {
 // ===== 升级选项 =====
 function generateUpgradeOptions() {
   let allUpgrades;
-   if(player.characterType == "gunner" || player.characterType == "knight"){
+   if(player.characterType == "gunner"){
      allUpgrades = [
     {
       type: "health",
@@ -941,6 +941,42 @@ function generateUpgradeOptions() {
         description: "Increase max HP by 25",
       },
       {
+        type: "speed",
+        name: "Speed Boost",
+        value: 0.5,
+        description: "Increase movement speed",
+      },
+      {
+        type: "fireRate",
+        name: "Fire Rate",
+        value: 2,
+        description: "Increase shooting speed",
+      },
+      {
+        type: "defense",
+        name: "Defense Boost",
+        value: 0.2,
+        description: "Reduce incoming damage",
+      },
+      {
+        type: "criticalChance",
+        name: "Critical Chance",
+        value: 0.05,
+        description: "Increase critical chance by 5%",
+      },
+      {
+        type: "expBonus",
+        name: "EXP Bonus",
+        value: 0.1,
+        description: "Gain 10% more EXP",
+      },
+      {
+        type: "armorPen",
+        name: "Armor Penetration",
+        value: 0.1,
+        description: "Ignore 10% of enemy defense",
+      },
+      {
         type: "attack",
         name: "Attack Boost",
         value: 5,
@@ -979,6 +1015,74 @@ function generateUpgradeOptions() {
         name: "Auto-Charge",
         value: "autoCharge",
         description: "Automatically charge arrows when not attacking",
+        oneTime: true,
+      },
+    ];
+  } else if(player.characterType == "knight"){
+    allUpgrades = [
+      {
+        type: "health",
+        name: "Health Boost",
+        value: 25,
+        description: "Increase max HP by 25",
+      },
+      {
+        type: "speed",
+        name: "Speed Boost",
+        value: 0.5,
+        description: "Increase movement speed",
+      },
+      {
+        type: "defense",
+        name: "Defense Boost",
+        value: 0.2,
+        description: "Reduce incoming damage",
+      },
+      {
+        type: "expBonus",
+        name: "EXP Bonus",
+        value: 0.1,
+        description: "Gain 10% more EXP",
+      },
+      {
+        type: "armorPen",
+        name: "Armor Penetration",
+        value: 0.1,
+        description: "Ignore 10% of enemy defense",
+      },
+      {
+        type: "healthBoostAndLifeSteal",
+        name: "Life Steal Giant",
+        //value: "pierce",
+        description: "Max Health 300 and gain 20% Life Steal",
+        oneTime: true,
+      },
+      {
+        type: "berserker",
+        name: "Berserker Mode",
+        //value: "split",
+        description: "50% critical rate, 200% critical damage",
+        oneTime: true,
+      },
+      {
+        type: "reborn",
+        name: "Blessing of the Immortal Bird",
+        //value: "double",
+        description: "gain 100 HP after dying (One Time!)",
+        oneTime: true,
+      },
+      {
+        type: "fastWalk",
+        name: "Dash!",
+        //value: "lifesteal",
+        description: "Press [Shift] to move faster",
+        oneTime: true,
+      },
+      {
+        type: "spinningSlash",
+        name: "Spinning Slash",
+        //value: "autoCharge",
+        description: "Press [E] to launch Spinning Slash skill",
         oneTime: true,
       },
     ];
