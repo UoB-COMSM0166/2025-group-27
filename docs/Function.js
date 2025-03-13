@@ -46,9 +46,6 @@ function handleGameplay(now) {
   } else if(wave == 10 && !obstacleBuild){
     obstacles = [];
     generateInitialObstacles();
-  } else if(!obstacleBuild){
-    obstacles = [];
-    generateInitialObstacles();
   }
 
   // 更新并显示障碍物
@@ -798,10 +795,15 @@ function generateInitialObstacles() {
     }
     obstacleBuild = true;
 
-    
+    if(wave<=10){
     if (valid)
       obstacles.push(new Obstacle(x, y, obsWidth, obsHeight, isVertical));
     attempts++;
+    } if(wave > 10){
+      if(valid)
+      obstacles.push(new Obstacle(x, y, 100, 100, isVertical));
+    attempts++;
+    }
   }
 }
 

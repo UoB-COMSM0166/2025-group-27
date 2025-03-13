@@ -52,11 +52,11 @@ class Obstacle {
         image(obstacle, this.pos.x, this.pos.y, this.width, this.height);
       }
     } else {
-      if(this.isVertical){
-        image(obstacle1, this.pos.x, this.pos.y, this.width, this.height);
-      } else{
-        image(obstacle2, this.pos.x, this.pos.y, this.width, this.height);
-      }
+        if(this.isVertical){
+        image(obstacle5, this.pos.x, this.pos.y, 100, 100);
+        } else {
+        image(obstacle7, this.pos.x, this.pos.y, 70, 70);
+        }
     }
   }
 
