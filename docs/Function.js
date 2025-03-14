@@ -310,12 +310,12 @@ function initButtons() {
   const baseX = width / 2 - 30;
 
   mainMenuButtons = [
-    new Button(width / 2 - 100, baseY - 50, 200, 40, "Resume Game", () => {
+    new Button(width / 2 - 100, baseY, 200, 40, "Resume Game", () => {
       buttonsound.play();
       loadSavedGame();
       gameState = "game"; // 从暂停改为直接进入游戏
     }),
-    new Button(width / 2 - 100, baseY, 200, 40, "Start Game(easy)", () => {
+    new Button(width / 2 - 100, baseY + 50, 200, 40, "Start Game(easy)", () => {
       buttonsound.play();
       savedGame = null;
       wave = 1; // 重置波数
@@ -324,7 +324,7 @@ function initButtons() {
       gameState = "story1";
       difficult = "easy";
     }),
-    new Button(width / 2 - 100, baseY + 50, 200, 40, "Start Game(hard)", () => {
+    new Button(width / 2 - 100, baseY + 100, 200, 40, "Start Game(hard)", () => {
       buttonsound.play();
       savedGame = null;
       wave = 1; // 重置波数
@@ -333,11 +333,11 @@ function initButtons() {
       gameState = "story1";
       difficult = "hard";
     }),
-    new Button(width / 2 - 100, baseY + 100, 200, 40, "Setting", () => {
+    new Button(width / 2 - 100, baseY + 150, 200, 40, "Setting", () => {
       buttonsound.play();
       gameState = "setting";
     }),
-    new Button(width / 2 - 100, baseY + 150, 200, 40, "Quit Game", () => {
+    new Button(width / 2 - 100, baseY + 200, 200, 40, "Quit Game", () => {
       buttonsound.play();
       noLoop()
 }),
