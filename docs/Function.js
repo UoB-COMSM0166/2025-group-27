@@ -85,7 +85,7 @@ function handleGameplay(now) {
       
       // 处理第10波的胜利情况
       if (wave === 10) {
-        gameState = "victory";
+        gameState = "vStory";
         finalStats = {
           normalEnemies: normalEnemiesDefeated,
           bosses: bossDefeated,
@@ -235,7 +235,7 @@ function handleGameplay(now) {
     }
 
     if (wave === 10) {
-      gameState = "victory";
+      gameState = "vStory";
       finalStats = {
         normalEnemies: normalEnemiesDefeated,
         bosses: bossDefeated,
@@ -711,7 +711,67 @@ function displayStoryPage3() {
 
   fill(255); // 文字颜色（白色）
   textSize(15);
+  text("Next", buttonX + buttonW / 2, buttonY + buttonH / 2);
+}
+
+function displayStoryPage4() {
+  image(story3, 0, 0, width, height);
+
+  buttonW = 100;
+  buttonH = 30;
+  buttonX = width - buttonW - 20; // 距离右侧 20 像素
+  buttonY = height - buttonH - 20; // 距离底部 20 像素
+  fill(0, 0, 255); // 按钮颜色（蓝色）
+  rect(buttonX, buttonY, buttonW, buttonH, 10); // 圆角按钮
+
+  fill(255); // 文字颜色（白色）
+  textSize(15);
   text("Start journey!", buttonX + buttonW / 2, buttonY + buttonH / 2);
+}
+
+function displayVictoryPage1() {
+  image(story1, 0, 0, width, height);
+
+  buttonW = 100;
+  buttonH = 30;
+  buttonX = width - buttonW - 20; // 距离右侧 20 像素
+  buttonY = height - buttonH - 20; // 距离底部 20 像素
+  fill(0, 0, 255); // 按钮颜色（蓝色）
+  rect(buttonX, buttonY, buttonW, buttonH, 10); // 圆角按钮
+
+  fill(255); // 文字颜色（白色）
+  textSize(30);
+  text("Next", buttonX + buttonW / 2, buttonY + buttonH / 2);
+}
+
+function displayVictoryPage2() {
+  image(story2, 0, 0, width, height);
+
+  buttonW = 100;
+  buttonH = 30;
+  buttonX = width - buttonW - 20; // 距离右侧 20 像素
+  buttonY = height - buttonH - 20; // 距离底部 20 像素
+  fill(0, 0, 255); // 按钮颜色（蓝色）
+  rect(buttonX, buttonY, buttonW, buttonH, 10); // 圆角按钮
+
+  fill(255); // 文字颜色（白色）
+  textSize(30);
+  text("Next", buttonX + buttonW / 2, buttonY + buttonH / 2);
+}
+
+function displayVictoryPage3() {
+  image(story3, 0, 0, width, height);
+
+  buttonW = 100;
+  buttonH = 30;
+  buttonX = width - buttonW - 20; // 距离右侧 20 像素
+  buttonY = height - buttonH - 20; // 距离底部 20 像素
+  fill(0, 0, 255); // 按钮颜色（蓝色）
+  rect(buttonX, buttonY, buttonW, buttonH, 10); // 圆角按钮
+
+  fill(255); // 文字颜色（白色）
+  textSize(30);
+  text("END!", buttonX + buttonW / 2, buttonY + buttonH / 2);
 }
 
 function displayCharacterSelection() {
@@ -744,7 +804,7 @@ function displayPauseMenu() {
   text(`Paused for: ${pausedTime}s`, width / 2, height / 3 + 30);
 
   text(`Level: ${player.level}`, width / 2, height / 2);
-  text(`Health: ${player.health}`, width / 2, height / 2 + 30);
+  text(`Health: ${Math.round(player.health)}`, width / 2, height / 2 + 30);
   text(`XP: ${player.exp}`, width / 2, height / 2 + 60);
   text("Save Game (Press 'S')", width / 2, height / 2 + 90);
   text("Return to Main Menu (Press 'M')", width / 2, height / 2 + 120);
@@ -842,7 +902,8 @@ function drawUpgradeScreen() {
     textSize(20);
     text(option.name, x, y - 20);
     textSize(16);
-    text(option.description, x, y + 20);
+    textWrap(WORD);
+    text(option.description, x - 100, y + 20, 200);
   }
   textAlign(LEFT);
 }
@@ -1059,37 +1120,42 @@ function generateUpgradeOptions() {
         description: "Ignore 10% of enemy defense",
       },
       {
+        type: "attackRange",
+        name: "Attack Range Boost",
+        description: "Increase Attack Range",
+      },
+      {
+        type: "attackAngle",
+        name: "Attack Angle Boost",
+        description: "Increase Attack Angle",
+      },
+      {
         type: "healthBoostAndLifeSteal",
         name: "Life Steal Giant",
-        //value: "pierce",
         description: "Max Health 300 and gain 20% Life Steal",
         oneTime: true,
       },
       {
         type: "berserker",
         name: "Berserker Mode",
-        //value: "split",
         description: "50% critical rate, 200% critical damage",
         oneTime: true,
       },
       {
         type: "reborn",
-        name: "Blessing of the Immortal Bird",
-        //value: "double",
+        name: "Blessing of Phoenix",
         description: "gain 100 HP after dying (One Time!)",
         oneTime: true,
       },
       {
         type: "fastWalk",
         name: "Dash!",
-        //value: "lifesteal",
         description: "Press [Shift] to move faster",
         oneTime: true,
       },
       {
         type: "spinningSlash",
         name: "Spinning Slash",
-        //value: "autoCharge",
         description: "Press [E] to launch Spinning Slash skill",
         oneTime: true,
       },
