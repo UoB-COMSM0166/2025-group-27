@@ -487,8 +487,7 @@ class BirdBoss extends Boss {
     // 调用 Boss 构造函数
     super(true, "boss", birdBossAction, 200, 160);
     this.birdBossAction = birdBossAction;
-    this.feathers = [];
-
+    
     // Boss 属性设置（可根据需求调整数值）
     this.health = 800;
     this.maxHealth = 800;
@@ -551,18 +550,19 @@ class BirdBoss extends Boss {
   hit(damage) {
     if (!this.isActive) return false;
 
-    // 生成4片羽毛，以Boss当前位置为中心稍作偏移
+    // 生成羽毛，使用对象池
     let offsets = [
       createVector(-30, -30),
       createVector(30, -30),
       createVector(-15, 0),
       createVector(15, 0)
     ];
+    
+    // 只生成羽毛，如果池中有空间
     for (let off of offsets) {
       let fx = this.pos.x + off.x;
       let fy = this.pos.y + off.y;
-      let feather = new Feather(fx, fy, featherSprite);
-      this.feathers.push(feather);
+      featherPool.get(fx, fy, featherSprite);
     }
 
     if (this.invulnerableTime <= 0) {
@@ -618,80 +618,61 @@ class BirdBoss extends Boss {
   update() {
     try {
       if (!this.isActive || !player) return;
-
-      // 始终更新羽毛掉落动画和羽毛数组
+      
+      // 羽毛掉落效果处理
       if (this.featherFalling) {
         this.featherOffsetY += 2;
         if (millis() >= this.featherEndTime) {
           this.featherFalling = false;
         }
       }
-      // 更新所有由 Boss 生成的羽毛对象
-      for (let i = this.feathers.length - 1; i >= 0; i--) {
-        let f = this.feathers[i];
-        f.update();
-        if (f.isOffScreen()) {
-          this.feathers.splice(i, 1);
+      
+      // === 恢复移动和攻击逻辑 ===
+      if (!this.isFrozen) {
+        // 计算到玩家的方向和距离
+        let dirToPlayer = p5.Vector.sub(player.pos, this.pos);
+        let distToPlayer = dirToPlayer.mag();
+        dirToPlayer.normalize();
+
+        // 更新攻击模式
+        this.patternTimer++;
+        if (this.patternTimer > 180) {
+          this.attackPattern = (this.attackPattern + 1) % 2;
+          this.patternTimer = 0;
         }
-      }
 
-      this.animate();
-
-      // 如果 Boss 处于冻结状态，则只更新计时器，不执行移动和攻击
-      if (this.isFrozen) {
-        if (millis() >= this.freezeEndTime) {
-          this.isFrozen = false;
+        // 根据攻击模式执行不同的行为
+        if (this.isDashing) {
+          // 冲刺状态
+          this.pos.add(p5.Vector.mult(dirToPlayer, this.dashSpeed));
+          this.dashDuration--;
+          if (this.dashDuration <= 0) {
+            this.isDashing = false;
+          }
         } else {
+          // 正常移动状态
+          if (distToPlayer > this.attackRange) {
+            // 追踪玩家
+            this.pos.add(p5.Vector.mult(dirToPlayer, this.speed));
+          }
+          
+          // 更新冷却时间
+          if (this.dashCooldown > 0) this.dashCooldown--;
+          if (this.meleeAttackCooldown > 0) this.meleeAttackCooldown--;
 
-          this.updateTimers();
-          return;
+          // 执行攻击模式
+          this.executeAttackPattern(dirToPlayer);
+
+          // 近战攻击检测
+          if (distToPlayer < this.meleeAttackRange && this.meleeAttackCooldown <= 0) {
+            this.performMeleeAttack();
+          }
         }
       }
 
-      // 正常 Boss 更新逻辑：无敌时间、攻击模式、移动、攻击等
+      // 更新无敌时间
       if (this.invulnerableTime > 0) {
         this.invulnerableTime--;
-      }
-
-      this.patternTimer++;
-      if (this.patternTimer > 180) {  // 从240降到180
-        this.attackPattern = (this.attackPattern + 1) % 2;
-        this.patternTimer = 0;
-      }
-
-
-      if (this.health < this.maxHealth * 0.6 && !this.isEnraged) {
-        this.isEnraged = true;
-        this.enrageTimer = 300;
-        this.speed *= 1.5;
-        this.damage *= 1.5;
-      }
-
-      let distToPlayer = p5.Vector.dist(this.pos, player.pos);
-      let dirToPlayer = p5.Vector.sub(player.pos, this.pos).normalize();
-
-      if (!this.shieldActive) {
-        if (this.isDashing) {
-          this.handleDashing(dirToPlayer);
-        } else {
-          this.handleNormalMovement(dirToPlayer);
-        }
-        if (distToPlayer <= this.meleeAttackRange && this.meleeAttackCooldown <= 0) {
-          this.performMeleeAttack();
-        }
-        this.executeAttackPattern(dirToPlayer);
-      }
-
-      this.updateTimers();
-
-      this.pos.x = constrain(this.pos.x, 0, width);
-      this.pos.y = constrain(this.pos.y, 0, height);
-
-      if (p5.Vector.dist(this.pos, player.pos) < this.radius + player.radius) {
-        let knockbackDir = p5.Vector.sub(player.pos, this.pos).normalize();
-        player.pos.add(knockbackDir.mult(20)); // 将玩家击退20个单位
-        this.isFrozen = true;
-        this.freezeEndTime = millis() + 2000; // Boss 冻结2秒
       }
 
       this.animate();
@@ -834,9 +815,12 @@ class BirdBoss extends Boss {
     this.displayHealthBar();
 
     // 绘制羽毛
-    for (let f of this.feathers) {
-      f.display();
-    }
+    // 移除这段遍历this.feathers的代码
+    // for (let f of this.feathers) {
+    //   f.display();
+    // }
+    
+    // 其他现有代码保持不变...
   }
 
   displayHealthBar() {
@@ -2188,3 +2172,68 @@ class BugBoss extends Enemy {
     pop();
   }
 }
+
+// 在全局添加羽毛对象池
+class FeatherPool {
+  constructor(maxSize = 80) {
+    this.pool = [];
+    this.maxSize = maxSize;
+    this.active = [];
+  }
+  
+  get(x, y, sprite) {
+    // 检查是否已达到最大数量限制
+    if (this.active.length >= this.maxSize) {
+      // 回收最早创建的羽毛
+      if (this.active.length > 0) {
+        this.release(this.active[0]);
+      }
+    }
+    
+    // 从池中获取可用对象
+    let feather;
+    if (this.pool.length > 0) {
+      feather = this.pool.pop();
+      feather.reset(x, y, sprite);
+    } else {
+      feather = new Feather(x, y, sprite);
+    }
+    
+    this.active.push(feather);
+    return feather;
+  }
+  
+  release(feather) {
+    // 从活动列表中移除
+    const index = this.active.indexOf(feather);
+    if (index !== -1) {
+      this.active.splice(index, 1);
+      
+      // 重置状态并加入池中
+      feather.lifetime = 0;
+      this.pool.push(feather);
+    }
+  }
+  
+  update() {
+    // 更新所有活动羽毛
+    for (let i = this.active.length - 1; i >= 0; i--) {
+      const feather = this.active[i];
+      if (!feather.update()) {
+        this.release(feather);
+      }
+    }
+  }
+  
+  display() {
+    // 只显示在屏幕内的羽毛
+    for (const feather of this.active) {
+      if (!feather.isOffScreen()) {
+        feather.display();
+      }
+    }
+  }
+}
+
+// 创建全局羽毛池实例
+const featherPool = new FeatherPool(80);

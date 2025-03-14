@@ -3,7 +3,7 @@ class Feather {
     this.pos = createVector(x, y);
     this.vel = createVector(0, 2);
     this.sprite = sprite;
-    this.lifetime = 120; // 减少生命周期到2秒
+    this.lifetime = 80; // 减少生命周期
     
     // 减少动画帧数和更新频率
     this.totalFrames = 8;
@@ -11,8 +11,9 @@ class Feather {
     this.frameDelay = 8; // 降低帧率
     this.frameCounter = 0;
 
-    this.frameWidth = this.sprite.width / this.totalFrames;
-    this.frameHeight = this.sprite.height;
+    // 预计算尺寸值
+    this.frameWidth = this.sprite ? this.sprite.width / this.totalFrames : 0;
+    this.frameHeight = this.sprite ? this.sprite.height : 0;
     
     // 预计算一些值以提高性能
     this.size = {
@@ -21,31 +22,50 @@ class Feather {
     };
   }
 
-  update() {
-    // 使用整数运算提高性能
-    this.lifetime = this.lifetime - 1;
+  // 添加重置方法以支持对象池复用
+  reset(x, y, sprite) {
+    this.pos.x = x;
+    this.pos.y = y;
+    this.vel.set(0, 2);
+    this.lifetime = 80;
     
-    // 简化速度计算
+    if (sprite && this.sprite !== sprite) {
+      this.sprite = sprite;
+      this.frameWidth = this.sprite.width / this.totalFrames;
+      this.frameHeight = this.sprite.height;
+      this.size = {
+        width: this.frameWidth,
+        height: this.frameHeight
+      };
+    }
+    
+    this.currentFrame = Math.floor(random(8));
+    this.frameCounter = 0;
+    return this;
+  }
+
+  update() {
+    this.lifetime--;
+    
     this.pos.x += this.vel.x;
     this.pos.y += this.vel.y;
     
-    // 减少动画更新频率
+    // 降低动画更新频率
     if (frameCount % this.frameDelay === 0) {
       this.currentFrame = (this.currentFrame + 1) % this.totalFrames;
     }
     
-    return !(this.isOffScreen() || this.lifetime <= 0);
+    return this.lifetime > 0 && !this.isOffScreen();
   }
 
   display() {
-    if (this.lifetime <= 0) return;
+    if (this.lifetime <= 0 || !this.sprite) return;
     
     push();
-    // 使用整数运算优化透明度计算
-    const alpha = Math.floor((this.lifetime / 120) * 255);
+    // 整数运算优化透明度计算
+    const alpha = Math.floor((this.lifetime / 80) * 255);
     tint(255, alpha);
     
-    // 使用预计算的尺寸
     image(
       this.sprite,
       Math.floor(this.pos.x),
@@ -61,7 +81,6 @@ class Feather {
   }
 
   isOffScreen() {
-    // 简化边界检查
     const margin = 50;
     return (this.pos.x < -margin || 
             this.pos.x > width + margin || 

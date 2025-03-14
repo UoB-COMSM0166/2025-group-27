@@ -21,6 +21,10 @@ function handleGameplay(now) {
   player.update();
   player.display();
 
+  // 更新并显示羽毛对象池
+  featherPool.update();
+  featherPool.display();
+
   //更新并绘制羽毛
   feathers = feathers.filter((feather) => {
     // 如果羽毛数量超过限制，移除最早的羽毛
