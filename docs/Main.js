@@ -449,6 +449,18 @@ function draw() {
     case "story3":
       displayStoryPage3();
       break;
+    case "story4":
+      displayStoryPage4();
+      break;
+    case "vStory":
+      displayVictoryPage1();
+      break;
+    case "vStory1":
+      displayVictoryPage2();
+      break;
+    case "vStory2":
+      displayVictoryPage3();
+      break;
   }
 
   // 处理浮动文字

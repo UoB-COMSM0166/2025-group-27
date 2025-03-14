@@ -8,7 +8,19 @@ function mouseClicked() {
     gameState = "story3";
   } else if (gameState == "story3" && mouseX > buttonX && mouseX < buttonX + buttonW &&
     mouseY > buttonY && mouseY < buttonY + buttonH) {
+    gameState = "story4";
+  } else if (gameState == "story4" && mouseX > buttonX && mouseX < buttonX + buttonW &&
+    mouseY > buttonY && mouseY < buttonY + buttonH) {
     gameState = "menu";
+  } else if (gameState == "vStory" && mouseX > buttonX && mouseX < buttonX + buttonW &&
+    mouseY > buttonY && mouseY < buttonY + buttonH) {
+    gameState = "vStory1";
+  } else if (gameState == "vStory1" && mouseX > buttonX && mouseX < buttonX + buttonW &&
+    mouseY > buttonY && mouseY < buttonY + buttonH) {
+    gameState = "vStory2";
+  } else if (gameState == "vStory2" && mouseX > buttonX && mouseX < buttonX + buttonW &&
+    mouseY > buttonY && mouseY < buttonY + buttonH) {
+    gameState = "victory";
   }
 }
 

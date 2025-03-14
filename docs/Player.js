@@ -334,6 +334,12 @@ class Player {
       case "spinningSlash":
         this.spinningSlash = true;
         break;
+      case "attackRange":
+        this.attackRange += 5;
+        break;
+      case "attackAngle":
+        this.attackAngle += 5;
+        break;
     }
     choosingUpgrade = false;
   }
