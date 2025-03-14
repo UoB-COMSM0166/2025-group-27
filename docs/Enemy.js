@@ -710,9 +710,9 @@ class BirdBoss extends Boss {
         this.sonicWaves.push({
           x: this.pos.x,
           y: this.pos.y,
-          radius: 10,
-          maxRadius: 100,
-          alpha: 200
+          radius: 20,        // 初始半径更大
+          maxRadius: 200,    // 最大半径更大
+          alpha: 230         // 透明度更高
         });
         
         this.screechwaveCount++;
@@ -736,21 +736,31 @@ class BirdBoss extends Boss {
       // 检测与玩家的碰撞
       if (player && !player.stunned) {
         let distToPlayer = dist(wave.x, wave.y, player.pos.x, player.pos.y);
-        if (distToPlayer < wave.radius + player.radius && 
-            distToPlayer > wave.radius - 10) {
-          // 眩晕玩家
+        // 更宽的碰撞检测范围
+        if (distToPlayer < wave.radius + player.radius + 15 && 
+            distToPlayer > wave.radius - 20) {
+          // 眩晕玩家（稍微延长时间）
           player.stunned = true;
-          player.stunDuration = 60; // 眩晕1秒
-          showFloatingText("Stunned!", player.pos.x, player.pos.y - 30, color(255, 255, 0));
+          player.stunDuration = 75; // 延长眩晕时间到1.25秒
+          showFloatingText("Stunned!", player.pos.x, player.pos.y - 30, color(255, 255, 0), 20);
         }
       }
       
       // 绘制声波
       push();
       noFill();
-      strokeWeight(3);
-      stroke(100, 200, 255, wave.alpha);
+      strokeWeight(5);  // 更粗的线条
+      // 使用渐变色
+      let c1 = color(100, 200, 255, wave.alpha);
+      let c2 = color(200, 100, 255, wave.alpha * 0.7);
+      let interColor = lerpColor(c1, c2, wave.radius / wave.maxRadius);
+      stroke(interColor);
       ellipse(wave.x, wave.y, wave.radius * 2);
+
+      // 添加内圈增强效果
+      stroke(255, 255, 255, wave.alpha * 0.5);
+      strokeWeight(2);
+      ellipse(wave.x, wave.y, wave.radius * 1.8);
       pop();
       
       // 移除完成的声波
@@ -948,8 +958,8 @@ class BirdBoss extends Boss {
     // 重置冷却时间
     this.sonicScreechCooldown = 300;
     
-    // 显示技能使用提示
-    showFloatingText("Sonic Screech!", this.pos.x, this.pos.y - 40, color(255, 50, 50), 20);
+    // 显示技能使用提示（更大字体）
+    showFloatingText("Sonic Screech!", this.pos.x, this.pos.y - 40, color(255, 50, 50), 24);
   }
 }
 
