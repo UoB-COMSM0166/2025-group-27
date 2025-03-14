@@ -359,6 +359,7 @@ class HealerPet extends BasePet {
 }
 
 function showPetSelectionScreen() {
+  push();
   background(0, 180);
 
   fill(255);
@@ -366,9 +367,9 @@ function showPetSelectionScreen() {
   textAlign(CENTER, CENTER);
   text("Choose your combat partner!", width / 2, height / 6);
 
-  let boxWidth = 220;
-  let boxHeight = 140;
-  let yOffset = height / 2 - 60;
+  let boxWidth = 300;
+  let boxHeight = 200;
+  let yOffset = height / 2 - 100;
 
   fill(50, 50, 50, 200);
   rect(width / 4 - boxWidth / 2, yOffset, boxWidth, boxHeight, 15);
@@ -377,33 +378,90 @@ function showPetSelectionScreen() {
 
   fill(255);
   textSize(24);
-  text("Blaze 🔥", width / 4, yOffset + 30);
-  text("Aegis 🛡️", width / 2, yOffset + 30);
-  text("Aurora ✨", width * 3 / 4, yOffset + 30);
+  text("Blaze 🔥", width / 4, yOffset + 40);
+  text("Aegis 🛡️", width / 2, yOffset + 40);
+  text("Aurora ✨", width * 3 / 4, yOffset + 40);
+
+  let eggY = yOffset + (40 + 180) / 2;
+  imageMode(CENTER);
+  image(eggFox, width / 4, eggY, 100, 100);
+  image(eggCow, width / 2, eggY, 100, 100);
+  image(eggFairy, width * 3 / 4, eggY, 100, 100);
 
   textSize(16);
   fill(255, 230);
-  text("Auto-attacks nearby enemies", width / 4, yOffset + 70);
-  text("Gives a 1.5s shield every 15s", width / 2, yOffset + 70);
-  text("Heals 0.4 HP per second", width * 3 / 4, yOffset + 70);
+  text("Auto-attacks nearby enemies", width / 4, yOffset + 180);
+  text("Gives a 1.5s shield every 15s", width / 2, yOffset + 180);
+  text("Heals 0.4 HP per second", width * 3 / 4, yOffset + 180);
+  pop();
 
 
   if (mouseIsPressed) {
     if (mouseX > width / 4 - boxWidth / 2 && mouseX < width / 4 + boxWidth / 2 &&
       mouseY > yOffset && mouseY < yOffset + boxHeight) {
+
       player.pet = new AttackPet(player.pos.x, player.pos.y);
-      gameState = "game";
+      selectedPetFrontImage = foxMoveFront;
+      gameState = "petReveal";
+      petRevealTimer = 0;
+      petRevealFrameIndex = 0;
+      petRevealFrameCounter = 0;
     } else if (mouseX > width / 2 - boxWidth / 2 && mouseX < width / 2 + boxWidth / 2 &&
       mouseY > yOffset && mouseY < yOffset + boxHeight) {
+
       player.pet = new DefensePet();
-      gameState = "game";
+      selectedPetFrontImage = cowMoveFront;
+      gameState = "petReveal";
+      petRevealTimer = 0;
+      petRevealFrameIndex = 0;
+      petRevealFrameCounter = 0;
     } else if (mouseX > width * 3 / 4 - boxWidth / 2 && mouseX < width * 3 / 4 + boxWidth / 2 &&
       mouseY > yOffset && mouseY < yOffset + boxHeight) {
+
       player.pet = new HealerPet();
-      gameState = "game";
+      selectedPetFrontImage = fairyMoveFront;
+      gameState = "petReveal";
+      petRevealTimer = 0;
+      petRevealFrameIndex = 0;
+      petRevealFrameCounter = 0;
     }
   }
 }
+
+function displayPetReveal() {
+  push();
+  background(0);
+  imageMode(CENTER);
+
+  if (selectedPetFrontImage) {
+    let frameWidth = selectedPetFrontImage.width / petRevealTotalFrames;
+    let frameHeight = selectedPetFrontImage.height;
+    petRevealFrameCounter++;
+    if (petRevealFrameCounter >= petRevealFrameDelay) {
+      petRevealFrameCounter = 0;
+      petRevealFrameIndex = (petRevealFrameIndex + 1) % petRevealTotalFrames;
+    }
+    let sx = petRevealFrameIndex * frameWidth;
+    image(
+      selectedPetFrontImage,
+      width / 2,
+      height / 2,
+      150,
+      150,
+      sx,
+      0,
+      frameWidth,
+      frameHeight
+    );
+  }
+  pop();
+
+  petRevealTimer++;
+  if (petRevealTimer > 60) {
+    finishPetSelection();
+  }
+}
+
 
 function finishPetSelection() {
   player.needsPetSelection = false;
@@ -411,7 +469,3 @@ function finishPetSelection() {
   spawnEnemiesForWave(wave);
   gameState = "game";
 }
-
-
-
-

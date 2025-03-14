@@ -70,6 +70,14 @@ let mainMenuButton = [];
 let endlessModeButton = [];
 let victoryButtons = [];
 
+let selectedPetFrontImage = null;
+let petRevealTimer = 0;
+let petRevealFrameIndex = 0;
+let petRevealFrameCounter = 0;
+let petRevealFrameDelay = 10;
+let petRevealTotalFrames = 4;
+
+
 // ----- 天气效果绘制 -----
 // 热天效果：利用噪声生成水平条纹模拟热浪扭曲效果
 function drawHeatHaze() {
@@ -166,22 +174,22 @@ function drawWeatherEffects() {
 // 如果选择的是特殊天气（hot, snowy, thunderstorm），则持续效果为20秒，之后自动恢复为 normal
 function updateWeather() {
   let currentTime = millis();
-  if(gameState == "game"){
-  // 每隔 60000 毫秒重新随机选择天气
-  if (currentTime - lastWeatherChange > 30000) {
-    let weatherOptions = ["normal", "hot", "snowy", "thunderstorm"];
-    weather = random(weatherOptions);
-    lastWeatherChange = currentTime;
-    weatherStartTime = currentTime;
+  if (gameState == "game") {
+    // 每隔 60000 毫秒重新随机选择天气
+    if (currentTime - lastWeatherChange > 30000) {
+      let weatherOptions = ["normal", "hot", "snowy", "thunderstorm"];
+      weather = random(weatherOptions);
+      lastWeatherChange = currentTime;
+      weatherStartTime = currentTime;
 
-    // 如果选到雷暴，则以玩家当前位置作为闪电起点
-    if (weather === "thunderstorm") {
-      lightningZone = player.pos.copy();
-      lightningChain = [lightningZone];
-      lastLightningTime = currentTime;
+      // 如果选到雷暴，则以玩家当前位置作为闪电起点
+      if (weather === "thunderstorm") {
+        lightningZone = player.pos.copy();
+        lightningChain = [lightningZone];
+        lastLightningTime = currentTime;
+      }
     }
   }
-}
 
   // 如果当前天气为特殊天气且持续超过20秒，则自动恢复为 normal
   if (weather !== "normal" && currentTime - weatherStartTime > 20000) {
@@ -305,6 +313,7 @@ function preload() {
   foxMoveFront = loadImage("./assets/selected_images/pets/fox/fox_move_front.png");
   foxMoveLeft = loadImage("./assets/selected_images/pets/fox/fox_move_left.png");
   foxMoveRight = loadImage("./assets/selected_images/pets/fox/fox_move_right.png");
+  eggFox = loadImage("./assets/selected_images/pets/eggs/egg_fox.gif");
 
   foxAttackBack = loadImage("./assets/selected_images/pets/fox/fox_attack_back.png");
   foxAttackFront = loadImage("./assets/selected_images/pets/fox/fox_attack_front.png");
@@ -317,14 +326,14 @@ function preload() {
   cowMoveLeft = loadImage("./assets/selected_images/pets/cow/cow_move_left.png");
   cowMoveRight = loadImage("./assets/selected_images/pets/cow/cow_move_right.png");
   cowCover = loadImage("./assets/selected_images/pets/cow/cover.png");
-
+  eggCow = loadImage("./assets/selected_images/pets/eggs/egg_cow.gif");
 
   //宠物三
   fairyMoveBack = loadImage("./assets/selected_images/pets/fairy/fairy_move_back.png");
   fairyMoveFront = loadImage("./assets/selected_images/pets/fairy/fairy_move_front.png");
   fairyMoveLeft = loadImage("./assets/selected_images/pets/fairy/fairy_move_left.png");
   fairyMoveRight = loadImage("./assets/selected_images/pets/fairy/fairy_move_right.png");
-
+  eggFairy = loadImage("./assets/selected_images/pets/eggs/egg_fairy.gif");
 
   //sound相关
   //UI声音
@@ -353,7 +362,7 @@ function preload() {
 
   // 加载幽冥鬼火图片
   ghostFireImg = loadImage("./assets/candidate_images/effects/skill_effects/drip/flame/blue_fire.png");
-  
+
   // 加载鬼火消失特效
   ghostDeathEffect = loadImage("./assets/candidate_images/effects/death_effects/blood_burst/AmoebaSplat2.png");
 
@@ -409,6 +418,9 @@ function draw() {
     case "petSelection":
       showPetSelectionScreen();
       break;
+    case "petReveal":
+      displayPetReveal();
+      break;
     case "game":
       handleGameplay(millis());
       pauseButton.display();
@@ -455,7 +467,7 @@ function draw() {
   if (showAttributes) {
     displayAttributes();
   }
-  
+
   enemies.forEach(enemy => {
     if (enemy.isDying) {
       updateDeathEffect(enemy);
@@ -463,9 +475,9 @@ function draw() {
   });
 
   enemies.forEach(enemy => {
-    if (enemy.health<=0 && enemy.dead) {
+    if (enemy.health <= 0 && enemy.dead) {
       let index = enemies.indexOf(enemy);
-      enemies.splice(index,1);
+      enemies.splice(index, 1);
     }
   });
 
@@ -478,11 +490,11 @@ function draw() {
       enemy.drawFogEffect();
     }
   }
-  if(gameState == "game"){
-  // 显示当前天气文本
-  textSize(16);
-  fill(255);
-  text("Weather：" + weather, 70, height - 10);
+  if (gameState == "game") {
+    // 显示当前天气文本
+    textSize(16);
+    fill(255);
+    text("Weather：" + weather, 70, height - 10);
   }
 
   // === 添加血条和经验条 ===
@@ -500,41 +512,41 @@ function drawPlayerStats() {
   if (!player) {
     return;
   }
-  if(gameState == "game"){
-  // 血条
-  const healthBarWidth = 200;
-  const healthBarHeight = 20;
-  const healthPercentage = player.health / player.maxHealth;
-  fill(255, 0, 0); // 红色表示已损失的血量
-  rect(10, 10, healthBarWidth, healthBarHeight);
-  fill(0, 255, 0); // 绿色表示当前血量
-  rect(10, 10, healthBarWidth * healthPercentage, healthBarHeight);
-  fill(255);
-  textSize(12);
-  textAlign(CENTER, CENTER);
-  text(
-    `HP: ${Math.floor(player.health)} / ${player.maxHealth}`,
-    10 + healthBarWidth / 2,
-    10 + healthBarHeight / 2
-  );
+  if (gameState == "game") {
+    // 血条
+    const healthBarWidth = 200;
+    const healthBarHeight = 20;
+    const healthPercentage = player.health / player.maxHealth;
+    fill(255, 0, 0); // 红色表示已损失的血量
+    rect(10, 10, healthBarWidth, healthBarHeight);
+    fill(0, 255, 0); // 绿色表示当前血量
+    rect(10, 10, healthBarWidth * healthPercentage, healthBarHeight);
+    fill(255);
+    textSize(12);
+    textAlign(CENTER, CENTER);
+    text(
+      `HP: ${Math.floor(player.health)} / ${player.maxHealth}`,
+      10 + healthBarWidth / 2,
+      10 + healthBarHeight / 2
+    );
 
-  // 经验条
-  const expBarWidth = 200;
-  const expBarHeight = 10;
-  const expPercentage = player.exp / player.expToNextLevel;
-  fill(100); // 灰色表示未获得的经验
-  rect(10, 40, expBarWidth, expBarHeight);
-  fill(0, 0, 255); // 蓝色表示当前经验
-  rect(10, 40, expBarWidth * expPercentage, expBarHeight);
-  fill(255);
-  textSize(10);
-  textAlign(CENTER, CENTER);
-  text(
-    `EXP: ${Math.floor(player.exp)} / ${player.expToNextLevel}`,
-    10 + expBarWidth / 2,
-    40 + expBarHeight / 2
-  );
-}
+    // 经验条
+    const expBarWidth = 200;
+    const expBarHeight = 10;
+    const expPercentage = player.exp / player.expToNextLevel;
+    fill(100); // 灰色表示未获得的经验
+    rect(10, 40, expBarWidth, expBarHeight);
+    fill(0, 0, 255); // 蓝色表示当前经验
+    rect(10, 40, expBarWidth * expPercentage, expBarHeight);
+    fill(255);
+    textSize(10);
+    textAlign(CENTER, CENTER);
+    text(
+      `EXP: ${Math.floor(player.exp)} / ${player.expToNextLevel}`,
+      10 + expBarWidth / 2,
+      40 + expBarHeight / 2
+    );
+  }
 }
 
 // 修改角色选择后的流程
