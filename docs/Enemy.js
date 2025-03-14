@@ -28,7 +28,7 @@ class Enemy {
     if (difficult == "hard") {
       this.health = 120;
     } else {
-      this.health = 50;
+      this.health = 70;
     }
     this.maxHealth = 50;
     if (difficult == "hard") {
