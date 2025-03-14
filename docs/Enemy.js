@@ -684,48 +684,53 @@ class BirdBoss extends Boss {
 
   executeAttackPattern(dirToPlayer) {
     switch (this.attackPattern) {
-      case 0:
-        this.performDashAttack();
+      case 0: // 冲刺攻击
+        if (this.dashCooldown <= 0 && !this.isDashing) {
+          this.performDashAttack();
+        }
         break;
-      case 1:
-        this.performPoisonAttack();
+      case 1: // 毒池攻击
+        this.trailCounter++;
+        if (this.trailCounter >= 10) {
+          this.performPoisonAttack();
+        }
         break;
-
     }
   }
 
+  performPoisonAttack() {
+    if (this.trailCounter >= 10) {
+      // 限制毒池数量
+      const MAX_POISON_TRAILS = 20;
+      if (poisonTrails.length < MAX_POISON_TRAILS) {
+        // 在四个方向创建毒池
+        for (let i = 0; i < 4; i++) {
+          let angle = (i * PI) / 2;
+          let offset = createVector(cos(angle) * 40, sin(angle) * 40);
+          let poisonPos = p5.Vector.add(this.pos, offset);
+          
+          poisonTrails.push({
+            pos: poisonPos,
+            radius: 20,
+            startTime: millis(),
+            duration: 4000,
+            frameIndex: 0,
+            frameCount: 4,
+            frameDelay: 8,
+            frameCounter: 0,
+            colorMod: color(255, 200, 50, 220)
+          });
+        }
+      }
+      this.trailCounter = 0;
+    }
+  }
 
   performDashAttack() {
     if (this.dashCooldown <= 0 && !this.isDashing) {
       this.isDashing = true;
       this.dashDuration = 20;
       this.dashCooldown = 120;
-    }
-  }
-
-  performPoisonAttack() {
-    if (this.trailCounter >= 10) {
-      // 在四个方向创建毒池
-      for (let i = 0; i < 4; i++) {
-        let angle = (i * PI) / 2;
-        let offset = createVector(cos(angle) * 40, sin(angle) * 40);
-        let poisonPos = p5.Vector.add(this.pos, offset);
-
-        poisonTrails.push({
-          pos: poisonPos,
-          radius: 20,  // 从35增加到40
-          startTime: millis(),
-          duration: 4000,
-          // 更新动画属性 - 从6帧改为4帧
-          frameIndex: 0,
-          frameCount: 4,  // 新图片有4帧
-          frameDelay: 8,
-          frameCounter: 0,
-          // 保留颜色调整
-          colorMod: color(255, 200, 50, 220)
-        });
-      }
-      this.trailCounter = 0;
     }
   }
 
