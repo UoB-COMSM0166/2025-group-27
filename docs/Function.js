@@ -660,7 +660,6 @@ function displayMainMenu() {
   fill(255);
   textSize(24);
   textAlign(CENTER, CENTER);
-  text("Dungeon Survival", width / 2, height / 3);
   let visibleButtons = [];
   if (savedGame) {
     visibleButtons = visibleButtons.concat(mainMenuButtons);
@@ -668,9 +667,7 @@ function displayMainMenu() {
     // 没有存档时只显示"开始游戏"和"退出游戏"
     visibleButtons.push(mainMenuButtons[1], mainMenuButtons[2], mainMenuButtons[3], mainMenuButtons[4]);
   }
-
-  // 修复2：统一渲染逻辑
-  visibleButtons.forEach((btn) => btn.display());
+  image(mainMenuPage,0,0,1062,600);
 }
 
 function displayStoryPage1() {
@@ -684,7 +681,7 @@ function displayStoryPage1() {
   rect(buttonX, buttonY, buttonW, buttonH, 10); // 圆角按钮
 
   fill(255); // 文字颜色（白色）
-  textSize(30);
+  textSize(15);
   text("Next", buttonX + buttonW / 2, buttonY + buttonH / 2);
 }
 
@@ -699,7 +696,7 @@ function displayStoryPage2() {
   rect(buttonX, buttonY, buttonW, buttonH, 10); // 圆角按钮
 
   fill(255); // 文字颜色（白色）
-  textSize(30);
+  textSize(15);
   text("Next", buttonX + buttonW / 2, buttonY + buttonH / 2);
 }
 
@@ -744,7 +741,7 @@ function displayVictoryPage1() {
   rect(buttonX, buttonY, buttonW, buttonH, 10); // 圆角按钮
 
   fill(255); // 文字颜色（白色）
-  textSize(30);
+  textSize(15);
   text("Next", buttonX + buttonW / 2, buttonY + buttonH / 2);
 }
 
@@ -759,7 +756,7 @@ function displayVictoryPage2() {
   rect(buttonX, buttonY, buttonW, buttonH, 10); // 圆角按钮
 
   fill(255); // 文字颜色（白色）
-  textSize(30);
+  textSize(15);
   text("Next", buttonX + buttonW / 2, buttonY + buttonH / 2);
 }
 
@@ -774,7 +771,7 @@ function displayVictoryPage3() {
   rect(buttonX, buttonY, buttonW, buttonH, 10); // 圆角按钮
 
   fill(255); // 文字颜色（白色）
-  textSize(30);
+  textSize(15);
   text("END!", buttonX + buttonW / 2, buttonY + buttonH / 2);
 }
 
@@ -1141,7 +1138,7 @@ function generateUpgradeOptions() {
       },
       {
         type: "berserker",
-        name: "Berserker Mode",
+        name: "Berserker",
         description: "50% critical rate, 200% critical damage",
         oneTime: true,
       },
@@ -1152,15 +1149,21 @@ function generateUpgradeOptions() {
         oneTime: true,
       },
       {
+        type: "highDamage",
+        name: "Mjölnir",
+        description: "20% critical rate, 400% critical damage",
+        oneTime: true,
+      },
+      {
         type: "fastWalk",
-        name: "Dash!",
+        name: "Gullinbursti",
         description: "Press [Shift] to move faster",
         oneTime: true,
       },
       {
         type: "spinningSlash",
-        name: "Spinning Slash",
-        description: "Press [E] to launch Spinning Slash skill",
+        name: "Gungnir",
+        description: "Press [E] to launch Gungnir(Spinning Slash skill)",
         oneTime: true,
       },
     ];

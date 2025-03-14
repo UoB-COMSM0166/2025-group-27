@@ -199,6 +199,8 @@ function updateWeather() {
 
 // ----- p5.js 核心函数 -----
 function preload() {
+  // 界面相关
+  mainMenuPage = loadImage("./assets/selected_images/page/MainMenu.png");
   // maps
   level1map = loadImage("./assets/selected_images/maps/level1.png");
   level2map = loadImage("./assets/selected_images/maps/level2.png");

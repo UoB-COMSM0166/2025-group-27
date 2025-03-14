@@ -340,6 +340,10 @@ class Player {
       case "attackAngle":
         this.attackAngle += 5;
         break;
+      case "highDamage":
+        this.critRate = 0.2;
+        this.critDamage = 4.0;
+        break;
     }
     choosingUpgrade = false;
   }
