@@ -165,6 +165,10 @@ class Player {
     this.invincibleFlash = 0; // 无敌闪烁效果
     this.needsPetSelection = false;
     this.pet = null;
+
+    // 添加眩晕状态属性
+    this.stunned = false;
+    this.stunDuration = 0;
   }
 
   takeDamage(amount) {
@@ -386,6 +390,15 @@ class Player {
   }
 
   move() {
+    // 如果处于眩晕状态，则减少眩晕时间并阻止移动
+    if (this.stunned) {
+      this.stunDuration--;
+      if (this.stunDuration <= 0) {
+        this.stunned = false;
+      }
+      return; // 眩晕时无法移动
+    }
+
     if(this.characterType == "knight" && this.dash){
   if (this.dashCooldown <= 0 && keyIsDown(16)) { // 16 是 Shift 键的键码
     this.dashing = true;
@@ -780,6 +793,11 @@ class Player {
 
   // 修改子弹发射逻辑
   shoot() {
+    // 如果处于眩晕状态，无法射击
+    if (this.stunned) {
+      return;
+    }
+
     if(!mouseIsPressed && this.characterType == "archer" && this.autoCharge == true){
       this.startCharge();
       // 攻击回血
@@ -1084,7 +1102,16 @@ class Player {
       }
     }
 
-
+    // 显示眩晕效果
+    if (this.stunned) {
+      push();
+      textSize(16);
+      fill(255, 255, 0);
+      text("✦", this.pos.x - 10, this.pos.y - 30);
+      text("✦", this.pos.x, this.pos.y - 40);
+      text("✦", this.pos.x + 10, this.pos.y - 30);
+      pop();
+    }
 
     if (this.characterType === "archer") {
       // 显示箭矢

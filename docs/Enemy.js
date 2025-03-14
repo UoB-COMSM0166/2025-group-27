@@ -544,6 +544,14 @@ class BirdBoss extends Boss {
     this.featherFalling = false;
     this.featherEndTime = 0;
     this.featherOffsetY = 0;
+
+    // 添加声波尖啸相关属性
+    this.sonicScreechCooldown = 300; // 冷却时间5秒
+    this.sonicWaves = [];            // 用于存储声波效果
+    this.isScreeching = false;       // 是否正在尖啸
+    this.screechwaveCount = 0;       // 已发射声波数量
+    this.waveInterval = 15;          // 声波间隔时间
+    this.waveTimer = 0;              // 声波计时器
   }
 
 
@@ -613,8 +621,6 @@ class BirdBoss extends Boss {
     return false;
   }
 
-
-
   update() {
     try {
       if (!this.isActive || !player) return;
@@ -637,7 +643,7 @@ class BirdBoss extends Boss {
         // 更新攻击模式
         this.patternTimer++;
         if (this.patternTimer > 180) {
-          this.attackPattern = (this.attackPattern + 1) % 2;
+          this.attackPattern = (this.attackPattern + 1) % 2; // 恢复为只在 0 和 1 之间切换
           this.patternTimer = 0;
         }
 
@@ -679,6 +685,78 @@ class BirdBoss extends Boss {
     }
     catch (error) {
       console.error("Error in BirdBoss update:", error);
+    }
+
+    // 声波尖啸冷却和触发
+    if (this.sonicScreechCooldown > 0) {
+      this.sonicScreechCooldown--;
+    } 
+
+    // 当在合适距离且冷却完成时触发技能
+    if (!this.isScreeching && this.sonicScreechCooldown <= 0) {
+      let distToPlayer = p5.Vector.dist(this.pos, player.pos);
+      if (distToPlayer < this.attackRange * 1.5) {
+        this.sonicScreech();
+      }
+    }
+
+    // 处理声波效果
+    if (this.isScreeching) {
+      this.waveTimer++;
+      
+      // 每隔一定时间发射一道声波
+      if (this.waveTimer >= this.waveInterval && this.screechwaveCount < 5) {
+        // 创建新的声波
+        this.sonicWaves.push({
+          x: this.pos.x,
+          y: this.pos.y,
+          radius: 10,
+          maxRadius: 100,
+          alpha: 200
+        });
+        
+        this.screechwaveCount++;
+        this.waveTimer = 0;
+      }
+      
+      // 如果已发射5道声波且没有活动的声波，结束技能
+      if (this.screechwaveCount >= 5 && this.sonicWaves.length === 0) {
+        this.isScreeching = false;
+      }
+    }
+
+    // 更新和绘制声波
+    for (let i = this.sonicWaves.length - 1; i >= 0; i--) {
+      let wave = this.sonicWaves[i];
+      
+      // 更新声波
+      wave.radius += 3;  // 声波扩散速度
+      wave.alpha -= 2;   // 声波渐隐
+      
+      // 检测与玩家的碰撞
+      if (player && !player.stunned) {
+        let distToPlayer = dist(wave.x, wave.y, player.pos.x, player.pos.y);
+        if (distToPlayer < wave.radius + player.radius && 
+            distToPlayer > wave.radius - 10) {
+          // 眩晕玩家
+          player.stunned = true;
+          player.stunDuration = 60; // 眩晕1秒
+          showFloatingText("Stunned!", player.pos.x, player.pos.y - 30, color(255, 255, 0));
+        }
+      }
+      
+      // 绘制声波
+      push();
+      noFill();
+      strokeWeight(3);
+      stroke(100, 200, 255, wave.alpha);
+      ellipse(wave.x, wave.y, wave.radius * 2);
+      pop();
+      
+      // 移除完成的声波
+      if (wave.radius >= wave.maxRadius || wave.alpha <= 0) {
+        this.sonicWaves.splice(i, 1);
+      }
     }
   }
 
@@ -764,10 +842,8 @@ class BirdBoss extends Boss {
   }
 
   updateTimers() {
-    this.webCooldown--;
     this.meleeAttackCooldown--;
     this.dashCooldown--;
-    this.webWallCooldown--;
     this.summonCooldown--;
     this.trailCounter++;
   }
@@ -860,6 +936,20 @@ class BirdBoss extends Boss {
         }
       }
     }
+  }
+
+  // 在 BirdBoss 类中添加 sonicScreech 方法
+  sonicScreech() {
+    // 开始尖啸状态
+    this.isScreeching = true;
+    this.screechwaveCount = 0;
+    this.waveTimer = 0;
+    
+    // 重置冷却时间
+    this.sonicScreechCooldown = 300;
+    
+    // 显示技能使用提示
+    showFloatingText("Sonic Screech!", this.pos.x, this.pos.y - 40, color(255, 50, 50), 20);
   }
 }
 
