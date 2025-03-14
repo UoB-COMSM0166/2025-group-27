@@ -16,7 +16,7 @@ class AttackPet extends BasePet {
     super();
     this.pos = createVector(x, y);
     this.attackRange = 40;
-    this.attackDamage = 15;
+    this.attackDamage = 10;
     this.speed = 4;
     this.orbitRadius = 30;
     this.angle = 0;
@@ -71,6 +71,12 @@ class AttackPet extends BasePet {
     }
 
     if (closest && record < detectionRange && this.attackCooldown <= 0) {
+      let killed = closest.hit(this.attackDamage); // 检查敌人是否被击杀
+      if (killed) {
+        this.attackCooldown = 30;
+        this.isAttacking = true;
+        this.attackTimer = 15;
+      }
       closest.hit(this.attackDamage);
       this.attackCooldown = 30;
       this.isAttacking = true;

@@ -25,18 +25,18 @@ class Enemy {
     this.pos = createVector(0, 0);
     this.vel = createVector(0, 0);
     this.radius = 10;
-    if(difficult == "hard"){
+    if (difficult == "hard") {
       this.health = 80;
     } else {
       this.health = 50;
     }
     this.maxHealth = 50;
-    if(difficult == "hard"){
+    if (difficult == "hard") {
       this.damage = 30;
     } else {
       this.damage = 10;
     }
-    if(difficult == "hard"){
+    if (difficult == "hard") {
       this.speed = 10;
     } else {
       this.speed = 2;
@@ -92,7 +92,11 @@ class Enemy {
   }
 
   update() {
-    if(this.health <= 0) {
+    if (this.health <= 0) {
+      this.dead = true; // 标记为死亡
+      return; // 如果已死亡，直接返回
+    }
+    if (this.health <= 0) {
       this.attackDetect = false;
     }
     if (this.invulnerableTime > 0) {
@@ -195,6 +199,12 @@ class Enemy {
 
   hit(damage, knockback = true) {
     this.health -= damage;
+    if (this.health <= 0) {
+      this.health = 0; // 确保血量不会小于0
+      this.startDeathEffect(); // 启动死亡效果
+      return true; // 返回 true 表示敌人已死亡
+    }
+
     if (knockback) {
       let knockbackDir = p5.Vector.sub(this.pos, player.pos)
         .normalize()
@@ -207,7 +217,7 @@ class Enemy {
       this.pos.y - 20,
       color(255, 0, 0)
     );
-    return this.health <= 0;
+    return false;
   }
 
   applyKnockback(knockbackVector) {
@@ -262,7 +272,7 @@ class Enemy {
   display() {
     let healthBarWidth = 30,
       healthBarHeight = 4;
-      let healthPercentage = Math.max(0, Math.min(1, this.health / this.maxHealth));
+    let healthPercentage = Math.max(0, Math.min(1, this.health / this.maxHealth));
     fill(255, 0, 0);
     rect(
       this.pos.x - healthBarWidth / 2,
@@ -719,7 +729,7 @@ class BirdBoss extends Boss {
         let angle = (i * PI) / 2;
         let offset = createVector(cos(angle) * 40, sin(angle) * 40);
         let poisonPos = p5.Vector.add(this.pos, offset);
-        
+
         poisonTrails.push({
           pos: poisonPos,
           radius: 20,  // 从35增加到40
@@ -749,7 +759,7 @@ class BirdBoss extends Boss {
       this.pos.add(p5.Vector.mult(dirToPlayer, this.dashSpeed));
     } else {
       this.isDashing = false;
-      this.dashDuration = 0;  
+      this.dashDuration = 0;
     }
   }
 
@@ -838,7 +848,7 @@ class BirdBoss extends Boss {
     const rows = 2; // 从4改为2
     const feathersPerRow = 8; // 每行的羽毛数量
     const rowSpacing = 40; // 行间距
-    
+
     for (let row = 0; row < rows; row++) {
       for (let i = 0; i < feathersPerRow; i++) {
         // 只有在当前羽毛数量未达到上限时才生成新羽毛
@@ -846,17 +856,17 @@ class BirdBoss extends Boss {
           const angle = (TWO_PI / feathersPerRow) * i;
           const xOffset = cos(angle) * 100;
           const yOffset = row * rowSpacing;
-          
+
           const feather = new Feather(
             this.pos.x + xOffset,
             this.pos.y + yOffset,
             featherSprite
           );
-          
+
           // 调整羽毛的速度和方向
           const vel = createVector(0, 2 + row * 0.5); // 后排羽毛速度稍快
           feather.vel = vel;
-          
+
           feathers.push(feather);
         }
       }
@@ -875,12 +885,12 @@ class SlimeBoss extends Boss {
     this.speed = 2.5;
     this.size = 120;
     this.isActive = true;
-    
+
     // 根据Boss类型设置位置偏移
     let offsetX = 0;
     let offsetY = 0;
-    
-    switch(type) {
+
+    switch (type) {
       case "fire":
         offsetX = -80;
         offsetY = -80;
@@ -898,7 +908,7 @@ class SlimeBoss extends Boss {
         offsetY = 80;
         break;
     }
-    
+
     // 设置位置（中心位置 + 偏移）
     this.pos = createVector(width / 2 + offsetX, height / 2 + offsetY);
 
@@ -915,13 +925,13 @@ class SlimeBoss extends Boss {
     this.animationCounter = 0;
 
     // 移动距离属性
-    this.moveDistance1 = 1;  
-    this.moveDistance2 = 1;  
+    this.moveDistance1 = 1;
+    this.moveDistance2 = 1;
 
     // 记录生成时间与初始停止时间（外部可修改 initialStopDelay）
     this.spawnTime = millis();
-    this.initialStopDelay = 0; 
-    
+    this.initialStopDelay = 0;
+
 
     // 移动相关
     this.movedFrame15 = false;
@@ -998,7 +1008,7 @@ class SlimeBoss extends Boss {
     if (!this.isActive || !player) return;
 
     try {
-      
+
       if (millis() - this.spawnTime < this.initialStopDelay) {
         return;
       }
@@ -1006,28 +1016,28 @@ class SlimeBoss extends Boss {
       this.animate();
       let currentFrame = this.currentAnimation[this.frameIndex];
 
- 
-    // 计算朝向玩家的单位向量
-    let dirToPlayer = p5.Vector.sub(player.pos, this.pos).normalize();
 
-    // 基本移动逻辑：在特定动画帧触发移动
-    if (!this.isDashing) {
-      if (currentFrame === 15 && !this.movedFrame15) {
-        let moveVec = p5.Vector.mult(dirToPlayer, this.moveDistance1);
-        this.pos.add(moveVec);
-        this.movedFrame15 = true;
-      } else if (currentFrame !== 15) {
-        this.movedFrame15 = false;
-      }
+      // 计算朝向玩家的单位向量
+      let dirToPlayer = p5.Vector.sub(player.pos, this.pos).normalize();
 
-      if (currentFrame === 16 && !this.movedFrame16) {
-        let moveVec = p5.Vector.mult(dirToPlayer, this.moveDistance2);
-        this.pos.add(moveVec);
-        this.movedFrame16 = true;
-      } else if (currentFrame !== 16) {
-        this.movedFrame16 = false;
+      // 基本移动逻辑：在特定动画帧触发移动
+      if (!this.isDashing) {
+        if (currentFrame === 15 && !this.movedFrame15) {
+          let moveVec = p5.Vector.mult(dirToPlayer, this.moveDistance1);
+          this.pos.add(moveVec);
+          this.movedFrame15 = true;
+        } else if (currentFrame !== 15) {
+          this.movedFrame15 = false;
+        }
+
+        if (currentFrame === 16 && !this.movedFrame16) {
+          let moveVec = p5.Vector.mult(dirToPlayer, this.moveDistance2);
+          this.pos.add(moveVec);
+          this.movedFrame16 = true;
+        } else if (currentFrame !== 16) {
+          this.movedFrame16 = false;
+        }
       }
-    }
 
 
       // 更新技能冷却
@@ -1036,10 +1046,10 @@ class SlimeBoss extends Boss {
       } else {
         // 添加调试信息
         console.log("Fire Slime casting skill, setting cooldown to:", this.skillDelay);
-        
+
         this.useElementalSkill();
         this.skillCooldown = this.skillDelay;
-        
+
         // 强制延长冷却时间，确保技能不会频繁释放
         if (this.type === "fire") {
           this.skillDelay = Math.max(180, this.skillDelay); // 至少3秒冷却
@@ -1079,25 +1089,25 @@ class SlimeBoss extends Boss {
   // 火焰史莱姆技能 - 调整内环距离防止重合
   fireSkill() {
     console.log("Fire skill triggered, current cooldown:", this.skillCooldown);
-    
+
     // 设置环绕火焰 - 双层火环设计
     const flameCount = 12; // 增加火焰数量
     const radius = this.flameRadius * 0.65; // 主环半径
     const innerRadius = this.flameRadius * 0.5; // 增加内环半径，从0.4改为0.5
-    
+
     // 首先清除任何现有的fireRing效果，防止叠加
     this.elementalEffects = this.elementalEffects.filter(effect => effect.type !== "fireRing");
-    
+
     // 创建双层火焰环
     for (let i = 0; i < flameCount; i++) {
       // 主环火焰
       const angle = (TWO_PI / flameCount) * i;
       const offsetX = cos(angle) * radius;
       const offsetY = sin(angle) * radius;
-      
+
       // 确保所有火焰效果都有有效的duration值
       const flameDuration = this.flameDuration || 90; // 提供默认值以防止undefined
-      
+
       // 添加主环火焰
       this.elementalEffects.push({
         type: "fireRing",
@@ -1117,13 +1127,13 @@ class SlimeBoss extends Boss {
         visualScale: 2.0,
         creationTime: millis() // 添加创建时间戳以供安全检查
       });
-      
+
       // 添加内环火焰 - 角度错开，形成交错效果
-      if (i % 2 === 0) { 
+      if (i % 2 === 0) {
         const innerAngle = angle + (TWO_PI / flameCount / 2);
         const innerOffsetX = cos(innerAngle) * innerRadius;
         const innerOffsetY = sin(innerAngle) * innerRadius;
-        
+
         this.elementalEffects.push({
           type: "fireRing",
           basePos: this.pos.copy(),
@@ -1167,11 +1177,11 @@ class SlimeBoss extends Boss {
         slowAmount: this.slowAmount,
         pulseTime: millis(),
         // 更新动画相关属性
-        frameIndex: 0,         
+        frameIndex: 0,
         frameCount: 6,         // 修正为6帧
         frameDelay: 8,         // 略微增加延迟使动画更平滑
-        frameCounter: 0,       
-        rotation: random(TWO_PI) 
+        frameCounter: 0,
+        rotation: random(TWO_PI)
       });
     }
   }
@@ -1200,12 +1210,12 @@ class SlimeBoss extends Boss {
   windSkill() {
     // 获取朝向玩家的角度
     let angleToPlayer = atan2(player.pos.y - this.pos.y, player.pos.x - this.pos.x);
-    
+
     // 创建三道龙卷风，扇形分布
     for (let i = -1; i <= 1; i++) {
       // 在基础角度上添加偏移，创建扇形效果
-      let tornadoAngle = angleToPlayer + i * PI/6; // 每个龙卷风间隔30度
-      
+      let tornadoAngle = angleToPlayer + i * PI / 6; // 每个龙卷风间隔30度
+
       this.elementalEffects.push({
         type: "wind",
         pos: this.pos.copy(),
@@ -1236,34 +1246,34 @@ class SlimeBoss extends Boss {
   updateElementalEffects() {
     const now = millis();
     const MAX_EFFECT_LIFETIME = 10000; // 最大10秒生命期作为安全措施
-    
+
     // 更新所有元素效果
     for (let i = this.elementalEffects.length - 1; i >= 0; i--) {
       let effect = this.elementalEffects[i];
-      
+
       // 安全检查1: 检查duration是否为非数字或未定义
       if (typeof effect.duration !== 'number') {
         console.log("Found effect with invalid duration:", effect.type);
         this.elementalEffects.splice(i, 1);
         continue;
       }
-      
+
       // 安全检查2: 检查是否超过最大生命期
       if (effect.creationTime && now - effect.creationTime > MAX_EFFECT_LIFETIME) {
         console.log("Force removing long-lived effect:", effect.type);
         this.elementalEffects.splice(i, 1);
         continue;
       }
-      
+
       // 安全检查3: 正常duration检查
       if (effect.duration <= 0) {
         this.elementalEffects.splice(i, 1);
         continue;
       }
-      
+
       // 然后才递减duration
       effect.duration--;
-      
+
       switch (effect.type) {
         case "fireRing":
           // 更新环绕火焰位置
@@ -1272,7 +1282,7 @@ class SlimeBoss extends Boss {
           const newY = effect.basePos.y + sin(effect.angle) * effect.orbitRadius;
           effect.pos.x = newX;
           effect.pos.y = newY;
-          
+
           // 更新动画帧
           if (effect.frameCounter !== undefined) {
             effect.frameCounter++;
@@ -1281,13 +1291,13 @@ class SlimeBoss extends Boss {
               effect.frameIndex = (effect.frameIndex + 1) % effect.frameCount;
             }
           }
-          
+
           // 检测与玩家的碰撞
           if (p5.Vector.dist(player.pos, effect.pos) < effect.radius + player.radius) {
             player.takeDamage(effect.damage);
             showFloatingText("Burning!", player.pos.x, player.pos.y - 20, color(255, 100, 0));
           }
-          
+
           // 更新基础位置以跟随史莱姆
           effect.basePos = this.pos.copy();
           break;
@@ -1295,7 +1305,7 @@ class SlimeBoss extends Boss {
         case "water":
           // 水波移动和脉动
           effect.pos.add(effect.vel);
-          
+
           // 更新动画帧
           if (effect.frameCounter !== undefined) {
             effect.frameCounter++;
@@ -1304,12 +1314,12 @@ class SlimeBoss extends Boss {
               effect.frameIndex = (effect.frameIndex + 1) % effect.frameCount;
             }
           }
-          
+
           // 旋转效果
           if (effect.rotation !== undefined) {
             effect.rotation += 0.02;
           }
-          
+
           // 检测碰撞
           let pulse = sin((millis() - effect.pulseTime) / 100) * 10;
           if (p5.Vector.dist(player.pos, effect.pos) < effect.radius + pulse) {
@@ -1324,7 +1334,7 @@ class SlimeBoss extends Boss {
           if (effect.moveDirection) {
             effect.pos.add(effect.moveDirection);
           }
-          
+
           // 更新动画帧
           if (effect.frameCounter !== undefined) {
             effect.frameCounter++;
@@ -1333,14 +1343,14 @@ class SlimeBoss extends Boss {
               effect.frameIndex = (effect.frameIndex + 1) % effect.frameCount;
             }
           }
-          
+
           // 更新龙卷风粒子效果
           effect.particles.forEach(p => {
             p.pos.add(p.vel);
             p.life--;
           });
           effect.particles = effect.particles.filter(p => p.life > 0);
-          
+
           // 添加新的粒子以保持效果
           if (effect.particles.length < 10) {
             for (let j = 0; j < 3; j++) {
@@ -1361,7 +1371,7 @@ class SlimeBoss extends Boss {
             player.pos.add(pushDir);
             showFloatingText("Blown Away!", player.pos.x, player.pos.y - 20, color(200, 200, 255));
           }
-          
+
           // 检测是否影响玩家子弹
           for (let j = bullets.length - 1; j >= 0; j--) {
             let bullet = bullets[j];
@@ -1381,10 +1391,10 @@ class SlimeBoss extends Boss {
       for (let i = this.poisonPools.length - 1; i >= 0; i--) {
         let pool = this.poisonPools[i];
         pool.duration--;
-    
+
         // 毒池扩散：每帧以固定速度扩展半径，直到达到最大值
         pool.radius = min(pool.maxRadius, pool.radius + pool.spreadSpeed);
-        
+
         // 更新动画帧
         if (pool.frameCounter !== undefined) {
           pool.frameCounter++;
@@ -1393,29 +1403,29 @@ class SlimeBoss extends Boss {
             pool.frameIndex = (pool.frameIndex + 1) % pool.frameCount;
           }
         }
-        
+
         // 更新缩放系数 - 随着范围增加而增大
         if (pool.startRadius && pool.maxRadius) {
           pool.scale = map(pool.radius, pool.startRadius, pool.maxRadius, 0.8, 1.6);
         }
-    
+
         // 检测玩家是否在毒池范围内
         if (p5.Vector.dist(player.pos, pool.pos) < pool.radius) {
           player.takeDamage(pool.damage / 60);
           showFloatingText("Poisoned!", player.pos.x, player.pos.y - 20, color(0, 255, 0));
         }
-    
+
         if (pool.duration <= 0) {
           this.poisonPools.splice(i, 1);
         }
       }
     }
-    
+
   }
 
   display() {
     push();
-    
+
     // 绘制元素效果 - 确保所有类型的效果都被渲染
     for (let effect of this.elementalEffects) {
       switch (effect.type) {
@@ -1424,14 +1434,14 @@ class SlimeBoss extends Boss {
             push();
             imageMode(CENTER);
             translate(effect.pos.x, effect.pos.y);
-            
+
             // 计算当前帧在精灵表中的位置
             let frameWidth = fireballImg.width / 6;
             let frameHeight = fireballImg.height;
-            
+
             // 绘制当前帧
             let displaySize = effect.radius * 2.5;
-            
+
             image(
               fireballImg,
               0, 0,
@@ -1439,7 +1449,7 @@ class SlimeBoss extends Boss {
               effect.frameIndex * frameWidth, 0,
               frameWidth, frameHeight
             );
-            
+
             // 添加辉光效果
             drawingContext.shadowBlur = 8;
             drawingContext.shadowColor = color(255, 120, 0, 150);
@@ -1447,7 +1457,7 @@ class SlimeBoss extends Boss {
             noStroke(); // 移除边缘线，与毒液效果一致
             ellipse(0, 0, displaySize * 0.9);
             drawingContext.shadowBlur = 0;
-            
+
             pop();
           } else {
             // 后备绘制方法
@@ -1456,20 +1466,20 @@ class SlimeBoss extends Boss {
             ellipse(effect.pos.x, effect.pos.y, effect.radius * 2);
           }
           break;
-          
+
         case "fireRing":
           if (fireballImg) {
             push();
             imageMode(CENTER);
             translate(effect.pos.x, effect.pos.y);
-            
+
             // 计算当前帧在精灵表中的位置
             let frameWidth = fireballImg.width / 6;
             let frameHeight = fireballImg.height;
-            
+
             // 绘制当前帧
             let displaySize = effect.radius * (effect.visualScale || 2.5);
-            
+
             image(
               fireballImg,
               0, 0,
@@ -1477,7 +1487,7 @@ class SlimeBoss extends Boss {
               effect.frameIndex * frameWidth, 0,
               frameWidth, frameHeight
             );
-            
+
             // 添加辉光效果
             drawingContext.shadowBlur = 8;
             drawingContext.shadowColor = color(255, 120, 0, 150);
@@ -1485,7 +1495,7 @@ class SlimeBoss extends Boss {
             noStroke(); // 移除边缘线，与毒液效果一致
             ellipse(0, 0, displaySize * 0.9);
             drawingContext.shadowBlur = 0;
-            
+
             pop();
           } else {
             // 后备绘制方法
@@ -1500,19 +1510,19 @@ class SlimeBoss extends Boss {
             push();
             imageMode(CENTER);
             translate(effect.pos.x, effect.pos.y);
-            
+
             // 应用旋转
             if (effect.rotation !== undefined) {
               rotate(effect.rotation);
             }
-            
+
             // 计算当前帧在精灵表中的位置
             let frameWidth = waterBubbleImg.width / 6;
             let frameHeight = waterBubbleImg.height;
-            
+
             // 绘制当前帧
             let displaySize = effect.radius * 3;
-            
+
             image(
               waterBubbleImg,
               0, 0,
@@ -1520,7 +1530,7 @@ class SlimeBoss extends Boss {
               effect.frameIndex * frameWidth, 0,
               frameWidth, frameHeight
             );
-            
+
             // 添加辉光效果
             drawingContext.shadowBlur = 10;
             drawingContext.shadowColor = color(80, 120, 255, 120);
@@ -1528,7 +1538,7 @@ class SlimeBoss extends Boss {
             noStroke(); // 移除边缘线，与毒液效果一致
             ellipse(0, 0, displaySize * 0.9);
             drawingContext.shadowBlur = 0;
-            
+
             pop();
           } else {
             // 后备绘制方法
@@ -1537,7 +1547,7 @@ class SlimeBoss extends Boss {
             ellipse(effect.pos.x, effect.pos.y, effect.radius * 2);
           }
           break;
-          
+
         case "wind":
           if (windTornadoImg && effect.frameIndex !== undefined) {
             // 绘制龙卷风动画
@@ -1545,14 +1555,14 @@ class SlimeBoss extends Boss {
             imageMode(CENTER);
             translate(effect.pos.x, effect.pos.y);
             rotate(effect.angle); // 旋转到正确方向
-            
+
             // 计算当前帧在精灵表中的位置 - 修正为12帧
             let frameWidth = windTornadoImg.width / effect.frameCount;
             let frameHeight = windTornadoImg.height;
-            
+
             // 绘制当前帧 - 减小尺寸
             let displaySize = effect.radius * (effect.scale || 0.8);
-            
+
             image(
               windTornadoImg,
               0, 0,
@@ -1560,7 +1570,7 @@ class SlimeBoss extends Boss {
               effect.frameIndex * frameWidth, 0,
               frameWidth, frameHeight
             );
-            
+
             // 添加辉光效果
             drawingContext.shadowBlur = 15;
             drawingContext.shadowColor = color(255, 255, 255, 150);
@@ -1568,10 +1578,10 @@ class SlimeBoss extends Boss {
             noStroke();
             ellipse(0, 0, displaySize * 0.6); // 减小辉光尺寸
             drawingContext.shadowBlur = 0;
-            
+
             pop();
           }
-          
+
           // 绘制风效果粒子
           push();
           for (let p of effect.particles) {
@@ -1584,7 +1594,7 @@ class SlimeBoss extends Boss {
           break;
       }
     }
-    
+
     // 绘制毒池 - 保持当前代码
     if (this.type === "poison" && this.poisonPools) {
       for (let pool of this.poisonPools) {
@@ -1593,14 +1603,14 @@ class SlimeBoss extends Boss {
           push();
           imageMode(CENTER);
           translate(pool.pos.x, pool.pos.y);
-          
+
           // 计算当前帧在精灵表中的位置
           let frameWidth = poisonVortexImg.width / pool.frameCount;
           let frameHeight = poisonVortexImg.height;
-          
+
           // 随着毒池扩散逐渐增大动画尺寸
           let displaySize = pool.radius * 2 * pool.scale;
-          
+
           // 绘制当前帧
           image(
             poisonVortexImg,
@@ -1609,7 +1619,7 @@ class SlimeBoss extends Boss {
             pool.frameIndex * frameWidth, 0,
             frameWidth, frameHeight
           );
-          
+
           // 添加轻微辉光效果，但不绘制边缘线
           drawingContext.shadowBlur = 15;
           drawingContext.shadowColor = color(0, 200, 50, 120);
@@ -1617,7 +1627,7 @@ class SlimeBoss extends Boss {
           noStroke(); // 移除边缘线
           ellipse(0, 0, displaySize * 0.9);
           drawingContext.shadowBlur = 0;
-          
+
           pop();
         } else {
           // 后备绘制方法
@@ -1661,7 +1671,7 @@ class SlimeBoss extends Boss {
     const rows = 2; // 从4改为2
     const feathersPerRow = 8; // 每行的羽毛数量
     const rowSpacing = 40; // 行间距
-    
+
     for (let row = 0; row < rows; row++) {
       for (let i = 0; i < feathersPerRow; i++) {
         // 只有在当前羽毛数量未达到上限时才生成新羽毛
@@ -1669,17 +1679,17 @@ class SlimeBoss extends Boss {
           const angle = (TWO_PI / feathersPerRow) * i;
           const xOffset = cos(angle) * 100;
           const yOffset = row * rowSpacing;
-          
+
           const feather = new Feather(
             this.pos.x + xOffset,
             this.pos.y + yOffset,
             featherSprite
           );
-          
+
           // 调整羽毛的速度和方向
           const vel = createVector(0, 2 + row * 0.5); // 后排羽毛速度稍快
           feather.vel = vel;
-          
+
           feathers.push(feather);
         }
       }
@@ -1692,7 +1702,7 @@ class BugBoss extends Enemy {
   constructor() {
     // 从Enemy继承
     super(true, "boss", commonEnemyAction, 40, 40);
-    
+
     // 基本属性
     this.health = 800;  // 设置血量为800
     this.maxHealth = 800;  // 最大血量也设为800
@@ -1702,11 +1712,11 @@ class BugBoss extends Enemy {
     this.attackRange = 100;
     this.expValue = 100;
     this.isBoss = true; // 确保标记为Boss
-    
+
     // 幽冥鬼火技能
     this.ghostFireCooldown = 0;
     this.ghostFireInterval = 150; // 从300减半到150 (2.5秒一次)
-    
+
     // 疾风裂爪技能
     this.rapidClawCooldown = 90; // 从180减半到90
     this.rapidClawInterval = 225; // 从450减半到225 (3.75秒一次)
@@ -1719,16 +1729,16 @@ class BugBoss extends Enemy {
     this.attackDelayCounter = 0; // 攻击延迟计时器
     this.baseClawDamage = 30; // 基础伤害
     this.baseClawRange = 80; // 基础范围
-    
+
     // 动画属性
     this.frameIndex = 0;
     this.frameDelay = 8;
     this.frameCounter = 0;
     this.totalFrames = 6;
-    
+
     // 当前朝向
     this.direction = 'down';
-    
+
     // 为了方便处理不同方向的显示
     this.customImages = {
       left: bugBossSide,
@@ -1736,7 +1746,7 @@ class BugBoss extends Enemy {
       up: bugBossUp,
       down: bugBossDown
     };
-    
+
     // 攻击动画图片
     this.attackImages = {
       left: bugBossAttackSide,
@@ -1744,11 +1754,11 @@ class BugBoss extends Enemy {
       up: bugBossAttackUp,
       down: bugBossAttackDown
     };
-    
+
     // 设置初始技能冷却时间为随机值
     this.ghostFireCooldown = random(60, 120);
     this.rapidClawCooldown = random(120, 240);
-    
+
     // 遮蔽视野技能相关属性
     this.visionBlockCooldown = 0;
     this.visionBlockInterval = 300; // 从600减半到300 (5秒一次)
@@ -1759,47 +1769,47 @@ class BugBoss extends Enemy {
     this.fogOpacity = 0; // 雾气不透明度
     this.maxFogOpacity = 180; // 最大不透明度
     this.fogTransitionSpeed = 10; // 雾气渐变速度
-    
+
     // 添加疾风裂爪动画相关属性
     this.clawEffectFrames = 6; // 特效动画总帧数
     this.clawEffectDelay = 4; // 特效动画帧延迟
   }
-  
+
   update() {
     // 更新无敌时间
     if (this.invulnerableTime > 0) {
       this.invulnerableTime--;
     }
-    
+
     // 判断是否正在施放疾风裂爪技能
     if (this.isRapidClawActive) {
       this.updateRapidClawAttack();
       return; // 在技能期间不执行普通更新
     }
-    
+
     // 更新动画
     this.frameCounter++;
     if (this.frameCounter >= this.frameDelay) {
       this.frameCounter = 0;
       this.frameIndex = (this.frameIndex + 1) % this.totalFrames;
     }
-    
+
     // 追踪玩家
     let dirToPlayer = p5.Vector.sub(player.pos, this.pos);
-    
+
     // 根据移动方向设置朝向
     if (Math.abs(dirToPlayer.x) > Math.abs(dirToPlayer.y)) {
       this.direction = dirToPlayer.x > 0 ? 'right' : 'left';
     } else {
       this.direction = dirToPlayer.y > 0 ? 'down' : 'up';
     }
-    
+
     // 根据距离调整行为
     let distToPlayer = dirToPlayer.mag();
     if (distToPlayer < this.attackRange) {
       // 在攻击范围内，减速移动
       dirToPlayer.normalize().mult(this.speed * 0.5);
-      
+
       // 近距离攻击玩家
       if (this.attackCooldown <= 0) {
         player.takeDamage(this.damage);
@@ -1812,11 +1822,11 @@ class BugBoss extends Enemy {
       // 正常移动
       dirToPlayer.normalize().mult(this.speed);
     }
-    
+
     // 应用移动
     this.vel = dirToPlayer;
     this.pos.add(this.vel);
-    
+
     // 幽冥鬼火技能
     if (this.ghostFireCooldown <= 0) {
       this.castGhostFire();
@@ -1825,7 +1835,7 @@ class BugBoss extends Enemy {
     } else {
       this.ghostFireCooldown--;
     }
-    
+
     // 疾风裂爪技能
     if (this.rapidClawCooldown <= 0) {
       this.startRapidClawAttack();
@@ -1833,10 +1843,10 @@ class BugBoss extends Enemy {
     } else {
       this.rapidClawCooldown--;
     }
-    
+
     // 处理碰撞
     this.resolveCollision();
-    
+
     // 更新遮蔽视野技能
     if (this.visionBlockCooldown <= 0 && !this.isVisionBlocked) {
       this.castVisionBlock();
@@ -1850,7 +1860,7 @@ class BugBoss extends Enemy {
     if (this.isVisionBlocked) {
       // 增加雾气不透明度直到最大值
       this.fogOpacity = min(this.fogOpacity + this.fogTransitionSpeed, this.maxFogOpacity);
-      
+
       this.visionBlockTimer--;
       if (this.visionBlockTimer <= 0) {
         this.isVisionBlocked = false;
@@ -1860,7 +1870,7 @@ class BugBoss extends Enemy {
       this.fogOpacity = max(this.fogOpacity - this.fogTransitionSpeed, 0);
     }
   }
-  
+
   // 启动疾风裂爪攻击
   startRapidClawAttack() {
     showFloatingText("疾风裂爪!", this.pos.x, this.pos.y - 40, color(255, 100, 100), 20);
@@ -1869,31 +1879,31 @@ class BugBoss extends Enemy {
     this.attackAnimationTime = 0;
     this.teleportToPlayer();
   }
-  
+
   // 瞬移到玩家附近
   teleportToPlayer() {
     // 计算玩家方向
     let dirToPlayer = p5.Vector.sub(player.pos, this.pos);
-    
+
     // 更新朝向
     if (Math.abs(dirToPlayer.x) > Math.abs(dirToPlayer.y)) {
       this.direction = dirToPlayer.x > 0 ? 'right' : 'left';
     } else {
       this.direction = dirToPlayer.y > 0 ? 'down' : 'up';
     }
-    
+
     // 瞬移到玩家附近的位置
     let teleportDistance = 80;
     let teleportDirection = dirToPlayer.copy().normalize().mult(teleportDistance);
     this.pos = p5.Vector.add(player.pos, teleportDirection.mult(-1)); // 反方向
-    
+
     // 添加瞬移特效
     for (let i = 0; i < 15; i++) {
       let angle = random(TWO_PI);
       let distance = random(10, 30);
       let x = this.pos.x + cos(angle) * distance;
       let y = this.pos.y + sin(angle) * distance;
-      
+
       poisonTrails.push({
         pos: createVector(x, y),
         radius: random(10, 20),
@@ -1902,7 +1912,7 @@ class BugBoss extends Enemy {
       });
     }
   }
-  
+
   // 处理疾风裂爪攻击
   updateRapidClawAttack() {
     if (this.attackDelayCounter > 0) {
@@ -1910,58 +1920,58 @@ class BugBoss extends Enemy {
       this.attackDelayCounter--;
       return;
     }
-    
+
     this.attackAnimationTime++;
-    
+
     // 检查是否应该造成伤害
     if (this.attackAnimationTime === this.attackDamageTime) {
       this.performRapidClawDamage();
     }
-    
+
     // 检查当前攻击动画是否结束
     if (this.attackAnimationTime >= this.attackAnimationDuration) {
       this.attackAnimationTime = 0;
       this.rapidClawStage++;
-      
+
       // 如果已经完成所有三次攻击，结束技能
       if (this.rapidClawStage >= 3) {
         this.isRapidClawActive = false;
         return;
       }
-      
+
       // 在继续下一次攻击前添加延迟
       this.attackDelayCounter = this.attackDelay;
       // 瞬移到玩家附近做下一次攻击
       this.teleportToPlayer();
     }
-    
+
     // 更新攻击动画帧
     let totalFramesInAttack = 6; // 攻击动画总帧数
     this.frameIndex = Math.floor((this.attackAnimationTime / this.attackAnimationDuration) * totalFramesInAttack);
     if (this.frameIndex >= totalFramesInAttack) this.frameIndex = totalFramesInAttack - 1;
   }
-  
+
   // 执行疾风裂爪伤害
   performRapidClawDamage() {
     // 根据攻击阶段增加伤害和范围
     let stageDamage = this.baseClawDamage * (1 + this.rapidClawStage * 0.5);
     let stageRange = this.baseClawRange * (1 + this.rapidClawStage * 0.5); // 增加范围增长系数(原来是0.2)
-    
+
     // 根据方向确定攻击区域
     let attackArea = this.calculateAttackArea(stageRange);
     let hitPlayerSuccess = this.checkPlayerInAttackArea(attackArea);
-    
+
     if (hitPlayerSuccess) {
       player.takeDamage(stageDamage);
       showFloatingText("-" + stageDamage, player.pos.x, player.pos.y - 20, color(255, 0, 0));
-      
+
       // 攻击效果
       for (let i = 0; i < 8; i++) {
         let angle = random(TWO_PI);
         let distance = random(10, 30);
         let x = player.pos.x + cos(angle) * distance;
         let y = player.pos.y + sin(angle) * distance;
-        
+
         poisonTrails.push({
           pos: createVector(x, y),
           radius: random(5, 15),
@@ -1970,78 +1980,78 @@ class BugBoss extends Enemy {
         });
       }
     }
-    
+
     // 可视化攻击区域，根据阶段增加特效数量
     this.visualizeAttackArea(attackArea, this.rapidClawStage + 6); // 增加特效数量
   }
-  
+
   // 计算攻击区域
   calculateAttackArea(range) {
     let area = {};
-    
-    switch(this.direction) {
+
+    switch (this.direction) {
       case 'left':
         area = {
-          x: this.pos.x - range/2,
-          y: this.pos.y - range/4,
+          x: this.pos.x - range / 2,
+          y: this.pos.y - range / 4,
           w: range,
-          h: range/2
+          h: range / 2
         };
         break;
       case 'right':
         area = {
-          x: this.pos.x - range/2,
-          y: this.pos.y - range/4,
+          x: this.pos.x - range / 2,
+          y: this.pos.y - range / 4,
           w: range,
-          h: range/2
+          h: range / 2
         };
         break;
       case 'up':
         area = {
-          x: this.pos.x - range/4,
-          y: this.pos.y - range/2,
-          w: range/2,
+          x: this.pos.x - range / 4,
+          y: this.pos.y - range / 2,
+          w: range / 2,
           h: range
         };
         break;
       case 'down':
         area = {
-          x: this.pos.x - range/4,
-          y: this.pos.y - range/2,
-          w: range/2,
+          x: this.pos.x - range / 4,
+          y: this.pos.y - range / 2,
+          w: range / 2,
           h: range
         };
         break;
     }
-    
+
     return area;
   }
-  
+
   // 检查玩家是否在攻击区域内
   checkPlayerInAttackArea(area) {
     // 简化为圆形检测
-    let center = createVector(area.x + area.w/2, area.y + area.h/2);
-    let radius = max(area.w, area.h)/2;
-    
+    let center = createVector(area.x + area.w / 2, area.y + area.h / 2);
+    let radius = max(area.w, area.h) / 2;
+
     let dist = p5.Vector.dist(center, player.pos);
     return dist < radius + player.radius;
   }
-  
+
   // 可视化攻击区域（仅用于调试）
   visualizeAttackArea(area, slashCount = 6) {
     // 添加攻击轨迹特效
     let angleOffset = this.direction === 'left' || this.direction === 'right' ? 0 : HALF_PI;
-    
+
     // 根据攻击阶段增加特效范围
     let length = area.w * (0.8 + this.rapidClawStage * 0.3); // 增加特效范围
-    
+
     for (let i = 0; i < slashCount; i++) {
-      let angle = map(i, 0, slashCount-1, -PI/3, PI/3) + angleOffset;
+      let angle = map(i, 0, slashCount - 1, -PI / 3, PI / 3) + angleOffset;
       if (this.direction === 'left') angle += PI;
-      
-      let x = this.pos.x + cos(angle) * length/2;
-      let y = this.pos.y + sin(angle) * length/2;
-      
+
+      let x = this.pos.x + cos(angle) * length / 2;
+      let y = this.pos.y + sin(angle) * length / 2;
+
       poisonTrails.push({
         pos: createVector(x, y),
         radius: 10 + this.rapidClawStage * 5, // 增加特效大小
@@ -2055,15 +2065,15 @@ class BugBoss extends Enemy {
       });
     }
   }
-  
+
   // 显示方法 - 根据当前状态选择不同的绘制方式
   display() {
     push();
     imageMode(CENTER);
-    
+
     // 根据当前状态选择合适的图像
     let currentImage;
-    
+
     if (this.isRapidClawActive) {
       // 使用攻击动画
       currentImage = this.attackImages[this.direction];
@@ -2071,63 +2081,63 @@ class BugBoss extends Enemy {
       // 使用移动动画
       currentImage = this.customImages[this.direction];
     }
-    
+
     // 计算当前帧位置
     let frameWidth = currentImage.width / this.totalFrames;
     let frameHeight = currentImage.height;
-    
+
     // 翻转左方向的图像
     if (this.direction === 'left') {
       translate(this.pos.x, this.pos.y);
       scale(-1, 1);
       image(
-        currentImage, 
-        0, 0, 
+        currentImage,
+        0, 0,
         this.radius * 2.5, this.radius * 2.5, // 稍微放大
-        this.frameIndex * frameWidth, 0, 
+        this.frameIndex * frameWidth, 0,
         frameWidth, frameHeight
       );
     } else {
       image(
-        currentImage, 
-        this.pos.x, this.pos.y, 
+        currentImage,
+        this.pos.x, this.pos.y,
         this.radius * 2.5, this.radius * 2.5, // 稍微放大
-        this.frameIndex * frameWidth, 0, 
+        this.frameIndex * frameWidth, 0,
         frameWidth, frameHeight
       );
     }
-    
+
     pop();
-    
+
     // 显示血条
     this.displayHealthBar();
-    
+
     // 绘制雾气效果
     if (this.fogOpacity > 0) {
       this.drawFogEffect();
     }
   }
-  
+
   // 其他方法保持不变 (displayHealthBar, castGhostFire等)
   // ...
-  
+
   // 添加缺失的displayHealthBar方法
   displayHealthBar() {
     // 确保设置全局Boss状态
     bossActive = true;
-    
+
     // 在全局范围显示Boss血条
     push();
     fill(100, 100, 100, 200);
-    rect(width/2 - 200, 50, 400, 20);
-    
+    rect(width / 2 - 200, 50, 400, 20);
+
     // 计算血量百分比
     let healthPercent = this.health / this.maxHealth;
     fill(255, 0, 0);
-    rect(width/2 - 200, 50, 400 * healthPercent, 20);
+    rect(width / 2 - 200, 50, 400 * healthPercent, 20);
     pop();
   }
-  
+
   // 添加缺失的castGhostFire方法
   castGhostFire() {
     // 在Boss周围生成6个鬼火
@@ -2136,7 +2146,7 @@ class BugBoss extends Enemy {
       let radius = 50;
       let x = this.pos.x + cos(angle) * radius;
       let y = this.pos.y + sin(angle) * radius;
-      
+
       // 创建并添加到全局数组
       enemyBullets.push(new GhostFire(x, y));
     }
@@ -2158,21 +2168,21 @@ class BugBoss extends Enemy {
       player.pos.x, player.pos.y, 0,
       player.pos.x, player.pos.y, this.fogRadius
     );
-    
+
     // 设置渐变颜色停止点
     gradient.addColorStop(0, `rgba(40, 40, 60, 0)`);
-    gradient.addColorStop(0.7, `rgba(40, 40, 60, ${this.fogOpacity * 0.5/255})`);
-    gradient.addColorStop(1, `rgba(40, 40, 60, ${this.fogOpacity/255})`);
-    
+    gradient.addColorStop(0.7, `rgba(40, 40, 60, ${this.fogOpacity * 0.5 / 255})`);
+    gradient.addColorStop(1, `rgba(40, 40, 60, ${this.fogOpacity / 255})`);
+
     // 应用渐变
     drawingContext.fillStyle = gradient;
-    
+
     // 创建模糊效果
     drawingContext.filter = 'blur(30px)';
-    
+
     // 绘制全屏遮罩
     rect(0, 0, width, height);
-    
+
     // 重置滤镜
     drawingContext.filter = 'none';
     pop();
