@@ -572,4 +572,158 @@ function initPlayer(type) {
   gameState = "petSelection"; // 角色选择后进入宠物选择
 }
 
+// 进一步放大火焰痕迹的效果
+function drawPoisonPools() {
+  for (let i = poisonTrails.length - 1; i >= 0; i--) {
+    const pool = poisonTrails[i];
+    const elapsed = millis() - pool.startTime;
+    
+    if (elapsed > pool.duration) {
+      poisonTrails.splice(i, 1);
+      continue;
+    }
+    
+    // 更新动画帧 - 保持原有动画系统
+    pool.frameCounter++;
+    if (pool.frameCounter >= pool.frameDelay) {
+      pool.frameCounter = 0;
+      pool.frameIndex = (pool.frameIndex + 1) % pool.frameCount;
+    }
+    
+    // 计算当前透明度
+    const fadeRatio = elapsed / pool.duration;
+    const alpha = map(fadeRatio, 0, 1, 1, 0);
+    
+    // 添加视觉增强效果
+    push();
+    
+    // 1. 更大的脉动效果
+    const pulseSize = sin(frameCount * 0.15) * 12; // 增大脉动幅度
+    const displayRadius = (pool.radius * 2.5) + pulseSize; // 将基础半径放大150%
+    
+    // 2. 更大的火焰光晕 - 使用红橙色调
+    noFill();
+    strokeWeight(5); // 增大线条宽度
+    for (let r = 0; r < 5; r++) { // 增加更多光晕层
+      // 火焰颜色渐变
+      let flameColor;
+      if (r === 0) flameColor = color(255, 50, 0, alpha * 0.7); // 红色内核
+      else if (r === 1) flameColor = color(255, 100, 0, alpha * 0.65); // 红橙过渡
+      else if (r === 2) flameColor = color(255, 150, 0, alpha * 0.6); // 橙色中层
+      else if (r === 3) flameColor = color(255, 200, 0, alpha * 0.5); // 黄色外层
+      else flameColor = color(255, 230, 180, alpha * 0.4); // 淡黄外晕
+      
+      stroke(flameColor);
+      ellipse(pool.pos.x, pool.pos.y, displayRadius * 2 + r * 18); // 增大光晕间距
+    }
+    
+    // 3. 绘制原始火焰痕迹 - 仍然使用原始动画框架
+    // 此处仍然会显示原始精灵或圆形，但有额外的火焰效果
+    
+    // 4. 添加更多火焰粒子效果
+    if (frameCount % 4 === 0) { // 更频繁地生成粒子
+      // 在火焰中心随机生成上升的火星
+      pool.sparks = pool.sparks || [];
+      
+      // 添加3-5个火花粒子
+      for (let s = 0; s < random(3, 6); s++) {
+        pool.sparks.push({
+          x: random(-displayRadius*0.7, displayRadius*0.7),
+          y: random(-displayRadius*0.7, displayRadius*0.7),
+          size: random(4, 12),
+          speedX: random(-0.8, 0.8),
+          speedY: random(-3, -0.8), // 更快的上升速度
+          alpha: random(0.7, 1.0),
+          color: random() > 0.6 ? color(255, 150, 0) : 
+                 random() > 0.3 ? color(255, 80, 0) : 
+                 color(255, 220, 50) // 增加一种更亮的黄色
+        });
+      }
+    }
+    
+    // 绘制火花
+    if (pool.sparks) {
+      for (let j = pool.sparks.length - 1; j >= 0; j--) {
+        const spark = pool.sparks[j];
+        
+        // 更新火花位置
+        spark.x += spark.speedX;
+        spark.y += spark.speedY;
+        spark.alpha -= 0.015; // 更慢的消失速度
+        spark.size -= 0.08;
+        
+        if (spark.alpha <= 0 || spark.size <= 0) {
+          pool.sparks.splice(j, 1);
+          continue;
+        }
+        
+        // 绘制火花
+        fill(red(spark.color), green(spark.color), blue(spark.color), 255 * spark.alpha);
+        noStroke();
+        ellipse(pool.pos.x + spark.x, pool.pos.y + spark.y, spark.size);
+        
+        // 添加火花尾迹
+        if (random() > 0.7) {
+          fill(255, 200, 100, 100 * spark.alpha);
+          ellipse(pool.pos.x + spark.x, pool.pos.y + spark.y + random(2, 4), spark.size * 0.7);
+        }
+      }
+    }
+    
+    // 5. 添加更大的内部波纹效果 (火焰涟漪)
+    if (frameCount % 7 === 0) {
+      pool.ripples = pool.ripples || [];
+      pool.ripples.push({
+        size: 15,
+        maxSize: random(pool.radius * 1.0, pool.radius * 2.0), // 更大的波纹尺寸
+        alpha: 0.9,
+        x: random(-12, 12),
+        y: random(-12, 12)
+      });
+    }
+    
+    // 绘制波纹
+    if (pool.ripples) {
+      for (let j = pool.ripples.length - 1; j >= 0; j--) {
+        const ripple = pool.ripples[j];
+        ripple.size += 2.0; // 更快的扩散速度
+        ripple.alpha -= 0.025;
+        
+        if (ripple.size >= ripple.maxSize || ripple.alpha <= 0) {
+          pool.ripples.splice(j, 1);
+          continue;
+        }
+        
+        // 使用火焰颜色
+        noFill();
+        let rippleColor = color(255, 100 + random(0, 155), 0, 255 * ripple.alpha);
+        stroke(rippleColor);
+        strokeWeight(3);
+        ellipse(pool.pos.x + ripple.x, pool.pos.y + ripple.y, ripple.size * 2);
+      }
+    }
+    
+    // 添加中心火球效果
+    noStroke();
+    for (let c = 0; c < 3; c++) {
+      let coreRadius = displayRadius * (0.2 - c * 0.05);
+      let coreAlpha = alpha * (0.8 - c * 0.2);
+      
+      fill(255, 200 - c * 50, 50, 255 * coreAlpha);
+      ellipse(pool.pos.x, pool.pos.y, coreRadius * 2);
+    }
+    
+    pop();
+    
+    // 检测玩家是否进入火焰区域 - 使用更大的碰撞区域
+    if (player && dist(pool.pos.x, pool.pos.y, player.pos.x, player.pos.y) < displayRadius + player.radius) {
+      if (frameCount % 12 === 0) { // 更频繁地造成伤害
+        // 每12帧造成伤害
+        player.takeDamage(5);
+        showFloatingText("Burned!", player.pos.x, player.pos.y - 20, color(255, 100, 0), 18);
+      }
+    }
+  }
+}
+
 
