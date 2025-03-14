@@ -26,7 +26,7 @@ class Enemy {
     this.vel = createVector(0, 0);
     this.radius = 10;
     if (difficult == "hard") {
-      this.health = 80;
+      this.health = 120;
     } else {
       this.health = 50;
     }
