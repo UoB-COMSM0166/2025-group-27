@@ -484,14 +484,14 @@ class Boss extends Enemy {
 
 class BirdBoss extends Boss {
   constructor(birdBossAction) {
-    // 调用 Boss 构造函数
-    super(true, "boss", birdBossAction, 200, 160);
+    // 修改尺寸参数，从200x160减小到150x120
+    super(true, "boss", birdBossAction, 150, 120);
     this.birdBossAction = birdBossAction;
     
     // Boss 属性设置（可根据需求调整数值）
     this.health = 800;
     this.maxHealth = 800;
-    this.size = 200;
+    this.size = 150; // 从200减小到150
     this.speed = 2.5;
     this.attackRange = 150;
     this.attackSpeed = 1.5;
@@ -504,7 +504,7 @@ class BirdBoss extends Boss {
     this.meleeDamage = 40;
     this.dashCooldown = 0;
     this.isDashing = false;
-    this.dashSpeed = 10;
+    this.dashSpeed = 15; // 从10提高到15，增加冲刺速度
     this.dashDuration = 0;
     this.attackPattern = 0;
     this.patternTimer = 0;
@@ -530,7 +530,7 @@ class BirdBoss extends Boss {
 
     // 初始位置
     this.pos = createVector(width / 2, height / 2);
-    this.radius = 25;
+    this.radius = 20; // 从25减小到20
     this.expValue = 200;
     this.isActive = true;
 
