@@ -370,6 +370,9 @@ function preload() {
 
   //死亡效果
   deathEffect1 = loadImage("./assets/candidate_images/effects/death_effects/blood_burst/Bloodsplatt.png");
+
+  // 在函数末尾添加这一行
+  featherBladeSprite = loadImage("./assets/candidate_images/characters/enemies/birdman/falling_feather_blue.png");
 }
 
 

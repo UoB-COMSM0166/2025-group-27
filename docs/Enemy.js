@@ -552,6 +552,13 @@ class BirdBoss extends Boss {
     this.screechwaveCount = 0;       // 已发射声波数量
     this.waveInterval = 15;          // 声波间隔时间
     this.waveTimer = 0;              // 声波计时器
+
+    // 添加羽刃旋风技能相关属性
+    this.featherBladesCooldown = 0;
+    this.featherBladesMaxCooldown = 480; // 8秒冷却
+    
+    // 定义技能选项（如果已有其他技能选项，添加到现有数组中）
+    this.skillOptions = ['dash', 'sonicScreech', 'featherBlades'];
   }
 
 
@@ -682,6 +689,27 @@ class BirdBoss extends Boss {
       }
 
       this.animate();
+
+      // 在现有代码后添加羽刃旋风冷却更新
+      if (this.featherBladesCooldown > 0) {
+        this.featherBladesCooldown--;
+      }
+      
+      // 添加随机技能选择逻辑，与现有的技能触发保持相同概率
+      if (random() < 0.005 && !this.isDashing && !this.isScreeching) {
+        let skill = random(this.skillOptions);
+        
+        if (skill === 'dash' && this.dashCooldown <= 0) {
+          // 现有冲刺逻辑...
+          this.initiateDash();
+        } else if (skill === 'sonicScreech' && this.sonicScreechCooldown <= 0) {
+          // 现有声波尖啸逻辑...
+          this.sonicScreech();
+        } else if (skill === 'featherBlades' && this.featherBladesCooldown <= 0) {
+          // 触发羽刃旋风技能
+          this.releaseFeatherBlades();
+        }
+      }
     }
     catch (error) {
       console.error("Error in BirdBoss update:", error);
@@ -960,6 +988,35 @@ class BirdBoss extends Boss {
     
     // 显示技能使用提示（更大字体）
     showFloatingText("Sonic Screech!", this.pos.x, this.pos.y - 40, color(255, 50, 50), 24);
+  }
+
+  // 添加羽刃旋风技能方法
+  releaseFeatherBlades() {
+    // 设置冷却
+    this.featherBladesCooldown = this.featherBladesMaxCooldown;
+    
+    // 显示技能使用提示
+    showFloatingText("Feather Blade Assault!", this.pos.x, this.pos.y - 40, color(200, 200, 255), 24);
+    
+    // 基础起始角度
+    let baseAngle = 0; // 默认从0开始
+    if (player) {
+      // 优先朝向玩家方向开始发射
+      let dirToPlayer = p5.Vector.sub(player.pos, this.pos);
+      baseAngle = dirToPlayer.heading();
+    }
+    
+    // 创建10道羽刃
+    let numberOfBlades = 10;
+    let angleIncrement = TWO_PI / numberOfBlades;
+    
+    for (let i = 0; i < numberOfBlades; i++) {
+      let attackAngle = baseAngle + i * angleIncrement;
+      // 计算投射物的速度向量
+      let bladeVel = createVector(cos(attackAngle), sin(attackAngle)).mult(6);
+      // 创建羽刃投射物
+      enemyBullets.push(new FeatherProjectile(this.pos.x, this.pos.y, bladeVel, this.damage));
+    }
   }
 }
 
@@ -2342,3 +2399,126 @@ class FeatherPool {
 
 // 创建全局羽毛池实例
 const featherPool = new FeatherPool(80);
+
+// 在文件末尾添加FeatherProjectile类
+class FeatherProjectile {
+  constructor(x, y, vel, damage) {
+    this.pos = createVector(x, y);
+    this.vel = vel;
+    this.damage = damage || 20; // 默认伤害
+    this.lifespan = 120; // 2秒生命周期
+    this.width = 24;  // 调整为图片宽度
+    this.height = 24; // 调整为图片高度
+    this.hitRadius = 10; // 碰撞检测半径
+    this.isActive = true;
+    
+    // 动画相关属性
+    this.frameIndex = 0;
+    this.totalFrames = 8;
+    this.animationSpeed = 0.2; // 较慢的动画速度，使动画更明显
+  }
+  
+  update() {
+    // 更新位置
+    this.pos.add(this.vel);
+    
+    // 更新动画帧
+    this.frameIndex = (this.frameIndex + this.animationSpeed) % this.totalFrames;
+    
+    // 减少生命周期
+    this.lifespan--;
+    if (this.lifespan <= 0) {
+      this.isActive = false;
+      return;
+    }
+    
+    // 检查是否超出屏幕边界
+    if (this.pos.x < 0 || this.pos.x > width || this.pos.y < 0 || this.pos.y > height) {
+      this.isActive = false;
+      return;
+    }
+    
+    // 检查与玩家的碰撞
+    if (player && this.isActive) {
+      let distToPlayer = dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y);
+      if (distToPlayer < this.hitRadius + player.radius) {
+        // 对玩家造成伤害
+        player.takeDamage(this.damage);
+        
+        // 生成一些粒子效果
+        for (let i = 0; i < 5; i++) {
+          poisonTrails.push({
+            pos: createVector(
+              this.pos.x + random(-10, 10),
+              this.pos.y + random(-10, 10)
+            ),
+            radius: random(3, 8),
+            startTime: millis(),
+            duration: 500,
+            color: color(200, 240, 255, 150)
+          });
+        }
+        
+        // 投射物碰撞后消失
+        this.isActive = false;
+        return;
+      }
+    }
+  }
+  
+  display() {
+    push();
+    // 计算羽刃的旋转角度
+    let angle = this.vel.heading() + PI / 2;
+    
+    translate(this.pos.x, this.pos.y);
+    rotate(angle);
+    
+    // 使用羽毛动画代替矩形
+    if (featherBladeSprite) {
+      // 计算当前动画帧
+      let currentFrame = Math.floor(this.frameIndex);
+      let frameWidth = featherBladeSprite.width / 8; // 8帧图片
+      
+      // 使用tint添加轻微蓝色调，使羽刃更加明显
+      tint(220, 240, 255, 230);
+      
+      // 绘制当前帧
+      image(
+        featherBladeSprite,
+        -this.width/2,
+        -this.height/2,
+        this.width,
+        this.height,
+        currentFrame * frameWidth,
+        0,
+        frameWidth,
+        featherBladeSprite.height
+      );
+    } else {
+      // 如果图片未加载，使用备用矩形
+      fill(200, 240, 255);
+      noStroke();
+      rect(-this.width/2, -this.height/2, this.width, this.height);
+    }
+    
+    pop();
+    
+    // 添加一些拖尾效果
+    if (frameCount % 2 === 0) {
+      poisonTrails.push({
+        pos: createVector(
+          this.pos.x, 
+          this.pos.y
+        ),
+        radius: random(2, 5),
+        startTime: millis(),
+        duration: 300,
+        color: color(200, 240, 255, 100)
+      });
+    }
+  }
+}
+
+// 在全局添加羽刃精灵图变量
+let featherBladeSprite;
