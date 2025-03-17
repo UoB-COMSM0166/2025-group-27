@@ -140,6 +140,20 @@ function keyPressed() {
     }
     if (key === "M" || key === "m") gameState = "mainMenu";
     if (key === "P" || key === "p") gameState = "game";
+    if (key === "I" || key === "i") {
+      player.isInvincible = !player.isInvincible;
+      showFloatingText(player.isInvincible ? "无敌模式已开启!" : "无敌模式已关闭", 
+                        width / 2, height / 2 - 100, 
+                        player.isInvincible ? color(255, 215, 0) : color(255, 100, 100), 24);
+      
+      // 更新无敌模式按钮的标签
+      for (let btn of pauseButtons) {
+        if (btn.label.includes("无敌模式")) {
+          btn.label = player.isInvincible ? "关闭无敌模式 (I)" : "开启无敌模式 (I)";
+          break;
+        }
+      }
+    }
   } else if (key === " ") {
     if (player.attack) player.attack();
   } else if (key === "P" || key === "p") {

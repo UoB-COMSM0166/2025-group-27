@@ -375,33 +375,28 @@ function initButtons() {
   ];
 
   pauseButtons = [
-    new Button(
-      width / 2 - 75,
-      baseY,
-      200,
-      40,
-      "Resume Game",
-      () => {
-        buttonsound.play();
-        (gameState = "game")
-}),
-    new Button(width / 2 - 75, baseY + 60, 200, 40, "Main Menu", () => {
-      buttonsound.play();
-      savedGame = {
-        ...savedGame,
-        wave: wave, // 新增保存波数
-        player: JSON.stringify({
-          ...player,
-          pos: { x: player.pos.x, y: player.pos.y }, // 保存精确坐标
-        }),
-        enemies: enemies.map((e) => ({
-          ...e,
-          type: e.constructor.name, // 保存具体敌人类型
-          pos: { x: e.pos.x, y: e.pos.y },
-        })),
-      };
+    new Button(width / 2 - 100, height / 2 - 40, 200, 40, "继续游戏 (P)", function() {
+      gameState = "game";
+    }),
+    new Button(width / 2 - 100, height / 2 + 20, 200, 40, "回到主菜单 (M)", function() {
       gameState = "mainMenu";
     }),
+    new Button(width / 2 - 100, height / 2 + 80, 200, 40, "保存游戏 (S)", function() {
+      // 保存游戏逻辑
+    }),
+    // 修改无敌模式按钮的创建方式，检查player是否存在
+    new Button(width / 2 - 100, height / 2 + 140, 200, 40, 
+      "开启无敌模式 (I)", 
+      function() {
+        if (player) {
+          player.isInvincible = !player.isInvincible;
+          // 更新按钮文本
+          this.label = player.isInvincible ? "关闭无敌模式 (I)" : "开启无敌模式 (I)";
+          showFloatingText(player.isInvincible ? "无敌模式已开启!" : "无敌模式已关闭", 
+                            width / 2, height / 2 - 100, 
+                            player.isInvincible ? color(255, 215, 0) : color(255, 100, 100), 24);
+        }
+    })
   ];
 }
 
@@ -779,7 +774,7 @@ function displayPauseMenu() {
   fill(255);
   textAlign(CENTER, CENTER);
   text("Game Paused", width / 2, height / 3);
-
+  
   // 计算并显示暂停时间
   let pausedTime = floor((millis() - pauseStartTime) / 1000);
   text(`Paused for: ${pausedTime}s`, width / 2, height / 3 + 30);
@@ -790,6 +785,8 @@ function displayPauseMenu() {
   text("Save Game (Press 'S')", width / 2, height / 2 + 90);
   text("Return to Main Menu (Press 'M')", width / 2, height / 2 + 120);
   text("Resume (Press 'P')", width / 2, height / 2 + 150);
+  // 添加无敌模式说明
+  text("Toggle Invincible Mode (Press 'I')", width / 2, height / 2 + 180);
   pop();
 }
 
