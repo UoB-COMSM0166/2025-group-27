@@ -140,7 +140,7 @@ class Player {
     this.berserkerMode = false; // 狂战士模式
 
     // 对于Archer类型的player
-    this.arrowDamage = 20; // 基础伤害
+    this.arrowDamage = 30; // 基础伤害
     this.arrowSpeed = 12; // 箭矢速度
     this.arrowSize = 12; // 箭矢尺寸
     this.isCharging = false; // 蓄力状态
