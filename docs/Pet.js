@@ -386,7 +386,7 @@ function showPetSelectionScreen() {
   image(eggFairy, center3.x, center3.y, eggW, eggH);
   pop();
 
-  const nameRegionHeight = 40;
+  const nameRegionHeight = 20;
 
   const nameRect1 = {
     x: box1.x,
@@ -410,6 +410,9 @@ function showPetSelectionScreen() {
   if (mouseIsPressed && !prevMouseIsPressed) {
     if (mouseX >= nameRect1.x && mouseX <= nameRect1.x + nameRect1.w &&
       mouseY >= nameRect1.y && mouseY <= nameRect1.y + nameRect1.h) {
+      if (!selectionSound.isPlaying()) {
+        selectionSound.loop();
+      }
       player.pet = new AttackPet(player.pos.x, player.pos.y);
       selectedPetFrontImage = foxMoveFront;
       gameState = "petReveal";
@@ -418,6 +421,9 @@ function showPetSelectionScreen() {
       petRevealFrameCounter = 0;
     } else if (mouseX >= nameRect2.x && mouseX <= nameRect2.x + nameRect2.w &&
       mouseY >= nameRect2.y && mouseY <= nameRect2.y + nameRect2.h) {
+      if (!selectionSound.isPlaying()) {
+        selectionSound.loop();
+      }
       player.pet = new DefensePet();
       selectedPetFrontImage = cowMoveFront;
       gameState = "petReveal";
@@ -426,6 +432,9 @@ function showPetSelectionScreen() {
       petRevealFrameCounter = 0;
     } else if (mouseX >= nameRect3.x && mouseX <= nameRect3.x + nameRect3.w &&
       mouseY >= nameRect3.y && mouseY <= nameRect3.y + nameRect3.h) {
+      if (!selectionSound.isPlaying()) {
+        selectionSound.loop();
+      }
       player.pet = new HealerPet();
       selectedPetFrontImage = fairyMoveFront;
       gameState = "petReveal";
@@ -466,7 +475,10 @@ function displayPetReveal() {
   pop();
 
   petRevealTimer++;
-  if (petRevealTimer > 60) {
+  if (petRevealTimer >= 180) {
+    if (selectionSound.isPlaying()) {
+      selectionSound.stop();
+    }
     finishPetSelection();
   }
 }

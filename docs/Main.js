@@ -343,6 +343,7 @@ function preload() {
 
   //宠物选择页面
   selectPetsImage = loadImage("./assets/selected_images/pets/selectpets.png");
+  selectionSound = loadSound("./assets/candidate_sounds/Music/biomeTitle.ogg");
 
   //sound相关
   //UI声音
