@@ -366,64 +366,66 @@ class HealerPet extends BasePet {
 
 function showPetSelectionScreen() {
   push();
-  background(0, 180);
-
-  fill(255);
-  textSize(36);
-  textAlign(CENTER, CENTER);
-  text("Choose your combat partner!", width / 2, height / 6);
-
-  let boxWidth = 300;
-  let boxHeight = 200;
-  let yOffset = height / 2 - 100;
-
-  fill(50, 50, 50, 200);
-  rect(width / 4 - boxWidth / 2, yOffset, boxWidth, boxHeight, 15);
-  rect(width / 2 - boxWidth / 2, yOffset, boxWidth, boxHeight, 15);
-  rect(width * 3 / 4 - boxWidth / 2, yOffset, boxWidth, boxHeight, 15);
-
-  fill(255);
-  textSize(24);
-  text("Blaze 🔥", width / 4, yOffset + 40);
-  text("Aegis 🛡️", width / 2, yOffset + 40);
-  text("Aurora ✨", width * 3 / 4, yOffset + 40);
-
-  let eggY = yOffset + (40 + 180) / 2;
-  imageMode(CENTER);
-  image(eggFox, width / 4, eggY, 100, 100);
-  image(eggCow, width / 2, eggY, 100, 100);
-  image(eggFairy, width * 3 / 4, eggY, 100, 100);
-
-  textSize(16);
-  fill(255, 230);
-  text("Auto-attacks nearby enemies", width / 4, yOffset + 180);
-  text("Gives a 1.5s shield every 15s", width / 2, yOffset + 180);
-  text("Heals 0.4 HP per second", width * 3 / 4, yOffset + 180);
+  imageMode(CORNER);
+  image(selectPetsImage, 0, 0, 1062, 600);
   pop();
 
+  const box1 = { x: 126, y: 100, w: 200, h: 340 };
+  const box2 = { x: 426, y: 100, w: 200, h: 340 };
+  const box3 = { x: 726, y: 100, w: 200, h: 340 };
 
-  if (mouseIsPressed) {
-    if (mouseX > width / 4 - boxWidth / 2 && mouseX < width / 4 + boxWidth / 2 &&
-      mouseY > yOffset && mouseY < yOffset + boxHeight) {
+  const eggW = 100, eggH = 100;
+  const center1 = { x: box1.x + box1.w / 2, y: box1.y + box1.h / 2 };
+  const center2 = { x: box2.x + box2.w / 2, y: box2.y + box2.h / 2 };
+  const center3 = { x: box3.x + box3.w / 2, y: box3.y + box3.h / 2 };
 
+  push();
+  imageMode(CENTER);
+  image(eggFox, center1.x, center1.y, eggW, eggH);
+  image(eggCow, center2.x, center2.y, eggW, eggH);
+  image(eggFairy, center3.x, center3.y, eggW, eggH);
+  pop();
+
+  const nameRegionHeight = 40;
+
+  const nameRect1 = {
+    x: box1.x,
+    y: box1.y + box1.h - nameRegionHeight,
+    w: box1.w,
+    h: nameRegionHeight
+  };
+  const nameRect2 = {
+    x: box2.x,
+    y: box2.y + box2.h - nameRegionHeight,
+    w: box2.w,
+    h: nameRegionHeight
+  };
+  const nameRect3 = {
+    x: box3.x,
+    y: box3.y + box3.h - nameRegionHeight,
+    w: box3.w,
+    h: nameRegionHeight
+  };
+
+  if (mouseIsPressed && !prevMouseIsPressed) {
+    if (mouseX >= nameRect1.x && mouseX <= nameRect1.x + nameRect1.w &&
+      mouseY >= nameRect1.y && mouseY <= nameRect1.y + nameRect1.h) {
       player.pet = new AttackPet(player.pos.x, player.pos.y);
       selectedPetFrontImage = foxMoveFront;
       gameState = "petReveal";
       petRevealTimer = 0;
       petRevealFrameIndex = 0;
       petRevealFrameCounter = 0;
-    } else if (mouseX > width / 2 - boxWidth / 2 && mouseX < width / 2 + boxWidth / 2 &&
-      mouseY > yOffset && mouseY < yOffset + boxHeight) {
-
+    } else if (mouseX >= nameRect2.x && mouseX <= nameRect2.x + nameRect2.w &&
+      mouseY >= nameRect2.y && mouseY <= nameRect2.y + nameRect2.h) {
       player.pet = new DefensePet();
       selectedPetFrontImage = cowMoveFront;
       gameState = "petReveal";
       petRevealTimer = 0;
       petRevealFrameIndex = 0;
       petRevealFrameCounter = 0;
-    } else if (mouseX > width * 3 / 4 - boxWidth / 2 && mouseX < width * 3 / 4 + boxWidth / 2 &&
-      mouseY > yOffset && mouseY < yOffset + boxHeight) {
-
+    } else if (mouseX >= nameRect3.x && mouseX <= nameRect3.x + nameRect3.w &&
+      mouseY >= nameRect3.y && mouseY <= nameRect3.y + nameRect3.h) {
       player.pet = new HealerPet();
       selectedPetFrontImage = fairyMoveFront;
       gameState = "petReveal";
@@ -432,6 +434,7 @@ function showPetSelectionScreen() {
       petRevealFrameCounter = 0;
     }
   }
+  prevMouseIsPressed = mouseIsPressed;
 }
 
 function displayPetReveal() {
