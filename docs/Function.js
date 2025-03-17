@@ -348,13 +348,13 @@ function initButtons() {
   ];
 
   charSelectButtons = [
-    new Button(baseX - 375, height / 2 + 200, 200, 40, "Gunner", () => {
+    new Button(baseX - 375, height / 2 + 167.5, 200, 40, "Gunner", () => {
       buttonsound.play();
       initPlayer("gunner")
 }),
     new Button(
-      baseX - 75,
-      height / 2 + 200,
+      baseX - 70,
+      height / 2 + 167.5,
       200,
       40,
       "Archer", // 间距从+20改为+30
@@ -363,8 +363,8 @@ function initButtons() {
         initPlayer("archer")
 }),
     new Button(
-      baseX + 225,
-      height / 2 + 200,
+      baseX + 235,
+      height / 2 + 167.5,
       200,
       40,
       "Knight",
@@ -452,7 +452,7 @@ function initPlayer(type) {
   generateInitialObstacles();
 
   spawnEnemiesForWave(wave);
-  gameState = "game";
+  gameState = "guide";
 }
 
 // display函数
@@ -677,12 +677,6 @@ function displayStoryPage1() {
   buttonH = 30;
   buttonX = width - buttonW - 20; // 距离右侧 20 像素
   buttonY = height - buttonH - 20; // 距离底部 20 像素
-  fill(0, 0, 255); // 按钮颜色（蓝色）
-  rect(buttonX, buttonY, buttonW, buttonH, 10); // 圆角按钮
-
-  fill(255); // 文字颜色（白色）
-  textSize(15);
-  text("Next", buttonX + buttonW / 2, buttonY + buttonH / 2);
 }
 
 function displayStoryPage2() {
@@ -692,12 +686,6 @@ function displayStoryPage2() {
   buttonH = 30;
   buttonX = width - buttonW - 20; // 距离右侧 20 像素
   buttonY = height - buttonH - 20; // 距离底部 20 像素
-  fill(0, 0, 255); // 按钮颜色（蓝色）
-  rect(buttonX, buttonY, buttonW, buttonH, 10); // 圆角按钮
-
-  fill(255); // 文字颜色（白色）
-  textSize(15);
-  text("Next", buttonX + buttonW / 2, buttonY + buttonH / 2);
 }
 
 function displayStoryPage3() {
@@ -707,27 +695,24 @@ function displayStoryPage3() {
   buttonH = 30;
   buttonX = width - buttonW - 20; // 距离右侧 20 像素
   buttonY = height - buttonH - 20; // 距离底部 20 像素
-  fill(0, 0, 255); // 按钮颜色（蓝色）
-  rect(buttonX, buttonY, buttonW, buttonH, 10); // 圆角按钮
-
-  fill(255); // 文字颜色（白色）
-  textSize(15);
-  text("Next", buttonX + buttonW / 2, buttonY + buttonH / 2);
 }
 
 function displayStoryPage4() {
-  image(story3, 0, 0, width, height);
+  image(story4, 0, 0, width, height);
 
   buttonW = 100;
   buttonH = 30;
   buttonX = width - buttonW - 20; // 距离右侧 20 像素
   buttonY = height - buttonH - 20; // 距离底部 20 像素
-  fill(0, 0, 255); // 按钮颜色（蓝色）
-  rect(buttonX, buttonY, buttonW, buttonH, 10); // 圆角按钮
+}
 
-  fill(255); // 文字颜色（白色）
-  textSize(15);
-  text("Start journey!", buttonX + buttonW / 2, buttonY + buttonH / 2);
+function displayStoryPage5() {
+  image(story5, 0, 0, width, height);
+
+  buttonW = 100;
+  buttonH = 30;
+  buttonX = width - buttonW - 20; // 距离右侧 20 像素
+  buttonY = height - buttonH - 20; // 距离底部 20 像素
 }
 
 function displayVictoryPage1() {
@@ -767,30 +752,25 @@ function displayVictoryPage3() {
   buttonH = 30;
   buttonX = width - buttonW - 20; // 距离右侧 20 像素
   buttonY = height - buttonH - 20; // 距离底部 20 像素
-  fill(0, 0, 255); // 按钮颜色（蓝色）
-  rect(buttonX, buttonY, buttonW, buttonH, 10); // 圆角按钮
-
-  fill(255); // 文字颜色（白色）
-  textSize(15);
-  text("END!", buttonX + buttonW / 2, buttonY + buttonH / 2);
 }
 
 function displayCharacterSelection() {
   fill(255);
   textSize(24);
   textAlign(CENTER, CENTER);
-  text("Choose Your Character", width / 2, height / 4 - 50);
+  image(characterChoose,0,0,width,height);
   image(gunnerpic, width / 2 - 350, height / 2 - 100, 100, 200);
-  textSize(16);
-  fill(255,255,0);
-  text("Why not turn the PC into a laser cannon?", width / 2 - 310, height / 2 + 150);
   image(archerpic, width / 2 - 50, height / 2 - 100, 100, 200);
-  text("Pull that mouse cable like a longbow", width / 2 + 10, height / 2 + 150);
   image(knightpic, width / 2 + 250, height / 2 - 100, 100, 200);
-  text("Swing that keyboard like a battle axe", width / 2 + 310, height / 2 + 150);
+}
 
+function displayGuidePage() {
+  image(guidePage, 0,0,width,height);
 
-  charSelectButtons.forEach((btn) => btn.display());
+  buttonW = 100;
+  buttonH = 30;
+  buttonX = width - buttonW - 20; // 距离右侧 20 像素
+  buttonY = height - buttonH - 20; // 距离底部 20 像素
 }
 
 function displayPauseMenu() {

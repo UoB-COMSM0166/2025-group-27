@@ -11,7 +11,13 @@ function mouseClicked() {
     gameState = "story4";
   } else if (gameState == "story4" && mouseX > buttonX && mouseX < buttonX + buttonW &&
     mouseY > buttonY && mouseY < buttonY + buttonH) {
+    gameState = "story5";
+  } else if (gameState == "story5" && mouseX > buttonX && mouseX < buttonX + buttonW &&
+    mouseY > buttonY && mouseY < buttonY + buttonH) {
     gameState = "menu";
+  } else if (gameState == "guide" && mouseX > buttonX && mouseX < buttonX + buttonW &&
+    mouseY > buttonY && mouseY < buttonY + buttonH) {
+    gameState = "game";
   } else if (gameState == "vStory" && mouseX > buttonX && mouseX < buttonX + buttonW &&
     mouseY > buttonY && mouseY < buttonY + buttonH) {
     gameState = "vStory1";

@@ -201,6 +201,8 @@ function updateWeather() {
 function preload() {
   // 界面相关
   mainMenuPage = loadImage("./assets/selected_images/page/MainMenu.png");
+  characterChoose = loadImage("./assets/selected_images/page/characterPage.png");
+  guidePage = loadImage("./assets/selected_images/guide/guide.png");
   // maps
   level1map = loadImage("./assets/selected_images/maps/level1.png");
   level2map = loadImage("./assets/selected_images/maps/level2.png");
@@ -209,6 +211,8 @@ function preload() {
   story1 = loadImage("./assets/selected_images/story/story1.png");
   story2 = loadImage("./assets/selected_images/story/story2.png");
   story3 = loadImage("./assets/selected_images/story/story3.png");
+  story4 = loadImage("./assets/selected_images/story/story4.png");
+  story5 = loadImage("./assets/selected_images/story/story5.png");
   // display Character
   gunnerpic = loadImage("./assets/selected_images/characters/intro/computerboy_intro.gif");
   archerpic = loadImage("./assets/selected_images/characters/intro/mousegirl_intro.gif");
@@ -456,6 +460,12 @@ function draw() {
       break;
     case "story4":
       displayStoryPage4();
+      break;
+    case "story5":
+      displayStoryPage5();
+      break;
+    case "guide":
+      displayGuidePage();
       break;
     case "vStory":
       displayVictoryPage1();
