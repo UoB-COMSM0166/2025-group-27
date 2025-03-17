@@ -169,9 +169,18 @@ class Player {
     // 添加眩晕状态属性
     this.stunned = false;
     this.stunDuration = 0;
+
+    // 添加无敌模式标志
+    this.isInvincible = false;
   }
 
   takeDamage(amount) {
+    // 如果处于无敌模式，不扣血
+    if (this.isInvincible) {
+      showFloatingText("无敌!", this.pos.x, this.pos.y - 20, color(255, 215, 0), 18);
+      return;
+    }
+    
     if(this.reborn){
     if (this.health > 10 && (this.health - amount) <= 10 && !this.rebornUsed) {
       this.health = 100; // 复活并恢复100生命
