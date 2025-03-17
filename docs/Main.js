@@ -203,6 +203,9 @@ function preload() {
   mainMenuPage = loadImage("./assets/selected_images/page/MainMenu.png");
   characterChoose = loadImage("./assets/selected_images/page/characterPage.png");
   guidePage = loadImage("./assets/selected_images/guide/guide.png");
+  pausePage = loadImage("./assets/selected_images/page/pause.png");
+  skillPage = loadImage("./assets/selected_images/page/skill.png");
+  victoryPage = loadImage("./assets/selected_images/page/victory.png");
   // maps
   level1map = loadImage("./assets/selected_images/maps/level1.png");
   level2map = loadImage("./assets/selected_images/maps/level2.png");
@@ -213,6 +216,7 @@ function preload() {
   story3 = loadImage("./assets/selected_images/story/story3.png");
   story4 = loadImage("./assets/selected_images/story/story4.png");
   story5 = loadImage("./assets/selected_images/story/story5.png");
+  victoryStory = loadImage("./assets/selected_images/story/victoryStory.png");
   // display Character
   gunnerpic = loadImage("./assets/selected_images/characters/intro/computerboy_intro.gif");
   archerpic = loadImage("./assets/selected_images/characters/intro/mousegirl_intro.gif");
@@ -469,12 +473,6 @@ function draw() {
       break;
     case "vStory":
       displayVictoryPage1();
-      break;
-    case "vStory1":
-      displayVictoryPage2();
-      break;
-    case "vStory2":
-      displayVictoryPage3();
       break;
   }
 

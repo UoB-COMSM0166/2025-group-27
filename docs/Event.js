@@ -20,13 +20,7 @@ function mouseClicked() {
     gameState = "game";
   } else if (gameState == "vStory" && mouseX > buttonX && mouseX < buttonX + buttonW &&
     mouseY > buttonY && mouseY < buttonY + buttonH) {
-    gameState = "vStory1";
-  } else if (gameState == "vStory1" && mouseX > buttonX && mouseX < buttonX + buttonW &&
-    mouseY > buttonY && mouseY < buttonY + buttonH) {
-    gameState = "vStory2";
-  } else if (gameState == "vStory2" && mouseX > buttonX && mouseX < buttonX + buttonW &&
-    mouseY > buttonY && mouseY < buttonY + buttonH) {
-    gameState = "victory";
+    gameState = "victory"
   }
 }
 

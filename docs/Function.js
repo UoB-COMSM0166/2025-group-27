@@ -716,37 +716,7 @@ function displayStoryPage5() {
 }
 
 function displayVictoryPage1() {
-  image(story1, 0, 0, width, height);
-
-  buttonW = 100;
-  buttonH = 30;
-  buttonX = width - buttonW - 20; // 距离右侧 20 像素
-  buttonY = height - buttonH - 20; // 距离底部 20 像素
-  fill(0, 0, 255); // 按钮颜色（蓝色）
-  rect(buttonX, buttonY, buttonW, buttonH, 10); // 圆角按钮
-
-  fill(255); // 文字颜色（白色）
-  textSize(15);
-  text("Next", buttonX + buttonW / 2, buttonY + buttonH / 2);
-}
-
-function displayVictoryPage2() {
-  image(story2, 0, 0, width, height);
-
-  buttonW = 100;
-  buttonH = 30;
-  buttonX = width - buttonW - 20; // 距离右侧 20 像素
-  buttonY = height - buttonH - 20; // 距离底部 20 像素
-  fill(0, 0, 255); // 按钮颜色（蓝色）
-  rect(buttonX, buttonY, buttonW, buttonH, 10); // 圆角按钮
-
-  fill(255); // 文字颜色（白色）
-  textSize(15);
-  text("Next", buttonX + buttonW / 2, buttonY + buttonH / 2);
-}
-
-function displayVictoryPage3() {
-  image(story3, 0, 0, width, height);
+  image(victoryStory, 0, 0, width, height);
 
   buttonW = 100;
   buttonH = 30;
@@ -775,10 +745,10 @@ function displayGuidePage() {
 
 function displayPauseMenu() {
   push();
-  textSize(20);
+  image(pausePage,0,0,width,height);
+  textSize(25);
   fill(255);
   textAlign(CENTER, CENTER);
-  text("Game Paused", width / 2, height / 3);
 
   // 计算并显示暂停时间
   let pausedTime = floor((millis() - pauseStartTime) / 1000);
@@ -858,33 +828,32 @@ function generateInitialObstacles() {
 
 // ===== 升级界面 =====
 function drawUpgradeScreen() {
+  image(skillPage,0,0,width,height);
   fill(0, 0, 0, 200);
-  rect(0, 0, width, height);
   fill(255);
   textSize(32);
   textAlign(CENTER);
-  text("Upgrade! Choose one option", width / 2, height / 4);
 
   for (let i = 0; i < upgradeOptions.length; i++) {
     let x = width / 4 + (i * width) / 4;
     let y = height / 2;
     let option = upgradeOptions[i];
-    fill(60, 60, 60);
+    fill(60, 60, 60, 150);
     if (
       mouseX > x - 100 &&
       mouseX < x + 100 &&
       mouseY > y - 50 &&
-      mouseY < y + 50
+      mouseY < y + 150
     ) {
       fill(80, 80, 80);
     }
-    rect(x - 100, y - 50, 200, 100, 10);
+    rect(x - 100, y - 50, 200, 200, 10);
     fill(255);
+    textSize(22);
+    text(option.name, x, y);
     textSize(20);
-    text(option.name, x, y - 20);
-    textSize(16);
     textWrap(WORD);
-    text(option.description, x - 100, y + 20, 200);
+    text(option.description, x - 100, y + 70, 200);
   }
   textAlign(LEFT);
 }
@@ -1802,22 +1771,13 @@ class Pet3 {
 // 添加游戏胜利界面相关内容
 function displayVictoryScreen() {
   background(0, 150);
+  image(victoryPage,0,0,width,height);
   fill(255);
   textAlign(CENTER, CENTER);
-  textSize(32);
-  text("🎉 Victory! 🎉", width / 2, height / 4);
 
-  textSize(20);
-  text(`Level: ${finalStats.level}`, width / 2, height / 3);
-  text(`Normal Enemies Defeated: ${finalStats.normalEnemies}`, width / 2, height / 3 + 30);
-  text(`Bosses Defeated: ${finalStats.bosses}`, width / 2, height / 3 + 60);
-  text(`Attack Power: ${finalStats.attackPower}`, width / 2, height / 3 + 90);
-  text(`Attack Speed: ${finalStats.attackSpeed}`, width / 2, height / 3 + 120);
-  text(`Attack Damage: ${finalStats.attackDamage}`, width / 2, height / 3 + 150);
-
-  for (let i = 0; i < victoryButtons.length; i++) {
-    victoryButtons[i].display(); // 显示每个按钮
-  }
+  textSize(25);
+  text(`Normal Enemies Defeated: ${finalStats.normalEnemies}`, width / 2, height / 3 + 200);
+  text(`Bosses Defeated: ${finalStats.bosses}`, width / 2, height / 3 + 230);
 }
 
 // 创建按钮
