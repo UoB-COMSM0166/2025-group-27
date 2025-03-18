@@ -52,12 +52,12 @@ function handleGameplay(now) {
   });
   
   if(wave == 5 || wave == 10 || wave == 15) {
-    obstacleBuild == false;
+    obstacleBuild = false;
   }
-  if(wave == 5 && !obstacleBuild){
+  if(wave == 6 && !obstacleBuild){
     obstacles = [];
     generateInitialObstacles();
-  } else if(wave == 10 && !obstacleBuild){
+  } else if(wave == 11 && !obstacleBuild){
     obstacles = [];
     generateInitialObstacles();
   }
@@ -773,12 +773,14 @@ function displayGameOverScreen() {
 
 // ===== 生成障碍物 =====
 function generateInitialObstacles() {
-  obstacles = [];
   const corridorWidth = 50;
   const minDistanceFromPlayer = 150;
   const minDistanceBetweenObstacles = 200;
   const numObstacles = 6;
   let attempts = 0;
+  if(wave == 6){
+    obstacles.push(new Obstacle(0,0,0,0,false,true));
+  }
   while (obstacles.length < numObstacles && attempts < 50) {
     let x = random(width * 0.1, width * 0.9);
     let y = random(height * 0.1, height * 0.9);
