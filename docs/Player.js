@@ -18,8 +18,8 @@ class Player {
     this.chWidthIntro = chWidthIntro;
     this.chHeightIntro = chHeightIntro;
 
-    this.ImageWidth = 35; //**角色大小
-    this.ImageHeight = 60; //**角色大小
+    this.ImageWidth = 40; //**角色大小
+    this.ImageHeight = 65; //**角色大小
     this.aImageWidth = 70; //**角色大小（攻击时
     this.aImageHeight = 70; //**角色大小（攻击时
     this.aaImageWidth = 100; //**角色大小（攻击时 左右

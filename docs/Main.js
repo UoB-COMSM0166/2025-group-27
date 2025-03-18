@@ -45,7 +45,6 @@ let commonEnemyAction = {};
 let commonEnemyAction1 = {};
 let commonEnemyAction2 = {};
 // 以下变量属于扩展（UI、统计等）
-let savedGame = null;
 let normalEnemiesDefeated = 0;
 let bossDefeated = 0;
 let bossDefeatedCount = 0;
@@ -203,16 +202,21 @@ function preload() {
   mainMenuPage = loadImage("./assets/selected_images/page/MainMenu.png");
   characterChoose = loadImage("./assets/selected_images/page/characterPage.png");
   guidePage = loadImage("./assets/selected_images/guide/guide.png");
+  pausePage = loadImage("./assets/selected_images/page/pause.png");
+  skillPage = loadImage("./assets/selected_images/page/skill.png");
+  victoryPage = loadImage("./assets/selected_images/page/victory.png");
   // maps
   level1map = loadImage("./assets/selected_images/maps/level1.png");
   level2map = loadImage("./assets/selected_images/maps/level2.png");
   level3map = loadImage("./assets/selected_images/maps/level3.png");
+  level4map = loadImage("./assets/selected_images/maps/level4.png");
   // story
   story1 = loadImage("./assets/selected_images/story/story1.png");
   story2 = loadImage("./assets/selected_images/story/story2.png");
   story3 = loadImage("./assets/selected_images/story/story3.png");
   story4 = loadImage("./assets/selected_images/story/story4.png");
   story5 = loadImage("./assets/selected_images/story/story5.png");
+  victoryStory = loadImage("./assets/selected_images/story/victoryStory.png");
   // display Character
   gunnerpic = loadImage("./assets/selected_images/characters/intro/computerboy_intro.gif");
   archerpic = loadImage("./assets/selected_images/characters/intro/mousegirl_intro.gif");
@@ -272,7 +276,8 @@ function preload() {
   slimeBossImage = loadImage("./assets/candidate_images/effects/skill_effects/drip/cell_sphere/boss_slime_blue.png");
   slimeBoss2Image = loadImage("./assets/candidate_images/effects/skill_effects/drip/cell_sphere/boss_slime.png");
   //spiderBossAction = loadImage("./assets/images/Characters/Enemies/SpiderBoss/SpiderBoss.png");
-
+  //主界面音乐
+  mainMenuSound = loadSound("./assets/candidate_sounds/Music/MainMenu.ogg");
   // 加载普通敌人背景音乐
   normalMusic12 = loadSound("./assets/candidate_sounds/Music/Sea_Biome_1.ogg");
   normalMusic45 = loadSound("./assets/candidate_sounds/Music/Stone_Biome_2_R1.ogg");
@@ -420,6 +425,7 @@ function draw() {
   normalMusic12.setVolume(volume);
   normalMusic45.setVolume(volume);
   normalMusic78.setVolume(volume);
+  mainMenuSound.setVolume(volume);
 
   switch (gameState) {
     case "mainMenu":
@@ -473,12 +479,6 @@ function draw() {
       break;
     case "vStory":
       displayVictoryPage1();
-      break;
-    case "vStory1":
-      displayVictoryPage2();
-      break;
-    case "vStory2":
-      displayVictoryPage3();
       break;
   }
 

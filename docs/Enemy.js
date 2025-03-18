@@ -489,8 +489,8 @@ class BirdBoss extends Boss {
     this.birdBossAction = birdBossAction;
     
     // Boss 属性设置（可根据需求调整数值）
-    this.health = 800;
-    this.maxHealth = 800;
+    this.health = 8; 
+    this.maxHealth = 8;
     this.size = 150; // 从200减小到150
     this.speed = 2.5;
     this.attackRange = 150;
@@ -1850,8 +1850,8 @@ class BugBoss extends Enemy {
     super(true, "boss", commonEnemyAction, 40, 40);
 
     // 基本属性
-    this.health = 800;  // 设置血量为800
-    this.maxHealth = 800;  // 最大血量也设为800
+    this.health = 8;  // 设置血量为800
+    this.maxHealth = 8;  // 最大血量也设为800
     this.radius = 30;
     this.speed = 2;
     this.damage = 20;
