@@ -114,7 +114,7 @@ class AttackPet extends BasePet {
       }
     }
 
-    let drawSize = this.isAttacking ? 45 : 35;
+    let drawSize = this.isAttacking ? 50 : 40;
     push();
     imageMode(CENTER);
     if (this.isAttacking) {
@@ -260,7 +260,7 @@ class DefensePet extends BasePet {
         this.currentImage,
         this.pos.x,
         this.pos.y,
-        35, 35,
+        40, 40,
         sx,
         0,
         this.currentImage.width / this.totalFrames,
@@ -353,7 +353,7 @@ class HealerPet extends BasePet {
         this.currentImage,
         this.pos.x,
         this.pos.y,
-        35, 35,
+        40, 40,
         sx,
         0,
         this.currentImage.width / this.totalFrames,
@@ -370,11 +370,11 @@ function showPetSelectionScreen() {
   image(selectPetsImage, 0, 0, 1062, 600);
   pop();
 
-  const box1 = { x: 126, y: 100, w: 200, h: 340 };
-  const box2 = { x: 426, y: 100, w: 200, h: 340 };
-  const box3 = { x: 726, y: 100, w: 200, h: 340 };
+  const box1 = { x: 126, y: 160, w: 200, h: 340 };
+  const box2 = { x: 426, y: 160, w: 200, h: 340 };
+  const box3 = { x: 726, y: 160, w: 200, h: 340 };
 
-  const eggW = 100, eggH = 100;
+  const eggW = 115, eggH = 115;
   const center1 = { x: box1.x + box1.w / 2, y: box1.y + box1.h / 2 };
   const center2 = { x: box2.x + box2.w / 2, y: box2.y + box2.h / 2 };
   const center3 = { x: box3.x + box3.w / 2, y: box3.y + box3.h / 2 };
@@ -386,7 +386,7 @@ function showPetSelectionScreen() {
   image(eggFairy, center3.x, center3.y, eggW, eggH);
   pop();
 
-  const nameRegionHeight = 20;
+  const nameRegionHeight = 40;
 
   const nameRect1 = {
     x: box1.x,
@@ -407,12 +407,13 @@ function showPetSelectionScreen() {
     h: nameRegionHeight
   };
 
-  if (mouseIsPressed && !prevMouseIsPressed) {
+  if (mouseIsPressed) {
     if (mouseX >= nameRect1.x && mouseX <= nameRect1.x + nameRect1.w &&
       mouseY >= nameRect1.y && mouseY <= nameRect1.y + nameRect1.h) {
       if (!selectionSound.isPlaying()) {
         selectionSound.loop();
       }
+      buttonsound.play();
       player.pet = new AttackPet(player.pos.x, player.pos.y);
       selectedPetFrontImage = foxMoveFront;
       gameState = "petReveal";
@@ -424,6 +425,7 @@ function showPetSelectionScreen() {
       if (!selectionSound.isPlaying()) {
         selectionSound.loop();
       }
+      buttonsound.play();
       player.pet = new DefensePet();
       selectedPetFrontImage = cowMoveFront;
       gameState = "petReveal";
@@ -435,6 +437,7 @@ function showPetSelectionScreen() {
       if (!selectionSound.isPlaying()) {
         selectionSound.loop();
       }
+      buttonsound.play();
       player.pet = new HealerPet();
       selectedPetFrontImage = fairyMoveFront;
       gameState = "petReveal";
@@ -443,7 +446,6 @@ function showPetSelectionScreen() {
       petRevealFrameCounter = 0;
     }
   }
-  prevMouseIsPressed = mouseIsPressed;
 }
 
 function displayPetReveal() {
@@ -475,7 +477,7 @@ function displayPetReveal() {
   pop();
 
   petRevealTimer++;
-  if (petRevealTimer >= 180) {
+  if (petRevealTimer >= 150) {
     if (selectionSound.isPlaying()) {
       selectionSound.stop();
     }
