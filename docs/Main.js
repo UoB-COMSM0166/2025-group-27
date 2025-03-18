@@ -158,6 +158,7 @@ function drawLightningFlash() {
 
 // 根据当前天气状态调用不同效果
 function drawWeatherEffects() {
+  if(gameState === "game"){
   if (weather === "hot") {
     drawHeatHaze();
   } else if (weather === "snowy") {
@@ -166,6 +167,7 @@ function drawWeatherEffects() {
     updateLightningFlash();
     drawLightningFlash();
   }
+}
 }
 
 // ----- 天气更新函数 -----
@@ -208,8 +210,8 @@ function preload() {
   // maps
   level1map = loadImage("./assets/selected_images/maps/level1.png");
   level2map = loadImage("./assets/selected_images/maps/level2.png");
-  level3map = loadImage("./assets/selected_images/maps/level3.png");
-  level4map = loadImage("./assets/selected_images/maps/level4.png");
+  level4map = loadImage("./assets/selected_images/maps/level3.png");
+  level3map = loadImage("./assets/selected_images/maps/level4.png");
   // story
   story1 = loadImage("./assets/selected_images/story/story1.png");
   story2 = loadImage("./assets/selected_images/story/story2.png");
