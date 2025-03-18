@@ -33,7 +33,7 @@ function mousePressed() {
         mouseX > x - 100 &&
         mouseX < x + 100 &&
         mouseY > y - 50 &&
-        mouseY < y + 50
+        mouseY < y + 150
       ) {
         player.applyUpgrade(upgradeOptions[i]);
         choosingUpgrade = false;
@@ -107,31 +107,11 @@ function keyPressed() {
       gameState = "game";
     }
   } else if (gameState === "mainMenu") {
-    if ((key === "C" || key === "c") && savedGame) gameState = "game";
-    else if (key === "Q" || key === "q") noLoop();
+    if (key === "Q" || key === "q") noLoop();
   } else if (gameState === "menu") {
     if (key === "1") initPlayer("gunner");
     if (key === "2") initPlayer("archer");
   } else if (gameState === "paused" && !choosingPotion) {
-    if (key === "S" || key === "s") {
-      savedGame = true;
-      savedGame = {
-        player: JSON.stringify({
-          ...player,
-          bulletTypes: Array.from(player.bulletTypes),
-          unlockedUpgrades: Array.from(player.unlockedUpgrades),
-          characterType: player.characterType,
-          pos: { x: player.pos.x, y: player.pos.y },
-        }),
-        enemies: JSON.stringify(
-          enemies.map((e) => ({
-            ...e,
-            type: e.constructor.name, // 新增：保存构造函数名称
-            pos: { x: e.pos.x, y: e.pos.y },
-          }))
-        ),
-      };
-    }
     if (key === "M" || key === "m") gameState = "mainMenu";
     if (key === "P" || key === "p") gameState = "game";
     if (key === "I" || key === "i") {

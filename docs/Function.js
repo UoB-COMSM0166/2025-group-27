@@ -13,6 +13,8 @@ function handleGameplay(now) {
     image(level2map,0,0,1062,600);
   } else if (wave>10 && wave <= 15){
     image(level3map,0,0,1062,600);
+  } else {
+    image(level4map,0,0,1062,600);
   }
 
   // 玩家相关操作
@@ -314,14 +316,8 @@ function initButtons() {
   const baseX = width / 2 - 30;
 
   mainMenuButtons = [
-    new Button(width / 2 - 100, baseY, 200, 40, "Resume Game", () => {
-      buttonsound.play();
-      loadSavedGame();
-      gameState = "game"; // 从暂停改为直接进入游戏
-    }),
     new Button(width / 2 - 100, baseY + 50, 200, 40, "Start Game(easy)", () => {
       buttonsound.play();
-      savedGame = null;
       wave = 1; // 重置波数
       normalEnemiesDefeated = 0; // 重置击杀数
       bossDefeated = 0;
@@ -330,7 +326,6 @@ function initButtons() {
     }),
     new Button(width / 2 - 100, baseY + 100, 200, 40, "Start Game(hard)", () => {
       buttonsound.play();
-      savedGame = null;
       wave = 1; // 重置波数
       normalEnemiesDefeated = 0; // 重置击杀数
       bossDefeated = 0;
@@ -652,16 +647,14 @@ function displayBossHealthBar() {
 
 // ===== 其他UI函数 =====
 function displayMainMenu() {
+  if(!mainMenuSound.isPlaying()){
+    mainMenuSound.play();
+  }
   fill(255);
   textSize(24);
   textAlign(CENTER, CENTER);
   let visibleButtons = [];
-  if (savedGame) {
-    visibleButtons = visibleButtons.concat(mainMenuButtons);
-  } else {
-    // 没有存档时只显示"开始游戏"和"退出游戏"
-    visibleButtons.push(mainMenuButtons[1], mainMenuButtons[2], mainMenuButtons[3], mainMenuButtons[4]);
-  }
+  visibleButtons.push(mainMenuButtons[1], mainMenuButtons[2], mainMenuButtons[3], mainMenuButtons[4]);
   image(mainMenuPage,0,0,1062,600);
 }
 
@@ -730,6 +723,7 @@ function displayCharacterSelection() {
 }
 
 function displayGuidePage() {
+  mainMenuSound.stop();
   image(guidePage, 0,0,width,height);
 
   buttonW = 100;
@@ -751,11 +745,10 @@ function displayPauseMenu() {
   text(`Level: ${player.level}`, width / 2, height / 2);
   text(`Health: ${Math.round(player.health)}`, width / 2, height / 2 + 30);
   text(`XP: ${player.exp}`, width / 2, height / 2 + 60);
-  text("Save Game (Press 'S')", width / 2, height / 2 + 90);
-  text("Return to Main Menu (Press 'M')", width / 2, height / 2 + 120);
-  text("Resume (Press 'P')", width / 2, height / 2 + 150);
+  text("Return to Main Menu (Press 'M')", width / 2, height / 2 + 90);
+  text("Resume (Press 'P')", width / 2, height / 2 + 120);
   // 添加无敌模式说明
-  text("Toggle Invincible Mode (Press 'I')", width / 2, height / 2 + 180);
+  text("Toggle Invincible Mode (Press 'I')", width / 2, height / 2 + 150);
   pop();
 }
 
@@ -1400,53 +1393,6 @@ function getValidSpawnPosition() {
   }
 
   return pos;
-}
-
-
-function loadSavedGame() {
-  if (!savedGame) return;
-
-  // 加载玩家
-  const playerData = JSON.parse(savedGame.player);
-  player = new Player(
-    playerData.pos.x,
-    playerData.pos.y,
-    playerData.characterType
-  );
-  player.bulletTypes = new Set(playerData.bulletTypes || []);
-  player.unlockedUpgrades = new Set(playerData.unlockedUpgrades || []);
-  Object.assign(player, playerData);
-  player.bulletTypes = new Set(player.bulletTypes); // 新增
-  player.unlockedUpgrades = new Set(player.unlockedUpgrades); // 新增
-  player.pos = createVector(playerData.pos.x, playerData.pos.y);
-
-  // 加载敌人
-  enemies = JSON.parse(savedGame.enemies).map((eData) => {
-    let enemy;
-    switch (eData.type) {
-      case "SpiderBoss":
-        enemy = new SpiderBoss();
-        break;
-      case "Boss":
-        enemy = new Boss();
-        break;
-      case "MeleeEnemy":
-        enemy = new MeleeEnemy(eData.isElite);
-        break;
-      case "RangedEnemy":
-        enemy = new RangedEnemy(eData.isElite);
-        break;
-      default:
-        enemy = new Enemy(eData.isElite, eData.type, commonEnemyAction, 18, 22);
-    }
-    // 确保位置正确设置
-    enemy.pos = createVector(eData.pos.x, eData.pos.y);
-    Object.assign(enemy, eData);
-    return enemy;
-  });
-
-  // 加载其他状态...
-  gameStartTime = millis() - savedGame.gameStartTime;
 }
 
 // 药水相关
