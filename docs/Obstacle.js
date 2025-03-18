@@ -1,9 +1,16 @@
 // --- Obstacle 类 ---
 class Obstacle {
-  constructor(x, y, width, height, isVertical) {
+  constructor(x, y, width, height, isVertical, isSpecial = false) {
+    this.isSpecial = isSpecial;
+    if(!isSpecial){
     this.pos = createVector(x, y);
     this.width = width;
     this.height = height;
+  } else {
+    this.pos = createVector(431,200);
+    this.width = 200;
+    this.height = 200;
+  }
     this.isVertical = isVertical;
     this.moving = false;
     this.targetPos = null;
@@ -39,6 +46,9 @@ class Obstacle {
   }
 
   display() {
+    if(this.isSpecial === true){
+      image(obstacleS, 431, 200, 200, 200);
+    } else {
     if(wave <= 5){
     if(this.isVertical){
       image(obstacle1, this.pos.x, this.pos.y, this.width, this.height);
@@ -65,6 +75,7 @@ class Obstacle {
         image(obstacle7, this.pos.x, this.pos.y, 70, 70);
         }
     }
+  }
   }
 
   collidesWith(otherPos, otherWidth, otherHeight) {

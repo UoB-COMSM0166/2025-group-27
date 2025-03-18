@@ -308,6 +308,7 @@ function preload() {
   obstacle2 = loadImage("./assets/selected_images/barrier/level_1/stone3.png");
   obstacle3 = loadImage("./assets/selected_images/barrier/level_2/alienObeliskTall.png");
   obstacle = loadImage("./assets/selected_images/barrier/level_2/ancientGiant.png");
+  obstacleS = loadImage("./assets/selected_images/barrier/level_2/altar.png")
   //11~15障碍物
   obstacle5 = loadImage("./assets/selected_images/barrier/level_3/volcano.png");
   obstacle7 = loadImage("./assets/selected_images/barrier/level_3/lavaRock.png");
