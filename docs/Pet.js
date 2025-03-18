@@ -407,7 +407,7 @@ function showPetSelectionScreen() {
     h: nameRegionHeight
   };
 
-  if (mouseIsPressed && !prevMouseIsPressed) {
+  if (mouseIsPressed) {
     if (mouseX >= nameRect1.x && mouseX <= nameRect1.x + nameRect1.w &&
       mouseY >= nameRect1.y && mouseY <= nameRect1.y + nameRect1.h) {
       if (!selectionSound.isPlaying()) {
@@ -446,7 +446,6 @@ function showPetSelectionScreen() {
       petRevealFrameCounter = 0;
     }
   }
-  prevMouseIsPressed = mouseIsPressed;
 }
 
 function displayPetReveal() {
