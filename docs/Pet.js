@@ -114,7 +114,7 @@ class AttackPet extends BasePet {
       }
     }
 
-    let drawSize = this.isAttacking ? 45 : 35;
+    let drawSize = this.isAttacking ? 50 : 40;
     push();
     imageMode(CENTER);
     if (this.isAttacking) {
@@ -260,7 +260,7 @@ class DefensePet extends BasePet {
         this.currentImage,
         this.pos.x,
         this.pos.y,
-        35, 35,
+        40, 40,
         sx,
         0,
         this.currentImage.width / this.totalFrames,
@@ -353,7 +353,7 @@ class HealerPet extends BasePet {
         this.currentImage,
         this.pos.x,
         this.pos.y,
-        35, 35,
+        40, 40,
         sx,
         0,
         this.currentImage.width / this.totalFrames,
@@ -374,7 +374,7 @@ function showPetSelectionScreen() {
   const box2 = { x: 426, y: 100, w: 200, h: 340 };
   const box3 = { x: 726, y: 100, w: 200, h: 340 };
 
-  const eggW = 100, eggH = 100;
+  const eggW = 115, eggH = 115;
   const center1 = { x: box1.x + box1.w / 2, y: box1.y + box1.h / 2 };
   const center2 = { x: box2.x + box2.w / 2, y: box2.y + box2.h / 2 };
   const center3 = { x: box3.x + box3.w / 2, y: box3.y + box3.h / 2 };
@@ -475,7 +475,7 @@ function displayPetReveal() {
   pop();
 
   petRevealTimer++;
-  if (petRevealTimer >= 180) {
+  if (petRevealTimer >= 150) {
     if (selectionSound.isPlaying()) {
       selectionSound.stop();
     }
