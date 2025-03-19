@@ -1850,8 +1850,8 @@ class BugBoss extends Enemy {
     super(true, "boss", commonEnemyAction, 40, 40);
 
     // 基本属性
-    this.health = 8;  // 设置血量为800
-    this.maxHealth = 8;  // 最大血量也设为800
+    this.health = 2400;  // 设置血量为800
+    this.maxHealth = 2400;  // 最大血量也设为800
     this.radius = 30;
     this.speed = 2;
     this.damage = 20;
@@ -1908,9 +1908,8 @@ class BugBoss extends Enemy {
     // 遮蔽视野技能相关属性
     this.visionBlockCooldown = 0;
     this.visionBlockInterval = 300; // 从600减半到300 (5秒一次)
-    this.isVisionBlocked = false;
-    this.visionBlockDuration = 180; // 持续3秒
-    this.visionBlockTimer = 0;
+    this.isVisionBlocked = true; // 默认就是开启状态
+    this.visionBlockTimer = 999999; // 设置一个极大的值，相当于永久持续
     this.fogRadius = 150; // 玩家可见范围半径
     this.fogOpacity = 0; // 雾气不透明度
     this.maxFogOpacity = 180; // 最大不透明度
@@ -1993,24 +1992,18 @@ class BugBoss extends Enemy {
     // 处理碰撞
     this.resolveCollision();
 
-    // 更新遮蔽视野技能
-    if (this.visionBlockCooldown <= 0 && !this.isVisionBlocked) {
-      this.castVisionBlock();
-      this.visionBlockCooldown = this.visionBlockInterval;
-      showFloatingText("Shrouding Roar!", this.pos.x, this.pos.y - 40, color(100, 100, 255));
-    } else {
-      this.visionBlockCooldown--;
-    }
-
     // 处理遮蔽视野效果
     if (this.isVisionBlocked) {
       // 增加雾气不透明度直到最大值
       this.fogOpacity = min(this.fogOpacity + this.fogTransitionSpeed, this.maxFogOpacity);
-
+      
+      // 注释掉或删除这段代码，防止效果会结束
+      /*
       this.visionBlockTimer--;
       if (this.visionBlockTimer <= 0) {
         this.isVisionBlocked = false;
       }
+      */
     } else {
       // 减少雾气不透明度直到0
       this.fogOpacity = max(this.fogOpacity - this.fogTransitionSpeed, 0);
