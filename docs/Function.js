@@ -757,18 +757,7 @@ function displayGameOverScreen() {
   textSize(20);
   fill(255);
   textAlign(CENTER, CENTER);
-  text("Game Over", width / 2, height / 4);
-  text(
-    `Enemies Killed: ${finalStats.normalEnemies}`,
-    width / 2,
-    height / 2 - 60
-  );
-  text(`Bosses Defeated: ${finalStats.bosses}`, width / 2, height / 2 - 30);
-  text(`Final Level: ${finalStats.level}`, width / 2, height / 2);
-  text(`ATK: ${finalStats.attackPower}`, width / 2, height / 2 + 30);
-  text(`ASPD: ${finalStats.attackSpeed}ms`, width / 2, height / 2 + 60);
-  text(`DMG: ${finalStats.attackDamage}`, width / 2, height / 2 + 90);
-  text("Press R to Restart", width / 2, height - 50);
+  image(gameOverPage,0,0,width,height);
 }
 
 // ===== 生成障碍物 =====
