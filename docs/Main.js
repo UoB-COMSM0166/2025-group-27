@@ -207,6 +207,7 @@ function preload() {
   pausePage = loadImage("./assets/selected_images/page/pause.png");
   skillPage = loadImage("./assets/selected_images/page/skill.png");
   victoryPage = loadImage("./assets/selected_images/page/victory.png");
+  gameOverPage = loadImage("./assets/selected_images/page/GameOver.png");
   // maps
   level1map = loadImage("./assets/selected_images/maps/level1.png");
   level2map = loadImage("./assets/selected_images/maps/level2.png");
