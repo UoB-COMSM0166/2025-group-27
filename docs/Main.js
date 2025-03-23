@@ -76,6 +76,7 @@ let petRevealFrameCounter = 0;
 let petRevealFrameDelay = 10;
 let petRevealTotalFrames = 4;
 let selectPetsImage;
+let petRevealBackground;
 
 // ----- 天气效果绘制 -----
 // 热天效果：利用噪声生成水平条纹模拟热浪扭曲效果
@@ -158,16 +159,16 @@ function drawLightningFlash() {
 
 // 根据当前天气状态调用不同效果
 function drawWeatherEffects() {
-  if(gameState === "game"){
-  if (weather === "hot") {
-    drawHeatHaze();
-  } else if (weather === "snowy") {
-    drawSnow();
-  } else if (weather === "thunderstorm") {
-    updateLightningFlash();
-    drawLightningFlash();
+  if (gameState === "game") {
+    if (weather === "hot") {
+      drawHeatHaze();
+    } else if (weather === "snowy") {
+      drawSnow();
+    } else if (weather === "thunderstorm") {
+      updateLightningFlash();
+      drawLightningFlash();
+    }
   }
-}
 }
 
 // ----- 天气更新函数 -----
@@ -353,6 +354,7 @@ function preload() {
   //宠物选择页面
   selectPetsImage = loadImage("./assets/selected_images/pets/selectpets.png");
   selectionSound = loadSound("./assets/candidate_sounds/Music/biomeTitle.ogg");
+  petRevealBackground = loadImage("./assets/selected_images/poster/background.png");
 
   //sound相关
   //UI声音

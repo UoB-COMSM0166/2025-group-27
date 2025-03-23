@@ -450,7 +450,11 @@ function showPetSelectionScreen() {
 
 function displayPetReveal() {
   push();
-  background(0);
+  imageMode(CORNER);
+  image(petRevealBackground, 0, 0, width, height);
+  pop();
+
+  push();
   imageMode(CENTER);
 
   if (selectedPetFrontImage) {
@@ -477,7 +481,7 @@ function displayPetReveal() {
   pop();
 
   petRevealTimer++;
-  if (petRevealTimer >= 150) {
+  if (petRevealTimer >= 130) {
     if (selectionSound.isPlaying()) {
       selectionSound.stop();
     }
