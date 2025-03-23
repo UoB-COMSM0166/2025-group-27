@@ -314,6 +314,9 @@ function preload() {
   //11~15障碍物
   obstacle5 = loadImage("./assets/selected_images/barrier/level_3/volcano.png");
   obstacle7 = loadImage("./assets/selected_images/barrier/level_3/lavaRock.png");
+  //16~障碍物
+  obstacleV = loadImage("./assets/selected_images/barrier/level_4/campTent.png");
+  obstacle9 = loadImage("./assets/selected_images/barrier/level_4/clampingFrame.png");
 
   bombAction = loadImage("./assets/candidate_images/items/weapons/bomb/bomb.png");
   // 添加水泡和火焰效果图片

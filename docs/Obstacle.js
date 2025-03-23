@@ -70,9 +70,9 @@ class Obstacle {
         }
     } else {
       if(this.isVertical){
-        image(obstacle5, this.pos.x, this.pos.y, 100, 100);
+        image(obstacle9, this.pos.x, this.pos.y, 70, 70);
         } else {
-        image(obstacle7, this.pos.x, this.pos.y, 70, 70);
+        image(obstacleV, this.pos.x, this.pos.y, 100, 50);
         }
     }
   }
