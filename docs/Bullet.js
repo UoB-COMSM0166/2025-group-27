@@ -99,18 +99,16 @@ class Bullet {
             obs.pos.y,
             obs.pos.y + obs.height
           );
-          if (abs(this.pos.x - closestX) < abs(this.pos.y - closestY)) {
-            this.vel.y *= -1;
-          } else {
+          
+          let normalX = this.pos.x - closestX;
+          let normalY = this.pos.y - closestY;
+          
+          if (abs(normalX) > abs(normalY)) {
             this.vel.x *= -1;
+          } else {
+            this.vel.y *= -1;
           }
           this.bounceCount++;
-          showFloatingText(
-            "Bounce!",
-            this.pos.x,
-            this.pos.y,
-            color(255, 200, 0)
-          );
           if (this.bounceCount > this.maxBounces) return false;
           this.pos.add(this.vel);
         } else if (this.type === "pierce") {
@@ -139,7 +137,6 @@ class Bullet {
           this.pos.y = constrain(this.pos.y, 0, height);
         }
         this.bounceCount++;
-        showFloatingText("Bounce!", this.pos.x, this.pos.y, color(255, 200, 0));
         if (this.bounceCount > this.maxBounces) return false;
       } else {
         return false;
