@@ -74,6 +74,17 @@ function handleGameplay(now) {
     enemy.update();
     enemy.display();
     
+    // 特别检查是否是BugBoss，并确保遮蔽视野效果被应用
+    if (enemy instanceof BugBoss) {
+      // 确保遮蔽视野属性是激活的
+      enemy.isVisionBlocked = true;
+      enemy.visionBlockTimer = 999999;
+      // 强制调用绘制雾气效果
+      if (typeof enemy.drawFogEffect === 'function') {
+        enemy.drawFogEffect();
+      }
+    }
+    
     // 检查是否为已击败的Boss(包括BugBoss)
     if ((enemy.isBoss || enemy instanceof BugBoss) && enemy.health <= 0) {
       bossDefeated++;
@@ -914,13 +925,6 @@ function generateUpgradeOptions() {
       name: "Life Steal",
       value: "lifesteal",
       description: "Heal on attack",
-      oneTime: true,
-    },
-    {
-      type: "passive",
-      name: "EXP Aura",
-      value: "expAura",
-      description: "Gain 50% extra EXP",
       oneTime: true,
     },
     {

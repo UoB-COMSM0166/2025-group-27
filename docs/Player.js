@@ -181,14 +181,14 @@ class Player {
       return;
     }
     
-    if(this.reborn){
-    if (this.health > 10 && (this.health - amount) <= 10 && !this.rebornUsed) {
-      this.health = 100; // 复活并恢复100生命
-      this.rebornUsed = true;
-      showFloatingText("Reborn!", this.pos.x, this.pos.y - 20, color(255, 215, 0));
-      return;
+    if (this.reborn){
+      if (this.health > 10 && (this.health - amount) <= 10 && !this.rebornUsed) {
+        this.health = Math.min(100, this.maxHealth); // 复活但不超过最大生命值
+        this.rebornUsed = true;
+        showFloatingText("Reborn!", this.pos.x, this.pos.y - 20, color(255, 215, 0));
+        return;
+      }
     }
-  }
     if (this.invincible) return; // 无敌时免疫伤害
     let actual = amount * (1 - this.defense * 0.1);
     this.health -= actual;
@@ -253,7 +253,9 @@ class Player {
     this.level++;
     this.exp -= this.expToNextLevel;
     this.expToNextLevel = Math.floor(this.expToNextLevel * 1.5);
-    this.health += 20;
+    this.maxHealth += 20; // 首先增加最大血量
+    this.health += 20; // 然后增加当前血量
+    this.health = Math.min(this.health, this.maxHealth); // 确保不超过上限
     this.fireRate += 1;
     this.speed += 0.5;
 
