@@ -379,17 +379,17 @@ function initButtons() {
     new Button(width / 2 - 100, height / 2 + 80, 200, 40, "保存游戏 (S)", function() {
       // 保存游戏逻辑
     }),
-    // 修改无敌模式按钮的创建方式，检查player是否存在
+    // 添加新的无敌模式按钮
     new Button(width / 2 - 100, height / 2 + 140, 200, 40, 
-      "开启无敌模式 (I)", 
+      player && player.isInvincible ? "关闭无敌模式 (I)" : "开启无敌模式 (I)", 
       function() {
         if (player) {
           player.isInvincible = !player.isInvincible;
           // 更新按钮文本
           this.label = player.isInvincible ? "关闭无敌模式 (I)" : "开启无敌模式 (I)";
           showFloatingText(player.isInvincible ? "无敌模式已开启!" : "无敌模式已关闭", 
-                            width / 2, height / 2 - 100, 
-                            player.isInvincible ? color(255, 215, 0) : color(255, 100, 100), 24);
+                           width / 2, height / 2 - 100, 
+                           player.isInvincible ? color(255, 215, 0) : color(255, 100, 100), 24);
         }
     })
   ];

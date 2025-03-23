@@ -232,6 +232,11 @@ class Player {
     // 如果处于第5波（Boss波），停止记录经验
     if (wave === 5) return;
 
+    // 应用经验值加成
+    if (this.expBonus) {
+      amount = amount * (1 + this.expBonus);
+    }
+
     showFloatingText(
       `+${Math.floor(amount)} EXP`,
       this.pos.x,
@@ -270,131 +275,198 @@ class Player {
       case "health":
         this.maxHealth += upgrade.value;
         this.health += upgrade.value;
+        showFloatingText(`+${upgrade.value} HP`, this.pos.x, this.pos.y - 30, color(0, 255, 0));
         break;
       case "speed":
         this.speed += upgrade.value;
+        showFloatingText(`+Speed`, this.pos.x, this.pos.y - 30, color(0, 200, 255));
         break;
       case "fireRate":
         this.fireRate += upgrade.value;
+        showFloatingText(`+Fire Rate`, this.pos.x, this.pos.y - 30, color(255, 150, 0));
         break;
       case "defense":
         this.defense += upgrade.value;
+        showFloatingText(`+Defense`, this.pos.x, this.pos.y - 30, color(100, 100, 255));
         break;
       case "healthRegen":
+        this.healthRegen = this.healthRegen || 0;
         this.healthRegen += upgrade.value;
+        showFloatingText(`+HP Regen`, this.pos.x, this.pos.y - 30, color(50, 255, 50));
         break;
       case "criticalChance":
+        this.criticalChance = this.criticalChance || 0;
+        this.critRate = this.critRate || 0;
         this.criticalChance += upgrade.value;
+        this.critRate += upgrade.value; // 确保同时更新两个属性
+        showFloatingText(`+${upgrade.value*100}% Crit`, this.pos.x, this.pos.y - 30, color(255, 50, 50));
         break;
       case "expBonus":
+        this.expBonus = this.expBonus || 0;
         this.expBonus += upgrade.value;
+        showFloatingText(`+${upgrade.value*100}% EXP`, this.pos.x, this.pos.y - 30, color(150, 255, 150));
         break;
       case "armorPen":
+        this.armorPenetration = this.armorPenetration || 0;
         this.armorPenetration += upgrade.value;
+        showFloatingText(`+Armor Pen`, this.pos.x, this.pos.y - 30, color(150, 0, 255));
         break;
       case "bulletType":
+        this.bulletTypes = this.bulletTypes || new Set();
         this.bulletTypes.add(upgrade.value);
         if (upgrade.value === "shotgun") {
           if (this.bulletType === "shotgun") {
+            this.shotgunLevel = this.shotgunLevel || 0;
             this.shotgunLevel++;
+            showFloatingText(`Shotgun Level ${this.shotgunLevel+1}`, this.pos.x, this.pos.y - 30, color(255, 200, 50));
           } else {
             this.bulletType = "shotgun";
             this.shotgunLevel = 0;
+            showFloatingText(`Shotgun Unlocked!`, this.pos.x, this.pos.y - 30, color(255, 200, 50));
           }
         } else {
-          let prev = this.shotgunLevel;
+          let prev = this.shotgunLevel || 0;
           this.bulletType = upgrade.value;
           this.shotgunLevel = prev;
+          showFloatingText(`${upgrade.value} Bullets!`, this.pos.x, this.pos.y - 30, color(255, 200, 50));
         }
         break;
       case "passive":
+        this.passiveSkills = this.passiveSkills || [];
         this.passiveSkills.push(upgrade.value);
+        showFloatingText(`Skill: ${upgrade.value}`, this.pos.x, this.pos.y - 30, color(200, 150, 255));
         break;
       // Archer 相关升级
       case "arrowPierce":
         this.arrowPierce = true;
+        showFloatingText(`Piercing Arrows!`, this.pos.x, this.pos.y - 30, color(200, 255, 100));
         break;
       case "arrowSplit":
         this.arrowSplit = true;
+        showFloatingText(`Split Arrows!`, this.pos.x, this.pos.y - 30, color(100, 255, 200));
         break;
       case "doubleShot":
         this.doubleShot = true;
+        showFloatingText(`Double Shot!`, this.pos.x, this.pos.y - 30, color(255, 100, 200));
         break;
       case "lifesteal":
         this.lifesteal = 0.1; // 攻击回血比例
+        showFloatingText(`Life Steal!`, this.pos.x, this.pos.y - 30, color(255, 0, 100));
         break;
       case "autoCharge":
         this.autoCharge = true;
+        showFloatingText(`Auto-Charge!`, this.pos.x, this.pos.y - 30, color(100, 200, 255));
         break;
       // knight 相关升级
       case "healthBoostAndLifeSteal":
         this.knightType = "giant";
         this.lifesteal = 0.2;
         this.maxHealth = 300;
+        this.health = 300;
+        showFloatingText(`Life Steal Giant!`, this.pos.x, this.pos.y - 30, color(255, 150, 150));
         break;
       case "berserker":
         this.knightType = "berserker";
         this.berserkerMode = true;
         this.critRate = 0.5;
         this.critDamage = 2.0;
+        showFloatingText(`Berserker Mode!`, this.pos.x, this.pos.y - 30, color(255, 0, 0));
         break;
       case "reborn":
         this.reborn = true;
+        this.rebornUsed = false;
+        showFloatingText(`Phoenix Blessing!`, this.pos.x, this.pos.y - 30, color(255, 100, 0));
+        break;
+      case "highDamage":
+        this.knightType = "mjolnir";
+        this.critRate = 0.2;
+        this.critDamage = 4.0;
+        showFloatingText(`Mjölnir Power!`, this.pos.x, this.pos.y - 30, color(0, 150, 255));
         break;
       case "fastWalk":
         this.dash = true;
+        showFloatingText(`Fast Walk Unlocked!`, this.pos.x, this.pos.y - 30, color(100, 255, 100));
         break;
       case "spinningSlash":
         this.spinningSlash = true;
+        showFloatingText(`Spinning Slash (E)!`, this.pos.x, this.pos.y - 30, color(255, 150, 0));
         break;
       case "attackRange":
+        this.attackRange = this.attackRange || 30;
         this.attackRange += 5;
+        showFloatingText(`+Attack Range`, this.pos.x, this.pos.y - 30, color(255, 200, 100));
         break;
       case "attackAngle":
-        this.attackAngle += 5;
+        this.attackAngle = this.attackAngle || 60;
+        this.attackAngle += 10;
+        showFloatingText(`+Attack Angle`, this.pos.x, this.pos.y - 30, color(255, 100, 200));
         break;
-      case "highDamage":
-        this.critRate = 0.2;
-        this.critDamage = 4.0;
+      case "attack":
+        this.attackDamage = this.attackDamage || 10;
+        this.attackDamage += upgrade.value;
+        showFloatingText(`+${upgrade.value} Attack`, this.pos.x, this.pos.y - 30, color(255, 50, 50));
+        break;
+      default:
+        console.log("Unknown upgrade type:", upgrade.type);
         break;
     }
     choosingUpgrade = false;
   }
 
   performSpinningSlash() {
-    if (this.spinningSlashCooldown <= 0 && this.canAttack) {
-      this.spinningSlashCooldown = 600; // 10秒冷却
-      enemies.forEach(enemy => {
-        const d = dist(this.pos.x, this.pos.y, enemy.pos.x, enemy.pos.y);
-        if (d < this.spinningSlashRange) {
-          const isCrit = random() < this.critRate;
-          const damage = isCrit ? 
-            this.attackDamage * this.critDamage : 
-            this.attackDamage;
-            let killed = enemy.hit(damage);  // 计算伤害
-            if (killed) {
-              enemy.startDeathEffect();
-              if (enemy instanceof Boss) {
-                bossDefeated++;
-                bossDefeatedCount++;
-              }
-              normalEnemiesDefeated++;
-              if(enemy.gainExp == false) {
-                player.gainExp(enemy.expValue);
-                enemy.gainExp = true;
-              }
-              
-              if(enemy.dead){
-                enemies.splice(i, 1);
-              }
-            }
-  
-            // 生命偷取效果
-            if (this.lifesteal > 0) {
-              this.health = min(this.maxHealth, this.health + damage * this.lifesteal);
-            }
+    if (!this.spinningSlash || this.spinningSlashCooldown > 0) return;
+    
+    this.spinningSlashCooldown = 180; // 3秒冷却
+    showFloatingText("Spinning Slash!", this.pos.x, this.pos.y - 30, color(255, 150, 0));
+    
+    // 创建旋转斩效果
+    const radius = this.attackRange || 100;
+    const angle = this.attackAngle || 360; // 完整旋转
+    
+    // 显示旋转效果
+    push();
+    noFill();
+    stroke(255, 150, 0, 150);
+    strokeWeight(3);
+    ellipse(this.pos.x + this.ImageWidth/2, this.pos.y + this.ImageHeight/2, radius*2);
+    pop();
+    
+    // 伤害范围内的所有敌人
+    for (let i = enemies.length - 1; i >= 0; i--) {
+      const enemy = enemies[i];
+      const dist = p5.Vector.dist(
+        createVector(this.pos.x + this.ImageWidth/2, this.pos.y + this.ImageHeight/2),
+        createVector(enemy.pos.x + enemy.radius, enemy.pos.y + enemy.radius)
+      );
+      
+      if (dist <= radius) {
+        // 计算伤害
+        let damage = this.attackDamage || 30;
+        let isCrit = random() < (this.critRate || 0);
+        if (isCrit) {
+          damage *= (this.critDamage || 1.5);
+          showFloatingText("CRIT!", enemy.pos.x, enemy.pos.y - 20, color(255, 0, 0), 18);
         }
-      });
+        
+        // 应用伤害
+        let killed = enemy.hit(damage);
+        if (killed) {
+          enemy.startDeathEffect();
+          if (enemy instanceof Boss) {
+            bossDefeated++;
+            bossDefeatedCount++;
+          }
+          normalEnemiesDefeated++;
+          if (!enemy.gainExp) {
+            this.gainExp(enemy.expValue);
+            enemy.gainExp = true;
+          }
+          
+          if (enemy.dead) {
+            enemies.splice(i, 1);
+          }
+        }
+      }
     }
   }
 
@@ -1013,6 +1085,26 @@ class Player {
     // 更新宠物
     if (this.pet) {
       this.pet.update(this);
+    }
+
+    // 处理健康回复
+    if (this.healthRegen && frameCount % 60 === 0) {
+      const healAmount = this.healthRegen;
+      if (this.health < this.maxHealth) {
+        this.health = Math.min(this.health + healAmount, this.maxHealth);
+        showFloatingText(`+${healAmount}`, this.pos.x, this.pos.y - 20, color(0, 255, 0), 14);
+      }
+    }
+    
+    // 处理冲刺能力
+    if (this.dash && keyIsDown(SHIFT)) {
+      // 确保有一个基础速度值
+      this.baseSpeed = this.baseSpeed || this.speed;
+      this.speed = this.baseSpeed * 1.5; // 加速50%
+    } else if (this.dash) {
+      // 恢复正常速度
+      this.baseSpeed = this.baseSpeed || this.speed;
+      this.speed = this.baseSpeed;
     }
   }
 
