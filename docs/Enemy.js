@@ -473,6 +473,16 @@ class Boss extends Enemy {
         bossActive = false;
         // 增加Boss击败计数
         bossDefeated++;
+
+        if (wave === 6) {
+          player.needsPetSelection = true;
+          gameState = "petSelection";
+        } else {
+          wave++;
+          setTimeout(() => {
+            spawnEnemiesForWave(wave);
+          }, 500);
+        }
       }
 
       return true;
@@ -487,9 +497,9 @@ class BirdBoss extends Boss {
     // 修改尺寸参数，从200x160减小到150x120
     super(true, "boss", birdBossAction, 150, 120);
     this.birdBossAction = birdBossAction;
-    
+
     // Boss 属性设置（可根据需求调整数值）
-    this.health = 8; 
+    this.health = 8;
     this.maxHealth = 8;
     this.size = 150; // 从200减小到150
     this.speed = 2.5;
@@ -556,7 +566,7 @@ class BirdBoss extends Boss {
     // 添加羽刃旋风技能相关属性
     this.featherBladesCooldown = 0;
     this.featherBladesMaxCooldown = 480; // 8秒冷却
-    
+
     // 定义技能选项（如果已有其他技能选项，添加到现有数组中）
     this.skillOptions = ['dash', 'sonicScreech', 'featherBlades'];
   }
@@ -572,7 +582,7 @@ class BirdBoss extends Boss {
       createVector(-15, 0),
       createVector(15, 0)
     ];
-    
+
     // 只生成羽毛，如果池中有空间
     for (let off of offsets) {
       let fx = this.pos.x + off.x;
@@ -631,7 +641,7 @@ class BirdBoss extends Boss {
   update() {
     try {
       if (!this.isActive || !player) return;
-      
+
       // 羽毛掉落效果处理
       if (this.featherFalling) {
         this.featherOffsetY += 2;
@@ -639,7 +649,7 @@ class BirdBoss extends Boss {
           this.featherFalling = false;
         }
       }
-      
+
       // === 恢复移动和攻击逻辑 ===
       if (!this.isFrozen) {
         // 计算到玩家的方向和距离
@@ -668,7 +678,7 @@ class BirdBoss extends Boss {
             // 追踪玩家
             this.pos.add(p5.Vector.mult(dirToPlayer, this.speed));
           }
-          
+
           // 更新冷却时间
           if (this.dashCooldown > 0) this.dashCooldown--;
           if (this.meleeAttackCooldown > 0) this.meleeAttackCooldown--;
@@ -694,11 +704,11 @@ class BirdBoss extends Boss {
       if (this.featherBladesCooldown > 0) {
         this.featherBladesCooldown--;
       }
-      
+
       // 添加随机技能选择逻辑，与现有的技能触发保持相同概率
       if (random() < 0.005 && !this.isDashing && !this.isScreeching) {
         let skill = random(this.skillOptions);
-        
+
         if (skill === 'dash' && this.dashCooldown <= 0) {
           // 现有冲刺逻辑...
           this.initiateDash();
@@ -718,7 +728,7 @@ class BirdBoss extends Boss {
     // 声波尖啸冷却和触发
     if (this.sonicScreechCooldown > 0) {
       this.sonicScreechCooldown--;
-    } 
+    }
 
     // 当在合适距离且冷却完成时触发技能
     if (!this.isScreeching && this.sonicScreechCooldown <= 0) {
@@ -731,7 +741,7 @@ class BirdBoss extends Boss {
     // 处理声波效果
     if (this.isScreeching) {
       this.waveTimer++;
-      
+
       // 每隔一定时间发射一道声波
       if (this.waveTimer >= this.waveInterval && this.screechwaveCount < 5) {
         // 创建新的声波
@@ -742,11 +752,11 @@ class BirdBoss extends Boss {
           maxRadius: 200,    // 最大半径更大
           alpha: 230         // 透明度更高
         });
-        
+
         this.screechwaveCount++;
         this.waveTimer = 0;
       }
-      
+
       // 如果已发射5道声波且没有活动的声波，结束技能
       if (this.screechwaveCount >= 5 && this.sonicWaves.length === 0) {
         this.isScreeching = false;
@@ -756,24 +766,24 @@ class BirdBoss extends Boss {
     // 更新和绘制声波
     for (let i = this.sonicWaves.length - 1; i >= 0; i--) {
       let wave = this.sonicWaves[i];
-      
+
       // 更新声波
       wave.radius += 3;  // 声波扩散速度
       wave.alpha -= 2;   // 声波渐隐
-      
+
       // 检测与玩家的碰撞
       if (player && !player.stunned) {
         let distToPlayer = dist(wave.x, wave.y, player.pos.x, player.pos.y);
         // 更宽的碰撞检测范围
-        if (distToPlayer < wave.radius + player.radius + 15 && 
-            distToPlayer > wave.radius - 20) {
+        if (distToPlayer < wave.radius + player.radius + 15 &&
+          distToPlayer > wave.radius - 20) {
           // 眩晕玩家（稍微延长时间）
           player.stunned = true;
           player.stunDuration = 75; // 延长眩晕时间到1.25秒
           showFloatingText("Stunned!", player.pos.x, player.pos.y - 30, color(255, 255, 0), 20);
         }
       }
-      
+
       // 绘制声波
       push();
       noFill();
@@ -790,7 +800,7 @@ class BirdBoss extends Boss {
       strokeWeight(2);
       ellipse(wave.x, wave.y, wave.radius * 1.8);
       pop();
-      
+
       // 移除完成的声波
       if (wave.radius >= wave.maxRadius || wave.alpha <= 0) {
         this.sonicWaves.splice(i, 1);
@@ -824,7 +834,7 @@ class BirdBoss extends Boss {
           let angle = (i * PI) / 2;
           let offset = createVector(cos(angle) * 40, sin(angle) * 40);
           let poisonPos = p5.Vector.add(this.pos, offset);
-          
+
           poisonTrails.push({
             pos: poisonPos,
             radius: 20,
@@ -938,7 +948,7 @@ class BirdBoss extends Boss {
     // for (let f of this.feathers) {
     //   f.display();
     // }
-    
+
     // 其他现有代码保持不变...
   }
 
@@ -982,10 +992,10 @@ class BirdBoss extends Boss {
     this.isScreeching = true;
     this.screechwaveCount = 0;
     this.waveTimer = 0;
-    
+
     // 重置冷却时间
     this.sonicScreechCooldown = 300;
-    
+
     // 显示技能使用提示（更大字体）
     showFloatingText("Sonic Screech!", this.pos.x, this.pos.y - 40, color(255, 50, 50), 24);
   }
@@ -994,10 +1004,10 @@ class BirdBoss extends Boss {
   releaseFeatherBlades() {
     // 设置冷却
     this.featherBladesCooldown = this.featherBladesMaxCooldown;
-    
+
     // 显示技能使用提示
     showFloatingText("Feather Blade Assault!", this.pos.x, this.pos.y - 40, color(200, 200, 255), 24);
-    
+
     // 基础起始角度
     let baseAngle = 0; // 默认从0开始
     if (player) {
@@ -1005,11 +1015,11 @@ class BirdBoss extends Boss {
       let dirToPlayer = p5.Vector.sub(player.pos, this.pos);
       baseAngle = dirToPlayer.heading();
     }
-    
+
     // 创建10道羽刃
     let numberOfBlades = 10;
     let angleIncrement = TWO_PI / numberOfBlades;
-    
+
     for (let i = 0; i < numberOfBlades; i++) {
       let attackAngle = baseAngle + i * angleIncrement;
       // 计算投射物的速度向量
@@ -1996,7 +2006,7 @@ class BugBoss extends Enemy {
     if (this.isVisionBlocked) {
       // 增加雾气不透明度直到最大值
       this.fogOpacity = min(this.fogOpacity + this.fogTransitionSpeed, this.maxFogOpacity);
-      
+
       // 注释掉或删除这段代码，防止效果会结束
       /*
       this.visionBlockTimer--;
@@ -2335,7 +2345,7 @@ class FeatherPool {
     this.maxSize = maxSize;
     this.active = [];
   }
-  
+
   get(x, y, sprite) {
     // 检查是否已达到最大数量限制
     if (this.active.length >= this.maxSize) {
@@ -2344,7 +2354,7 @@ class FeatherPool {
         this.release(this.active[0]);
       }
     }
-    
+
     // 从池中获取可用对象
     let feather;
     if (this.pool.length > 0) {
@@ -2353,23 +2363,23 @@ class FeatherPool {
     } else {
       feather = new Feather(x, y, sprite);
     }
-    
+
     this.active.push(feather);
     return feather;
   }
-  
+
   release(feather) {
     // 从活动列表中移除
     const index = this.active.indexOf(feather);
     if (index !== -1) {
       this.active.splice(index, 1);
-      
+
       // 重置状态并加入池中
       feather.lifetime = 0;
       this.pool.push(feather);
     }
   }
-  
+
   update() {
     // 更新所有活动羽毛
     for (let i = this.active.length - 1; i >= 0; i--) {
@@ -2379,7 +2389,7 @@ class FeatherPool {
       }
     }
   }
-  
+
   display() {
     // 只显示在屏幕内的羽毛
     for (const feather of this.active) {
@@ -2404,40 +2414,40 @@ class FeatherProjectile {
     this.height = 24; // 调整为图片高度
     this.hitRadius = 10; // 碰撞检测半径
     this.isActive = true;
-    
+
     // 动画相关属性
     this.frameIndex = 0;
     this.totalFrames = 8;
     this.animationSpeed = 0.2; // 较慢的动画速度，使动画更明显
   }
-  
+
   update() {
     // 更新位置
     this.pos.add(this.vel);
-    
+
     // 更新动画帧
     this.frameIndex = (this.frameIndex + this.animationSpeed) % this.totalFrames;
-    
+
     // 减少生命周期
     this.lifespan--;
     if (this.lifespan <= 0) {
       this.isActive = false;
       return;
     }
-    
+
     // 检查是否超出屏幕边界
     if (this.pos.x < 0 || this.pos.x > width || this.pos.y < 0 || this.pos.y > height) {
       this.isActive = false;
       return;
     }
-    
+
     // 检查与玩家的碰撞
     if (player && this.isActive) {
       let distToPlayer = dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y);
       if (distToPlayer < this.hitRadius + player.radius) {
         // 对玩家造成伤害
         player.takeDamage(this.damage);
-        
+
         // 生成一些粒子效果
         for (let i = 0; i < 5; i++) {
           poisonTrails.push({
@@ -2451,36 +2461,36 @@ class FeatherProjectile {
             color: color(200, 240, 255, 150)
           });
         }
-        
+
         // 投射物碰撞后消失
         this.isActive = false;
         return;
       }
     }
   }
-  
+
   display() {
     push();
     // 计算羽刃的旋转角度
     let angle = this.vel.heading() + PI / 2;
-    
+
     translate(this.pos.x, this.pos.y);
     rotate(angle);
-    
+
     // 使用羽毛动画代替矩形
     if (featherBladeSprite) {
       // 计算当前动画帧
       let currentFrame = Math.floor(this.frameIndex);
       let frameWidth = featherBladeSprite.width / 8; // 8帧图片
-      
+
       // 使用tint添加轻微蓝色调，使羽刃更加明显
       tint(220, 240, 255, 230);
-      
+
       // 绘制当前帧
       image(
         featherBladeSprite,
-        -this.width/2,
-        -this.height/2,
+        -this.width / 2,
+        -this.height / 2,
         this.width,
         this.height,
         currentFrame * frameWidth,
@@ -2492,16 +2502,16 @@ class FeatherProjectile {
       // 如果图片未加载，使用备用矩形
       fill(200, 240, 255);
       noStroke();
-      rect(-this.width/2, -this.height/2, this.width, this.height);
+      rect(-this.width / 2, -this.height / 2, this.width, this.height);
     }
-    
+
     pop();
-    
+
     // 添加一些拖尾效果
     if (frameCount % 2 === 0) {
       poisonTrails.push({
         pos: createVector(
-          this.pos.x, 
+          this.pos.x,
           this.pos.y
         ),
         radius: random(2, 5),
