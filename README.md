@@ -296,6 +296,30 @@ Through this evaluation, we gained insights into the game design from both quali
 
 ---
 
+## Sustainability Analysis
+
+### Social Dimension
+We raise awareness of developer well-being by embedding themes of overwork and creative burnout into gameplay.
+Community-driven features like level design submissions encourage collaboration and shared creative expression.
+
+### Environmental Dimension
+Our dynamic weather reflects shifting digital environments and resource unpredictability, prompting adaptive strategies.
+We use nature-inspired map design and optimize code for minimal energy use, promoting ecological consciousness in both content and performance.
+
+### Economic Dimension
+The game is free-to-play with optional donations, all of which go to organizations advocating for tech worker rights.
+Through ongoing content updates, we prioritize long-term engagement over extractive monetization.
+
+### Technical Dimension
+We apply modular and efficient coding practices to reduce maintenance overhead and technical waste.
+Visual effects and animations are optimized to lower power consumption and improve runtime efficiency.
+
+### Individual Dimension
+By gamifying debugging as self-discovery, we invite players to reflect on productivity, stress, and balance.
+The variety of tools and paths encourages experimentation, creativity, and personal agency in problem-solving.
+
+---
+
 ## Project Report
 
 ### Introduction
