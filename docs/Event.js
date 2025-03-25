@@ -2,24 +2,31 @@
 function mouseClicked() {
   if (gameState == "story1" && mouseX > buttonX && mouseX < buttonX + buttonW &&
     mouseY > buttonY && mouseY < buttonY + buttonH) {
+      buttonsound.play();
     gameState = "story2";
   } else if (gameState == "story2" && mouseX > buttonX && mouseX < buttonX + buttonW &&
     mouseY > buttonY && mouseY < buttonY + buttonH) {
+      buttonsound.play();
     gameState = "story3";
   } else if (gameState == "story3" && mouseX > buttonX && mouseX < buttonX + buttonW &&
     mouseY > buttonY && mouseY < buttonY + buttonH) {
+      buttonsound.play();
     gameState = "story4";
   } else if (gameState == "story4" && mouseX > buttonX && mouseX < buttonX + buttonW &&
     mouseY > buttonY && mouseY < buttonY + buttonH) {
+      buttonsound.play();
     gameState = "story5";
   } else if (gameState == "story5" && mouseX > buttonX && mouseX < buttonX + buttonW &&
     mouseY > buttonY && mouseY < buttonY + buttonH) {
+      buttonsound.play();
     gameState = "menu";
   } else if (gameState == "guide" && mouseX > buttonX && mouseX < buttonX + buttonW &&
     mouseY > buttonY && mouseY < buttonY + buttonH) {
+      buttonsound.play();
     gameState = "game";
   } else if (gameState == "vStory" && mouseX > buttonX && mouseX < buttonX + buttonW &&
     mouseY > buttonY && mouseY < buttonY + buttonH) {
+      buttonsound.play();
     gameState = "victory"
   }
 }

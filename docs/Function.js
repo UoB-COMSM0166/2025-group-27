@@ -100,8 +100,8 @@ function handleGameplay(now) {
         return;
       }
       
-      // 处理第10波的胜利情况
-      if (wave === 10) {
+      // 处理第15波的胜利情况
+      if (wave === 15) {
         gameState = "vStory";
         finalStats = {
           normalEnemies: normalEnemiesDefeated,
@@ -251,7 +251,7 @@ function handleGameplay(now) {
       return; // 直接返回，不执行后续生成敌人的逻辑
     }
 
-    if (wave === 10) {
+    if (wave === 15) {
       gameState = "vStory";
       finalStats = {
         normalEnemies: normalEnemiesDefeated,
@@ -718,6 +718,7 @@ function displayStoryPage5() {
 }
 
 function displayVictoryPage1() {
+  bossMusic3.stop();
   image(victoryStory, 0, 0, width, height);
 
   buttonW = 100;
@@ -767,6 +768,12 @@ function displayPauseMenu() {
 }
 
 function displayGameOverScreen() {
+  normalMusic12.stop();
+  normalMusic45.stop();
+  normalMusic78.stop();
+  bossMusic1.stop();
+  bossMusic2.stop();
+  bossMusic3.stop();
   background(0);
   textSize(20);
   fill(255);
@@ -781,9 +788,6 @@ function generateInitialObstacles() {
   const minDistanceBetweenObstacles = 200;
   const numObstacles = 6;
   let attempts = 0;
-  if(wave == 6){
-    obstacles.push(new Obstacle(0,0,0,0,false,true));
-  }
   while (obstacles.length < numObstacles && attempts < 50) {
     let x = random(width * 0.1, width * 0.9);
     let y = random(height * 0.1, height * 0.9);
@@ -1147,17 +1151,17 @@ function spawnEnemiesForWave(waveNumber) {
   console.log("Spawning enemies for wave", waveNumber);
   
   // 第9关开启雾效果
-  if (waveNumber === 9) {
+  if (waveNumber === 15) {
     levelFogEnabled = true;
-    console.log("Wave 9: Level fog effect enabled");
-  } else if (waveNumber > 9) {
+    console.log("Wave 15: Level fog effect enabled");
+  } else if (waveNumber > 15) {
     // 第9关之后禁用雾效果
     levelFogEnabled = false;
   }
   
   enemies = [];
 
-  if (waveNumber === 3) {
+  if (waveNumber === 5) {
     // Boss 关 1：SlimeBoss
     // 停止普通波音乐
     if (normalMusic12 && normalMusic12.isPlaying()) { normalMusic12.stop(); }
@@ -1219,7 +1223,7 @@ function spawnEnemiesForWave(waveNumber) {
     bossActive = true;
   }
   
-  else if (waveNumber === 6) {
+  else if (waveNumber === 10) {
     // Boss 关 2：BirdBoss
     // 停止普通波音乐
     if (normalMusic12 && normalMusic12.isPlaying()) { normalMusic12.stop(); }
@@ -1242,7 +1246,7 @@ function spawnEnemiesForWave(waveNumber) {
     bossActive = true;
   }
   
-  else if (waveNumber === 9) {  // Boss 关 3：BugBoss
+  else if (waveNumber === 15) {  // Boss 关 3：BugBoss
     // 停止普通波音乐
     if (normalMusic12 && normalMusic12.isPlaying()) { normalMusic12.stop(); }
     if (normalMusic45 && normalMusic45.isPlaying()) { normalMusic45.stop(); }
@@ -1272,19 +1276,19 @@ function spawnEnemiesForWave(waveNumber) {
     if (bossMusic3 && bossMusic3.isPlaying()) { bossMusic3.stop(); }
     
     // 根据 wave 数值播放对应的普通敌人背景音乐
-    if (waveNumber === 1 || waveNumber === 2) {
+    if (waveNumber === 1 || waveNumber === 2 || waveNumber === 3 || waveNumber === 4) {
       if (normalMusic45 && normalMusic45.isPlaying()) { normalMusic45.stop(); }
       if (normalMusic78 && normalMusic78.isPlaying()) { normalMusic78.stop(); }
       if (normalMusic12 && !normalMusic12.isPlaying()) {
         normalMusic12.play();
       }
-    } else if (waveNumber === 4 || waveNumber === 5) {
+    } else if (waveNumber === 6 || waveNumber === 7 || waveNumber === 8 || waveNumber === 9) {
       if (normalMusic12 && normalMusic12.isPlaying()) { normalMusic12.stop(); }
       if (normalMusic78 && normalMusic78.isPlaying()) { normalMusic78.stop(); }
       if (normalMusic45 && !normalMusic45.isPlaying()) {
         normalMusic45.play();
       }
-    } else if (waveNumber === 7 || waveNumber === 8) {
+    } else if (waveNumber === 11 || waveNumber === 12 || waveNumber === 13 || waveNumber === 14) {
       if (normalMusic12 && normalMusic12.isPlaying()) { normalMusic12.stop(); }
       if (normalMusic45 && normalMusic45.isPlaying()) { normalMusic45.stop(); }
       if (normalMusic78 && !normalMusic78.isPlaying()) {
@@ -1741,7 +1745,7 @@ function setupVictoryButtons() {
     new Button(width / 2 + 20, height - 100, 100, 40, "Endless Mode", () => {
       buttonsound.play();
       gameState = "game";
-      wave = 11;
+      wave = 16;
       spawnEnemiesForWave(wave);
     })
   ];

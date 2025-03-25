@@ -489,8 +489,8 @@ class BirdBoss extends Boss {
     this.birdBossAction = birdBossAction;
 
     // Boss 属性设置（可根据需求调整数值）
-    this.health = 8;
-    this.maxHealth = 8;
+    this.health = 800;
+    this.maxHealth = 800;
     this.size = 150; // 从200减小到150
     this.speed = 2.5;
     this.attackRange = 150;
