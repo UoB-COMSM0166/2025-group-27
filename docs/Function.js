@@ -265,7 +265,7 @@ function handleGameplay(now) {
     }
 
     // 检查是否需要等待宠物选择
-    if (wave === 5 && player.needsPetSelection) {
+    if (wave === 6 && player.needsPetSelection) {
       console.log("C");
       gameState = "petSelection";
       return;

@@ -463,6 +463,11 @@ class Boss extends Enemy {
       this.health = 0; // 确保血量不会小于0
       this.isActive = false;
 
+      if (wave === 5) {
+        gameState = "petSelection";
+        player.needsPetSelection = true;
+      }
+
       // 显示击败提示
       let bossName = this.constructor.name.replace('Boss', '');
       showFloatingText(`${bossName} Boss Defeated!`, this.pos.x, this.pos.y - 40, color(255, 215, 0));
@@ -610,7 +615,7 @@ class BirdBoss extends Boss {
           }, 500);
         }
 
-        if (wave === 10) {
+        if (wave === 15) {
           gameState = "vStory";
           finalStats = {
             normalEnemies: normalEnemiesDefeated,
