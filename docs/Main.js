@@ -752,4 +752,11 @@ function drawPoisonPools() {
   }
 }
 
+// 在全局变量区域添加这些变量
+let levelFogEnabled = false;
+let levelFogOpacity = 0;
+let levelFogRadius = 150;
+let maxLevelFogOpacity = 180;
+let fogTransitionSpeed = 5;
+
 

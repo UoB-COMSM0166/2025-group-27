@@ -317,6 +317,9 @@ function handleGameplay(now) {
 
   // ★ 调用天气效果函数，应用天气效果 ★
   applyWeatherEffects(now);
+
+  // 在所有内容之上绘制关卡雾效果
+  drawLevelFogEffect();
 }
 
 
@@ -1140,10 +1143,21 @@ function updateArrows() {
 }
 
 // ===== 根据当前波数生成敌人 =====
-function spawnEnemiesForWave(wave) {
+function spawnEnemiesForWave(waveNumber) {
+  console.log("Spawning enemies for wave", waveNumber);
+  
+  // 第9关开启雾效果
+  if (waveNumber === 9) {
+    levelFogEnabled = true;
+    console.log("Wave 9: Level fog effect enabled");
+  } else if (waveNumber > 9) {
+    // 第9关之后禁用雾效果
+    levelFogEnabled = false;
+  }
+  
   enemies = [];
 
-  if (wave === 3) {
+  if (waveNumber === 3) {
     // Boss 关 1：SlimeBoss
     // 停止普通波音乐
     if (normalMusic12 && normalMusic12.isPlaying()) { normalMusic12.stop(); }
@@ -1205,7 +1219,7 @@ function spawnEnemiesForWave(wave) {
     bossActive = true;
   }
   
-  else if (wave === 6) {
+  else if (waveNumber === 6) {
     // Boss 关 2：BirdBoss
     // 停止普通波音乐
     if (normalMusic12 && normalMusic12.isPlaying()) { normalMusic12.stop(); }
@@ -1228,7 +1242,7 @@ function spawnEnemiesForWave(wave) {
     bossActive = true;
   }
   
-  else if (wave === 9) {  // Boss 关 3：BugBoss
+  else if (waveNumber === 9) {  // Boss 关 3：BugBoss
     // 停止普通波音乐
     if (normalMusic12 && normalMusic12.isPlaying()) { normalMusic12.stop(); }
     if (normalMusic45 && normalMusic45.isPlaying()) { normalMusic45.stop(); }
@@ -1258,19 +1272,19 @@ function spawnEnemiesForWave(wave) {
     if (bossMusic3 && bossMusic3.isPlaying()) { bossMusic3.stop(); }
     
     // 根据 wave 数值播放对应的普通敌人背景音乐
-    if (wave === 1 || wave === 2) {
+    if (waveNumber === 1 || waveNumber === 2) {
       if (normalMusic45 && normalMusic45.isPlaying()) { normalMusic45.stop(); }
       if (normalMusic78 && normalMusic78.isPlaying()) { normalMusic78.stop(); }
       if (normalMusic12 && !normalMusic12.isPlaying()) {
         normalMusic12.play();
       }
-    } else if (wave === 4 || wave === 5) {
+    } else if (waveNumber === 4 || waveNumber === 5) {
       if (normalMusic12 && normalMusic12.isPlaying()) { normalMusic12.stop(); }
       if (normalMusic78 && normalMusic78.isPlaying()) { normalMusic78.stop(); }
       if (normalMusic45 && !normalMusic45.isPlaying()) {
         normalMusic45.play();
       }
-    } else if (wave === 7 || wave === 8) {
+    } else if (waveNumber === 7 || waveNumber === 8) {
       if (normalMusic12 && normalMusic12.isPlaying()) { normalMusic12.stop(); }
       if (normalMusic45 && normalMusic45.isPlaying()) { normalMusic45.stop(); }
       if (normalMusic78 && !normalMusic78.isPlaying()) {
@@ -1280,9 +1294,9 @@ function spawnEnemiesForWave(wave) {
     
     let baseEnemyCount;
     if (difficult == "hard") {
-      baseEnemyCount = Math.floor(6 + wave * 1.1);
+      baseEnemyCount = Math.floor(6 + waveNumber * 1.1);
     } else {
-      baseEnemyCount = Math.floor(6 + wave * 0.8);
+      baseEnemyCount = Math.floor(6 + waveNumber * 0.8);
     }
     for (let i = 0; i < baseEnemyCount; i++) {
       let isElite = random() < 0.2;
@@ -1290,7 +1304,7 @@ function spawnEnemiesForWave(wave) {
       let enemy;
       let pos = getValidSpawnPosition();
       
-      if (wave<=5){
+      if (waveNumber<=5){
       if (enemyType < 0.4) {
         enemy = new Enemy(isElite, "normal", commonEnemyAction, 18, 22);
       } else if (enemyType < 0.75) {
@@ -1298,7 +1312,7 @@ function spawnEnemiesForWave(wave) {
       } else {
         enemy = new Enemy(isElite, "exploding", commonEnemyAction, 18, 22);
       }
-      } else if(wave>5 && wave<=10){
+      } else if(waveNumber>5 && waveNumber<=10){
         if (enemyType < 0.4) {
           enemy = new Enemy(isElite, "normal", commonEnemyAction1, 20, 20, 5, 8, 8, 8);
         } else if (enemyType < 0.75) {
@@ -1306,7 +1320,7 @@ function spawnEnemiesForWave(wave) {
         } else {
           enemy = new Enemy(isElite, "exploding", commonEnemyAction1, 20, 20, 5, 8, 8, 8);
         }
-      } else if(wave>10){
+      } else if(waveNumber>10){
         if (enemyType < 0.4) {
           enemy = new Enemy(isElite, "normal", commonEnemyAction2, 18, 18, 5, 6, 6, 6);
         } else if (enemyType < 0.75) {
@@ -1792,5 +1806,43 @@ function updateDeathEffect(enemy) {
     enemy.deathFrame * frameWidth, 0,
     frameWidth, deathEffect1.height
   );
+  pop();
+}
+
+// 在Function.js中添加这个函数
+function drawLevelFogEffect() {
+  if (!levelFogEnabled) {
+    levelFogOpacity = Math.max(0, levelFogOpacity - fogTransitionSpeed);
+    if (levelFogOpacity <= 0) return;
+  } else {
+    // 逐渐增加雾气效果
+    levelFogOpacity = Math.min(maxLevelFogOpacity, levelFogOpacity + fogTransitionSpeed);
+  }
+  
+  // 如果没有不透明度就不绘制
+  if (levelFogOpacity <= 0) return;
+  
+  push();
+  // 设置遮罩效果
+  fill(0, 0, 0, levelFogOpacity);
+  noStroke();
+  
+  // 创建整个屏幕的黑色遮罩
+  beginShape();
+  vertex(0, 0);
+  vertex(width, 0);
+  vertex(width, height);
+  vertex(0, height);
+  
+  // 挖出玩家周围的圆形可见区域
+  beginContour();
+  for (let i = 0; i < TWO_PI; i += 0.1) {
+    let x = player.pos.x + cos(i) * levelFogRadius;
+    let y = player.pos.y + sin(i) * levelFogRadius;
+    vertex(x, y);
+  }
+  endContour();
+  
+  endShape(CLOSE);
   pop();
 }

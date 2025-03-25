@@ -1905,19 +1905,17 @@ class BugBoss extends Enemy {
     this.ghostFireCooldown = random(60, 120);
     this.rapidClawCooldown = random(120, 240);
 
-    // 遮蔽视野技能相关属性
+    // 注释掉或删除遮蔽视野相关属性
+    /*
     this.visionBlockCooldown = 0;
-    this.visionBlockInterval = 300; // 从600减半到300 (5秒一次)
-    this.isVisionBlocked = true; // 默认就是开启状态
-    this.visionBlockTimer = 999999; // 设置一个极大的值，相当于永久持续
-    this.fogRadius = 150; // 玩家可见范围半径
-    this.fogOpacity = 0; // 雾气不透明度
-    this.maxFogOpacity = 180; // 最大不透明度
-    this.fogTransitionSpeed = 10; // 雾气渐变速度
-
-    // 添加疾风裂爪动画相关属性
-    this.clawEffectFrames = 6; // 特效动画总帧数
-    this.clawEffectDelay = 4; // 特效动画帧延迟
+    this.visionBlockInterval = 300;
+    this.isVisionBlocked = true;
+    this.visionBlockTimer = 999999;
+    this.fogRadius = 150;
+    this.fogOpacity = 0;
+    this.maxFogOpacity = 180;
+    this.fogTransitionSpeed = 10;
+    */
   }
 
   update() {
@@ -1992,22 +1990,15 @@ class BugBoss extends Enemy {
     // 处理碰撞
     this.resolveCollision();
 
+    // 注释掉或删除遮蔽视野逻辑
+    /*
     // 处理遮蔽视野效果
     if (this.isVisionBlocked) {
-      // 增加雾气不透明度直到最大值
       this.fogOpacity = min(this.fogOpacity + this.fogTransitionSpeed, this.maxFogOpacity);
-
-      // 注释掉或删除这段代码，防止效果会结束
-      /*
-      this.visionBlockTimer--;
-      if (this.visionBlockTimer <= 0) {
-        this.isVisionBlocked = false;
-      }
-      */
     } else {
-      // 减少雾气不透明度直到0
       this.fogOpacity = max(this.fogOpacity - this.fogTransitionSpeed, 0);
     }
+    */
   }
 
   // 启动疾风裂爪攻击
@@ -2251,10 +2242,13 @@ class BugBoss extends Enemy {
     // 显示血条
     this.displayHealthBar();
 
+    // 注释掉或删除drawFogEffect方法
+    /*
     // 绘制雾气效果
     if (this.fogOpacity > 0) {
       this.drawFogEffect();
     }
+    */
   }
 
   // 其他方法保持不变 (displayHealthBar, castGhostFire等)
@@ -2297,35 +2291,12 @@ class BugBoss extends Enemy {
     this.visionBlockTimer = this.visionBlockDuration;
   }
 
-  // 在display方法后添加绘制雾气效果
+  // 注释掉或删除drawFogEffect方法
+  /*
   drawFogEffect() {
-    if (this.fogOpacity <= 0) return;
-
-    push();
-    // 创建径向渐变遮罩
-    let gradient = drawingContext.createRadialGradient(
-      player.pos.x, player.pos.y, 0,
-      player.pos.x, player.pos.y, this.fogRadius
-    );
-
-    // 设置渐变颜色停止点
-    gradient.addColorStop(0, `rgba(40, 40, 60, 0)`);
-    gradient.addColorStop(0.7, `rgba(40, 40, 60, ${this.fogOpacity * 0.5 / 255})`);
-    gradient.addColorStop(1, `rgba(40, 40, 60, ${this.fogOpacity / 255})`);
-
-    // 应用渐变
-    drawingContext.fillStyle = gradient;
-
-    // 创建模糊效果
-    drawingContext.filter = 'blur(30px)';
-
-    // 绘制全屏遮罩
-    rect(0, 0, width, height);
-
-    // 重置滤镜
-    drawingContext.filter = 'none';
-    pop();
+    // 原有的遮蔽视野绘制代码...
   }
+  */
 }
 
 // 在全局添加羽毛对象池
