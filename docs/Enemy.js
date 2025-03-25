@@ -473,16 +473,6 @@ class Boss extends Enemy {
         bossActive = false;
         // 增加Boss击败计数
         bossDefeated++;
-
-        if (wave === 6) {
-          player.needsPetSelection = true;
-          gameState = "petSelection";
-        } else {
-          wave++;
-          setTimeout(() => {
-            spawnEnemiesForWave(wave);
-          }, 500);
-        }
       }
 
       return true;
