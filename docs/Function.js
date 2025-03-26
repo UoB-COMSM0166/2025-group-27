@@ -1796,61 +1796,48 @@ function updateDeathEffect(enemy) {
   pop();
 }
 
-// 优化的雾气效果函数 - 缩小范围并添加过渡效果
+// 优化雾气效果 - 减少可视区域的亮度
 function drawLevelFogEffect() {
+  // 如果不需要雾气，就降低不透明度或直接return
   if (!levelFogEnabled) {
     levelFogOpacity = Math.max(0, levelFogOpacity - fogTransitionSpeed);
     if (levelFogOpacity <= 0) return;
   } else {
-    // 逐渐增加雾气效果
     levelFogOpacity = Math.min(maxLevelFogOpacity, levelFogOpacity + fogTransitionSpeed);
   }
   
-  // 如果没有不透明度就不绘制
-  if (levelFogOpacity <= 0) return;
-  
   // 缩小可视范围30%
-  const adjustedRadius = levelFogRadius * 0.7;
+  const maxRadius = levelFogRadius *0.8 ;
   
   // 计算玩家中心点
   const playerCenterX = player.pos.x + player.ImageWidth / 2;
   const playerCenterY = player.pos.y + player.ImageHeight / 2;
   
+  // 先用暗色覆盖整个画面
   push();
-  
-  // 先绘制过渡效果的渐变圆环
-  for (let i = 0; i < 10; i++) {
-    // 计算当前半径 - 从主可视区域向外延伸一些
-    const transitionRadius = adjustedRadius + i * 4;
-    // 从里到外降低不透明度
-    const alphaValue = map(i, 0, 9, levelFogOpacity * 0.3, 0);
-    
-    noFill();
-    stroke(20, 20, 30, alphaValue);
-    strokeWeight(4);
-    ellipse(playerCenterX, playerCenterY, transitionRadius * 2);
-  }
-  
-  // 然后绘制主雾气遮罩
   noStroke();
-  fill(20, 20, 30, levelFogOpacity * 0.7);
+  fill(20, 20, 30, levelFogOpacity * 0.85);
+  rect(0, 0, width, height);
   
-  // 创建整个屏幕的遮罩
-  beginShape();
-  vertex(0, 0);
-  vertex(width, 0);
-  vertex(width, height);
-  vertex(0, height);
+  // 切换到擦除模式，开始"擦除"可视区域
+  erase();
   
-  // 挖出玩家周围的圆形可见区域
-  beginContour();
-  for (let i = TWO_PI; i >= 0; i -= 0.1) {
-    let x = playerCenterX + cos(i) * adjustedRadius;
-    let y = playerCenterY + sin(i) * adjustedRadius;
-    vertex(x, y);
+  // 准备画一个从中心透明度最高到外圈逐渐变化的渐变
+  const steps = 100; // 步数越多，过渡越平滑
+  
+  for (let i = steps; i >= 0; i--) {
+    let ratio = i / steps;          // 比例从 1.0 递减到 0
+    let r = maxRadius * ratio;      // 当前圆的半径
+    
+    
+    let alphaValue = 1.5* (1 - ratio);   // 降低擦除强度使视野更朦胧
+    
+    noStroke();
+    fill(100, alphaValue);
+    ellipse(playerCenterX, playerCenterY, r * 2, r * 2);
   }
-  endContour();
   
-  endShape(CLOSE);
+  // 恢复默认模式，结束"擦除"阶段
+  noErase();
   pop();
 }
