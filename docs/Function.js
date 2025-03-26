@@ -1796,7 +1796,7 @@ function updateDeathEffect(enemy) {
   pop();
 }
 
-// 修正的雾气效果函数 - 确保以主角为中心
+// 优化的雾气效果函数 - 缩小范围并添加过渡效果
 function drawLevelFogEffect() {
   if (!levelFogEnabled) {
     levelFogOpacity = Math.max(0, levelFogOpacity - fogTransitionSpeed);
@@ -1805,79 +1805,52 @@ function drawLevelFogEffect() {
     // 逐渐增加雾气效果
     levelFogOpacity = Math.min(maxLevelFogOpacity, levelFogOpacity + fogTransitionSpeed);
   }
-
+  
   // 如果没有不透明度就不绘制
   if (levelFogOpacity <= 0) return;
-<<<<<<< HEAD
   
-  // 缩小可视范围到原来的一半
-  const visibleRadius = levelFogRadius * 0.5;
+  // 缩小可视范围30%
+  const adjustedRadius = levelFogRadius * 0.7;
   
-  // 获取玩家中心位置
+  // 计算玩家中心点
   const playerCenterX = player.pos.x + player.ImageWidth / 2;
   const playerCenterY = player.pos.y + player.ImageHeight / 2;
   
-=======
-
->>>>>>> 836760cf5f51aece008711a2b07425dc4cddf483
   push();
   
-  // 绘制全屏雾气
+  // 先绘制过渡效果的渐变圆环
+  for (let i = 0; i < 10; i++) {
+    // 计算当前半径 - 从主可视区域向外延伸一些
+    const transitionRadius = adjustedRadius + i * 4;
+    // 从里到外降低不透明度
+    const alphaValue = map(i, 0, 9, levelFogOpacity * 0.3, 0);
+    
+    noFill();
+    stroke(20, 20, 30, alphaValue);
+    strokeWeight(4);
+    ellipse(playerCenterX, playerCenterY, transitionRadius * 2);
+  }
+  
+  // 然后绘制主雾气遮罩
   noStroke();
-<<<<<<< HEAD
-  fill(30, 30, 40, levelFogOpacity);
-  rect(0, 0, width, height);
+  fill(20, 20, 30, levelFogOpacity * 0.7);
   
-  // 使用destination-out混合模式来创建视野区域
-  drawingContext.globalCompositeOperation = 'destination-out';
-  
-  // 创建从中心向外的渐变
-  const gradient = drawingContext.createRadialGradient(
-    playerCenterX, playerCenterY, 0,
-    playerCenterX, playerCenterY, visibleRadius
-  );
-  
-  // 设置半透明的渐变效果
-  gradient.addColorStop(0, 'rgba(255, 255, 255, 0.7)'); // 中心70%透明度
-  gradient.addColorStop(0.6, 'rgba(255, 255, 255, 0.5)'); // 中间50%透明度
-  gradient.addColorStop(0.8, 'rgba(255, 255, 255, 0.3)'); // 边缘30%透明度
-  gradient.addColorStop(1, 'rgba(255, 255, 255, 0)'); // 完全不透明
-  
-  drawingContext.fillStyle = gradient;
-  drawingContext.beginPath();
-  drawingContext.arc(playerCenterX, playerCenterY, visibleRadius, 0, TWO_PI);
-  drawingContext.fill();
-  
-  // 重置混合模式
-  drawingContext.globalCompositeOperation = 'source-over';
-  
-  // 添加一点模糊效果使边缘更平滑
-  const blurRadius = 3;
-  drawingContext.filter = `blur(${blurRadius}px)`;
-  drawingContext.beginPath();
-  drawingContext.arc(playerCenterX, playerCenterY, visibleRadius - blurRadius, 0, TWO_PI);
-  drawingContext.stroke();
-  drawingContext.filter = 'none';
-  
-=======
-
-  // 创建整个屏幕的黑色遮罩
+  // 创建整个屏幕的遮罩
   beginShape();
   vertex(0, 0);
   vertex(width, 0);
   vertex(width, height);
   vertex(0, height);
-
+  
   // 挖出玩家周围的圆形可见区域
   beginContour();
-  for (let i = 0; i < TWO_PI; i += 0.1) {
-    let x = player.pos.x + cos(i) * levelFogRadius;
-    let y = player.pos.y + sin(i) * levelFogRadius;
+  for (let i = TWO_PI; i >= 0; i -= 0.1) {
+    let x = playerCenterX + cos(i) * adjustedRadius;
+    let y = playerCenterY + sin(i) * adjustedRadius;
     vertex(x, y);
   }
   endContour();
-
+  
   endShape(CLOSE);
->>>>>>> 836760cf5f51aece008711a2b07425dc4cddf483
   pop();
 }
