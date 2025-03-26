@@ -131,18 +131,21 @@ A failed **quantum time synchronization experiment** caused the time freeze. The
 
 ## Introduction
 
-**About Glitchwood**
-Glitchwood is a 2D roguelike RPG game. Players can choose from three different characters, each with unique attack ability and different upgrades. The game features highly randomized elements (such as weather, pets, enemies, bosses, obstacles, and upgrades, etc.), allowing players to enjoy the thrill of boosting through clearing stages. By clearing stages, players can unlock an endless mode, continuously improving their characters and striving for higher kill counts.
-The development of this game was inspired by Vampire Survivors and the popular Steam roguelike game 20 Minutes Till Dawn. Glitchwood features a unique art style, an original and engaging background story, and creative background music with sound effects that complement the game’s atmosphere. It is not only easy to play, the game also includes a tutorial to help new players get started. We also introduce the endless mode which can further extend playtime.
+### About Glitchwood
 
-**What makes our game distinction ?**
-In terms of game innovation, we have design different upgrade paths for three different characters, whereas traditional roguelike games usually offer only a single upgrade path. We also introduce a pet system, while traditional roguelike games typically only have standard upgrade options. Additionally, to enhance the game's randomness, we have implemented various weather conditions that affect both players and enemies under specific circumstances.
-Regarding the storyline, we have broken away from the conventional RPG narrative style by integrating the game's plot with the life of coding, conveying the message: "While writing code, we should also pay attention to life and those things around you."
-For art design, the game reflects our own experiences, featuring three uniquely designed characters with a "programmer" background, making them stand out.
+**Glitchwood** is a **2D roguelike RPG game**. Players can choose from **three different characters**, each with unique attack ability and different upgrades. The game features highly **randomized elements (such as weather, pets, enemies, bosses, obstacles, and upgrades, etc.)**, allowing players to enjoy the thrill of boosting through clearing stages. By clearing stages, players can unlock an **endless mode**, continuously improving their characters and striving for higher kill counts.
+The development of this game was inspired by **Vampire Survivors** and the popular Steam roguelike game **20 Minutes Till Dawn**. Glitchwood features a unique art style, an original and engaging background story, and creative background music with sound effects that complement the game’s atmosphere. It is not only easy to play, the game also includes a tutorial to help new players get started. We also introduce the endless mode which can further extend playtime.
+
+### What makes our game distinction ?
+
+In terms of game innovation, we have design **different upgrade paths** for three different characters, whereas traditional roguelike games usually offer only a single upgrade path. We also introduce a **pet system**, while traditional roguelike games typically only have standard upgrade options. Additionally, to enhance the game's randomness, we have implemented various **weather conditions** that affect both players and enemies under specific circumstances.
+Regarding the storyline, we have broken away from the conventional RPG narrative style by **integrating the game's plot with the life of coding**, conveying the message: **"While writing code, we should also pay attention to life and those things around you."**
+For art design, the game reflects our own experiences, featuring three uniquely designed characters with a **"programmer"** background, making them stand out.
 For challenging gameplay, we have designed three different bosses, introduced an endless mode, and provided two difficulty levels for players to choose from.
 In summary, this game is an exciting game and provide some accessible experience where players continuously improve themselves while facing increasingly powerful enemies.
 
-**Before you play, there are some info that you need to know!!**
+### Before you play, there are some info that you need to know!!
+
 | Image  | Character Name | Description  |
 |--------|--------------|--------------|
 | ![Archer](docs/assets/selected_images/characters/intro/mousegirl_intro.gif) | Mousegirl | This character has a unique charge attack mode. When fully charged, she reaches the maximum attack power among the characters. Her upgrades are related to the attack mechanics of the bow and arrows. |
