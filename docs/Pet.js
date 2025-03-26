@@ -375,9 +375,21 @@ function showPetSelectionScreen() {
   const box3 = { x: 726, y: 160, w: 200, h: 340 };
 
   const eggW = 115, eggH = 115;
-  const center1 = { x: box1.x + box1.w / 2, y: box1.y + box1.h / 2 };
-  const center2 = { x: box2.x + box2.w / 2, y: box2.y + box2.h / 2 };
-  const center3 = { x: box3.x + box3.w / 2, y: box3.y + box3.h / 2 };
+  const offset1 = { x: 0, y: -25 };
+  const offset2 = { x: 10, y: -25 };
+
+  const center1 = {
+    x: box1.x + box1.w / 2 + offset1.x,
+    y: box1.y + box1.h / 2 + offset1.y
+  };
+  const center2 = {
+    x: box2.x + box2.w / 2 + offset2.x,
+    y: box2.y + box2.h / 2 + offset2.y
+  };
+  const center3 = {
+    x: box3.x + box3.w / 2 + offset2.x,
+    y: box3.y + box3.h / 2 + offset2.y
+  };
 
   push();
   imageMode(CENTER);
