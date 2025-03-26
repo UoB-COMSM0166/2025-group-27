@@ -1813,7 +1813,7 @@ function updateDeathEffect(enemy) {
   pop();
 }
 
-// 在Function.js中添加这个函数
+// 修正的雾气效果函数 - 确保以主角为中心
 function drawLevelFogEffect() {
   if (!levelFogEnabled) {
     levelFogOpacity = Math.max(0, levelFogOpacity - fogTransitionSpeed);
@@ -1826,27 +1826,50 @@ function drawLevelFogEffect() {
   // 如果没有不透明度就不绘制
   if (levelFogOpacity <= 0) return;
   
+  // 缩小可视范围到原来的一半
+  const visibleRadius = levelFogRadius * 0.5;
+  
+  // 获取玩家中心位置
+  const playerCenterX = player.pos.x + player.ImageWidth / 2;
+  const playerCenterY = player.pos.y + player.ImageHeight / 2;
+  
   push();
-  // 设置遮罩效果
-  fill(0, 0, 0, levelFogOpacity);
+  
+  // 绘制全屏雾气
   noStroke();
+  fill(30, 30, 40, levelFogOpacity);
+  rect(0, 0, width, height);
   
-  // 创建整个屏幕的黑色遮罩
-  beginShape();
-  vertex(0, 0);
-  vertex(width, 0);
-  vertex(width, height);
-  vertex(0, height);
+  // 使用destination-out混合模式来创建视野区域
+  drawingContext.globalCompositeOperation = 'destination-out';
   
-  // 挖出玩家周围的圆形可见区域
-  beginContour();
-  for (let i = 0; i < TWO_PI; i += 0.1) {
-    let x = player.pos.x + cos(i) * levelFogRadius;
-    let y = player.pos.y + sin(i) * levelFogRadius;
-    vertex(x, y);
-  }
-  endContour();
+  // 创建从中心向外的渐变
+  const gradient = drawingContext.createRadialGradient(
+    playerCenterX, playerCenterY, 0,
+    playerCenterX, playerCenterY, visibleRadius
+  );
   
-  endShape(CLOSE);
+  // 设置半透明的渐变效果
+  gradient.addColorStop(0, 'rgba(255, 255, 255, 0.7)'); // 中心70%透明度
+  gradient.addColorStop(0.6, 'rgba(255, 255, 255, 0.5)'); // 中间50%透明度
+  gradient.addColorStop(0.8, 'rgba(255, 255, 255, 0.3)'); // 边缘30%透明度
+  gradient.addColorStop(1, 'rgba(255, 255, 255, 0)'); // 完全不透明
+  
+  drawingContext.fillStyle = gradient;
+  drawingContext.beginPath();
+  drawingContext.arc(playerCenterX, playerCenterY, visibleRadius, 0, TWO_PI);
+  drawingContext.fill();
+  
+  // 重置混合模式
+  drawingContext.globalCompositeOperation = 'source-over';
+  
+  // 添加一点模糊效果使边缘更平滑
+  const blurRadius = 3;
+  drawingContext.filter = `blur(${blurRadius}px)`;
+  drawingContext.beginPath();
+  drawingContext.arc(playerCenterX, playerCenterY, visibleRadius - blurRadius, 0, TWO_PI);
+  drawingContext.stroke();
+  drawingContext.filter = 'none';
+  
   pop();
 }
