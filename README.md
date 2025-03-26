@@ -130,7 +130,30 @@ A failed **quantum time synchronization experiment** caused the time freeze. The
 ---
 
 ## Introduction
-Describe your game, what is based on, what makes it novel?
+
+**About Glitchwood**
+Glitchwood is a 2D roguelike RPG game. Players can choose from three different characters, each with unique attack ability and different upgrades. The game features highly randomized elements (such as weather, pets, enemies, bosses, obstacles, and upgrades, etc.), allowing players to enjoy the thrill of boosting through clearing stages. By clearing stages, players can unlock an endless mode, continuously improving their characters and striving for higher kill counts.
+The development of this game was inspired by Vampire Survivors and the popular Steam roguelike game 20 Minutes Till Dawn. Glitchwood features a unique art style, an original and engaging background story, and creative background music with sound effects that complement the game’s atmosphere. It is not only easy to play, the game also includes a tutorial to help new players get started. We also introduce the endless mode which can further extend playtime.
+
+**What makes our game distinction ?**
+In terms of game innovation, we have design different upgrade paths for three different characters, whereas traditional roguelike games usually offer only a single upgrade path. We also introduce a pet system, while traditional roguelike games typically only have standard upgrade options. Additionally, to enhance the game's randomness, we have implemented various weather conditions that affect both players and enemies under specific circumstances.
+Regarding the storyline, we have broken away from the conventional RPG narrative style by integrating the game's plot with the life of coding, conveying the message: "While writing code, we should also pay attention to life and those things around you."
+For art design, the game reflects our own experiences, featuring three uniquely designed characters with a "programmer" background, making them stand out.
+For challenging gameplay, we have designed three different bosses, introduced an endless mode, and provided two difficulty levels for players to choose from.
+In summary, this game is an exciting game and provide some accessible experience where players continuously improve themselves while facing increasingly powerful enemies.
+
+**Before you play, there are some info that you need to know!!**
+| Image  | Character Name | Description  |
+|--------|--------------|--------------|
+| ![Archer](docs/assets/selected_images/characters/intro/mousegirl_intro.gif) | Mousegirl | This character has a unique charge attack mode. When fully charged, she reaches the maximum attack power among the characters. Her upgrades are related to the attack mechanics of the bow and arrows. |
+| ![Caster](docs/assets/selected_images/characters/intro/computerboy_intro.gif) | Computerboy | This character is easy to play—simple yet powerful. His upgrades focus on various attributes and bullet enhancements. |
+| ![Berserker](docs/assets/selected_images/characters/intro/keyboardman_intro.gif) | Keyboardman | This character specializes in melee combat, having high AOE damage. However, he needs to be close to enemies for launching attack. His upgrades mainly enhance survivability (e.g., lifesteal, resurrection) and some unique abilities. |
+
+| Image  | Boss Name  | Description  |
+|--------|-----------|--------------|
+| ![Slimeboss](path/to/slimeboss_image.png) | Slimeboss | They are usually enemies found around beginner villages in RPG games, but in our game, they appear as bosses—be careful! They have four different forms, each with unique attack patterns and characteristics. Challenge them multiple times to familiarize yourself with the attack styles of different-colored slimes! |
+| ![Birdboss](path/to/birdboss_image.png) | Birdboss | This boss appears around altars and specializes in dash attacks and movement-restricting strikes. Don’t be deceived by its flashy appearance! Here’s a little secret: its dash range is limited, so if you stay outside its attack range... |
+| ![Bugboss](path/to/bugboss_image.png) | Bugboss | A boss that obscures vision, summons ghost flames, and performs dash attacks. Watch out for its ghost flames—they deal massive damage! |
 
 ---
 
