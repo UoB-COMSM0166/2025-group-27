@@ -31,10 +31,6 @@ function applyWeatherEffects(now) {
             if (isBoss) {
               bossDefeated++;
               bossDefeatedCount++;
-              if (wave === 6) {
-                player.needsPetSelection = true;
-                gameState = "petSelection";
-              }
               score += 10;
               player.gainExp(expValue || 10);
             }
