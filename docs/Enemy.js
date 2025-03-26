@@ -605,7 +605,7 @@ class BirdBoss extends Boss {
         bossActive = false;
         showFloatingText("Boss Defeated!", this.pos.x, this.pos.y - 40, color(255, 215, 0));
 
-        if (wave === 6) {
+        if (wave === 5) {
           gameState = "petSelection";
           player.needsPetSelection = true;
         } else {

@@ -7,14 +7,14 @@ const MAX_FEATHERS = 50; // 将最大羽毛数量从100降到50
 
 // ===== 核心游戏逻辑 =====
 function handleGameplay(now) {
-  if(wave<=5){
-    image(level1map,0,0,1062,600);
-  } else if (wave>5 && wave <= 10){
-    image(level2map,0,0,1062,600);
-  } else if (wave>10 && wave <= 15){
-    image(level3map,0,0,1062,600);
+  if (wave <= 5) {
+    image(level1map, 0, 0, 1062, 600);
+  } else if (wave > 5 && wave <= 10) {
+    image(level2map, 0, 0, 1062, 600);
+  } else if (wave > 10 && wave <= 15) {
+    image(level3map, 0, 0, 1062, 600);
   } else {
-    image(level4map,0,0,1062,600);
+    image(level4map, 0, 0, 1062, 600);
   }
 
   // 玩家相关操作
@@ -33,7 +33,7 @@ function handleGameplay(now) {
     if (feathers.length > MAX_FEATHERS) {
       return false;
     }
-    
+
     if (!feather.update()) {
       return false; // 超出屏幕等条件，移除
     }
@@ -50,14 +50,14 @@ function handleGameplay(now) {
     }
     return false;
   });
-  
-  if(wave == 5 || wave == 10 || wave == 15) {
+
+  if (wave == 5 || wave == 10 || wave == 15) {
     obstacleBuild = false;
   }
-  if(wave == 6 && !obstacleBuild){
+  if (wave == 6 && !obstacleBuild) {
     obstacles = [];
     generateInitialObstacles();
-  } else if(wave == 11 && !obstacleBuild){
+  } else if (wave == 11 && !obstacleBuild) {
     obstacles = [];
     generateInitialObstacles();
   }
@@ -73,7 +73,11 @@ function handleGameplay(now) {
     let enemy = enemies[j];
     enemy.update();
     enemy.display();
-    
+
+    if (enemy.shouldRemove()) {
+      enemies.splice(j, 1);
+    }
+
     // 特别检查是否是BugBoss，并确保遮蔽视野效果被应用
     if (enemy instanceof BugBoss) {
       // 确保遮蔽视野属性是激活的
@@ -84,22 +88,15 @@ function handleGameplay(now) {
         enemy.drawFogEffect();
       }
     }
-    
+
     // 检查是否为已击败的Boss(包括BugBoss)
     if ((enemy.isBoss || enemy instanceof BugBoss) && enemy.health <= 0) {
       bossDefeated++;
       enemies.splice(j, 1);
       bossActive = false; // 确保重置bossActive状态
-      
+
       console.log("Boss defeated, current wave:", wave); // 调试日志
-      
-      // 处理第6波的特殊情况
-      if (wave === 6) {
-        player.needsPetSelection = true;
-        gameState = "petSelection";
-        return;
-      }
-      
+
       // 处理第15波的胜利情况
       if (wave === 15) {
         gameState = "vStory";
@@ -113,7 +110,7 @@ function handleGameplay(now) {
         };
         return;
       }
-      
+
       // 由于已经击败了当前波次的Boss，加载下一波
       wave++;
       showFloatingText("Wave " + wave, width / 2, height / 2, color(255, 255, 0), 40);
@@ -138,7 +135,7 @@ function handleGameplay(now) {
   // 处理毒气伤害效果
   for (let i = poisonTrails.length - 1; i >= 0; i--) {
     let trail = poisonTrails[i];
-    
+
     // 更新动画帧
     if (trail.frameCounter !== undefined) {
       trail.frameCounter++;
@@ -147,7 +144,7 @@ function handleGameplay(now) {
         trail.frameIndex = (trail.frameIndex + 1) % trail.frameCount;
       }
     }
-    
+
     if (millis() - trail.startTime > trail.duration) {
       poisonTrails.splice(i, 1);
       continue;
@@ -159,14 +156,14 @@ function handleGameplay(now) {
         push();
         drawingContext.filter = 'contrast(1.2) brightness(1.1)';
         imageMode(CENTER);
-        
+
         // 计算当前帧在精灵表中的位置
         let frameWidth = poisonPoolEffectImg.width / trail.frameCount;
         let frameHeight = poisonPoolEffectImg.height;
-        
+
         // 调整渲染质量
         drawingContext.imageSmoothingEnabled = false; // 禁用平滑，保留像素感
-        
+
         // 减小透明度衰减速度，保持更长时间的清晰度
         let alpha = map(millis() - trail.startTime, 0, trail.duration * 0.7, 255, 100);
         if (trail.colorMod) {
@@ -174,22 +171,22 @@ function handleGameplay(now) {
         } else {
           tint(255, 255, 255, alpha);
         }
-        
+
         // 调整尺寸参数，使特效更大更清晰
         let displaySize = trail.radius * 2.2; // 从1.8倍增加到2.2倍
-        
+
         image(
           poisonPoolEffectImg,
-          trail.pos.x, 
+          trail.pos.x,
           trail.pos.y,
-          displaySize, 
           displaySize,
-          trail.frameIndex * frameWidth, 
+          displaySize,
+          trail.frameIndex * frameWidth,
           0,
-          frameWidth, 
+          frameWidth,
           frameHeight
         );
-        
+
         noTint();
         drawingContext.imageSmoothingEnabled = true;
         drawingContext.filter = 'none';
@@ -202,20 +199,20 @@ function handleGameplay(now) {
       // 使用死亡特效动画替代绿色圆圈
       push();
       imageMode(CENTER);
-      
+
       // 计算当前帧在精灵表中的位置
       let frameWidth = ghostDeathEffect.width / 4; // 4帧动画
       let frameHeight = ghostDeathEffect.height;
-      
+
       // 计算当前帧索引
       let progress = (millis() - trail.startTime) / trail.duration;
       let frameIndex = floor(progress * 4); // 4帧动画
       frameIndex = constrain(frameIndex, 0, 3);
-      
+
       // 计算透明度
       let alpha = map(millis() - trail.startTime, 0, trail.duration, 255, 0);
       tint(255, alpha);
-      
+
       // 绘制特效
       image(
         ghostDeathEffect,
@@ -228,7 +225,7 @@ function handleGameplay(now) {
         frameWidth,
         frameHeight
       );
-      
+
       noTint();
       pop();
     }
@@ -244,13 +241,6 @@ function handleGameplay(now) {
       return; // 如果不是游戏状态，不生成新敌人
     }
 
-    // 检查是否需要宠物选择（第6波Boss战后）
-    if (wave === 6 && player.needsPetSelection) {
-      gameState = "petSelection";
-      player.needsPetSelection = false; // 重置标志
-      return; // 直接返回，不执行后续生成敌人的逻辑
-    }
-
     if (wave === 15) {
       gameState = "vStory";
       finalStats = {
@@ -261,13 +251,6 @@ function handleGameplay(now) {
         attackSpeed: player.attackSpeed,
         attackDamage: player.attackDamage,
       };
-      return;
-    }
-
-    // 检查是否需要等待宠物选择
-    if (wave === 6 && player.needsPetSelection) {
-      console.log("C");
-      gameState = "petSelection";
       return;
     }
 
@@ -353,14 +336,14 @@ function initButtons() {
     new Button(width / 2 - 100, baseY + 200, 200, 40, "Quit Game", () => {
       buttonsound.play();
       noLoop()
-}),
+    }),
   ];
 
   charSelectButtons = [
     new Button(baseX - 375, height / 2 + 167.5, 200, 40, "Gunner", () => {
       buttonsound.play();
       initPlayer("gunner")
-}),
+    }),
     new Button(
       baseX - 70,
       height / 2 + 167.5,
@@ -370,7 +353,7 @@ function initButtons() {
       () => {
         buttonsound.play();
         initPlayer("archer")
-}),
+      }),
     new Button(
       baseX + 235,
       height / 2 + 167.5,
@@ -380,32 +363,32 @@ function initButtons() {
       () => {
         buttonsound.play();
         initPlayer("knight")
-}),
+      }),
   ];
 
   pauseButtons = [
-    new Button(width / 2 - 100, height / 2 - 40, 200, 40, "继续游戏 (P)", function() {
+    new Button(width / 2 - 100, height / 2 - 40, 200, 40, "继续游戏 (P)", function () {
       gameState = "game";
     }),
-    new Button(width / 2 - 100, height / 2 + 20, 200, 40, "回到主菜单 (M)", function() {
+    new Button(width / 2 - 100, height / 2 + 20, 200, 40, "回到主菜单 (M)", function () {
       gameState = "mainMenu";
     }),
-    new Button(width / 2 - 100, height / 2 + 80, 200, 40, "保存游戏 (S)", function() {
+    new Button(width / 2 - 100, height / 2 + 80, 200, 40, "保存游戏 (S)", function () {
       // 保存游戏逻辑
     }),
     // 添加新的无敌模式按钮
-    new Button(width / 2 - 100, height / 2 + 140, 200, 40, 
-      player && player.isInvincible ? "关闭无敌模式 (I)" : "开启无敌模式 (I)", 
-      function() {
+    new Button(width / 2 - 100, height / 2 + 140, 200, 40,
+      player && player.isInvincible ? "关闭无敌模式 (I)" : "开启无敌模式 (I)",
+      function () {
         if (player) {
           player.isInvincible = !player.isInvincible;
           // 更新按钮文本
           this.label = player.isInvincible ? "关闭无敌模式 (I)" : "开启无敌模式 (I)";
-          showFloatingText(player.isInvincible ? "无敌模式已开启!" : "无敌模式已关闭", 
-                           width / 2, height / 2 - 100, 
-                           player.isInvincible ? color(255, 215, 0) : color(255, 100, 100), 24);
+          showFloatingText(player.isInvincible ? "无敌模式已开启!" : "无敌模式已关闭",
+            width / 2, height / 2 - 100,
+            player.isInvincible ? color(255, 215, 0) : color(255, 100, 100), 24);
         }
-    })
+      })
   ];
 }
 
@@ -589,79 +572,79 @@ function hideSettingsElements() {
 // === 显示Boss血条 ===
 function displayBossHealthBar() {
   // 只计算活跃的Boss
-  if(gameState == "game"){
-  let activeBosses = enemies.filter(e => e instanceof Boss && e.isActive);
-  if (activeBosses.length === 0) {
-    bossActive = false;
-    return;
-  }
+  if (gameState == "game") {
+    let activeBosses = enemies.filter(e => e instanceof Boss && e.isActive);
+    if (activeBosses.length === 0) {
+      bossActive = false;
+      return;
+    }
 
-  // 计算活跃Boss的总血量
-  let totalMaxHealth = 0;
-  let totalCurrentHealth = 0;
-  for (let boss of activeBosses) {
-    totalMaxHealth += boss.maxHealth;
-    totalCurrentHealth += Math.max(0, boss.health); // 确保不会出现负数
-  }
+    // 计算活跃Boss的总血量
+    let totalMaxHealth = 0;
+    let totalCurrentHealth = 0;
+    for (let boss of activeBosses) {
+      totalMaxHealth += boss.maxHealth;
+      totalCurrentHealth += Math.max(0, boss.health); // 确保不会出现负数
+    }
 
-  // 绘制血条
-  const barWidth = width * 0.6;
-  const barHeight = 20;
-  const x = width / 2 - barWidth / 2;
-  const y = 30;
+    // 绘制血条
+    const barWidth = width * 0.6;
+    const barHeight = 20;
+    const x = width / 2 - barWidth / 2;
+    const y = 30;
 
-  // 血条背景
-  stroke(255, 215, 0);
-  strokeWeight(2);
-  fill(50);
-  rect(x, y, barWidth, barHeight, 5);
-  noStroke();
+    // 血条背景
+    stroke(255, 215, 0);
+    strokeWeight(2);
+    fill(50);
+    rect(x, y, barWidth, barHeight, 5);
+    noStroke();
 
-  // 当前血量
-  if (totalMaxHealth > 0) { // 添加检查以避免除以零
-    let healthPercentage = totalCurrentHealth / totalMaxHealth;
-    healthPercentage = constrain(healthPercentage, 0, 1); // 确保百分比在0-1之间
+    // 当前血量
+    if (totalMaxHealth > 0) { // 添加检查以避免除以零
+      let healthPercentage = totalCurrentHealth / totalMaxHealth;
+      healthPercentage = constrain(healthPercentage, 0, 1); // 确保百分比在0-1之间
 
-    fill(255, 0, 0);
-    rect(x + 2, y + 2, barWidth - 4, barHeight - 4, 3);
-    fill(0, 255, 0);
-    rect(
-      x + 2,
-      y + 2,
-      (barWidth - 4) * healthPercentage,
-      barHeight - 4,
-      3
-    );
-  }
-
-  // 显示血量数值
-  fill(255);
-  textAlign(CENTER);
-  textSize(14);
-  text(
-    `Boss HP: ${Math.ceil(totalCurrentHealth)} / ${totalMaxHealth}`,
-    width / 2,
-    y + barHeight + 15
-  );
-
-  // 只显示活跃Boss的单独血量
-  if (activeBosses.length > 1) {
-    textSize(12);
-    activeBosses.forEach((boss, index) => {
-      fill(255);
-      text(
-        `Slime ${index + 1}: ${Math.ceil(boss.health)} / ${boss.maxHealth}`,
-        width / 2,
-        y + barHeight + 35 + index * 15
+      fill(255, 0, 0);
+      rect(x + 2, y + 2, barWidth - 4, barHeight - 4, 3);
+      fill(0, 255, 0);
+      rect(
+        x + 2,
+        y + 2,
+        (barWidth - 4) * healthPercentage,
+        barHeight - 4,
+        3
       );
-    });
+    }
+
+    // 显示血量数值
+    fill(255);
+    textAlign(CENTER);
+    textSize(14);
+    text(
+      `Boss HP: ${Math.ceil(totalCurrentHealth)} / ${totalMaxHealth}`,
+      width / 2,
+      y + barHeight + 15
+    );
+
+    // 只显示活跃Boss的单独血量
+    if (activeBosses.length > 1) {
+      textSize(12);
+      activeBosses.forEach((boss, index) => {
+        fill(255);
+        text(
+          `Slime ${index + 1}: ${Math.ceil(boss.health)} / ${boss.maxHealth}`,
+          width / 2,
+          y + barHeight + 35 + index * 15
+        );
+      });
+    }
   }
-}
 }
 
 // ===== 其他UI函数 =====
 function displayMainMenu() {
-  if(!mainMenuSound.isPlaying()){
+  if (!mainMenuSound.isPlaying()) {
     mainMenuSound.play();
   }
   fill(255);
@@ -669,7 +652,7 @@ function displayMainMenu() {
   textAlign(CENTER, CENTER);
   let visibleButtons = [];
   visibleButtons.push(mainMenuButtons[1], mainMenuButtons[2], mainMenuButtons[3], mainMenuButtons[4]);
-  image(mainMenuPage,0,0,1062,600);
+  image(mainMenuPage, 0, 0, 1062, 600);
 }
 
 function displayStoryPage1() {
@@ -731,7 +714,7 @@ function displayCharacterSelection() {
   fill(255);
   textSize(24);
   textAlign(CENTER, CENTER);
-  image(characterChoose,0,0,width,height);
+  image(characterChoose, 0, 0, width, height);
   image(gunnerpic, width / 2 - 350, height / 2 - 100, 100, 200);
   image(archerpic, width / 2 - 50, height / 2 - 100, 100, 200);
   image(knightpic, width / 2 + 250, height / 2 - 100, 100, 200);
@@ -739,7 +722,7 @@ function displayCharacterSelection() {
 
 function displayGuidePage() {
   mainMenuSound.stop();
-  image(guidePage, 0,0,width,height);
+  image(guidePage, 0, 0, width, height);
 
   buttonW = 100;
   buttonH = 30;
@@ -749,7 +732,7 @@ function displayGuidePage() {
 
 function displayPauseMenu() {
   push();
-  image(pausePage,0,0,width,height);
+  image(pausePage, 0, 0, width, height);
   textSize(25);
   fill(255);
   textAlign(CENTER, CENTER);
@@ -778,7 +761,7 @@ function displayGameOverScreen() {
   textSize(20);
   fill(255);
   textAlign(CENTER, CENTER);
-  image(gameOverPage,0,0,width,height);
+  image(gameOverPage, 0, 0, width, height);
 }
 
 // ===== 生成障碍物 =====
@@ -812,21 +795,21 @@ function generateInitialObstacles() {
     }
     obstacleBuild = true;
 
-    if(wave<=10){
-    if (valid)
-      obstacles.push(new Obstacle(x, y, obsWidth, obsHeight, isVertical));
-    attempts++;
-    } if(wave > 10){
-      if(valid)
-      obstacles.push(new Obstacle(x, y, 100, 100, isVertical));
-    attempts++;
+    if (wave <= 10) {
+      if (valid)
+        obstacles.push(new Obstacle(x, y, obsWidth, obsHeight, isVertical));
+      attempts++;
+    } if (wave > 10) {
+      if (valid)
+        obstacles.push(new Obstacle(x, y, 100, 100, isVertical));
+      attempts++;
     }
   }
 }
 
 // ===== 升级界面 =====
 function drawUpgradeScreen() {
-  image(skillPage,0,0,width,height);
+  image(skillPage, 0, 0, width, height);
   fill(0, 0, 0, 200);
   fill(255);
   textSize(32);
@@ -859,89 +842,89 @@ function drawUpgradeScreen() {
 // ===== 升级选项 =====
 function generateUpgradeOptions() {
   let allUpgrades;
-   if(player.characterType == "gunner"){
-     allUpgrades = [
-    {
-      type: "health",
-      name: "Health Boost",
-      value: 25,
-      description: "Increase max HP by 25",
-    },
-    {
-      type: "speed",
-      name: "Speed Boost",
-      value: 0.5,
-      description: "Increase movement speed",
-    },
-    {
-      type: "fireRate",
-      name: "Fire Rate",
-      value: 2,
-      description: "Increase shooting speed",
-    },
-    {
-      type: "defense",
-      name: "Defense Boost",
-      value: 0.2,
-      description: "Reduce incoming damage",
-    },
-    {
-      type: "criticalChance",
-      name: "Critical Chance",
-      value: 0.05,
-      description: "Increase critical chance by 5%",
-    },
-    {
-      type: "expBonus",
-      name: "EXP Bonus",
-      value: 0.1,
-      description: "Gain 10% more EXP",
-    },
-    {
-      type: "armorPen",
-      name: "Armor Penetration",
-      value: 0.1,
-      description: "Ignore 10% of enemy defense",
-    },
-    {
-      type: "bulletType",
-      name: "Shotgun Spread",
-      value: "shotgun",
-      description:
-        player && player.bulletType === "shotgun"
-          ? `Add an additional shotgun pellet (Current:${player.shotgunLevel})`
-          : "Fire multiple pellets in spread pattern",
-      oneTime: false,
-    },
-    {
-      type: "bulletType",
-      name: "Piercing Rounds",
-      value: "pierce",
-      description: "Bullets can penetrate enemies",
-      oneTime: true,
-    },
-    {
-      type: "bulletType",
-      name: "Ricochet Rounds",
-      value: "bounce",
-      description: "Bullets can bounce 3 times",
-      oneTime: true,
-    },
-    {
-      type: "passive",
-      name: "Life Steal",
-      value: "lifesteal",
-      description: "Heal on attack",
-      oneTime: true,
-    },
-    {
-      type: "passive",
-      name: "Thorn Armor",
-      value: "thorns",
-      description: "Reflect damage when hit",
-      oneTime: true,
-    },
-  ]
+  if (player.characterType == "gunner") {
+    allUpgrades = [
+      {
+        type: "health",
+        name: "Health Boost",
+        value: 25,
+        description: "Increase max HP by 25",
+      },
+      {
+        type: "speed",
+        name: "Speed Boost",
+        value: 0.5,
+        description: "Increase movement speed",
+      },
+      {
+        type: "fireRate",
+        name: "Fire Rate",
+        value: 2,
+        description: "Increase shooting speed",
+      },
+      {
+        type: "defense",
+        name: "Defense Boost",
+        value: 0.2,
+        description: "Reduce incoming damage",
+      },
+      {
+        type: "criticalChance",
+        name: "Critical Chance",
+        value: 0.05,
+        description: "Increase critical chance by 5%",
+      },
+      {
+        type: "expBonus",
+        name: "EXP Bonus",
+        value: 0.1,
+        description: "Gain 10% more EXP",
+      },
+      {
+        type: "armorPen",
+        name: "Armor Penetration",
+        value: 0.1,
+        description: "Ignore 10% of enemy defense",
+      },
+      {
+        type: "bulletType",
+        name: "Shotgun Spread",
+        value: "shotgun",
+        description:
+          player && player.bulletType === "shotgun"
+            ? `Add an additional shotgun pellet (Current:${player.shotgunLevel})`
+            : "Fire multiple pellets in spread pattern",
+        oneTime: false,
+      },
+      {
+        type: "bulletType",
+        name: "Piercing Rounds",
+        value: "pierce",
+        description: "Bullets can penetrate enemies",
+        oneTime: true,
+      },
+      {
+        type: "bulletType",
+        name: "Ricochet Rounds",
+        value: "bounce",
+        description: "Bullets can bounce 3 times",
+        oneTime: true,
+      },
+      {
+        type: "passive",
+        name: "Life Steal",
+        value: "lifesteal",
+        description: "Heal on attack",
+        oneTime: true,
+      },
+      {
+        type: "passive",
+        name: "Thorn Armor",
+        value: "thorns",
+        description: "Reflect damage when hit",
+        oneTime: true,
+      },
+    ]
   } else if (player.characterType == "archer") {
     allUpgrades = [
       {
@@ -1028,7 +1011,7 @@ function generateUpgradeOptions() {
         oneTime: true,
       },
     ];
-  } else if(player.characterType == "knight"){
+  } else if (player.characterType == "knight") {
     allUpgrades = [
       {
         type: "health",
@@ -1149,7 +1132,7 @@ function updateArrows() {
 // ===== 根据当前波数生成敌人 =====
 function spawnEnemiesForWave(waveNumber) {
   console.log("Spawning enemies for wave", waveNumber);
-  
+
   // 第9关开启雾效果
   if (waveNumber === 15) {
     levelFogEnabled = true;
@@ -1158,7 +1141,7 @@ function spawnEnemiesForWave(waveNumber) {
     // 第9关之后禁用雾效果
     levelFogEnabled = false;
   }
-  
+
   enemies = [];
 
   if (waveNumber === 5) {
@@ -1202,27 +1185,27 @@ function spawnEnemiesForWave(waveNumber) {
     boss1.moveDistance1 = 40;
     boss1.moveDistance2 = 60;
 
-    boss2.moveDistance1 = 30; 
+    boss2.moveDistance1 = 30;
     boss2.moveDistance2 = 40;
 
-    boss3.moveDistance1 = 15;  
+    boss3.moveDistance1 = 15;
     boss3.moveDistance2 = 20;
 
-    boss4.moveDistance1 = 55;  
+    boss4.moveDistance1 = 55;
     boss4.moveDistance2 = 45;
 
     // 错开起跳
-    boss1.initialStopDelay = 0;     
-    boss2.initialStopDelay = 500;    
-    boss3.initialStopDelay = 800;   
-    boss4.initialStopDelay = 1200;   
+    boss1.initialStopDelay = 0;
+    boss2.initialStopDelay = 500;
+    boss3.initialStopDelay = 800;
+    boss4.initialStopDelay = 1200;
 
     enemies.push(boss1, boss2, boss3, boss4);
 
     showFloatingText("Elemental Slime Bosses Appear!", width / 2, height / 2 - 40, color(0, 255, 0));
     bossActive = true;
   }
-  
+
   else if (waveNumber === 10) {
     // Boss 关 2：BirdBoss
     // 停止普通波音乐
@@ -1245,7 +1228,7 @@ function spawnEnemiesForWave(waveNumber) {
     showFloatingText("Bird Boss Appears!", width / 2, height / 2 - 40, color(0, 255, 0));
     bossActive = true;
   }
-  
+
   else if (waveNumber === 15) {  // Boss 关 3：BugBoss
     // 停止普通波音乐
     if (normalMusic12 && normalMusic12.isPlaying()) { normalMusic12.stop(); }
@@ -1267,14 +1250,14 @@ function spawnEnemiesForWave(waveNumber) {
     showFloatingText("Bug Boss Appears!", width / 2, height / 2 - 40, color(0, 255, 0));
     bossActive = true;
   }
-  
+
   else {
     // 普通敌人生成逻辑
     // 停止所有 Boss 音乐
     if (bossMusic1 && bossMusic1.isPlaying()) { bossMusic1.stop(); }
     if (bossMusic2 && bossMusic2.isPlaying()) { bossMusic2.stop(); }
     if (bossMusic3 && bossMusic3.isPlaying()) { bossMusic3.stop(); }
-    
+
     // 根据 wave 数值播放对应的普通敌人背景音乐
     if (waveNumber === 1 || waveNumber === 2 || waveNumber === 3 || waveNumber === 4) {
       if (normalMusic45 && normalMusic45.isPlaying()) { normalMusic45.stop(); }
@@ -1295,7 +1278,7 @@ function spawnEnemiesForWave(waveNumber) {
         normalMusic78.play();
       }
     }
-    
+
     let baseEnemyCount;
     if (difficult == "hard") {
       baseEnemyCount = Math.floor(6 + waveNumber * 1.1);
@@ -1307,16 +1290,16 @@ function spawnEnemiesForWave(waveNumber) {
       let enemyType = random();
       let enemy;
       let pos = getValidSpawnPosition();
-      
-      if (waveNumber<=5){
-      if (enemyType < 0.4) {
-        enemy = new Enemy(isElite, "normal", commonEnemyAction, 18, 22);
-      } else if (enemyType < 0.75) {
-        enemy = new Enemy(isElite, "ranged", commonEnemyAction, 18, 22);
-      } else {
-        enemy = new Enemy(isElite, "exploding", commonEnemyAction, 18, 22);
-      }
-      } else if(waveNumber>5 && waveNumber<=10){
+
+      if (waveNumber <= 5) {
+        if (enemyType < 0.4) {
+          enemy = new Enemy(isElite, "normal", commonEnemyAction, 18, 22);
+        } else if (enemyType < 0.75) {
+          enemy = new Enemy(isElite, "ranged", commonEnemyAction, 18, 22);
+        } else {
+          enemy = new Enemy(isElite, "exploding", commonEnemyAction, 18, 22);
+        }
+      } else if (waveNumber > 5 && waveNumber <= 10) {
         if (enemyType < 0.4) {
           enemy = new Enemy(isElite, "normal", commonEnemyAction1, 20, 20, 5, 8, 8, 8);
         } else if (enemyType < 0.75) {
@@ -1324,7 +1307,7 @@ function spawnEnemiesForWave(waveNumber) {
         } else {
           enemy = new Enemy(isElite, "exploding", commonEnemyAction1, 20, 20, 5, 8, 8, 8);
         }
-      } else if(waveNumber>10){
+      } else if (waveNumber > 10) {
         if (enemyType < 0.4) {
           enemy = new Enemy(isElite, "normal", commonEnemyAction2, 18, 18, 5, 6, 6, 6);
         } else if (enemyType < 0.75) {
@@ -1726,7 +1709,7 @@ class Pet3 {
 // 添加游戏胜利界面相关内容
 function displayVictoryScreen() {
   background(0, 150);
-  image(victoryPage,0,0,width,height);
+  image(victoryPage, 0, 0, width, height);
   fill(255);
   textAlign(CENTER, CENTER);
 
@@ -1755,27 +1738,27 @@ function setupVictoryButtons() {
 function spawnMultipleElementalBosses() {
   const bossTypes = ["fire", "water", "poison", "wind"];
   const positions = [
-    {x: -100, y: -100}, // 左上
-    {x: 100, y: -100},  // 右上
-    {x: -100, y: 100},  // 左下
-    {x: 100, y: 100}    // 右下
+    { x: -100, y: -100 }, // 左上
+    { x: 100, y: -100 },  // 右上
+    { x: -100, y: 100 },  // 左下
+    { x: 100, y: 100 }    // 右下
   ];
-  
+
   for (let i = 0; i < bossTypes.length; i++) {
     const boss = new SlimeBoss(slimeBossImage, bossTypes[i]);
     boss.pos = createVector(
-      width / 2 + positions[i].x, 
+      width / 2 + positions[i].x,
       height / 2 + positions[i].y
     );
     enemies.push(boss);
   }
-  
+
   bossActive = true;
 }
 
 function updateDeathEffect(enemy) {
   const FRAME_DURATION = 80;
-  
+
   // 初始化时间戳（保险措施）
   if (!enemy.effectStartTime) {
     enemy.effectStartTime = millis();
@@ -1791,8 +1774,8 @@ function updateDeathEffect(enemy) {
     enemy.dead = true;
     enemy.attackDetect = false;
     let index = enemies.indexOf(enemy);
-    enemies.splice(index,1);
-    
+    enemies.splice(index, 1);
+
     // 执行完成回调
     if (enemy.onEffectComplete) {
       enemy.onEffectComplete();
@@ -1803,8 +1786,8 @@ function updateDeathEffect(enemy) {
   // 绘制逻辑保持不变
   const frameWidth = deathEffect1.width / 4;
   push();
-  image(deathEffect1, 
-    enemy.pos.x - 20, 
+  image(deathEffect1,
+    enemy.pos.x - 20,
     enemy.pos.y - 20,
     60, 80,
     enemy.deathFrame * frameWidth, 0,
@@ -1822,22 +1805,22 @@ function drawLevelFogEffect() {
     // 逐渐增加雾气效果
     levelFogOpacity = Math.min(maxLevelFogOpacity, levelFogOpacity + fogTransitionSpeed);
   }
-  
+
   // 如果没有不透明度就不绘制
   if (levelFogOpacity <= 0) return;
-  
+
   push();
   // 设置遮罩效果
   fill(0, 0, 0, levelFogOpacity);
   noStroke();
-  
+
   // 创建整个屏幕的黑色遮罩
   beginShape();
   vertex(0, 0);
   vertex(width, 0);
   vertex(width, height);
   vertex(0, height);
-  
+
   // 挖出玩家周围的圆形可见区域
   beginContour();
   for (let i = 0; i < TWO_PI; i += 0.1) {
@@ -1846,7 +1829,7 @@ function drawLevelFogEffect() {
     vertex(x, y);
   }
   endContour();
-  
+
   endShape(CLOSE);
   pop();
 }
