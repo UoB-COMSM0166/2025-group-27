@@ -452,37 +452,60 @@ class Boss extends Enemy {
   }
 
   hit(damage) {
-    if (!this.isActive) return false;
-
-    // 扣血
+    // 先正常处理伤害逻辑
     this.health -= damage;
-    showFloatingText("-" + Math.floor(damage), this.pos.x, this.pos.y - 20, color(255, 0, 0));
-
+    
+    // 显示伤害数字
+    showFloatingText(
+      "-" + Math.floor(damage),
+      this.pos.x,
+      this.pos.y - 20,
+      color(255, 0, 0)
+    );
+    
     // 检查是否死亡
     if (this.health <= 0) {
-      this.health = 0; // 确保血量不会小于0
-      this.isActive = false;
-
-      if (wave === 5) {
-        gameState = "petSelection";
-        player.needsPetSelection = true;
-      }
-
-      // 显示击败提示
-      let bossName = this.constructor.name.replace('Boss', '');
+      this.health = 0;
+      this.isActive = false; // 标记为不活跃但不立即移除
+      
+      // 显示击败信息
+      let bossName = this.constructor.name.replace("Boss", "");
       showFloatingText(`${bossName} Boss Defeated!`, this.pos.x, this.pos.y - 40, color(255, 215, 0));
-
-      // 检查是否所有Boss都被击败
-      let remainingActiveBosses = enemies.filter(e => e instanceof Boss && e.isActive).length;
-      if (remainingActiveBosses === 0) {
-        bossActive = false;
-        // 增加Boss击败计数
+      
+      // 检查是否所有Boss都已被击败
+      let remainingBosses = enemies.filter(e => (e instanceof Boss || e instanceof BugBoss) && e.health > 0);
+      
+      if (remainingBosses.length === 0) {
+        // 只有当所有Boss都被击败时才触发关卡结束逻辑
         bossDefeated++;
+        bossActive = false;
+        
+        // 根据当前波数处理特殊情况
+        if (wave === 5) {
+          gameState = "petSelection";
+          player.needsPetSelection = true;
+        } else if (wave === 15) {
+          gameState = "vStory";
+          finalStats = {
+            normalEnemies: normalEnemiesDefeated,
+            bosses: bossDefeated,
+            level: player.level,
+            attackPower: player.attackPower,
+            attackSpeed: player.attackSpeed,
+            attackDamage: player.attackDamage,
+          };
+        } else {
+          // 普通波次进入下一波
+          wave++;
+          showFloatingText("Wave " + wave, width / 2, height / 2, color(255, 255, 0), 40);
+          spawnEnemiesForWave(wave);
+        }
       }
-
-      return true;
+      
+      return true; // 返回true表示敌人已死亡
     }
-    return false;
+    
+    return false; // 返回false表示敌人未死亡
   }
 }
 

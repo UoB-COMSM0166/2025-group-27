@@ -93,8 +93,7 @@ function handleGameplay(now) {
     if ((enemy.isBoss || enemy instanceof BugBoss) && enemy.health <= 0) {
       bossDefeated++;
       enemies.splice(j, 1);
-      bossActive = false; // 确保重置bossActive状态
-
+      
       console.log("Boss defeated, current wave:", wave); // 调试日志
 
       // 处理第15波的胜利情况
@@ -111,10 +110,17 @@ function handleGameplay(now) {
         return;
       }
 
-      // 由于已经击败了当前波次的Boss，加载下一波
-      wave++;
-      showFloatingText("Wave " + wave, width / 2, height / 2, color(255, 255, 0), 40);
-      spawnEnemiesForWave(wave);
+      // 检查是否仍有Boss活着
+      let remainingBosses = enemies.filter(e => e.isBoss || e instanceof BugBoss);
+      console.log("Remaining bosses:", remainingBosses.length);
+      
+      // 只有当所有Boss都被击败后才进入下一波
+      if (remainingBosses.length === 0) {
+        bossActive = false;
+        wave++;
+        showFloatingText("Wave " + wave, width / 2, height / 2, color(255, 255, 0), 40);
+        spawnEnemiesForWave(wave);
+      }
     }
   }
 
