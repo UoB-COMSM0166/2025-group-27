@@ -1807,8 +1807,7 @@ function drawLevelFogEffect() {
   }
   
   // 缩小可视范围30%
-  const maxRadius = levelFogRadius *0.8 ;
-  
+  const maxRadius = levelFogRadius ;
   // 计算玩家中心点
   const playerCenterX = player.pos.x + player.ImageWidth / 2;
   const playerCenterY = player.pos.y + player.ImageHeight / 2;
@@ -1833,7 +1832,7 @@ function drawLevelFogEffect() {
     let alphaValue = 1.5* (1 - ratio);   // 降低擦除强度使视野更朦胧
     
     noStroke();
-    fill(100, alphaValue);
+    fill(150, alphaValue);
     ellipse(playerCenterX, playerCenterY, r * 2, r * 2);
   }
   
