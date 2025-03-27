@@ -11,7 +11,7 @@ Include a demo video of your game here (you don't have to wait until the end, yo
 
 ## Your Group
 
-Add a group photo here!
+![Group_photo](docs/assets/selected_images/member/Group27.png)
 
 |   🎭 Name      |       📧 E-mail        | 📌 Role |                  🐙 Username                     |
 |---------------|-----------------------|------|-------------------------------------------------|
