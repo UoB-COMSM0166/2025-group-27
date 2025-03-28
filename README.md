@@ -154,9 +154,9 @@ In summary, this game is an exciting game and provide some accessible experience
 
 | Image  | Boss Name  | Description  |
 |--------|-----------|--------------|
-| ![Slimeboss](path/to/slimeboss_image.png) | Slimeboss | They are usually enemies found around beginner villages in RPG games, but in our game, they appear as bosses—be careful! They have four different forms, each with unique attack patterns and characteristics. Challenge them multiple times to familiarize yourself with the attack styles of different-colored slimes! |
-| ![Birdboss](path/to/birdboss_image.png) | Birdboss | This boss appears around altars and specializes in dash attacks and movement-restricting strikes. Don’t be deceived by its flashy appearance! Here’s a little secret: its dash range is limited, so if you stay outside its attack range... |
-| ![Bugboss](path/to/bugboss_image.png) | Bugboss | A boss that obscures vision, summons ghost flames, and performs dash attacks. Watch out for its ghost flames—they deal massive damage! |
+| ![Slimeboss](docs/assets/selected_images/bossgif/Slimeboss.gif) | Slimeboss | They are usually enemies found around beginner villages in RPG games, but in our game, they appear as bosses—be careful! They have four different forms, each with unique attack patterns and characteristics. Challenge them multiple times to familiarize yourself with the attack styles of different-colored slimes! |
+| ![Birdboss](docs/assets/selected_images/bossgif/Birdboss.gif) | Birdboss | This boss appears around altars and specializes in dash attacks and movement-restricting strikes. Don’t be deceived by its flashy appearance! Here’s a little secret: its dash range is limited, so if you stay outside its attack range... |
+| ![Bugboss](docs/assets/selected_images/bossgif/Bugboss.gif) | Bugboss | A boss that obscures vision, summons ghost flames, and performs dash attacks. Watch out for its ghost flames—they deal massive damage! |
 
 ---
 
