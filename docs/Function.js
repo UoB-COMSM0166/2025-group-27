@@ -1802,7 +1802,7 @@ function updateDeathEffect(enemy) {
   pop();
 }
 
-// 优化雾气效果 - 减少可视区域的亮度
+// 优化雾气效果 - 改进可视区域的质量和性能
 function drawLevelFogEffect() {
   // 如果不需要雾气，就降低不透明度或直接return
   if (!levelFogEnabled) {
@@ -1812,8 +1812,6 @@ function drawLevelFogEffect() {
     levelFogOpacity = Math.min(maxLevelFogOpacity, levelFogOpacity + fogTransitionSpeed);
   }
   
-  // 缩小可视范围30%
-  const maxRadius = levelFogRadius ;
   // 计算玩家中心点
   const playerCenterX = player.pos.x + player.ImageWidth / 2;
   const playerCenterY = player.pos.y + player.ImageHeight / 2;
@@ -1821,28 +1819,40 @@ function drawLevelFogEffect() {
   // 先用暗色覆盖整个画面
   push();
   noStroke();
-  fill(20, 20, 30, levelFogOpacity * 0.85);
+  fill(16, 16, 26, levelFogOpacity * 0.95);
   rect(0, 0, width, height);
   
   // 切换到擦除模式，开始"擦除"可视区域
   erase();
   
   // 准备画一个从中心透明度最高到外圈逐渐变化的渐变
-  const steps = 100; // 步数越多，过渡越平滑
+  const steps = 60; // 减少步数以提高性能，但仍保持平滑效果
   
   for (let i = steps; i >= 0; i--) {
     let ratio = i / steps;          // 比例从 1.0 递减到 0
-    let r = maxRadius * ratio;      // 当前圆的半径
+    let r = levelFogRadius * ratio; // 当前圆的半径
     
-    
-    let alphaValue = 1.5* (1 - ratio);   // 降低擦除强度使视野更朦胧
+    // 调整透明度曲线，使中心区域更清晰，边缘更加模糊
+    let alphaValue = 2.5 * (1 - ratio * ratio); // 使用二次曲线提供更自然的渐变
     
     noStroke();
-    fill(150, alphaValue);
+    fill(200, alphaValue);
     ellipse(playerCenterX, playerCenterY, r * 2, r * 2);
   }
   
   // 恢复默认模式，结束"擦除"阶段
   noErase();
+  
+  // 添加轻微的边缘光晕效果，增强可视区域的边界
+  noFill();
+  noStroke();
+  strokeWeight(8);
+  ellipse(playerCenterX, playerCenterY, levelFogRadius * 2 - 5, levelFogRadius * 2 - 5);
+  
+  // 再添加一个更薄的光晕
+  noStroke();
+  strokeWeight(3);
+  ellipse(playerCenterX, playerCenterY, levelFogRadius * 2, levelFogRadius * 2);
+  
   pop();
 }
