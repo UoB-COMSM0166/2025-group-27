@@ -309,6 +309,7 @@ Players expressed interest in the game's setting of intertwining technology and 
 
 ####1.4 Focus group Q&A transcripts
 ![Question and answer chart](docs/game_idea/interview.png)
+
 The questions and sample responses above reflect the focus group's views on the game's interface, operation, mode experience, hint messages, and plot characters. Based on this feedback, we have made improvements in the following directions:
 
 | Issue Category           | User Feedback                                                                                           | Improvement Points                                                                                                       |
@@ -320,22 +321,27 @@ The questions and sample responses above reflect the focus group's views on the 
 
 #### 2. Quantitative Evaluation
 
-To further quantify the game experience, we conducted a quantitative evaluation using the NASA TLX and System Usability Scale (SUS) to measure the workload and usability of the game. Ten users participated in our evaluation test, and each user filled out these two questionnaires after playing the game at both L1 (easy) and L2 (hard) difficulty levels.
+In order to evaluate the usability and player load of the game in different difficulty modes (L1 easy mode and L2 hard mode), we used the System Usability Scale (SUS) and NASA-TLX (Task Load Index) to collect and analyze the data respectively.
 
-**NASA TLX Scores**.
+**2.1 NASA TLX Scores**.
 
 At the L1 (easy) difficulty, users generally reported a lower workload, particularly in the dimensions of mental demand and effort. The average Mental Demand score for L1 was 60, while at L2 (hard), it significantly increased to 80. Other dimensions such as Physical Demand and Frustration showed similar trends, indicating that as the difficulty increased, players experienced higher physical exertion and emotional stress. At L2, users’ Frustration scores were generally higher, indicating an increase in frustration at the higher difficulty.
 
-**System Usability Scale (SUS)**.
+**2.2 System Usability Scale (SUS)**.
 
 We used the Wilcoxon Signed Rank Test to compare the evaluation data between the two difficulty levels, calculating the significance differences in the NASA TLX and SUS scores for L1 and L2. The analysis revealed that while there was a significant difference in workload between L1 and L2, the usability ratings showed only a small difference, indicating that the game maintained a relatively consistent user experience across both difficulty levels.
 
-![L1](https://github.com/user-attachments/assets/925e05b2-e862-4e1b-9786-8f38dd1fac45)
+![Figure 1：L1 Data map](https://github.com/user-attachments/assets/925e05b2-e862-4e1b-9786-8f38dd1fac45)
 
-![L2](https://github.com/user-attachments/assets/7263cf0b-1bda-4787-964c-b5155d597a63)
+From the SUS data in the table, it can be seen that in the L1 Easy Mode, players' evaluation of the game's ease of use, intuitiveness, and integration of functions is relatively high. In addition, the data in NASA shows that players' scores for Psychical Demand and Effort are generally low in Easy Mode, which indicates that players' attention span and complexity of operation are low in this mode. Time demands and physical demands are also relatively mild, and overall frustration is low (in the 20-30 range). This is consistent with the goal of the L1 mode, which is to quickly familiarize novices with the basic gameplay and reduce psychological stress.
 
-#### Conclusion
-Through this evaluation, we gained insights into the game design from both qualitative and quantitative perspectives. The qualitative evaluation helped us improve the difficulty design and user experience, while the quantitative evaluation provided concrete data to verify the workload and usability at different difficulty levels. Through a reasonable code testing strategy, we ensured the stability and performance of the game. In the future, we will continue to optimize the game based on the evaluation results, ensuring that players enjoy a better gaming experience.
+![Figure 2：L2 Data map](https://github.com/user-attachments/assets/7263cf0b-1bda-4787-964c-b5155d597a63)
+
+In contrast, the scores of some questions in L2 mode (such as Q2, Q4, Q10 and other negative questions) increased, indicating that players felt more obvious about the complexity of the system operation and the burden of learning.NASA's scores of all dimensions in the difficult mode increased to a certain extent, especially the mental demand, effort and frustration (in the range of 60-70), which reflected that players need to invest more energy and reaction ability when coping with the faster, more difficult or more complicated enemies/levels, and are also more prone to the stress of failure. or more complex enemies/levels require more effort and reflexes, and are more prone to the stress of failure. At the same time, time demands also increase, indicating that players need to make more frequent and quick decisions and actions in a shorter period of time.
+
+####3 Code Test
+
+The test environment deployed an online version of the game via GitHub Pages, ensuring accessibility in both desktop and mobile browsers. We invited three typical user groups (classmates, game enthusiasts, and developers) to participate in semi-structured interviews after the trial. During the interviews, we not only collected qualitative user experience feedback (interface intuitiveness, smoothness of operation, hints, etc.), but also discussed specific scenarios in the game in detail, which helped the team clarify the direction of improvement.
 
 ---
 
