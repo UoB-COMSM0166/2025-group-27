@@ -288,14 +288,14 @@ The sequence diagram illustrates interactions between game components in various
 
 ## Evaluation
 
-#### 1. Qualitative Evaluation
-#####1.1 Artistic style and interaction design
+### 1. Qualitative Evaluation
+####1.1 Artistic style and interaction design
 
 — Players recognized the simplicity of the interface layout (e.g., the flat design of the character selection panel), and the tutorial's graphic guide enabled novices to get started quickly, making it a very successful design.
 
 — Most players said that the programmer style, code symbols and digital elements used in the game make the overall picture full of unique “black science and technology” sense, which is very different from the traditional theme, adding personality and interest to the game. In addition, special effects such as dynamic weather, light and shadow gradient and particle effects add a sense of hierarchy and dynamism to the screen, making each game present a very different visual experience.
 
-#####1.2 Difficulty balance
+####1.2 Difficulty balance
   
 — L1 Easy Mode: 
 All new players were able to pass the level, and found the upgrade props and pacing to be relatively linear, and the bosses' attack intervals to be reasonable.
@@ -303,12 +303,12 @@ All new players were able to pass the level, and found the upgrade props and pac
 — L2 Difficulty Mode: 
 In this mode, the number of enemies, speed and strength of attacks are increased, the attack pattern of bosses is more aggressive, and random events are more frequent (e.g., dynamic weather), which puts more pressure on the player to maneuver and react to the situation, resulting in a higher level of frustration, and a sense of accomplishment for the player who seeks a challenge after defeating it.
 
-#####1.3 Plot and Immersion
+####1.3 Plot and Immersion
 
 Players expressed interest in the game's setting of intertwining technology and survival, saying that this theme reflects the life of a programmer and also incorporates the exciting experience of adventure and survival. Some players mentioned that they resonated with the design of the game's individual characters, and felt a sense of accomplishment and immersion as they grew through their characters and fought against tough environments during the experience.
 
-#####1.4 Focus group Q&A transcripts
-
+####1.4 Focus group Q&A transcripts
+![Question and answer chart](图片路径)
 
 
 #### 2. Quantitative Evaluation
