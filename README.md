@@ -356,7 +356,7 @@ We hold regular offline meetings in MVB lab, and organize at least one full team
 
 In order to guarantee the version control and efficient collaboration of the project, we chose GitHub as the code hosting platform and implemented a strict code review mechanism on this basis. Each member of the team uses their own functional branches during development, such as the main menu, map status, battle status, store status, etc., to ensure that the main branch always maintains a working basic version. All code submissions are subject to Pull Request approval, ensuring that all changes are reviewed by the team before being merged into the master branch, a measure that effectively reduces the risk of potential errors and conflicts. At the same time, we utilize the JIRA(as shown in the figure2 ) system to handle task flow and manage project tasks, splitting the overall workload into smaller sub-tasks, with clear deadlines and responsible persons for each task, and real-time tracking of progress updates and issue feedback. Ensure that each code update does not break existing functionality. Bugs are also fixed and responded to quickly by the technical team.
 
-![figure2:Jira task flow chart](docs/game_idea/Jira task flow chart.png)
+![figure2:Jira task flow chart](docs/game_idea/Jira.png)
 
 ### 3. Team roles and division of tasks
 
