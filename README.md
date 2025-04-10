@@ -289,16 +289,26 @@ The sequence diagram illustrates interactions between game components in various
 ## Evaluation
 
 #### 1. Qualitative Evaluation
+#####1.1 Artistic style and interaction design
 
-To comprehensively evaluate our game design, we conducted a qualitative evaluation. During the evaluation process, we selected five users for in-depth interviews, focusing on the following aspects:
+— Players recognized the simplicity of the interface layout (e.g., the flat design of the character selection panel), and the tutorial's graphic guide enabled novices to get started quickly, making it a very successful design.
 
-- **User Experience**.
-- **Game Difficulty**.
-- **Interactivity**.
+— Most players said that the programmer style, code symbols and digital elements used in the game make the overall picture full of unique “black science and technology” sense, which is very different from the traditional theme, adding personality and interest to the game. In addition, special effects such as dynamic weather, light and shadow gradient and particle effects add a sense of hierarchy and dynamism to the screen, making each game present a very different visual experience.
+
+#####1.2 Difficulty balance
   
-Through these interviews, we gathered valuable feedback. Most users reported that the L1 (easy) difficulty was relatively relaxed and suitable for beginners. However, at the L2 (hard) difficulty, players felt that there were too many monsters, the bosses were too difficult to defeat, and the presence of air walls was quite severe, affecting movement, positioning, and the ability to defeat enemies. As a result, they found it very difficult to pass the second level. They expressed the need for some hints or guidance to progress through it successfully.
+— L1 Easy Mode: 
+All new players were able to pass the level, and found the upgrade props and pacing to be relatively linear, and the bosses' attack intervals to be reasonable.
 
-These qualitative evaluations helped us identify pain points in the user experience, especially at the L2 difficulty level. Based on user feedback, the development team decided to add more hints and guidance to help players better adapt to different difficulty settings.
+— L2 Difficulty Mode: 
+In this mode, the number of enemies, speed and strength of attacks are increased, the attack pattern of bosses is more aggressive, and random events are more frequent (e.g., dynamic weather), which puts more pressure on the player to maneuver and react to the situation, resulting in a higher level of frustration, and a sense of accomplishment for the player who seeks a challenge after defeating it.
+
+#####1.3 Plot and Immersion
+
+Players expressed interest in the game's setting of intertwining technology and survival, saying that this theme reflects the life of a programmer and also incorporates the exciting experience of adventure and survival. Some players mentioned that they resonated with the design of the game's individual characters, and felt a sense of accomplishment and immersion as they grew through their characters and fought against tough environments during the experience.
+
+#####1.4 Focus group Q&A transcripts
+
 
 
 #### 2. Quantitative Evaluation
