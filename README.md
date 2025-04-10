@@ -308,8 +308,9 @@ In this mode, the number of enemies, speed and strength of attacks are increased
 Players expressed interest in the game's setting of intertwining technology and survival, saying that this theme reflects the life of a programmer and also incorporates the exciting experience of adventure and survival. Some players mentioned that they resonated with the design of the game's individual characters, and felt a sense of accomplishment and immersion as they grew through their characters and fought against tough environments during the experience.
 
 ####1.4 Focus group Q&A transcripts
-![Question and answer chart](图片路径)
+![Question and answer chart](docs/game_idea/interview.png)
 
+The questions and sample responses above reflect the focus group's views on the game's interface, operation, mode experience, hint messages, and plot characters. Based on this feedback, we have made improvements in the following directions:
 
 #### 2. Quantitative Evaluation
 
