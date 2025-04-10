@@ -289,7 +289,7 @@ The sequence diagram illustrates interactions between game components in various
 ## Evaluation
 
 ### 1. Qualitative Evaluation
-###1.1 Artistic style and interaction design
+####1.1 Artistic style and interaction design
 
 — Players recognized the simplicity of the interface layout (e.g., the flat design of the character selection panel), and the tutorial's graphic guide enabled novices to get started quickly, making it a very successful design.
 
