@@ -309,8 +309,14 @@ Players expressed interest in the game's setting of intertwining technology and 
 
 ####1.4 Focus group Q&A transcripts
 ![Question and answer chart](docs/game_idea/interview.png)
-
 The questions and sample responses above reflect the focus group's views on the game's interface, operation, mode experience, hint messages, and plot characters. Based on this feedback, we have made improvements in the following directions:
+
+| Issue Category           | User Feedback                                                                                           | Improvement Points                                                                                                       |
+| ------------------------ | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| Reminder mechanism       | Add Boss skill animation/sound effects.                                                                 | Add text files and sound cues                                                                                            |
+| performance optimization | The screen gets stuck when there are too many special effects                                           | Reduce effects loading pressure with object pooling                                                                      |
+| Excessive plotting       | Some transitions can be abrupt.                                                                         | Optimize scene transitions and effects pacing                                                                            |
+| Helpful Hints            | The textual explanations and illustrations in the Beginner's Guide are slightly fragmented and not intuitive enough. | Integrate help pages to enhance the readability of the explanatory text and the overall visual presentation.             |
 
 #### 2. Quantitative Evaluation
 
