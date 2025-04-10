@@ -307,7 +307,7 @@ In this mode, the number of enemies, speed and strength of attacks are increased
 
 Players expressed interest in the game's setting of intertwining technology and survival, saying that this theme reflects the life of a programmer and also incorporates the exciting experience of adventure and survival. Some players mentioned that they resonated with the design of the game's individual characters, and felt a sense of accomplishment and immersion as they grew through their characters and fought against tough environments during the experience.
 
-### #1.4 Focus group Q&A transcripts
+#### 1.4 Focus group Q&A transcripts
 ![Question and answer chart](docs/game_idea/interview.png)
 
 The questions and sample responses above reflect the focus group's views on the game's interface, operation, mode experience, hint messages, and plot characters. Based on this feedback, we have made improvements in the following directions:
@@ -339,12 +339,29 @@ From the SUS data in the table, it can be seen that in the L1 Easy Mode, players
 
 In contrast, the scores of some questions in L2 mode (such as Q2, Q4, Q10 and other negative questions) increased, indicating that players felt more obvious about the complexity of the system operation and the burden of learning.NASA's scores of all dimensions in the difficult mode increased to a certain extent, especially the mental demand, effort and frustration (in the range of 60-70), which reflected that players need to invest more energy and reaction ability when coping with the faster, more difficult or more complicated enemies/levels, and are also more prone to the stress of failure. or more complex enemies/levels require more effort and reflexes, and are more prone to the stress of failure. At the same time, time demands also increase, indicating that players need to make more frequent and quick decisions and actions in a shorter period of time.
 
-### 3 Code Test
+### 3.Code Test
 
 The test environment deployed an online version of the game via GitHub Pages, ensuring accessibility in both desktop and mobile browsers. We invited three typical user groups (classmates, game enthusiasts, and developers) to participate in semi-structured interviews after the trial. During the interviews, we not only collected qualitative user experience feedback (interface intuitiveness, smoothness of operation, hints, etc.), but also discussed specific scenarios in the game in detail, which helped the team clarify the direction of improvement.
 
 ---
+## Process
 
+With efficiency, collaboration and communication at the core of this team assignment, our team adopted a series of standardized workflows to ensure the smooth development of Glitchwood. Throughout the entire process, from the building of the Minimum Viable Product (MVP) to the subsequent feature iterations, teamwork and communication were always present to continuously improve the quality of the project and the user experience.
+
+### 1.Meetings and communication mechanisms
+
+We hold regular offline meetings in MVB lab, and organize at least one full team meeting every week, which mainly includes: project progress report, discussion of existing problems, and decomposition of tasks for the next phase. In the meeting, team members explain in detail the current progress of the features they are responsible for, the technical problems they encountered and their next steps, and make suggestions on how to improve the connection between game states and optimize the user experience. In addition, we also have occasional discussions, when someone has a problem that cannot be solved, we will start a meeting to discuss how to solve it together. Outside of these meetings, the team has also set up a Wechat group to keep in touch with each other via instant messaging. Especially during the holiday season, even though we can't meet in person, we still work together efficiently on Wechat to make sure everyone knows what they need to accomplish while on vacation.
+
+### 2.Tools and collaborative platforms
+
+In order to guarantee the version control and efficient collaboration of the project, we chose GitHub as the code hosting platform and implemented a strict code review mechanism on this basis. Each member of the team uses their own functional branches during development, such as the main menu, map status, battle status, store status, etc., to ensure that the main branch always maintains a working basic version. All code submissions are subject to Pull Request approval, ensuring that all changes are reviewed by the team before being merged into the master branch, a measure that effectively reduces the risk of potential errors and conflicts. At the same time, we utilize the JIRA(as shown in the figure2 ) system to handle task flow and manage project tasks, splitting the overall workload into smaller sub-tasks, with clear deadlines and responsible persons for each task, and real-time tracking of progress updates and issue feedback. Ensure that each code update does not break existing functionality. Bugs are also fixed and responded to quickly by the technical team.
+
+![figure2:Jira task flow chart](./images/jira_flow.png)
+
+### 3. Team roles and division of tasks
+
+
+---
 ## Sustainability Analysis
 
 ### Social Dimension
