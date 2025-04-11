@@ -267,13 +267,14 @@ The sequence diagram illustrates interactions between game components in various
 - The Player selects a role (Sword, Gun, or Bow).  
 - Depending on the weapon, the player either attacks directly (sword) or uses a ranged attack (gun or bow).  
 - The attack process triggers different methods (shootBullet(), shootArrow(), attack()).
+- Depending on the character roles, each character upgrades different skills.
 
 #### 2. Potion System  
 - The Player interacts with the PotionSystem to retrieve health potions (getPotion()).  
 - The system checks the player's HP and applies the necessary effects.
 
 #### 3. Pet System  
-- The player chooses a Pet (choosePet()), which can follow and attack enemies.  
+- The player chooses a Pet (choosePet()), which can provide some extra gains to the player. 
 - Pets provide additional support in combat.
 
 #### 4. Enemy and Boss Battle  
