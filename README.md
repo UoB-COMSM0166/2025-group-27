@@ -162,11 +162,11 @@ In summary, this game is an exciting game and provide some accessible experience
 
 ## Requirements
 
-Throughout the game development process, we explored how structured planning tools—Epics, User Stories, and Acceptance Criteria—enhance clarity, improve teamwork, and ensure an efficient workflow. By integrating these concepts into our project, we gained valuable insights into game design, stakeholder needs, and structured development.
+Throughout the game development process, we adopted structured planning tools—epics, user stories, and acceptance criteria. These tools helped improve clarity, enhanced team collaboration, and streamlined our workflow. By integrating them into our project, we gained valuable insights into understanding player needs, defining design goals, and working more efficiently.
 
 ### The Onion Model of Stakeholders
 
-One key realization was that different stakeholders (players, developers, marketing teams, etc.) have different expectations and needs. The Onion Model of Stakeholders helped us visualize how our decisions impact not just players but also publishers, game platforms, and designers. This model allowed us to refine our development priorities.
+We recognized that our game involved multiple stakeholders, including players, developers, publishers, and the marketing team. The stakeholder onion model allowed us to visualize how our decisions impacted different groups. This helped us prioritize development tasks more effectively and ensure a balanced approach that considered both gameplay experience and broader business needs.
 
 The diagram below represents the onion model of stakeholder requirements for our project.
 
@@ -212,7 +212,7 @@ By integrating Epics, User Stories, and Acceptance Criteria, we ensured that our
 
 ### Conclusion
 
-This structured approach transformed how we approached game development. Initially, we tended to jump straight into implementation without considering broader design implications. However, through this process, we learned the importance of:
+This structured approach fundamentally transformed how we approached game development. Initially, we were inclined to jump straight into implementation without fully considering the broader design implications. However, through this process, we learned the importance of:
 
 Breaking down complex ideas into manageable tasks.
 Ensuring clear communication between designers, developers, and testers.
