@@ -138,6 +138,8 @@ A wave-based roguelike where players control one of several programmer-themed ch
 
 - 📹 [**Game 1 – Survival Roguelike: Paper Prototype Demo (Video)**](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/docs/prototype/video/Prototype_Game_Idea_1.mp4)  
   _Early-stage gameplay exploration through paper prototyping._
+  
+[![Prototype_Game_Idea_1](https://img.youtube.com/vi/LU3oWswBsX0/0.jpg)](https://www.youtube.com/watch?v=LU3oWswBsX0)
 
   ---
   
@@ -168,6 +170,8 @@ A time-loop puzzle RPG set in a frozen university lab. Players explore, solve pr
 - 📹 [**Game 2 – Horror Puzzle RPG: Paper Prototype Demo (Video)**](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/docs/prototype/video/Prototype_Game_Idea_2.mp4)  
   _Walkthrough of story-driven puzzle concepts via paper prototype._
 
+[![Prototype_Game_Idea_2](https://img.youtube.com/vi/HQiOb3xbiVc/0.jpg)](https://www.youtube.com/watch?v=HQiOb3xbiVc)
+
   ---
   
 ### 2.3 Why We Chose Game Idea 1
@@ -191,10 +195,10 @@ Our first step was to identify all relevant stakeholders involved in or affected
 
 ![Onion Model of Stakeholders](docs/requirements/Onion_Model.png)
 
-- **Level 1: System** – The game itself.
-- **Level 2: Containing System** – Internal team members (developers, testers, players).
-- **Level 3: Wider Environment** – Supervisors, designers, and instructors.
-- **Level 4: External Environment** – Platform providers, the public, influencers, and potential competitors.
+- **Level 1: System** – Glitchwood (the game itself).
+- **Level 2: Containing System** – Testers, Players.
+- **Level 3: Wider Environment** – Instructors, Designers, Team Members.
+- **Level 4: External Environment** – Game Platform, Influencers, Competitors, Public.
 
 This layered structure helped us balance the technical, experiential, and market considerations during the development process.
 
@@ -636,19 +640,18 @@ Finally, optimizing the game’s performance, ensuring it runs smoothly on a wid
 In summary, the development of **Glitchwood** has allowed us to combine agile development, technical challenges, and ethical considerations into a cohesive and rewarding project. The lessons learned during this process, from game design and programming to team collaboration and sustainability practices, will undoubtedly benefit our future careers as developers. We have gained a deeper understanding of how to balance creativity with technical feasibility, and how to design games that are not only enjoyable but also socially and environmentally responsible.
 
 
-## 10 Appendix: Team Contributions
+## 10 Appendix
 
 ## 10.1 Contributions of Team Members
 
-| Name          | Role                                             | Responsibilities                                                                                                                                                                                                                                  | Contribution                                                                                                                   |
-|---------------|--------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
-| **Chengjun Yi**   | Lead Developer and Debug Team Leader           | Overall code architecture, system performance tuning, debugging, and integration. Ensured that all modules worked together smoothly. Took on project management and coordinated team activities. Contributed to video creation and creative discussions.                                             | Code integration, debugging, project management, and video participation. Involved in the creative brainstorming process.        |
-| **Qiutong Zhao**  | Video Director, Editor, and Coordination Engineer | Directed and edited the game presentation video. Coordinated progress within the team and handled task allocation. Led the creative direction for the game’s narrative design. Contributed to auxiliary logic code, such as bug tracking and fixing.                                             | Video direction, editing, and creative contributions to the story. Involved in task coordination and bug fixing.                |
-| **Heng Zhang**    | Core Development Engineer and Debug Team Member  | Implemented core game logic, including enemy generation, boss skills, collision detection, and dynamic weather systems. Took charge of implementing and debugging boss skills and special effects. Contributed to the creative direction and participated in video creation.                                                      | Implemented game mechanics, boss skills, and special effects. Contributed to creative discussions and video participation.                                   |
-| **Tong Yu**       | Art Design and Front-end UI Development Engineer | Designed game art and visual resources, and developed the front-end UI. Worked on animations and integrated visual design with gameplay. Contributed to the storyline design and optimization of the report. Took part in video creation.                             | Art design, UI development, storyline input, and video participation. Contributed to report optimization.                                                                |
-| **Feihang Yan**   | Pet Systems Engineer and Debug Team Member       | Developed the pet system, including pet behavior modeling, interaction logic, state management, and optimization. Ensured the pet system was integrated with the overall game mechanics. Contributed to designing pet abilities and participated in video creation. | Developed pet systems and skills. Contributed to creative input on pet design and video participation.                                                           |
-| **Xianhang Peng** | Front-end Development Engineer                   | Focused on developing the game’s front-end components, including the main menu, score display, and operational prompts. Worked on map design and optimizing interaction logic. Contributed to video creation and creative brainstorming.                                                             | Front-end development, map design, and video participation.                                                                                   |
-
+| Name          | Contribution                                                                                                                           | Weight |
+|---------------|----------------------------------------------------------------------------------------------------------------------------------------|--------|
+| **Chengjun Yi**   | Led overall code integration and debugging, ensuring smooth interaction between all modules. Coordinated team activities and handled project management tasks. Contributed to video creation and participated in creative brainstorming sessions. | 1      |
+| **Qiutong Zhao**  | Directed and edited the game’s presentation video. Led the narrative design and contributed to creative discussions. Managed team coordination and task allocation, while also assisting with bug tracking and fixing. | 1      |
+| **Heng Zhang**    | Implemented core game mechanics such as enemy generation, boss skills, and dynamic weather systems. Took charge of boss skill design and debugging, and actively participated in creative discussions and video creation. | 1      |
+| **Tong Yu**       | Designed the game’s visual art and front-end UI, ensuring that animation and design were well integrated with gameplay. Contributed to the storyline development and played a key role in optimizing the project report. Also participated in video creation. | 1      |
+| **Feihang Yan**   | Developed the pet system, including its behavior modeling, interaction logic, and state management. Contributed creatively to pet design and participated in video creation. Also assisted with debugging and optimization. | 1      |
+| **Xianhang Peng** | Focused on front-end development, including UI elements like the main menu and score display. Played a key role in map design and optimizing the game’s interaction logic. Contributed to video creation and participated in creative brainstorming. | 1      |
 
 
 以下待删除：
