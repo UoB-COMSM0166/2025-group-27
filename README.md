@@ -69,8 +69,8 @@ Designed for both **newcomers and roguelike veterans**, Glitchwood includes a bu
 Glitchwood draws inspiration from roguelike games like **Vampire Survivors** and **20 Minutes Till Dawn**, known for their escalating difficulty and minimalist gameplay. We appreciated how these games combined randomness with short-session intensity.
 
 <div style="display: flex; justify-content: space-around;">
-  <img src="docs/game_idea/Vampire_Survivors.jpg" height="250px" alt="Vampire Survivors">
-  <img src="docs/game_idea/20_Minutes_Till_Dawn.jpg" height="250px" alt="20 Minutes Till Dawn">
+  <img src="docs/game_idea/Vampire_Survivors.jpg" height="200px" alt="Vampire Survivors">
+  <img src="docs/game_idea/20_Minutes_Till_Dawn.jpg" height="200px" alt="20 Minutes Till Dawn">
 </div>
 
 However, as computer science students, we wanted to push further—infusing personal and metaphorical meaning. In Glitchwood, the player is trapped inside their own game, battling symbolic “bugs,” navigating unstable “runtime environments,” and relying on tools (weapons, pets) to debug and survive.
@@ -704,67 +704,3 @@ In summary, the development of **Glitchwood** has allowed us to combine agile de
 | **Tong Yu**       | Designed the game’s visual art and front-end UI, ensuring that animation and design were well integrated with gameplay. Contributed to the storyline development and played a key role in optimizing the project report. Also participated in video creation. | 1      |
 | **Feihang Yan**   | Developed the pet system, including its behavior modeling, interaction logic, and state management. Contributed creatively to pet design and participated in video creation. Also assisted with debugging and optimization. | 1      |
 | **Xianhang Peng** | Focused on front-end development, including UI elements like the main menu and score display. Played a key role in map design and optimizing the game’s interaction logic. Contributed to video creation and participated in creative brainstorming. | 1      |
-
-
-以下待删除：
-
-## Project Report
-
-### Introduction
-
-- 5% ~250 words 
-- Describe your game, what is based on, what makes it novel? 
-
-### Requirements 
-
-- 15% ~750 words
-- Use case diagrams, user stories. Early stages design. Ideation process. How did you decide as a team what to develop? 
-
-### Design
-
-- 15% ~750 words 
-- System architecture. Class diagrams, behavioural diagrams. 
-
-### Implementation
-
-- 15% ~750 words
-
-- Describe implementation of your game, in particular highlighting the three areas of challenge in developing your game. 
-
-### Evaluation
-
-- 15% ~750 words
-
-- One qualitative evaluation (your choice) 
-
-- One quantitative evaluation (of your choice) 
-
-- Description of how code was tested. 
-
-### Process 
-
-- 15% ~750 words
-
-- Teamwork. How did you work together, what tools did you use. Did you have team roles? Reflection on how you worked together. 
-
-### Conclusion
-
-- 10% ~500 words
-
-- Reflect on project as a whole. Lessons learned. Reflect on challenges. Future work. 
-
-### Contribution Statement
-
-- Provide a table of everyone's contribution, which may be used to weight individual grades. We expect that the contribution will be split evenly across team-members in most cases. Let us know as soon as possible if there are any issues with teamwork as soon as they are apparent. 
-
-### Additional Marks
-
-You can delete this section in your own repo, it's just here for information. in addition to the marks above, we will be marking you on the following two points:
-
-- **Quality** of report writing, presentation, use of figures and visual material (5%) 
-  - Please write in a clear concise manner suitable for an interested layperson. Write as if this repo was publicly available.
-
-- **Documentation** of code (5%)
-
-  - Is your repo clearly organised? 
-  - Is code well commented throughout?
