@@ -65,7 +65,18 @@
 
 **Glitchwood** is a **2D roguelike action RPG** developed using P5.js. Players choose from **three uniquely designed characters**—each with distinct combat styles and upgrade preferences—to battle through procedurally generated stages filled with enemies, traps, and unpredictable challenges.
 
+<div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+  <img src="docs/introduction/start.gif" alt="Start Animation" width="250"/>
+  <img src="docs/introduction/char.gif" alt="Character Animation" width="250"/>
+  <img src="docs/introduction/boss.gif" alt="Boss Animation" width="250"/>
+</div>
+
 The game emphasizes **randomness and replayability**, introducing features like dynamic **weather effects**, **support pets**, **enemy variants**, and **environmental obstacles**. As players progress through increasingly difficult waves, they earn upgrades and eventually unlock an **Endless Mode** to test their endurance.
+
+<div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+  <img src="docs/introduction/pet.gif" alt="Pet Animation" width="250"/>
+  <img src="docs/introduction/weather.gif" alt="Weather Animation" width="250"/>
+</div>
 
 Designed for both **newcomers and roguelike veterans**, Glitchwood includes a built-in tutorial, intuitive controls, and two difficulty levels. Its gameplay is tied to a deeper theme—**a developer lost inside their own creation**, fighting to escape.
 
@@ -74,6 +85,11 @@ Designed for both **newcomers and roguelike veterans**, Glitchwood includes a bu
 ### 1.2 Inspiration
 
 Glitchwood draws inspiration from roguelike games like **Vampire Survivors** and **20 Minutes Till Dawn**, known for their escalating difficulty and minimalist gameplay. We appreciated how these games combined randomness with short-session intensity.
+
+<div style="display: flex; justify-content: space-around;">
+  <img src="docs/game_idea/Vampire_Survivors.jpg" height="250px" alt="Vampire Survivors">
+  <img src="docs/game_idea/20_Minutes_Till_Dawn.jpg" height="250px" alt="20 Minutes Till Dawn">
+</div>
 
 However, as computer science students, we wanted to push further—infusing personal and metaphorical meaning. In Glitchwood, the player is trapped inside their own game, battling symbolic “bugs,” navigating unstable “runtime environments,” and relying on tools (weapons, pets) to debug and survive.
 
@@ -125,6 +141,12 @@ A wave-based roguelike where players control one of several programmer-themed ch
 - **Wave-based enemy spawning**, with bosses and random rewards scaling over time
 - **Pets with combat effects** (attack, heal, shield), acquired after boss battles
 - **Endless mode** and increasing difficulty to encourage replayability
+  
+<div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+  <img src="docs/game_idea/game1_who.gif" alt="Game1 Who Animation" width="250"/>
+  <img src="docs/game_idea/game1_select.gif" alt="Game1 Select Animation" width="250"/>
+  <img src="docs/game_idea/game1_attack.gif" alt="Game1 Attack Animation" width="250"/>
+</div>
 
 **Design Strengths**
 - Straightforward system to prototype with paper diagrams and early demos
@@ -136,10 +158,11 @@ A wave-based roguelike where players control one of several programmer-themed ch
 - 📄 [**Game 1 – Survival Roguelike: Design Proposal (PDF)**](./docs/game_idea/Survival_Shooting_Game(Roguelike_Elements).pdf)  
   _Detailed breakdown of the core mechanics, setting, and system design._
 
-- 📹 [**Game 1 – Survival Roguelike: Paper Prototype Demo (Video)**](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/docs/prototype/video/Prototype_Game_Idea_1.mp4)  
-  _Early-stage gameplay exploration through paper prototyping._
+- 📹 [**Game 1 – Survival Roguelike: Paper Prototype Demo (Video)**](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/docs/prototype/video/Prototype_Game_Idea_1.mp4)
+
+  [![Prototype_Game_Idea_1](https://img.youtube.com/vi/LU3oWswBsX0/0.jpg)](https://www.youtube.com/watch?v=LU3oWswBsX0)
   
-[![Prototype_Game_Idea_1](https://img.youtube.com/vi/LU3oWswBsX0/0.jpg)](https://www.youtube.com/watch?v=LU3oWswBsX0)
+  _Early-stage gameplay exploration through paper prototyping._
 
   ---
   
@@ -156,6 +179,12 @@ A time-loop puzzle RPG set in a frozen university lab. Players explore, solve pr
 - Supernatural horror events and evolving world state
 - Multiple endings based on player decisions
 
+<div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+  <img src="docs/game_idea/game2_start.gif" alt="Game2 Start Animation" width="250"/>
+  <img src="docs/game_idea/game2_key.gif" alt="Game2 Key Animation" width="250"/>
+  <img src="docs/game_idea/game2_ghost.gif" alt="Game2 Ghost Animation" width="250"/>
+</div>
+
 **Design Limitations**
 - Requires extensive narrative scripting and state control
 - Harder to modularize for team collaboration
@@ -167,10 +196,11 @@ A time-loop puzzle RPG set in a frozen university lab. Players explore, solve pr
 - 📄 [**Game 2 – Horror Puzzle RPG: Design Proposal (PDF)**](./docs/game_idea/Horror_Puzzle_RPG.pdf)  
   _Narrative structure, gameplay loops, and puzzle design overview._
 
-- 📹 [**Game 2 – Horror Puzzle RPG: Paper Prototype Demo (Video)**](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/docs/prototype/video/Prototype_Game_Idea_2.mp4)  
+- 📹 [**Game 2 – Horror Puzzle RPG: Paper Prototype Demo (Video)**](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/docs/prototype/video/Prototype_Game_Idea_2.mp4)
+  
+    [![Prototype_Game_Idea_2](https://img.youtube.com/vi/HQiOb3xbiVc/0.jpg)](https://www.youtube.com/watch?v=HQiOb3xbiVc)
+  
   _Walkthrough of story-driven puzzle concepts via paper prototype._
-
-[![Prototype_Game_Idea_2](https://img.youtube.com/vi/HQiOb3xbiVc/0.jpg)](https://www.youtube.com/watch?v=HQiOb3xbiVc)
 
   ---
   
@@ -349,66 +379,72 @@ These early design models were crucial in guiding our team during implementation
 As we moved from prototypes to full development, the visual clarity of our architecture helped us iterate faster and avoid major refactors. Looking forward, this structure supports the addition of new levels, enemies, or even multiplayer logic with minimal disruption.
 
 
-## 5 Implementation （需要修改）
+## 5 Implementation
 
-### Basic Implement
+### 5.1 Basic Implement
 
-The implement of Glitchwood revolve around battling enemies, leveling up, and progressing through stages while striving for higher kill counts in endless mode. Players can easily control one of three selectable characters using a combination of keyboard and mouse: the keyboard handles movement, while the mouse controls attacks and attack direction. **The implementation relies primarily on event-related methods such as keyPressed and mouseClicked.**
+The implementation of **Glitchwood** revolves around battling enemies, leveling up, and progressing through stages while striving for higher kill counts in endless mode. Players can easily control one of three selectable characters using a combination of keyboard and mouse: the keyboard handles movement, while the mouse controls attacks and attack direction. **The implementation relies primarily on event-related methods such as keyPressed and mouseClicked.**
 
 Characters can engage in both melee and ranged combat, with damage types classified as either single-target or AoE.
 
-The game features four distinct maps, each owned procedurally generated obstacles of different styles. These obstacles block both movement and attacks(For both players and enemies). However, certain bosses possess the ability to phase through obstacles. **When a new map is generated, existing obstacles are cleared, and new obstacles are created based on the current wave.**
+The game features four distinct maps, each with procedurally generated obstacles of different styles. These obstacles block both movement and attacks (for both players and enemies). However, certain bosses possess the ability to phase through obstacles. **When a new map is generated, existing obstacles are cleared, and new obstacles are created based on the current wave.**
 
 As for the game logic, enemies spawn outside obstacle zones and at a certain distance from the player’s location. As waves increase, the number of spawning enemies increases. Bosses appear at waves 5, 10, and 15, each bringing unique challenges. **To ensure enemies pursue the player effectively, we calculate the direct line between them and determine the optimal angle for movement along the shortest path.**
 
 Regarding the pet and weather systems, after defeating the first boss, players can choose one of three pets, each granting a unique blessing—such as generating a shield, restoring health, or automatically attacking enemies. Additionally, the game introduces a dynamic weather system that changes every 30 seconds. **This is implemented using time-related functions provided by p5.js, along with random number generation to determine the type of weather effect.**
 
-### Challenges
+### 5.2 Code Architecture Overview
 
-In the development of our game, we faced several key challenges that required creative problem-solving and technical expertise. These challenges mainly fall into two categories(In fact, in this part we list more than three challenges): **integrating story and Game’s Elements with gameplay and implementing complex game mechanics and code compatibility.**
+The code architecture of **Glitchwood** is modular and follows object-oriented principles. Key components like **Player**, **Enemies**, **Bullets**, **Pets**, and **Weather Effects** are encapsulated in separate classes. This modular design allows us to scale the game and add new features easily without disrupting existing functionalities.
 
-#### 1. Integrating Story and Game’s Elements with Gameplay
+1. **Main Game Loop**:
+   - The core game logic is driven by a main loop where the game state is constantly updated, including player movements, collisions, enemy spawning, and state transitions (e.g., between gameplay, pet selection, and boss fights).
+   - The loop also handles **event-driven interactions**, using methods like `keyPressed()` for player movement and `mouseClicked()` for attacks.
+   
+2. **Modular Classes**:
+   - **Player Class**: Handles the player character’s attributes, movement, upgrades, and attack mechanisms. It includes both melee and ranged combat modes, as seen in the characters like `Mousegirl` and `Keyboardman`.
+   - **Enemy Class**: A superclass for all enemy types, defining basic behaviors like movement, attack patterns, and interactions with obstacles. More complex enemies (e.g., **Bosses**) are subclasses with specialized behaviors.
+   - **Bullet Class**: Manages the projectile logic, including hit detection and boundary handling. Specific projectiles like **EnemyBullets** and **WebProjectiles** are subclasses with additional features.
+   - **Pet System**: After defeating a boss, players can choose a pet (e.g., shield, attack, healing), and the selected pet follows the player during gameplay, impacting the strategy with unique abilities.
+   - **Weather Effects**: The dynamic weather system that alters gameplay every 30 seconds, affecting player and enemy movements (e.g., slowing down in snow or damaging in thunderstorms).
 
-One of our core challenges was tightly blending the main storyline with gameplay mechanics. The game’s narrative needed to be immersive while ensuring that the gameplay remained engaging and not overshadowed by excessive text or cutscenes. Key aspects of this challenge included:
+### 5.3 Key Features and Highlights
 
--	**Background Art & Atmosphere**: The background needed to reflect the story setting while maintaining clarity for gameplay. Striking a balance between visual storytelling and functional level design was crucial.
+1. **Dynamic Map and Obstacle Generation**:
+   The game generates unique maps with randomized obstacles that block movement and attacks. The **stack-based approach** allows obstacles to be dynamically added and removed as new waves of enemies are generated.
 
--	**Monster and Character Design**: Each character and monster had to be visually distinct, fitting the game’s theme while ensuring their silhouettes were recognizable in fast-paced combat. Achieving dynamic animations for multiple characters further increased development complexity. **For example, we need to load different movement animations based on the enemy's movement direction.**
+2. **Complex Collision Detection**:
+   Collision detection in the game is handled meticulously to ensure a fair and responsive combat experience. **Attack hitboxes** and **enemy collisions** are calculated with precision. The inclusion of **"air walls"** prevents players from exiting the intended play area, using boundary logic.
 
--	**Attack Mechanisms**: The player character required two distinct attack methods: melee and ranged combat. These two attack types needed to feel different in mechanics, balance, and animations, making their implementation more complex. For example, the **Mousegirl** character requires a charging bar to be drawn, while **Keyboardman** needs different animations bound to attacks in four directions.
+3. **Pet System**:
+   The pet system introduces an additional layer of complexity, allowing players to choose pets with distinct abilities. Each pet follows the player, interacts with the game environment, and impacts gameplay mechanics (e.g., shields, attack boosts, or healing). Ensuring that the pets don't disrupt gameplay balance while adding depth was a key challenge.
 
--	**Pet System**: The game included three types of pets, each offering unique benefits such as attack, shield, and healing. These pets needed to follow the main character and interact with the environment without disrupting the gameplay balance. Designing pet mechanics that complemented the main character’s abilities added to the challenge.
+4. **Weather System**:
+   The weather system influences gameplay significantly, providing varied environmental conditions that players must adapt to. Snow slows movement, lightning damages enemies and players, and sunlight can be both a benefit and a detriment. This system is implemented using **time-based functions** to control the intervals and transitions between different weather conditions.
 
--	**Level Design**: Each stage needed to introduce new gameplay elements while maintaining difficulty progression. The placement of enemies, obstacles, and power-ups had to be carefully designed to prevent either excessive frustration or a lack of challenge. **For this, we need to create a variety of different characters, which also increases the complexity of the code.**
+### 5.4 Challenges Faced in Implementing Game Mechanics
 
--	**Weather System**: Dynamic weather effects were considered to enhance immersion, but integrating them in a way that impacted gameplay (e.g., reducing visibility in fog or affecting movement in the rain) required careful design and testing. **For example, when generating lightning, we should provide players with enough time to react.**
+1. **Integrating Story with Gameplay**:
+   Blending the narrative into the gameplay without overwhelming players with text or cutscenes was a major challenge. For example:
+   - **Background Art & Atmosphere**: Ensuring that the game’s art and atmosphere complemented the theme of being trapped inside a game was important. The visual elements had to balance the story's depth without interfering with gameplay.
+   - **Character & Monster Design**: Ensuring that characters and monsters were both visually distinct and functioned well within the game's dynamic environment was tricky. For example, animating enemies to change direction dynamically depending on their movement added complexity, especially in fast-paced combat situations.
 
-##### 2. Implementing Complex Game Mechanics and Code Compatibility
+2. **Complex Game Mechanics**:
+   - **Collision and Boundary Detection**: Fine-tuning the game’s **collision detection** for both enemies and players was complex. Implementing invisible "air walls" around the game world and ensuring that the characters' movements did not interfere with these boundaries was challenging. Moreover, handling **attack hitboxes** and making sure projectiles interacted appropriately with enemies was a critical part of the gameplay.
+   - **Obstacle and Pet System Integration**: Dynamic obstacles presented the challenge of creating a flexible system that could spawn and destroy obstacles as waves progressed, while ensuring that the pet system didn't disrupt the balance of the game.
 
-Beyond storytelling and visual design, the technical implementation of various game mechanics posed another set of challenges. These included:
+### 5.5 Optimizing Game Performance and Compatibility
 
--	**Collision Detection & Air Walls**: The game world needed invisible boundaries ("air walls") to prevent players from exiting the intended play area. However, defining their volume accurately without interfering with gameplay movement was tricky. For this, we need to carefully crop the images to minimize empty borders as much as possible.
+**Performance optimization** was a key consideration, especially given the graphical and gameplay complexity. By using **modular coding practices** and optimizing resource-heavy components like animations and special effects, we ensured the game runs efficiently across different devices. However, performance bottlenecks were noted, especially in scenarios with complex weather effects and high enemy counts, which may require future refinements.
 
--	**Obstacle Variations**: Each level introduced unique obstacles, requiring a flexible system that could spawn new types dynamically while removing old ones efficiently. For this challenge, we try to use **stack** to solve it.
+### 5.6 Conclusion of the Implementation Challenges
 
--	**Attack & Hit Detection**: Both player and enemy attacks needed precise hitbox detection to ensure fair and responsive combat. Different attack types (melee, ranged, pet abilities) made this more challenging. **For melee characters' attacks, we have introduced two parameters: attack range and attack angle**.
-
--	**Pet Abilities**: The three pets followed the main character while providing distinct benefits. Coding behavior for pets that attack enemies, provide shields, or heal the player in real-time added layers of complexity. Ensuring pets didn't obstruct movement or interfere with combat balance was another challenge.
-
--	**Weather System Implementation**: If the game featured a weather system, its effects on physics (e.g., slowing movement in snow) and visibility (e.g., fog reducing sight) had to be carefully implemented without breaking the game’s mechanics.
-
--	**Frame Rate Differences Between Characters**: Different characters had unique animations, but their frame rates varied. Unifying animation timing across all characters without making them feel sluggish or desynchronized was a difficult technical task.
-
-#### 3. Conclusion
-
-Developing a game involves overcoming multiple challenges, from balancing storytelling and gameplay mechanics to solving complex coding problems. Through iteration, testing, and optimization, we tackled these challenges to create a more immersive and enjoyable gaming experience. Future improvements will focus on refining game balance, enhancing AI behavior, and optimizing performance across different devices.
+The development of **Glitchwood** involved tackling numerous technical and design challenges, from integrating the narrative into gameplay to optimizing performance. The modular architecture allowed us to develop features iteratively and improve the game based on continuous feedback. Moving forward, there are opportunities to refine the **AI behavior**, **enhance the pet system**, and optimize **performance** further. Each challenge we faced helped us develop a deeper understanding of how to balance creativity, performance, and usability in game development.
 
 
 ## 6 🔍 Evaluation
 
 This section presents both qualitative and quantitative evaluations of our game, **Glitchwood**. We conducted structured user interviews and employed established metrics like **SUS** (System Usability Scale) and **NASA-TLX** (Task Load Index) to assess the game's usability, workload, and player experience across both difficulty modes.
-
----
 
 ### 6.1 Qualitative Evaluation
 
