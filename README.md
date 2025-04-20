@@ -84,6 +84,8 @@ This is our [Kanban link(Jira)](https://1971026049.atlassian.net/jira/software/p
 
 - [9. 📊 Contribution Statement](#9-contribution-statement)
 
+---
+
 ### 1. Introduction
 
 #### 1.1 Game Overview
@@ -125,6 +127,8 @@ From a gameplay perspective, our goal was to build modular systems—such as the
 Technically, we aimed to push the boundaries of what P5.js can handle in a real-time action game. The project provided valuable experience in managing collisions, animation states, and responsive input under performance constraints.
 
 Looking ahead, Glitchwood could evolve in many directions: deeper roguelike branching, community-designed upgrades, or even as a learning platform to demonstrate code-as-world metaphors. Our vision is to keep expanding Glitchwood not just as a game, but as a **sandbox for experimentation in gameplay, storytelling, and system design**.
+
+---
 
 ### Background Research
 
