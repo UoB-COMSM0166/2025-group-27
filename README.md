@@ -8,7 +8,7 @@
 
 Link to your game [PLAY HERE](https://uob-comsm0166.github.io/2025-group-27/)
 
-##### Before you play, there are some info that you need to know!!
+### Before you play, there are some info that you need to know!!
 
 | Image  | Character Name | Description  |
 |--------|--------------|--------------|
@@ -47,43 +47,49 @@ This is our [Kanban link(Jira)](https://1971026049.atlassian.net/jira/software/p
 
 ### 📑 Table of Contents
 
-- [1. 🎮 Introduction](#1-introduction)
-  - [1.1 Game Overview](#11-game-overview)
-  - [1.2 Inspiration](#12-inspiration)
-  - [1.3 Innovation](#13-innovation)
-  - [1.4 Project Objectives & Vision](#14-project-objectives--vision)
+- [1. 🎮 Introduction](#1-🎮-introduction)  
+  - [1.1 Game Overview](#11-game-overview)  
+  - [1.2 Inspiration](#12-inspiration)  
+  - [1.3 Innovation](#13-innovation)  
+  - [1.4 Project Objectives & Vision](#14-project-objectives--vision)  
 
-- [2. 📋 Requirements](#2-requirements)
-  - [2.1 Stakeholder Analysis](#21-stakeholder-analysis)
-  - [2.2 Epics & User Stories](#22-epics--user-stories)
-  - [2.3 Acceptance Criteria](#23-acceptance-criteria)
-  - [2.4 Design Justification](#24-design-justification)
+- [2. 💡 Game Ideation & Concept Exploration](#2-💡-game-ideation--concept-exploration)  
+  - [2.1 Game Idea 1: Glitch-themed Survival Roguelike](#21-game-idea-1-glitch-themed-survival-roguelike)  
+  - [2.2 Game Idea 2: Horror Puzzle RPG](#22-game-idea-2-horror-puzzle-rpg)  
+  - [2.3 Why We Chose Game Idea 1](#23-why-we-chose-game-idea-1)  
 
-- [3. 🧠 Design](#3-design)
-  - [3.1 System Architecture](#31-system-architecture)
-  - [3.2 Class Diagram](#32-class-diagram)
-  - [3.3 Sequence Diagram](#33-sequence-diagram)
+- [3. 📋 Requirements](#3-📋-requirements)  
+  - [3.1 Stakeholder Analysis](#31-stakeholder-analysis)  
+  - [3.2 Epics & User Stories](#32-epics--user-stories)  
+  - [3.3 Acceptance Criteria](#33-acceptance-criteria)  
+  - [3.4 Application in Our Game](#34-application-in-our-game-development)  
+  - [3.5 Summary & Takeaways](#35-summary--takeaways)  
 
-- [4. 🛠️ Implementation](#4-implementation)
-  - [4.1 Core Mechanics](#41-core-mechanics)
-  - [4.2 Challenges Faced](#42-challenges-faced)
-  - [4.3 Technical Decisions](#43-technical-decisions)
+- [4. 🧠 Design](#4-🧠-design)  
+  - [4.1 Class Diagram](#41-class-diagram)  
+  - [4.2 Sequence Diagram](#42-sequence-diagram)  
 
-- [5. 🔍 Evaluation](#5-evaluation)
-  - [5.1 Qualitative Evaluation](#51-qualitative-evaluation)
-  - [5.2 Quantitative Evaluation](#52-quantitative-evaluation)
-  - [5.3 Code Testing](#53-code-testing)
+- [5. 🛠️ Implementation](#5-🛠️-implementation)  
+  - [5.1 Core Systems](#51-core-systems)  
+  - [5.2 Major Challenges](#52-major-challenges)  
+  - [5.3 Future Technical Improvements](#53-future-technical-improvements)  
 
-- [6. 🤝 Process](#6-process)
-  - [6.1 Team Structure](#61-team-structure)
-  - [6.2 Collaboration Tools](#62-collaboration-tools)
-  - [6.3 Workflow Reflection](#63-workflow-reflection)
+- [6. 🔍 Evaluation](#6-🔍-evaluation)  
+  - [6.1 Qualitative Evaluation](#61-qualitative-evaluation)  
+  - [6.2 Quantitative Evaluation](#62-quantitative-evaluation)  
+  - [6.3 Code Testing](#63-code-testing)  
 
-- [7. 🌱 Sustainability, Ethics & Accessibility](#7-sustainability-ethics--accessibility)
+- [7. 🤝 Team Process](#7-🤝-team-process)  
+  - [7.1 Communication & Meetings](#71-communication--meetings)  
+  - [7.2 Tools & Collaboration Platforms](#72-tools--collaboration-platforms)  
+  - [7.3 Team Roles](#73-team-roles)  
+  - [7.4 Reflection & Continuous Improvement](#74-reflection--continuous-improvement)  
 
-- [8. 🧭 Conclusion](#8-conclusion)
+- [8. 🌱 Sustainability, Ethics & Accessibility](#8-🌱-sustainability-ethics--accessibility)
 
-- [9. 📊 Contribution Statement](#9-contribution-statement)
+- [9. 🧭 Conclusion](#9-🧭-conclusion)
+
+- [10. 📊 Contribution Statement](#10-📊-contribution-statement)
 
 ---
 
@@ -131,112 +137,65 @@ Looking ahead, Glitchwood could evolve in many directions: deeper roguelike bran
 
 ---
 
-### Background Research
+### 2. Game Ideation & Concept Exploration
 
-#### Game Ideas
+Before selecting and developing Glitchwood, our team explored two original game concepts. Each was supported by early design prototypes and system planning. This allowed us to evaluate their creative potential, feasibility within our toolset (P5.js), and suitability for an agile development workflow.
 
-##### 1.Survival Shooting Game (Roguelike Elements)
+#### 2.1 Game Idea 1: Glitch-themed Survival Roguelike
 
- 🎯 Introduction  
-This **Survival Shooting Game** combines **Roguelike elements** with a **post-apocalyptic wasteland** setting. Players must survive against relentless enemies while facing dynamic environmental changes and **random events**. Every **3 minutes** brings a **surprise**, while every **5 minutes** introduces **despair**, ensuring an intense and unpredictable gameplay experience.  
+🎯 **Core Concept**  
+A wave-based roguelike where players control one of several programmer-themed characters navigating glitchy environments filled with enemies, hazards, and random upgrades. Players adapt to ever-changing weather, pet abilities, and environmental effects while progressing toward high scores or survival.
 
-**[GAME1 OVERVIEW](./docs/game_idea/Survival_Shooting_Game(Roguelike_Elements).pdf)**
+🔥 **Key Mechanics**
+- **Distinct characters** with different combat styles and upgrade preferences
+- **Dynamic weather system** (e.g., lightning, snow, sunlight) affecting all characters and enemies
+- **Wave-based enemy spawning**, with bosses and random rewards scaling over time
+- **Pets with combat effects** (attack, heal, shield), acquired after boss battles
+- **Endless mode** and increasing difficulty to encourage replayability
 
-![Survival Shooting Game](docs/game_idea/Survival_Shooting_Game(Rogue_like_Elements).png)
+🧠 **Design Strengths**
+- Straightforward system to prototype with paper diagrams and early demos
+- Modular enough to design separate upgrade logic, pet effects, and environmental systems
+- Compatible with course tools: P5.js, class/use case diagrams, agile iterations
 
-###### 🔥 Game Mechanics  
+🎬 [🎮 Demo Video](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/docs/prototype/video/Prototype_Game_Idea_1.mp4)
 
-###### 👥 Characters & Growth  
-- Choose from **3 initial characters**, each with unique skills.  
-- Gain **random rewards** (items, pets) to enhance abilities.  
-- **Synergy system** creates unique experiences in each playthrough.  
+#### 2.2 Game Idea 2: Horror Puzzle RPG
 
-###### 👾 Monster System  
-- **Enemies spawn randomly** at screen edges and move toward the player.  
-- **Two enemy types**:  
-  - **Mobs**: Numerous but weak.  
-  - **Bosses**: Special abilities & independent HP bars.  
+🎯 **Core Concept**  
+A time-loop puzzle RPG set in a frozen university lab. Players explore, solve programming-themed puzzles, and uncover hidden experiments to escape a mysterious temporal trap.
 
-###### 🎯 Shooting & Combat  
-- **Mouse-controlled aiming** for precise shooting.  
-- **Progressive upgrades**: Gain XP, new items, and ability boosts.  
-- **Pet drops**: Obtain companions with unique effects.  
+🧩 **Key Mechanics**
+- Environmental puzzles (logic, object-based, memory)
+- Repeated time loops revealing more story and areas
+- Supernatural horror events and evolving world state
+- Multiple endings based on player decisions
 
-###### 🌍 Dynamic Challenges  
-- **Random events**: Weather changes (Intense sunlight,Falling snowflakes,Lightning strikes，Raining ) and terrain traps (quicksand, spikes).  
-- **Unpredictable battles**: Environmental changes force strategic adaptation.  
+🧠 **Design Limitations**
+- Requires extensive narrative scripting and state control
+- Harder to modularize for team collaboration
+- Fewer opportunities for randomness or iterative balance tuning
+- Less suited for fast prototyping and testing in P5.js
 
-###### 🔀 Story & Progression  
-- **Post-apocalyptic world** with a deep storyline.  
-- Character progression tied to uncovering **the secrets of the wasteland**.  
-- Unlockable content reveals hidden lore.  
+🎬 [🎮 Demo Video](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/docs/prototype/video/Prototype_Game_Idea_2.mp4)
 
-###### ⚙️ Development & Technology  
-- **Agile development** with tools like **use case diagrams, class diagrams, and communication diagrams**.  
-- **Core mechanics**: Monster spawning, shooting physics, and rewards.  
-- **GitHub version control** for efficient collaboration.  
-- **Continuous testing & optimization** to ensure combat balance and fluidity.  
+#### 2.3 Why We Chose Game Idea 1
 
-💀 **Survive, adapt, and uncover the secrets of the wasteland!**  
+After structured comparison, we selected **Game Idea 1** as the foundation for Glitchwood. This decision was based on the following:
 
-###### 🎬 Paper Prototype
-
-🎮 **Game Idea 1 - Demo Video** 📹: [Click here to watch!](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/docs/prototype/video/Prototype_Game_Idea_1.mp4)
-
----
-
-##### 2.Horror Puzzle RPG
-
-###### 🎯 Introduction  
-In this **Horror Puzzle RPG**, players take on the role of a **computer science undergraduate** trapped in the university's experimental building. The building is mysteriously frozen in time at **22:22**, with supernatural events occurring. The protagonist must explore, solve puzzles, and uncover the truth to break the time curse.  
-
-**[GAME2 OVERVIEW](./docs/game_idea/Horror_Puzzle_RPG.pdf)**
-
-![Horror_Puzzle_RPG_Game](docs/game_idea/Horror_Puzzle_RPG_Game.png)
-
-
-###### 🔥 Game Mechanics  
-
-###### 🔍 Exploration & Puzzle Solving  
-- Unlock new areas by **finding items** and **deciphering codes**.  
-- Various **puzzle types**:  
-  - **Logic puzzles** based on environmental clues.  
-  - **Item-based puzzles** requiring specific objects.  
-  - **Memory puzzles** (e.g., recognizing paintings or texts).  
-
-###### ⏳ Time Loop Mechanic  
-- **Failure resets time**, forcing players to retry.  
-- Repeated loops **unlock new areas and story elements**.  
-
-###### 🏚️ Dynamic Horror Environment  
-- **Random supernatural events** (lights flicker, paintings shift).  
-- Rooms become **more distorted** with each visit.  
-
-###### 🔀 Multiple Endings  
-- **Good Ending**: The protagonist **fixes the time system** and escapes.  
-- **Bad Ending**: The protagonist is **trapped in the time loop forever**.  
-- **Hidden Ending**: The protagonist uncovers the **university’s secret experiment** on time control.  
-
-###### 💻 Tech-Based Puzzle Design  
-- Includes **debugging code, repairing programs, and hacking servers**.  
-- Aligns with the **computer science theme**.  
-
-###### 🎭 Story Background  
-A failed **quantum time synchronization experiment** caused the time freeze. The protagonist must repair the system to **restore normal time** and escape.  
- 
-🚀 **Can you break the cycle and uncover the truth?**  
-
-###### 🎬 Paper Prototype
-
-🎮 **Game Idea 2 - Demo Video** 📹: [Click here to watch!](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/docs/prototype/video/Prototype_Game_Idea_2.mp4)
+- 🧩 **Better modularity and scalability**: Wave-based combat, pet effects, weather changes, and upgrade logic could be developed in parallel by different team members.
+- 🛠️ **Stronger compatibility with course tools**: We could apply use case diagrams, class diagrams, and early paper prototypes effectively.
+- 🔁 **Supports agile iteration**: Core mechanics (spawning, combat, upgrades) could be tested and refined incrementally in sprints.
+- 🎯 **Higher alignment with learning goals**: The idea allowed us to explore randomness, system balance, and symbolic design while reinforcing CS themes (e.g., bugs, debugging, resilience).
+- 🤝 **Better fit for team collaboration**: Each subsystem (combat, environment, pet system) could be assigned clearly, allowing us to coordinate through GitHub and version control.
 
 ---
 
-## Requirements
+### Requirements
 
 Throughout the game development process, we adopted structured planning tools—epics, user stories, and acceptance criteria. These tools helped improve clarity, enhanced team collaboration, and streamlined our workflow. By integrating them into our project, we gained valuable insights into understanding player needs, defining design goals, and working more efficiently.
 
-### The Onion Model of Stakeholders
+#### The Onion Model of Stakeholders
 
 We recognized that our game involved multiple stakeholders, including players, developers, publishers, and the marketing team. The stakeholder onion model allowed us to visualize how our decisions impacted different groups. This helped us prioritize development tasks more effectively and ensure a balanced approach that considered both gameplay experience and broader business needs.
 
@@ -244,13 +203,13 @@ The diagram below represents the onion model of stakeholder requirements for our
 
 ![Onion Model of Stakeholders](docs/requirements/Onion.png)
 
-### Understanding Epics & User Stories
+#### Understanding Epics & User Stories
 
 Epics serve as a high-level breakdown of major game features. They provide a broad vision of what we aim to achieve, ensuring that our work aligns with the game’s core mechanics and user experience goals.
 
 User Stories translate these broad ideas into concrete, actionable tasks. The structured format—"As a [user], I want [goal], so that [reason]"—forced us to think from a player’s perspective rather than a purely technical viewpoint.
 
-### Importance of Acceptance Criteria
+#### Importance of Acceptance Criteria
 
 Acceptance Criteria helped us define when a feature is truly complete. Using the "Given-When-Then" format, we set clear success conditions for our game mechanics.
 
@@ -270,7 +229,7 @@ The diagram below illustrates the Epics, User Stories, and Acceptance Criteria f
 
 ![Stakeholder Requirements](docs/requirements/Stakeholder_Requirements.png)
 
-### Application in Our Game Development
+#### Application in Our Game Development
 
 Our game, Survival Shooting Game, benefited significantly from these structured methodologies. Instead of jumping into coding immediately, we first defined stakeholder needs, as seen in the Stakeholder Requirements Analysis.
 
@@ -282,7 +241,7 @@ Publishers required monetization and replayable mechanics.
 Marketing Teams needed attractive visuals and promotional appeal.
 By integrating Epics, User Stories, and Acceptance Criteria, we ensured that our development process balanced all these needs while staying aligned with the core game vision.
 
-### Conclusion
+#### Conclusion
 
 This structured approach fundamentally transformed how we approached game development. Initially, we were inclined to jump straight into implementation without fully considering the broader design implications. However, through this process, we learned the importance of:
 
@@ -293,36 +252,37 @@ By using Epics, User Stories, and Acceptance Criteria, we now have a well-struct
 
 ---
 
-## Design
+### Design
 
 **This part is based on our early design**
 
 ![Class Diagram](docs/design/ClassDiagram.png)
-### **Class Diagram Description**
+
+#### **Class Diagram Description**
 The class diagram represents a game system with multiple interacting components, focusing on **players, enemies, weapons, weather effects, and rewards**.
 
-#### 1. **Field and Figures**  
+##### 1. **Field and Figures**  
 - The **Field** class represents the game area with a size attribute.  
 - The **Figures** class is a general entity affecting the game.
 
-#### 2. **Player and Enemy**  
+##### 2. **Player and Enemy**  
 - The **Player** class includes attributes such as speed, HP, level, defense, attackSpeed, and type. It has methods for movement (move()), upgrades (upgrade()), and display (display()).  
 - The **Enemy** class has HP and attackPower, along with methods to appear(), disappear(), and attack().  
 - A subclass of **Enemy** is **Boss**, which has an additional method to displayHealthBar().
 
-#### 3. **Weapons**  
+##### 3. **Weapons**  
 - **Sword** (power, attackRange, swordAttack())  
 - **Gun** (attackDistance, bulletAttack())  
 - **Bow** (fireCoolDown, attackDistance, arrowAttack())  
 - **Bullet** (perDamage, numberOfOneShoot, touchEnemy(), disappear())
 
-#### 4. **Weather Effects**  
+##### 4. **Weather Effects**  
 - The **Weather** class affects gameplay and includes types such as:  
   - **Snow** (slowDownRate)  
   - **Thunder** (range, damage)  
   - **Sun** (duration, powerUpRate)  
 
-#### 5. Rewards  
+##### 5. Rewards  
 - Potion (effect, color)  
 - Pet, which has name, type, follow(), attack(), and move().  
   - Bird (attackRange, fly())  
@@ -332,43 +292,45 @@ The class diagram represents a game system with multiple interacting components,
 ---
 
 ![Sequence Diagram](docs/design/SequenceDiagram.png)
-### Sequence Diagram Description (Second Image)  
+
+#### Sequence Diagram Description (Second Image)  
 The sequence diagram illustrates interactions between game components in various gameplay scenarios.
 
-#### 1. Character Selection & Attack System  
+##### 1. Character Selection & Attack System  
 - The Player selects a role (Sword, Gun, or Bow).  
 - Depending on the weapon, the player either attacks directly (sword) or uses a ranged attack (gun or bow).  
 - The attack process triggers different methods (shootBullet(), shootArrow(), attack()).
 - Depending on the character roles, each character upgrades different skills.
 
-#### 2. Potion System  
+##### 2. Potion System  
 - The Player interacts with the PotionSystem to retrieve health potions (getPotion()).  
 - The system checks the player's HP and applies the necessary effects.
 
-#### 3. Pet System  
+##### 3. Pet System  
 - The player chooses a Pet (choosePet()), which can provide some extra gains to the player. 
 - Pets provide additional support in combat.
 
-#### 4. Enemy and Boss Battle  
+##### 4. Enemy and Boss Battle  
 - The CommonEnemy and Boss entities engage in battle with the Player.  
 - The Boss has additional attack patterns (heavyAttack()).
 
-#### 5. Weather System Effects  
+##### 5. Weather System Effects  
 - The WeatherSystem influences gameplay through different weather conditions (affect()).  
 - Weather may hinder movement or provide power-ups.
 
 ---
 
-## Evaluation
+### Evaluation
 
-### 1. Qualitative Evaluation
-#### 1.1 Artistic style and interaction design
+#### 1. Qualitative Evaluation
+
+##### 1.1 Artistic style and interaction design
 
 — Players recognized the simplicity of the interface layout (e.g., the flat design of the character selection panel), and the tutorial's graphic guide enabled novices to get started quickly, making it a very successful design.
 
 — Most players said that the programmer style, code symbols and digital elements used in the game make the overall picture full of unique “black science and technology” sense, which is very different from the traditional theme, adding personality and interest to the game. In addition, special effects such as dynamic weather, light and shadow gradient and particle effects add a sense of hierarchy and dynamism to the screen, making each game present a very different visual experience.
 
-#### 1.2 Difficulty balance
+##### 1.2 Difficulty balance
   
 — L1 Easy Mode: 
 All new players were able to pass the level, and found the upgrade props and pacing to be relatively linear, and the bosses' attack intervals to be reasonable.
@@ -376,11 +338,11 @@ All new players were able to pass the level, and found the upgrade props and pac
 — L2 Difficulty Mode: 
 In this mode, the number of enemies, speed and strength of attacks are increased, the attack pattern of bosses is more aggressive, and random events are more frequent (e.g., dynamic weather), which puts more pressure on the player to maneuver and react to the situation, resulting in a higher level of frustration, and a sense of accomplishment for the player who seeks a challenge after defeating it.
 
-#### 1.3 Plot and Immersion
+##### 1.3 Plot and Immersion
 
 Players expressed interest in the game's setting of intertwining technology and survival, saying that this theme reflects the life of a programmer and also incorporates the exciting experience of adventure and survival. Some players mentioned that they resonated with the design of the game's individual characters, and felt a sense of accomplishment and immersion as they grew through their characters and fought against tough environments during the experience.
 
-#### 1.4 Focus group Q&A transcripts
+##### 1.4 Focus group Q&A transcripts
 ![Question and answer chart](docs/game_idea/interview.png)
 
 The questions and sample responses above reflect the focus group's views on the game's interface, operation, mode experience, hint messages, and plot characters. Based on this feedback, we have made improvements in the following directions:
@@ -392,7 +354,7 @@ The questions and sample responses above reflect the focus group's views on the 
 | Excessive plotting       | Some transitions can be abrupt.                                                                         | Optimize scene transitions and effects pacing                                                                            |
 | Helpful Hints            | The textual explanations and illustrations in the Beginner's Guide are slightly fragmented and not intuitive enough. | Integrate help pages to enhance the readability of the explanatory text and the overall visual presentation.             |
 
-### 2. Quantitative Evaluation
+#### 2. Quantitative Evaluation
 
 In order to evaluate the usability and player load of the game in different difficulty modes (L1 easy mode and L2 hard mode), we used the System Usability Scale (SUS) and NASA-TLX (Task Load Index) to collect and analyze the data respectively.
 
@@ -412,26 +374,27 @@ From the SUS data in the table, it can be seen that in the L1 Easy Mode, players
 
 In contrast, the scores of some questions in L2 mode (such as Q2, Q4, Q10 and other negative questions) increased, indicating that players felt more obvious about the complexity of the system operation and the burden of learning.NASA's scores of all dimensions in the difficult mode increased to a certain extent, especially the mental demand, effort and frustration (in the range of 60-70), which reflected that players need to invest more energy and reaction ability when coping with the faster, more difficult or more complicated enemies/levels, and are also more prone to the stress of failure. or more complex enemies/levels require more effort and reflexes, and are more prone to the stress of failure. At the same time, time demands also increase, indicating that players need to make more frequent and quick decisions and actions in a shorter period of time.
 
-### 3.Code Test
+#### 3.Code Test
 
 The test environment deployed an online version of the game via GitHub Pages, ensuring accessibility in both desktop and mobile browsers. We invited three typical user groups (classmates, game enthusiasts, and developers) to participate in semi-structured interviews after the trial. During the interviews, we not only collected qualitative user experience feedback (interface intuitiveness, smoothness of operation, hints, etc.), but also discussed specific scenarios in the game in detail, which helped the team clarify the direction of improvement.
 
 ---
-## Process
+
+### Process
 
 With efficiency, collaboration and communication at the core of this team assignment, our team adopted a series of standardized workflows to ensure the smooth development of Glitchwood. Throughout the entire process, from the building of the Minimum Viable Product (MVP) to the subsequent feature iterations, teamwork and communication were always present to continuously improve the quality of the project and the user experience.
 
-### 1.Meetings and communication mechanisms
+#### 1.Meetings and communication mechanisms
 
 We hold regular offline meetings in MVB lab, and organize at least one full team meeting every week, which mainly includes: project progress report, discussion of existing problems, and decomposition of tasks for the next phase. In the meeting, team members explain in detail the current progress of the features they are responsible for, the technical problems they encountered and their next steps, and make suggestions on how to improve the connection between game states and optimize the user experience. In addition, we also have occasional discussions, when someone has a problem that cannot be solved, we will start a meeting to discuss how to solve it together. Outside of these meetings, the team has also set up a Wechat group to keep in touch with each other via instant messaging. Especially during the holiday season, even though we can't meet in person, we still work together efficiently on Wechat to make sure everyone knows what they need to accomplish while on vacation.
 
-### 2.Tools and collaborative platforms
+#### 2.Tools and collaborative platforms
 
 In order to guarantee the version control and efficient collaboration of the project, we chose GitHub as the code hosting platform and implemented a strict code review mechanism on this basis. Each member of the team uses their own functional branches during development, such as the main menu, map status, battle status, store status, etc., to ensure that the main branch always maintains a working basic version. All code submissions are subject to Pull Request approval, ensuring that all changes are reviewed by the team before being merged into the master branch, a measure that effectively reduces the risk of potential errors and conflicts. At the same time, we utilize the JIRA(as shown in the figure2 ) system to handle task flow and manage project tasks, splitting the overall workload into smaller sub-tasks, with clear deadlines and responsible persons for each task, and real-time tracking of progress updates and issue feedback. Ensure that each code update does not break existing functionality. Bugs are also fixed and responded to quickly by the technical team.
 
 ![figure2:Jira task flow chart](docs/game_idea/Jira.png)
 
-### 3. Team roles and division of tasks
+#### 3. Team roles and division of tasks
 
 | Name          | Role                                             | Contribution                                                                                                                                                                                                                    | Weight |
 |---------------|--------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------|
@@ -442,40 +405,41 @@ In order to guarantee the version control and efficient collaboration of the pro
 | **Feihang Yan**   | Pet Systems Engineer and Debug Team Member       | Comprehensively responsible for pet system code development, including pet behavior modeling, interaction logic, state management and performance optimization, etc., to ensure that the pet system is tightly integrated with the overall game logic.             | 1      |
 | **Xianhang Peng** | Front-end Development Engineer                   | Responsible for the development of the game front-end components of the code (such as the main menu, operation prompts, score display, etc.), optimize the interaction logic.                                                                                        | 1      |
 
-### 4. Team reflection and continuous improvement
+#### 4. Team reflection and continuous improvement
 
 Looking back at the whole project, we encountered a lot of unexpected challenges during the development of the Minimum Viable Prototype (MVP): due to the parallel development of the modules, there were frequent problems with the connection between the game states, which resulted in the overall experience failing to meet the expectations. At this stage, in order to solve the problem, we organized a “Game Jam” meeting, through face-to-face discussion and improvisation, we brainstormed on how to smooth the transitions between game states and came up with concrete and effective solutions. This not only alleviated the interface problems between modules, but also stimulated team members' creativity and enthusiasm for collaboration.
 At the same time, our team continued to optimize the workflow in daily communication. Real-time communication through WeChat, detailed task management through Kanban, and strict implementation of the code review system ensured the orderly progress of our work. Although online tools have greatly facilitated remote communication, we realize that face-to-face discussions are still irreplaceable in solving technical problems and in-depth collaboration.
 We realized that active and efficient communication is the key to successful teamwork, and that only through continuous open communication can we maximize the talents of each member. In addition, a clear division of roles, timely team reflection and lessons learned, also provide a solid guarantee for the smooth progress of the project. Through this project experience, we not only optimized the development process, but also accumulated valuable experience for future cross-module collaboration.
 
 ---
-## Sustainability Analysis
 
-### Social Dimension
+### Sustainability Analysis
+
+#### Social Dimension
 We raise awareness of developer well-being by embedding themes of overwork and creative burnout into gameplay.
 Community-driven features like level design submissions encourage collaboration and shared creative expression.
 
-### Environmental Dimension
+#### Environmental Dimension
 Our dynamic weather reflects shifting digital environments and resource unpredictability, prompting adaptive strategies.
 We use nature-inspired map design and optimize code for minimal energy use, promoting ecological consciousness in both content and performance.
 
-### Economic Dimension
+#### Economic Dimension
 The game is free-to-play with optional donations, all of which go to organizations advocating for tech worker rights.
 Through ongoing content updates, we prioritize long-term engagement over extractive monetization.
 
-### Technical Dimension
+#### Technical Dimension
 We apply modular and efficient coding practices to reduce maintenance overhead and technical waste.
 Visual effects and animations are optimized to lower power consumption and improve runtime efficiency.
 
-### Individual Dimension
+#### Individual Dimension
 By gamifying debugging as self-discovery, we invite players to reflect on productivity, stress, and balance.
 The variety of tools and paths encourages experimentation, creativity, and personal agency in problem-solving.
 
 ---
 
-## Implementation
+### Implementation
 
-### Basic Implement
+#### Basic Implement
 
 The implement of Glitchwood revolve around battling enemies, leveling up, and progressing through stages while striving for higher kill counts in endless mode. Players can easily control one of three selectable characters using a combination of keyboard and mouse: the keyboard handles movement, while the mouse controls attacks and attack direction. **The implementation relies primarily on event-related methods such as keyPressed and mouseClicked.**
 
@@ -487,11 +451,11 @@ As for the game logic, enemies spawn outside obstacle zones and at a certain dis
 
 Regarding the pet and weather systems, after defeating the first boss, players can choose one of three pets, each granting a unique blessing—such as generating a shield, restoring health, or automatically attacking enemies. Additionally, the game introduces a dynamic weather system that changes every 30 seconds. **This is implemented using time-related functions provided by p5.js, along with random number generation to determine the type of weather effect.**
 
-### Challenges
+#### Challenges
 
 In the development of our game, we faced several key challenges that required creative problem-solving and technical expertise. These challenges mainly fall into two categories(In fact, in this part we list more than three challenges): **integrating story and Game’s Elements with gameplay and implementing complex game mechanics and code compatibility.**
 
-#### 1. Integrating Story and Game’s Elements with Gameplay
+##### 1. Integrating Story and Game’s Elements with Gameplay
 
 One of our core challenges was tightly blending the main storyline with gameplay mechanics. The game’s narrative needed to be immersive while ensuring that the gameplay remained engaging and not overshadowed by excessive text or cutscenes. Key aspects of this challenge included:
 
@@ -507,7 +471,7 @@ One of our core challenges was tightly blending the main storyline with gameplay
 
 -	**Weather System**: Dynamic weather effects were considered to enhance immersion, but integrating them in a way that impacted gameplay (e.g., reducing visibility in fog or affecting movement in the rain) required careful design and testing. **For example, when generating lightning, we should provide players with enough time to react.**
 
-#### 2. Implementing Complex Game Mechanics and Code Compatibility
+##### 2. Implementing Complex Game Mechanics and Code Compatibility
 
 Beyond storytelling and visual design, the technical implementation of various game mechanics posed another set of challenges. These included:
 
@@ -523,30 +487,31 @@ Beyond storytelling and visual design, the technical implementation of various g
 
 -	**Frame Rate Differences Between Characters**: Different characters had unique animations, but their frame rates varied. Unifying animation timing across all characters without making them feel sluggish or desynchronized was a difficult technical task.
 
-#### 3. Conclusion
+##### 3. Conclusion
 
 Developing a game involves overcoming multiple challenges, from balancing storytelling and gameplay mechanics to solving complex coding problems. Through iteration, testing, and optimization, we tackled these challenges to create a more immersive and enjoyable gaming experience. Future improvements will focus on refining game balance, enhancing AI behavior, and optimizing performance across different devices.
 
 ---
-## Sustainability, Ethics, and Accessibility
+### Sustainability, Ethics, and Accessibility
 In addition to pursuing gameplay, challenge and innovation, we also strive to have a positive impact on the environment, society and economy. We have demonstrated the impact mechanism in three key dimensions during the development process: environment, society and economy.
 
-### Environmental Impact
+#### Environmental Impact
 In terms of the environment, the core design concept of Glitchwood is to establish a close connection with natural and environmental elements. We carefully constructed a dynamic weather system and a map design "inspired by nature" to reflect the unpredictability of the climate and the challenges of ecological protection in reality. The game uses a dynamic weather system that changes every 30 seconds, simulating various weather conditions such as rain and lightning. Players must develop different strategies according to environmental changes in battle, which not only greatly improves immersion, but also subtly improves their understanding of resource unpredictability and the balance of natural ecosystem management.
 In addition, we pay special attention to reducing energy consumption at runtime in the design and optimization of visual effects and animations. Our code is specially optimized with the goal of achieving minimum energy consumption and easy maintenance, which is particularly important in the context of increasing global attention to digital carbon footprints. Through this technical approach, we not only provide an efficient operation experience, but also convey the concept of respecting nature and cherishing resources, which helps to build a green and sustainable digital ecosystem. The integration of environmental elements has a dual purpose: on the one hand, it enhances the player's immersive experience through a constantly changing dynamic system, and on the other hand, it provides a creative platform for discussing broader ecological issues. Like real-world environmental management challenges, Glitchwood encourages players to develop adaptive strategies, educate themselves on the environment, and increase ecological awareness while having fun.
 
-### Social Impact
+#### Social Impact
 Glitchwood incorporates sustainability and ideology into the game's narrative and design, focusing not only on the player experience, but also on the physical health of the development team and community collaboration. The game embeds themes about overwork, work-life balance, and creative fatigue, directly exploring common stress issues in the technology and game industries, guiding players to reflect on game development. At the same time, we encourage players to propose creative ideas and design solutions, thereby promoting collaboration and knowledge sharing. This open and interactive model not only stimulates collective wisdom, but also continuously enriches the game content and forms a stronger and more combative player community.
 
 In addition, to address accessibility issues, we extensively incorporate feedback from qualitative interviews and quantitative evaluations into the design to ensure that the game is suitable for players of different abilities and experience levels. By providing multiple entry settings, such as L1 mode designed for novices and L2 mode designed for advanced players, and adding additional prompts and guidance in high-difficulty modes, we strive to ensure that all players can get a full game experience. This player-centered design approach not only reflects the importance of social responsibility, but also promotes the spread of the concept of healthy work-life balance, making games an important concept for promoting positive social causes.
 
-### Economic Impact
+#### Economic Impact
 Glitchwood adopts a free model supplemented by optional donations, aiming to break traditional payment barriers, attract a wider player base, and ensure that the business model is ethical and socially responsible. Our strategy is not only to maximize player accessibility, but also to create a non-exploitative revenue structure that encourages long-term player participation through continuous content updates and open community communication mechanisms, rather than relying on one-time in-app purchases or aggressive in-game advertising. The free strategy lowers the barrier to entry, making the game accessible to players from different economic backgrounds, and lays the foundation for building a fair, transparent and inclusive digital ecosystem.
 
 All optional donations are processed transparently, and a portion of the revenue is pledged to be donated to non-profit organizations that advocate for the rights and ethical practices of technical workers. This measure not only reflects our concern for improving the labor environment within the industry, but also conveys our belief in an economic model that prioritizes short-term profits over long-term participation and user well-being. Through this combination of public welfare and business, Glitchwood creates a healthy and positive economic cycle that allows both participants and developers to benefit sustainably from continued success. At the same time, this model cleverly guides players to pay attention to industry ethics and labor environment issues, greatly enhancing the importance of occupational health of technical workers.
 
 ---
-## Conclusion
+
+### Conclusion
 The development of Glitchwood is a multifaceted process that not only challenges our technical skills, but also our ability to balance storytelling, game mechanics, and sustainable design.
 
 During the project process, our agile development approach allows the team to iterate quickly and adapt to changes based on continuous feedback. We often refine user stories and acceptance criteria to ensure that all features meet game standards and stakeholder expectations. Heuristic evaluation plays a crucial role in every sprint cycle; It not only helps identify usability issues early in the development cycle, but also ensures that the game is accessible and enjoyable for both novice and experienced players.
@@ -561,6 +526,7 @@ Looking ahead, future work will focus on several areas that need improvement. On
 In short, in this project, agile planning, heuristic insights, and sustainable design are integrated to create an attractive and ethically responsible product. The lessons learned here will undoubtedly provide great help for our future career development.
 
 ---
+
 ## Project Report
 
 ### Introduction
