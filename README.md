@@ -17,24 +17,6 @@
 - 📽️ **Demo Video**: *Coming soon!*  
   _A brief gameplay showcase will be added here when finalized._
 
-## Before You Play: Meet the Characters & Bosses
-
-### Playable Characters
-
-| Image | Name | Description |
-|:---:|:---:|:---|
-| ![Mousegirl](docs/assets/selected_images/characters/intro/mousegirl_intro.gif) | **Mousegirl** | Charge-based ranged attacker. Fully charged, deals highest damage. Upgrades focus on bow mechanics. |
-| ![Computerboy](docs/assets/selected_images/characters/intro/computerboy_intro.gif) | **Computerboy** | Easy-to-use character with strong bullet-based attacks. Upgrades boost attributes and firepower. |
-| ![Keyboardman](docs/assets/selected_images/characters/intro/keyboardman_intro.gif) | **Keyboardman** | Melee fighter with high AoE damage. Needs to stay close. Upgrades emphasize survivability and special traits. |
-
-### Bosses You'll Encounter
-
-| Image | Name | Description |
-|:---:|:---:|:---|
-| ![Slimeboss](docs/assets/selected_images/bossgif/Slimeboss.gif) | **Slimeboss** | Classic RPG enemy reimagined as a boss. Four colored forms with different attack patterns. |
-| ![Birdboss](docs/assets/selected_images/bossgif/Birdboss.gif) | **Birdboss** | Shrine-dwelling boss with dash and restriction skills. Stay outside its range to stay safe. |
-| ![Bugboss](docs/assets/selected_images/bossgif/Bugboss.gif) | **Bugboss** | Disrupts vision and summons ghost flames. Sudden high-damage attacks — stay alert! |
-
 # Our Group
 
 ![Group_photo](docs/assets/selected_images/member/Group27.png)
@@ -104,6 +86,40 @@ Ultimately, Glitchwood merges familiar roguelike gameplay with **personal meanin
 Glitchwood brings several innovations to the roguelike format, blending symbolic design with engaging mechanics.
 
 **Mechanically**, the game offers three characters with distinct **combat roles and upgrade styles**, not a shared progression path. We also introduced a **pet system**: after defeating a boss, players choose a pet (attack, shield, or heal) that influences combat strategy. A **dynamic weather system** further alters gameplay: **snow slows movement**, **lightning causes damage**, and **sunlight drains health**—affecting both players and enemies.
+
+#### Characters
+
+| Image | Name | Description |
+|:-----:|:----:|:-----------|
+| <img src="docs/assets/selected_images/characters/intro/mousegirl_intro.gif" height="100px"> | **Mousegirl** | Charge-based ranged attacker. Fully charged, deals highest damage. Upgrades focus on bow mechanics. |
+| <img src="docs/assets/selected_images/characters/intro/computerboy_intro.gif" height="100px"> | **Computerboy** | Easy-to-use character with strong bullet-based attacks. Upgrades boost attributes and firepower. |
+| <img src="docs/assets/selected_images/characters/intro/keyboardman_intro.gif" height="100px"> | **Keyboardman** | Melee fighter with high AoE damage. Needs to stay close. Upgrades emphasize survivability and special traits. |
+
+#### Bosses
+
+| Image | Name | Description |
+|:-----:|:----:|:-----------|
+| <img src="docs/assets/selected_images/bossgif/Slimeboss.gif" height="100px"> | **Slimeboss** | Classic RPG enemy reimagined as a boss. Four colored forms with different attack patterns. |
+| <img src="docs/assets/selected_images/bossgif/Birdboss.gif" height="100px"> | **Birdboss** | Shrine-dwelling boss with dash and restriction skills. Stay outside its range to stay safe. |
+| <img src="docs/assets/selected_images/bossgif/Bugboss.gif" height="100px"> | **Bugboss** | Disrupts vision and summons ghost flames. Sudden high-damage attacks — stay alert! |
+
+
+### Weather
+
+| Image | Name | Description |
+|:-----:|:----:|:-----------|
+| <img src="docs/introduction/flake.gif" height="100px"> | **Snow** | Slows the movement speed of both characters and enemies. |
+| <img src="docs/introduction/lightning.gif" height="100px"> | **Lightning** | Deals damage to characters and enemies within its range. |
+| <img src="docs/introduction/sun.gif" height="100px"> | **Sun** | Causes gradual health loss over time for both players and enemies. |
+
+### Pets
+
+| Image | Name | Description |
+|:-----:|:----:|:-----------|
+| <img src="docs/introduction/fox.gif" height="100px"> | **Blaze** | Attacks enemies, dealing damage to them. |
+| <img src="docs/introduction/cow.gif" height="100px"> | **Aegis** | Protects the player, preventing damage from enemies and environmental hazards. |
+| <img src="docs/introduction/fairy.gif" height="100px"> | **Aurora** | Heals the player by restoring health over time. |
+
 
 **Narratively**, the game metaphorically reflects a programmer's journey through burnout, bugs, and problem-solving. These ideas are not explained through text, but embedded in every mechanic.
 
