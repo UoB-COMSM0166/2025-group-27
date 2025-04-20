@@ -7,6 +7,7 @@
 ![Glitchwood_Poster](docs/assets/selected_images/poster/Glitchwood.png)
 
 Link to your game [PLAY HERE](https://uob-comsm0166.github.io/2025-group-27/)
+
 ##### Before you play, there are some info that you need to know!!
 
 | Image  | Character Name | Description  |
@@ -44,7 +45,7 @@ This is our [Kanban link(Jira)](https://1971026049.atlassian.net/jira/software/p
 
 ## Project Report
 
-## 📑 Table of Contents
+### 📑 Table of Contents
 
 - [1. 🎮 Introduction](#1-introduction)
   - [1.1 Game Overview](#11-game-overview)
