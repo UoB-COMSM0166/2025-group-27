@@ -53,7 +53,7 @@ This is our [Kanban link(Jira)](https://1971026049.atlassian.net/jira/software/p
   - [1.3 Innovation](#13-innovation)  
   - [1.4 Project Objectives & Vision](#14-project-objectives--vision)  
 
-- [2. 💡 Game Ideation & Concept Exploration](#2-💡-game-ideation--concept-exploration)  
+- [2. 💡 Idea](#2-💡-game-ideation--concept-exploration)  
   - [2.1 Game Idea 1: Glitch-themed Survival Roguelike](#21-game-idea-1-glitch-themed-survival-roguelike)  
   - [2.2 Game Idea 2: Horror Puzzle RPG](#22-game-idea-2-horror-puzzle-rpg)  
   - [2.3 Why We Chose Game Idea 1](#23-why-we-chose-game-idea-1)  
@@ -137,11 +137,17 @@ Looking ahead, Glitchwood could evolve in many directions: deeper roguelike bran
 
 ---
 
-### 2. Game Ideation & Concept Exploration
+### 2. Idea
 
 Before selecting and developing Glitchwood, our team explored two original game concepts. Each was supported by early design prototypes and system planning. This allowed us to evaluate their creative potential, feasibility within our toolset (P5.js), and suitability for an agile development workflow.
 
 #### 2.1 Game Idea 1: Glitch-themed Survival Roguelike
+
+**[GAME1 OVERVIEW](./docs/game_idea/Survival_Shooting_Game(Roguelike_Elements).pdf)**
+
+![Survival Shooting Game](docs/game_idea/Survival_Shooting_Game(Rogue_like_Elements).png)
+
+🎬 [🎮 Demo Video](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/docs/prototype/video/Prototype_Game_Idea_1.mp4)
 
 🎯 **Core Concept**  
 A wave-based roguelike where players control one of several programmer-themed characters navigating glitchy environments filled with enemies, hazards, and random upgrades. Players adapt to ever-changing weather, pet abilities, and environmental effects while progressing toward high scores or survival.
@@ -158,9 +164,14 @@ A wave-based roguelike where players control one of several programmer-themed ch
 - Modular enough to design separate upgrade logic, pet effects, and environmental systems
 - Compatible with course tools: P5.js, class/use case diagrams, agile iterations
 
-🎬 [🎮 Demo Video](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/docs/prototype/video/Prototype_Game_Idea_1.mp4)
-
 #### 2.2 Game Idea 2: Horror Puzzle RPG
+
+
+**[GAME2 OVERVIEW](./docs/game_idea/Horror_Puzzle_RPG.pdf)**
+
+![Horror_Puzzle_RPG_Game](docs/game_idea/Horror_Puzzle_RPG_Game.png)
+
+🎬 [🎮 Demo Video](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/docs/prototype/video/Prototype_Game_Idea_2.mp4)
 
 🎯 **Core Concept**  
 A time-loop puzzle RPG set in a frozen university lab. Players explore, solve programming-themed puzzles, and uncover hidden experiments to escape a mysterious temporal trap.
@@ -176,8 +187,6 @@ A time-loop puzzle RPG set in a frozen university lab. Players explore, solve pr
 - Harder to modularize for team collaboration
 - Fewer opportunities for randomness or iterative balance tuning
 - Less suited for fast prototyping and testing in P5.js
-
-🎬 [🎮 Demo Video](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/docs/prototype/video/Prototype_Game_Idea_2.mp4)
 
 #### 2.3 Why We Chose Game Idea 1
 
