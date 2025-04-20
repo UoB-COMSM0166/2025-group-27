@@ -44,45 +44,87 @@ This is our [Kanban link(Jira)](https://1971026049.atlassian.net/jira/software/p
 
 ## Project Report
 
+## 📑 Table of Contents
+
+- [1. 🎮 Introduction](#1-introduction)
+  - [1.1 Game Overview](#11-game-overview)
+  - [1.2 Inspiration](#12-inspiration)
+  - [1.3 Innovation](#13-innovation)
+  - [1.4 Project Objectives & Vision](#14-project-objectives--vision)
+
+- [2. 📋 Requirements](#2-requirements)
+  - [2.1 Stakeholder Analysis](#21-stakeholder-analysis)
+  - [2.2 Epics & User Stories](#22-epics--user-stories)
+  - [2.3 Acceptance Criteria](#23-acceptance-criteria)
+  - [2.4 Design Justification](#24-design-justification)
+
+- [3. 🧠 Design](#3-design)
+  - [3.1 System Architecture](#31-system-architecture)
+  - [3.2 Class Diagram](#32-class-diagram)
+  - [3.3 Sequence Diagram](#33-sequence-diagram)
+
+- [4. 🛠️ Implementation](#4-implementation)
+  - [4.1 Core Mechanics](#41-core-mechanics)
+  - [4.2 Challenges Faced](#42-challenges-faced)
+  - [4.3 Technical Decisions](#43-technical-decisions)
+
+- [5. 🔍 Evaluation](#5-evaluation)
+  - [5.1 Qualitative Evaluation](#51-qualitative-evaluation)
+  - [5.2 Quantitative Evaluation](#52-quantitative-evaluation)
+  - [5.3 Code Testing](#53-code-testing)
+
+- [6. 🤝 Process](#6-process)
+  - [6.1 Team Structure](#61-team-structure)
+  - [6.2 Collaboration Tools](#62-collaboration-tools)
+  - [6.3 Workflow Reflection](#63-workflow-reflection)
+
+- [7. 🌱 Sustainability, Ethics & Accessibility](#7-sustainability-ethics--accessibility)
+
+- [8. 🧭 Conclusion](#8-conclusion)
+
+- [9. 📊 Contribution Statement](#9-contribution-statement)
+
 ### 1. Introduction
 
 #### 1.1 Game Overview
 
-**Glitchwood** is a **2D roguelike action RPG** developed using P5.js. Players choose from **three uniquely designed characters**—each with distinct combat styles and upgrade paths—to battle through procedurally generated stages filled with enemies, traps, and unpredictable challenges.
+**Glitchwood** is a **2D roguelike action RPG** developed using P5.js. Players choose from **three uniquely designed characters**—each with distinct combat styles and upgrade preferences—to battle through procedurally generated stages filled with enemies, traps, and unpredictable challenges.
 
-The game emphasizes **replayability and randomness**, introducing **weather conditions**, **support pets**, **enemy variants**, and **environmental obstacles**. As players survive increasingly difficult waves, they gain experience, unlock new upgrades, and ultimately access an **Endless Mode** to push their limits in pursuit of higher kill counts.
+The game emphasizes **randomness and replayability**, introducing features like dynamic **weather effects**, **support pets**, **enemy variants**, and **environmental obstacles**. As players progress through increasingly difficult waves, they earn upgrades and eventually unlock an **Endless Mode** to test their endurance.
 
-Designed for both **newcomers and roguelike veterans**, Glitchwood includes an integrated tutorial, intuitive controls, and escalating difficulty levels. Its mechanics are tied to a deeper theme: a mysterious story of being trapped inside one’s own code—a reflection of the developer’s journey.
+Designed for both **newcomers and roguelike veterans**, Glitchwood includes a built-in tutorial, intuitive controls, and two difficulty levels. Its gameplay is tied to a deeper theme—**a developer lost inside their own creation**, fighting to escape.
 
 #### 1.2 Inspiration
 
-Glitchwood draws inspiration from **Vampire Survivors** and **20 Minutes Till Dawn**, known for their simple controls, escalating combat, and high replayability. We were especially interested in how they balance randomness with player growth.
+Glitchwood draws inspiration from roguelike games like **Vampire Survivors** and **20 Minutes Till Dawn**, known for their escalating difficulty and minimalist gameplay. We appreciated how these games combined randomness with short-session intensity.
 
-However, we wanted more than mechanical depth. As computer science students, we reimagined the roguelike through a **symbolic lens**: a programmer trapped inside their own game, fighting bugs, facing unpredictable environments, and using tools to survive. This metaphor guided both our gameplay and narrative structure.
+However, as computer science students, we wanted to push further—infusing personal and metaphorical meaning. In Glitchwood, the player is trapped inside their own game, battling symbolic “bugs,” navigating unstable “runtime environments,” and relying on tools (weapons, pets) to debug and survive.
 
-Our constraints also shaped design choices. Using **P5.js**, we prioritized modular systems—wave-based combat, manageable AI, and scalable random elements—that support complexity without technical overload.
+Working within the limits of **P5.js**, we focused on modular systems like wave-based enemy spawning, straightforward combat, and randomized upgrades—balancing feasibility with creative depth.
 
 Ultimately, Glitchwood merges familiar roguelike gameplay with **personal meaning and developer culture**.
 
 #### 1.3 Innovation
 
-Glitchwood introduces key innovations in mechanics, narrative, and visual design.
+Glitchwood brings several innovations to the roguelike format, blending symbolic design with engaging mechanics.
 
-**Mechanically**, we implemented **character-specific upgrade trees**, moving away from shared progression systems. We added a **pet system**, offering post-boss choices of support pets (attack, heal, or shield). Our **dynamic weather system** adds strategic depth: **snow slows movement**, **lightning causes damage**, and **sunlight drains health**—affecting both players and enemies.
+**Mechanically**, the game offers three characters with distinct **combat roles and upgrade styles**, not a shared progression path. We also introduced a **pet system**: after defeating a boss, players choose a pet (attack, shield, or heal) that influences combat strategy. A **dynamic weather system** further alters gameplay: **snow slows movement**, **lightning causes damage**, and **sunlight drains health**—affecting both players and enemies.
 
-**Narratively**, Glitchwood uses metaphor to represent a programmer’s journey. Bosses are bugs, pets are debug tools, weather reflects unstable runtime conditions—embedding meaning into play.
+**Narratively**, the game metaphorically reflects a programmer's journey through burnout, bugs, and problem-solving. These ideas are not explained through text, but embedded in every mechanic.
 
-**Visually**, we use pixel art rooted in coding culture. Characters embody programmer archetypes, and UI details subtly reference tech aesthetics.
+**Visually**, Glitchwood uses pixel art to reflect different programmer archetypes, with UI elements nodding to coding culture. Combined with minimalist sound effects and dynamic visuals, it creates a distinctive atmosphere.
 
-Glitchwood also features **two difficulty modes**, **three bosses**, and an **endless challenge mode**, delivering variety and long-term replayability.
+With two difficulty modes, three bosses, and endless replayability, Glitchwood offers not just challenge, but also introspection.
 
 #### 1.4 Project Objectives & Vision
 
-Our goal was to create not just a game, but a creative reflection of **developer life**. We wanted to combine engaging mechanics with symbolic storytelling about burnout, debugging fatigue, and the blurred line between logic and life.
+Glitchwood was created with dual objectives: to deliver a polished and replayable roguelike experience, and to explore how technical and creative systems can reflect real-world development processes.
 
-By externalizing these ideas through game elements—bosses, pets, and weather—we aimed to create an experience that resonates emotionally, especially with fellow developers.
+From a gameplay perspective, our goal was to build modular systems—such as the weather engine, pet integration, and enemy generation—that could be scaled or repurposed. We focused on clean architecture and maintainable code to support future content expansions, difficulty tuning, and possibly co-op play.
 
-Looking ahead, Glitchwood could evolve into a **narrative sandbox**, expanding character arcs and community content to explore the intersection of creativity, pressure, and code.
+Technically, we aimed to push the boundaries of what P5.js can handle in a real-time action game. The project provided valuable experience in managing collisions, animation states, and responsive input under performance constraints.
+
+Looking ahead, Glitchwood could evolve in many directions: deeper roguelike branching, community-designed upgrades, or even as a learning platform to demonstrate code-as-world metaphors. Our vision is to keep expanding Glitchwood not just as a game, but as a **sandbox for experimentation in gameplay, storytelling, and system design**.
 
 ### Background Research
 
