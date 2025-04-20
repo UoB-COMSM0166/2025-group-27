@@ -1,9 +1,25 @@
 # 2025-group-27
+
 2025 COMSM0166 group 27
 
 ## Glitchwood
+
 ![Glitchwood_Poster](docs/assets/selected_images/poster/Glitchwood.png)
+
 Link to your game [PLAY HERE](https://uob-comsm0166.github.io/2025-group-27/)
+##### Before you play, there are some info that you need to know!!
+
+| Image  | Character Name | Description  |
+|--------|--------------|--------------|
+| ![Archer](docs/assets/selected_images/characters/intro/mousegirl_intro.gif) | Mousegirl | This character has a unique charge attack mode. When fully charged, she reaches the maximum attack power among the characters. Her upgrades are related to the attack mechanics of the bow and arrows. |
+| ![Caster](docs/assets/selected_images/characters/intro/computerboy_intro.gif) | Computerboy | This character is easy to play—simple yet powerful. His upgrades focus on various attributes and bullet enhancements. |
+| ![Berserker](docs/assets/selected_images/characters/intro/keyboardman_intro.gif) | Keyboardman | This character specializes in melee combat, having high AOE damage. However, he needs to be close to enemies for launching attack. His upgrades mainly enhance survivability (e.g., lifesteal, resurrection) and some unique abilities. |
+
+| Image  | Boss Name  | Description  |
+|--------|-----------|--------------|
+| ![Slimeboss](docs/assets/selected_images/bossgif/Slimeboss.gif) | Slimeboss | They are usually enemies found around beginner villages in RPG games, but in our game, they appear as bosses—be careful! They have four different forms, each with unique attack patterns and characteristics. Challenge them multiple times to familiarize yourself with the attack styles of different-colored slimes! |
+| ![Birdboss](docs/assets/selected_images/bossgif/Birdboss.gif) | Birdboss | This boss appears around altars and specializes in dash attacks and movement-restricting strikes. Don’t be deceived by its flashy appearance! Here’s a little secret: its dash range is limited, so if you stay outside its attack range... |
+| ![Bugboss](docs/assets/selected_images/bossgif/Bugboss.gif) | Bugboss | A boss that obscures vision, summons ghost flames, and performs dash attacks. Watch out for its ghost flames—they deal massive damage! |
 
 Your game lives in the [/docs](/docs) folder, and is published using Github pages to the link above.
 
@@ -27,6 +43,46 @@ Include a demo video of your game here (you don't have to wait until the end, yo
 This is our [Kanban link(Jira)](https://1971026049.atlassian.net/jira/software/projects/KAN/boards/1)
 
 ## Project Report
+
+### 1. Introduction
+
+#### 1.1 Game Overview
+
+**Glitchwood** is a **2D roguelike action RPG** developed using P5.js. Players choose from **three uniquely designed characters**—each with distinct combat styles and upgrade paths—to battle through procedurally generated stages filled with enemies, traps, and unpredictable challenges.
+
+The game emphasizes **replayability and randomness**, introducing **weather conditions**, **support pets**, **enemy variants**, and **environmental obstacles**. As players survive increasingly difficult waves, they gain experience, unlock new upgrades, and ultimately access an **Endless Mode** to push their limits in pursuit of higher kill counts.
+
+Designed for both **newcomers and roguelike veterans**, Glitchwood includes an integrated tutorial, intuitive controls, and escalating difficulty levels. Its mechanics are tied to a deeper theme: a mysterious story of being trapped inside one’s own code—a reflection of the developer’s journey.
+
+#### 1.2 Inspiration
+
+Glitchwood draws inspiration from **Vampire Survivors** and **20 Minutes Till Dawn**, known for their simple controls, escalating combat, and high replayability. We were especially interested in how they balance randomness with player growth.
+
+However, we wanted more than mechanical depth. As computer science students, we reimagined the roguelike through a **symbolic lens**: a programmer trapped inside their own game, fighting bugs, facing unpredictable environments, and using tools to survive. This metaphor guided both our gameplay and narrative structure.
+
+Our constraints also shaped design choices. Using **P5.js**, we prioritized modular systems—wave-based combat, manageable AI, and scalable random elements—that support complexity without technical overload.
+
+Ultimately, Glitchwood merges familiar roguelike gameplay with **personal meaning and developer culture**.
+
+#### 1.3 Innovation
+
+Glitchwood introduces key innovations in mechanics, narrative, and visual design.
+
+**Mechanically**, we implemented **character-specific upgrade trees**, moving away from shared progression systems. We added a **pet system**, offering post-boss choices of support pets (attack, heal, or shield). Our **dynamic weather system** adds strategic depth: **snow slows movement**, **lightning causes damage**, and **sunlight drains health**—affecting both players and enemies.
+
+**Narratively**, Glitchwood uses metaphor to represent a programmer’s journey. Bosses are bugs, pets are debug tools, weather reflects unstable runtime conditions—embedding meaning into play.
+
+**Visually**, we use pixel art rooted in coding culture. Characters embody programmer archetypes, and UI details subtly reference tech aesthetics.
+
+Glitchwood also features **two difficulty modes**, **three bosses**, and an **endless challenge mode**, delivering variety and long-term replayability.
+
+#### 1.4 Project Objectives & Vision
+
+Our goal was to create not just a game, but a creative reflection of **developer life**. We wanted to combine engaging mechanics with symbolic storytelling about burnout, debugging fatigue, and the blurred line between logic and life.
+
+By externalizing these ideas through game elements—bosses, pets, and weather—we aimed to create an experience that resonates emotionally, especially with fellow developers.
+
+Looking ahead, Glitchwood could evolve into a **narrative sandbox**, expanding character arcs and community content to explore the intersection of creativity, pressure, and code.
 
 ### Background Research
 
@@ -126,37 +182,6 @@ A failed **quantum time synchronization experiment** caused the time freeze. The
 ###### 🎬 Paper Prototype
 
 🎮 **Game Idea 2 - Demo Video** 📹: [Click here to watch!](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/docs/prototype/video/Prototype_Game_Idea_2.mp4)
-
----
-
-## Introduction
-
-### About Glitchwood
-
-**Glitchwood** is a **2D roguelike RPG game**. Players can choose from **three different characters**, each with unique attack ability and different upgrades. The game features highly **randomized elements (such as weather, pets, enemies, bosses, obstacles, and upgrades, etc.)**, allowing players to enjoy the thrill of boosting through clearing stages. By clearing stages, players can unlock an **endless mode**, continuously improving their characters and striving for higher kill counts.
-The development of this game was inspired by **Vampire Survivors** and the popular Steam roguelike game **20 Minutes Till Dawn**. Glitchwood features a unique art style, an original and engaging background story, and creative background music with sound effects that complement the game’s atmosphere. It is not only easy to play, the game also includes a tutorial to help new players get started. We also introduce the endless mode which can further extend playtime.
-
-### What makes our game distinction ?
-
-In terms of game innovation, we have design **different upgrade paths** for three different characters, whereas traditional roguelike games usually offer only a single upgrade path. We also introduce a **pet system**, while traditional roguelike games typically only have standard upgrade options. Additionally, to enhance the game's randomness, we have implemented various **weather conditions** that affect both players and enemies under specific circumstances.
-Regarding the storyline, we have broken away from the conventional RPG narrative style by **integrating the game's plot with the life of coding**, conveying the message: **"While writing code, we should also pay attention to life and those things around you."**
-For art design, the game reflects our own experiences, featuring three uniquely designed characters with a **"programmer"** background, making them stand out.
-For challenging gameplay, we have designed three different bosses, introduced an endless mode, and provided two difficulty levels for players to choose from.
-In summary, this game is an exciting game and provide some accessible experience where players continuously improve themselves while facing increasingly powerful enemies.
-
-### Before you play, there are some info that you need to know!!
-
-| Image  | Character Name | Description  |
-|--------|--------------|--------------|
-| ![Archer](docs/assets/selected_images/characters/intro/mousegirl_intro.gif) | Mousegirl | This character has a unique charge attack mode. When fully charged, she reaches the maximum attack power among the characters. Her upgrades are related to the attack mechanics of the bow and arrows. |
-| ![Caster](docs/assets/selected_images/characters/intro/computerboy_intro.gif) | Computerboy | This character is easy to play—simple yet powerful. His upgrades focus on various attributes and bullet enhancements. |
-| ![Berserker](docs/assets/selected_images/characters/intro/keyboardman_intro.gif) | Keyboardman | This character specializes in melee combat, having high AOE damage. However, he needs to be close to enemies for launching attack. His upgrades mainly enhance survivability (e.g., lifesteal, resurrection) and some unique abilities. |
-
-| Image  | Boss Name  | Description  |
-|--------|-----------|--------------|
-| ![Slimeboss](docs/assets/selected_images/bossgif/Slimeboss.gif) | Slimeboss | They are usually enemies found around beginner villages in RPG games, but in our game, they appear as bosses—be careful! They have four different forms, each with unique attack patterns and characteristics. Challenge them multiple times to familiarize yourself with the attack styles of different-colored slimes! |
-| ![Birdboss](docs/assets/selected_images/bossgif/Birdboss.gif) | Birdboss | This boss appears around altars and specializes in dash attacks and movement-restricting strikes. Don’t be deceived by its flashy appearance! Here’s a little secret: its dash range is limited, so if you stay outside its attack range... |
-| ![Bugboss](docs/assets/selected_images/bossgif/Bugboss.gif) | Bugboss | A boss that obscures vision, summons ghost flames, and performs dash attacks. Watch out for its ghost flames—they deal massive damage! |
 
 ---
 
