@@ -6,42 +6,50 @@
 
 ![Glitchwood_Poster](docs/assets/selected_images/poster/Glitchwood.png)
 
-Link to your game [PLAY HERE](https://uob-comsm0166.github.io/2025-group-27/)
+Welcome to the official repository of **Glitchwood**, a fast-paced 2D roguelike action RPG created by students from the University of Bristol.
 
-### Before you play, there are some info that you need to know!!
+> ✨ Built using **p5.js**, this game explores the metaphor of being trapped inside your own code while battling waves of enemies, bosses, and your own limits.
 
-| Image  | Character Name | Description  |
-|--------|--------------|--------------|
-| ![Archer](docs/assets/selected_images/characters/intro/mousegirl_intro.gif) | Mousegirl | This character has a unique charge attack mode. When fully charged, she reaches the maximum attack power among the characters. Her upgrades are related to the attack mechanics of the bow and arrows. |
-| ![Caster](docs/assets/selected_images/characters/intro/computerboy_intro.gif) | Computerboy | This character is easy to play—simple yet powerful. His upgrades focus on various attributes and bullet enhancements. |
-| ![Berserker](docs/assets/selected_images/characters/intro/keyboardman_intro.gif) | Keyboardman | This character specializes in melee combat, having high AOE damage. However, he needs to be close to enemies for launching attack. His upgrades mainly enhance survivability (e.g., lifesteal, resurrection) and some unique abilities. |
+🔗 **Play the Game Now** 👉 [Click here to start playing!](https://uob-comsm0166.github.io/2025-group-27/)
 
-| Image  | Boss Name  | Description  |
-|--------|-----------|--------------|
-| ![Slimeboss](docs/assets/selected_images/bossgif/Slimeboss.gif) | Slimeboss | They are usually enemies found around beginner villages in RPG games, but in our game, they appear as bosses—be careful! They have four different forms, each with unique attack patterns and characteristics. Challenge them multiple times to familiarize yourself with the attack styles of different-colored slimes! |
-| ![Birdboss](docs/assets/selected_images/bossgif/Birdboss.gif) | Birdboss | This boss appears around altars and specializes in dash attacks and movement-restricting strikes. Don’t be deceived by its flashy appearance! Here’s a little secret: its dash range is limited, so if you stay outside its attack range... |
-| ![Bugboss](docs/assets/selected_images/bossgif/Bugboss.gif) | Bugboss | A boss that obscures vision, summons ghost flames, and performs dash attacks. Watch out for its ghost flames—they deal massive damage! |
+📂 Game source code lives in the [`/docs`](./docs) folder and is deployed via GitHub Pages.
 
-Your game lives in the [/docs](/docs) folder, and is published using Github pages to the link above.
+📽️ Demo Video (Coming Soon!)
 
-Include a demo video of your game here (you don't have to wait until the end, you can insert a work in progress video)
+### 🧍‍♂️ Before You Play: Meet the Characters & Bosses
 
-## Your Group
+#### 🧑‍💻 Playable Characters
+
+| Image  | Name        | Description |
+|--------|-------------|-------------|
+| ![Mousegirl](docs/assets/selected_images/characters/intro/mousegirl_intro.gif) | **Mousegirl** | Has a **charge-based ranged attack**. When fully charged, she deals the **highest damage** among all characters. Her upgrades focus on bow mechanics. |
+| ![Computerboy](docs/assets/selected_images/characters/intro/computerboy_intro.gif) | **Computerboy** | A **simple and powerful ranged attacker**. Easy to pick up. His upgrades emphasize **attribute boosts** and bullet enhancement. |
+| ![Keyboardman](docs/assets/selected_images/characters/intro/keyboardman_intro.gif) | **Keyboardman** | A **melee fighter** with strong AOE damage. Needs to get close to enemies. Upgrades improve **survivability**, such as lifesteal or resurrection. |
+
+#### 🐉 Bosses You'll Encounter
+
+| Image  | Boss Name  | Description |
+|--------|------------|-------------|
+| ![Slimeboss](docs/assets/selected_images/bossgif/Slimeboss.gif) | **Slimeboss** | A classic slime-type enemy turned **multi-form boss**. Each color has its own attack patterns. Learn them all to survive! |
+| ![Birdboss](docs/assets/selected_images/bossgif/Birdboss.gif) | **Birdboss** | Appears at altars. Uses **dash and movement restriction** attacks. Tip: keep your distance to avoid its dash range. |
+| ![Bugboss](docs/assets/selected_images/bossgif/Bugboss.gif) | **Bugboss** | A deadly boss that **summons ghost flames**, obscures vision, and dashes suddenly. Beware of its **high burst damage**! |
+
+## 🧑‍🤝‍🧑 Meet the Team
 
 ![Group_photo](docs/assets/selected_images/member/Group27.png)
 
-|   🎭 Name      |       📧 E-mail        | 📌 Role |                  🐙 Username                     |
-|---------------|-----------------------|------|-------------------------------------------------|
-| Chengjun Yi   | lw24658@bristol.ac.uk | TBD  | [realYDIAN](https://github.com/realYDIAN)       |
-| Qiutong Zhao  | fa24741@bristol.ac.uk | TBD  | [AQIU20](https://github.com/AQIU20)             |
-| Heng Zhang    | gg24694@bristol.ac.uk | TBD  | [chrisheng456](https://github.com/chrisheng456) |
-| Tong Yu       | mp24824@bristol.ac.uk | TBD  | [CelesteYt](https://github.com/CelesteYt)       |
-| Feihang Yan   | vj24070@bristol.ac.uk | TBD  | [Feihang027](https://github.com/Feihang027)     |
-| Xianhang Peng | ge24600@bristol.ac.uk | TBD  | [capybara131](https://github.com/capybara131)   |
+| 🎭 Name          | 📧 E-mail                  | 📌 Role (TBD) | 🐙 GitHub |
+|------------------|---------------------------|---------------|-----------|
+| Chengjun Yi       | lw24658@bristol.ac.uk     | TBD           | [realYDIAN](https://github.com/realYDIAN)       |
+| Qiutong Zhao      | fa24741@bristol.ac.uk     | TBD           | [AQIU20](https://github.com/AQIU20)             |
+| Heng Zhang        | gg24694@bristol.ac.uk     | TBD           | [chrisheng456](https://github.com/chrisheng456) |
+| Tong Yu           | mp24824@bristol.ac.uk     | TBD           | [CelesteYt](https://github.com/CelesteYt)       |
+| Feihang Yan       | vj24070@bristol.ac.uk     | TBD           | [Feihang027](https://github.com/Feihang027)     |
+| Xianhang Peng     | ge24600@bristol.ac.uk     | TBD           | [capybara131](https://github.com/capybara131)   |
 
-## Kanban
+## 📌 Task Management
 
-This is our [Kanban link(Jira)](https://1971026049.atlassian.net/jira/software/projects/KAN/boards/1)
+Track our progress here 👉 [Kanban Board (Jira)](https://1971026049.atlassian.net/jira/software/projects/KAN/boards/1)
 
 ## Project Report
 
