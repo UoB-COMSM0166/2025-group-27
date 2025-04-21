@@ -1,4 +1,4 @@
-// pet
+//--------------------Class BasePet------------------------
 class BasePet {
   constructor() {
     this.pos = createVector(0, 0);
@@ -10,7 +10,7 @@ class BasePet {
   display() { }
 }
 
-// pet 1
+// pet 1 Blaze
 class AttackPet extends BasePet {
   constructor(x, y) {
     super();
@@ -71,7 +71,7 @@ class AttackPet extends BasePet {
     }
 
     if (closest && record < detectionRange && this.attackCooldown <= 0) {
-      let killed = closest.hit(this.attackDamage); // 检查敌人是否被击杀
+      let killed = closest.hit(this.attackDamage);
       if (killed) {
         this.attackCooldown = 30;
         this.isAttacking = true;
@@ -153,7 +153,7 @@ class AttackPet extends BasePet {
   }
 }
 
-// pet 2
+// pet 2 Aegis
 class DefensePet extends BasePet {
   constructor() {
     super();
@@ -281,7 +281,7 @@ class DefensePet extends BasePet {
   }
 }
 
-// pet 3
+// pet 3 Aurora
 class HealerPet extends BasePet {
   constructor() {
     super();

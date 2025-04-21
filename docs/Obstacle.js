@@ -1,4 +1,3 @@
-// --- Obstacle 类 ---
 class Obstacle {
   constructor(x, y, width, height, isVertical, isSpecial = false) {
     this.isSpecial = isSpecial;
@@ -80,10 +79,10 @@ class Obstacle {
 
   collidesWith(otherPos, otherWidth, otherHeight) {
     return !(
-      otherPos.x + otherWidth < this.pos.x ||    // 其他矩形的右边界在当前矩形左侧
-      otherPos.x > this.pos.x + this.width ||    // 其他矩形的左边界在当前矩形右侧
-      otherPos.y + otherHeight < this.pos.y ||   // 其他矩形的下边界在当前矩形上侧
-      otherPos.y > this.pos.y + this.height      // 其他矩形的上边界在当前矩形下侧
+      otherPos.x + otherWidth < this.pos.x ||
+      otherPos.x > this.pos.x + this.width ||
+      otherPos.y + otherHeight < this.pos.y ||
+      otherPos.y > this.pos.y + this.height
     );
   }
 

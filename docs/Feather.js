@@ -3,26 +3,22 @@ class Feather {
     this.pos = createVector(x, y);
     this.vel = createVector(0, 2);
     this.sprite = sprite;
-    this.lifetime = 80; // 减少生命周期
+    this.lifetime = 80;
     
-    // 减少动画帧数和更新频率
     this.totalFrames = 8;
-    this.currentFrame = Math.floor(random(8)); // 随机初始帧，使动画不同步
-    this.frameDelay = 8; // 降低帧率
+    this.currentFrame = Math.floor(random(8));
+    this.frameDelay = 8;
     this.frameCounter = 0;
 
-    // 预计算尺寸值
     this.frameWidth = this.sprite ? this.sprite.width / this.totalFrames : 0;
     this.frameHeight = this.sprite ? this.sprite.height : 0;
     
-    // 预计算一些值以提高性能
     this.size = {
       width: this.frameWidth,
       height: this.frameHeight
     };
   }
 
-  // 添加重置方法以支持对象池复用
   reset(x, y, sprite) {
     this.pos.x = x;
     this.pos.y = y;
@@ -50,7 +46,6 @@ class Feather {
     this.pos.x += this.vel.x;
     this.pos.y += this.vel.y;
     
-    // 降低动画更新频率
     if (frameCount % this.frameDelay === 0) {
       this.currentFrame = (this.currentFrame + 1) % this.totalFrames;
     }
@@ -62,7 +57,6 @@ class Feather {
     if (this.lifetime <= 0 || !this.sprite) return;
     
     push();
-    // 整数运算优化透明度计算
     const alpha = Math.floor((this.lifetime / 80) * 255);
     tint(255, alpha);
     

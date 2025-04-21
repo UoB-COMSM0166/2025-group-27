@@ -1,4 +1,4 @@
-// ===== 鼠标与键盘事件 =====
+//---------------event related to mouseClick------------------
 function mouseClicked() {
   if (gameState == "story1" && mouseX > buttonX && mouseX < buttonX + buttonW &&
     mouseY > buttonY && mouseY < buttonY + buttonH) {
@@ -46,7 +46,6 @@ function mousePressed() {
         choosingUpgrade = false;
         gameState = "game";
         
-        // 如果需要生成新的敌人，直接生成，不使用 setTimeout
         if (enemies.length === 0) {
           spawnEnemiesForWave(wave);
         }
@@ -84,7 +83,6 @@ function mousePressed() {
 }
 
 function mouseReleased() {
-  // 确保 player 存在且游戏状态正确
   if (player && gameState === "game") {
     if (player.characterType === "archer" && player.autoCharge == false) {
       player.releaseArrow();
@@ -93,14 +91,14 @@ function mouseReleased() {
 }
 
 function keyPressed() {
-  if (keyCode === 69 && player.characterType == "knight" && player.spinningSlash == true) { // E键
+  if (keyCode === 69 && player.characterType == "knight" && player.spinningSlash == true) { //E
     console.log("E");
     player.performSpinningSlash();
   }
   if ((gameState === "game" || gameState === "paused") && keyCode === 9) {
-    // TAB键
+    // TAB
     showAttributes = !showAttributes;
-    gameState = showAttributes ? "paused" : "game"; // 切换游戏状态
+    gameState = showAttributes ? "paused" : "game"; // switch game state
     return false;
   }
   if (choosingPotion) {
@@ -123,14 +121,13 @@ function keyPressed() {
     if (key === "P" || key === "p") gameState = "game";
     if (key === "I" || key === "i") {
       player.isInvincible = !player.isInvincible;
-      showFloatingText(player.isInvincible ? "无敌模式已开启!" : "无敌模式已关闭", 
+      showFloatingText(player.isInvincible ? "Invincible mode open!" : "Invincible mode close!", 
                         width / 2, height / 2 - 100, 
                         player.isInvincible ? color(255, 215, 0) : color(255, 100, 100), 24);
       
-      // 更新无敌模式按钮的标签
       for (let btn of pauseButtons) {
-        if (btn.label.includes("无敌模式")) {
-          btn.label = player.isInvincible ? "关闭无敌模式 (I)" : "开启无敌模式 (I)";
+        if (btn.label.includes("Invincible mode")) {
+          btn.label = player.isInvincible ? "close Invincible mode (I)" : "Invincible mode (I)";
           break;
         }
       }

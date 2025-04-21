@@ -1,4 +1,4 @@
-// ===== Button 类 =====
+//------------------Class Button----------------------
 class Button {
     constructor(x, y, w, h, label, action) {
       this.x = x;
@@ -30,7 +30,7 @@ class Button {
     }
   }
   
-  // --- FloatingText 类 ---
+//----------------------Class FloatingText------------------
 class FloatingText {
     constructor(text, x, y, col) {
       this.text = text;
