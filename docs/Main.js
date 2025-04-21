@@ -85,6 +85,12 @@ let levelFogRadius = 150;
 let maxLevelFogOpacity = 180;
 let fogTransitionSpeed = 5;
 
+let currentFrame1 = 0;
+let animationDone = false;
+let deathAnimations = [];
+
+const MAX_FEATHERS = 50;
+
 //----------------------preload image-----------------------------
 function preload() {
   // page related

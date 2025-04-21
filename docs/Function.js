@@ -1,11 +1,3 @@
-let currentFrame1 = 0;
-let animationDone = false;
-let deathAnimations = []; // 追踪所有正在播放的死亡动画
-
-// 在全局变量区域添加最大羽毛数量限制
-const MAX_FEATHERS = 50; // 将最大羽毛数量从100降到50
-
-// ===== 核心游戏逻辑 =====
 function handleGameplay(now) {
   if (wave <= 5) {
     image(level1map, 0, 0, 1062, 600);
@@ -17,32 +9,28 @@ function handleGameplay(now) {
     image(level4map, 0, 0, 1062, 600);
   }
 
-  // 玩家相关操作
   player.move();
   player.shoot();
   player.update();
   player.display();
 
-  // 更新并显示羽毛对象池
   featherPool.update();
   featherPool.display();
 
-  //更新并绘制羽毛
   feathers = feathers.filter((feather) => {
-    // 如果羽毛数量超过限制，移除最早的羽毛
     if (feathers.length > MAX_FEATHERS) {
       return false;
     }
 
     if (!feather.update()) {
-      return false; // 超出屏幕等条件，移除
+      return false;
     }
-    feather.animate(); // 如果有多帧动画
+    feather.animate();
     feather.display();
     return true;
   });
 
-  // 更新并显示子弹
+  // bullet
   bullets = bullets.filter((bullet) => {
     if (bullet.update()) {
       bullet.display();
@@ -62,13 +50,13 @@ function handleGameplay(now) {
     generateInitialObstacles();
   }
 
-  // 更新并显示障碍物
+  // obstacle
   obstacles.forEach((obs) => {
     obs.update();
     obs.display();
   });
 
-  // 更新并显示敌人
+  // enemies
   for (let j = enemies.length - 1; j >= 0; j--) {
     let enemy = enemies[j];
     enemy.update();
@@ -78,25 +66,21 @@ function handleGameplay(now) {
       enemies.splice(j, 1);
     }
 
-    // 特别检查是否是BugBoss，并确保遮蔽视野效果被应用
     if (enemy instanceof BugBoss) {
-      // 确保遮蔽视野属性是激活的
       enemy.isVisionBlocked = true;
       enemy.visionBlockTimer = 999999;
-      // 强制调用绘制雾气效果
       if (typeof enemy.drawFogEffect === 'function') {
         enemy.drawFogEffect();
       }
     }
 
-    // 检查是否为已击败的Boss(包括BugBoss)
     if ((enemy.isBoss || enemy instanceof BugBoss) && enemy.health <= 0) {
       bossDefeated++;
       enemies.splice(j, 1);
       
-      console.log("Boss defeated, current wave:", wave); // 调试日志
+      console.log("Boss defeated, current wave:", wave);
 
-      // 处理第15波的胜利情况
+      //victory
       if (wave === 15) {
         gameState = "vStory";
         finalStats = {
@@ -110,11 +94,9 @@ function handleGameplay(now) {
         return;
       }
 
-      // 检查是否仍有Boss活着
       let remainingBosses = enemies.filter(e => e.isBoss || e instanceof BugBoss);
       console.log("Remaining bosses:", remainingBosses.length);
-      
-      // 只有当所有Boss都被击败后才进入下一波
+
       if (remainingBosses.length === 0) {
         bossActive = false;
         wave++;
@@ -124,25 +106,21 @@ function handleGameplay(now) {
     }
   }
 
-  // 更新并显示敌人子弹，同时检测与玩家的碰撞
   enemyBullets = enemyBullets.filter((bullet) => {
     bullet.update();
     bullet.display();
-    return bullet.isActive; // 过滤掉已经不活跃的子弹
+    return bullet.isActive;
   });
 
-  // 更新经验球
   expOrbs = expOrbs.filter((orb) => {
     orb.update();
     orb.display();
     return !orb.checkCollection();
   });
 
-  // 处理毒气伤害效果
   for (let i = poisonTrails.length - 1; i >= 0; i--) {
     let trail = poisonTrails[i];
 
-    // 更新动画帧
     if (trail.frameCounter !== undefined) {
       trail.frameCounter++;
       if (trail.frameCounter >= trail.frameDelay) {
@@ -156,21 +134,17 @@ function handleGameplay(now) {
       continue;
     }
 
-    // 绘制毒池动画
     if (typeof poisonPoolEffectImg !== 'undefined' && poisonPoolEffectImg && trail.frameIndex !== undefined) {
       try {
         push();
         drawingContext.filter = 'contrast(1.2) brightness(1.1)';
         imageMode(CENTER);
 
-        // 计算当前帧在精灵表中的位置
         let frameWidth = poisonPoolEffectImg.width / trail.frameCount;
         let frameHeight = poisonPoolEffectImg.height;
 
-        // 调整渲染质量
-        drawingContext.imageSmoothingEnabled = false; // 禁用平滑，保留像素感
+        drawingContext.imageSmoothingEnabled = false;
 
-        // 减小透明度衰减速度，保持更长时间的清晰度
         let alpha = map(millis() - trail.startTime, 0, trail.duration * 0.7, 255, 100);
         if (trail.colorMod) {
           tint(red(trail.colorMod), green(trail.colorMod), blue(trail.colorMod), alpha);
@@ -178,8 +152,7 @@ function handleGameplay(now) {
           tint(255, 255, 255, alpha);
         }
 
-        // 调整尺寸参数，使特效更大更清晰
-        let displaySize = trail.radius * 2.2; // 从1.8倍增加到2.2倍
+        let displaySize = trail.radius * 2.2;
 
         image(
           poisonPoolEffectImg,
@@ -198,28 +171,22 @@ function handleGameplay(now) {
         drawingContext.filter = 'none';
         pop();
       } catch (e) {
-        // 移除后备的绿色圆圈显示，直接继续
         continue;
       }
     } else {
-      // 使用死亡特效动画替代绿色圆圈
       push();
       imageMode(CENTER);
 
-      // 计算当前帧在精灵表中的位置
-      let frameWidth = ghostDeathEffect.width / 4; // 4帧动画
+      let frameWidth = ghostDeathEffect.width / 4; 
       let frameHeight = ghostDeathEffect.height;
 
-      // 计算当前帧索引
       let progress = (millis() - trail.startTime) / trail.duration;
-      let frameIndex = floor(progress * 4); // 4帧动画
+      let frameIndex = floor(progress * 4);
       frameIndex = constrain(frameIndex, 0, 3);
 
-      // 计算透明度
       let alpha = map(millis() - trail.startTime, 0, trail.duration, 255, 0);
       tint(255, alpha);
 
-      // 绘制特效
       image(
         ghostDeathEffect,
         trail.pos.x,
@@ -241,10 +208,9 @@ function handleGameplay(now) {
     }
   }
 
-  // 如果所有敌人被消灭，则生成下一波敌人
   if (enemies.length === 0) {
     if (gameState !== "game") {
-      return; // 如果不是游戏状态，不生成新敌人
+      return;
     }
 
     if (wave === 15) {
@@ -271,7 +237,6 @@ function handleGameplay(now) {
     );
   }
 
-  // 显示波数提示动画
   if (waveTextAnimation > 0) {
     push();
     waveTextAnimation--;
@@ -282,11 +247,9 @@ function handleGameplay(now) {
     pop();
   }
 
-  // 显示 HUD 信息
   let elapsedTime = floor((now - gameStartTime) / 1000);
   displayHUD(elapsedTime);
 
-  // 判断游戏结束
   if (player.health <= 0) {
     finalStats = {
       normalEnemies: normalEnemiesDefeated,
@@ -299,21 +262,15 @@ function handleGameplay(now) {
     gameState = "gameOver";
   }
 
-  // 如果处于升级状态，则绘制升级界面
   if (choosingUpgrade) {
     drawUpgradeScreen();
   }
 
-  // ★ 调用天气效果函数，应用天气效果 ★
   applyWeatherEffects(now);
 
-  // 在所有内容之上绘制关卡雾效果
   drawLevelFogEffect();
 }
-
-
-// 初始化相关
-// ===== 角色选择和按钮初始化 =====
+//initial function
 function initButtons() {
   const baseY = height / 2 - 30;
   const baseX = width / 2 - 30;
@@ -321,16 +278,16 @@ function initButtons() {
   mainMenuButtons = [
     new Button(width / 2 - 100, baseY + 50, 200, 40, "Start Game(easy)", () => {
       buttonsound.play();
-      wave = 1; // 重置波数
-      normalEnemiesDefeated = 0; // 重置击杀数
+      wave = 1;
+      normalEnemiesDefeated = 0;
       bossDefeated = 0;
       gameState = "story1";
       difficult = "easy";
     }),
     new Button(width / 2 - 100, baseY + 100, 200, 40, "Start Game(hard)", () => {
       buttonsound.play();
-      wave = 1; // 重置波数
-      normalEnemiesDefeated = 0; // 重置击杀数
+      wave = 1;
+      normalEnemiesDefeated = 0;
       bossDefeated = 0;
       gameState = "story1";
       difficult = "hard";
@@ -355,7 +312,7 @@ function initButtons() {
       height / 2 + 167.5,
       200,
       40,
-      "Archer", // 间距从+20改为+30
+      "Archer",
       () => {
         buttonsound.play();
         initPlayer("archer")
@@ -373,24 +330,21 @@ function initButtons() {
   ];
 
   pauseButtons = [
-    new Button(width / 2 - 100, height / 2 - 40, 200, 40, "继续游戏 (P)", function () {
+    new Button(width / 2 - 100, height / 2 - 40, 200, 40, "resume game (P)", function () {
       gameState = "game";
     }),
-    new Button(width / 2 - 100, height / 2 + 20, 200, 40, "回到主菜单 (M)", function () {
+    new Button(width / 2 - 100, height / 2 + 20, 200, 40, "back to mainmenu (M)", function () {
       gameState = "mainMenu";
     }),
-    new Button(width / 2 - 100, height / 2 + 80, 200, 40, "保存游戏 (S)", function () {
-      // 保存游戏逻辑
+    new Button(width / 2 - 100, height / 2 + 80, 200, 40, "save game (S)", function () {
     }),
-    // 添加新的无敌模式按钮
     new Button(width / 2 - 100, height / 2 + 140, 200, 40,
-      player && player.isInvincible ? "关闭无敌模式 (I)" : "开启无敌模式 (I)",
+      player && player.isInvincible ? "close Invincible Mode (I)" : "open Invincible Mode (I)",
       function () {
         if (player) {
           player.isInvincible = !player.isInvincible;
-          // 更新按钮文本
-          this.label = player.isInvincible ? "关闭无敌模式 (I)" : "开启无敌模式 (I)";
-          showFloatingText(player.isInvincible ? "无敌模式已开启!" : "无敌模式已关闭",
+          this.label = player.isInvincible ? "close Invincible Mode (I)" : "open Invincible Mode (I)";
+          showFloatingText(player.isInvincible ? "Invincible Mode is opened!" : "Invincible Mode is closed!",
             width / 2, height / 2 - 100,
             player.isInvincible ? color(255, 215, 0) : color(255, 100, 100), 24);
         }
@@ -398,7 +352,6 @@ function initButtons() {
   ];
 }
 
-// ===== 初始化角色时生成第一波敌人 =====
 function initPlayer(type) {
   if (type === "gunner") {
     player = new Player(GunnerActionUp, GunnerActionDown, GunnerActionLeft, GunnerActionRight, GunnerActionIntro, GunnerAttackUp, GunnerAttackDown, GunnerAttackLeft, GunnerAttackRight, 50.75, 100, 50.75, 100, 50.75, 100, 50.75, 100, 50.75, 100, 1, 1, 1, 1, 1, 1, 1, 1, type);
@@ -422,11 +375,11 @@ function initPlayer(type) {
     player.dodgeRate = 0.05;
     player.lifesteal = 0;
     player.thorns = 0;
-    player.arrowDamage = 20;          // 基础伤害
-    player.arrowSpeed = 10;           // 基础速度
-    player.maxChargeTime = 90;        // 增加最大蓄力时间
-    player.arrowCooldown = 20;        // 冷却时间调整
-    player.chargeBarScale = 0.7;      // 新增蓄力条缩放系数
+    player.arrowDamage = 20;
+    player.arrowSpeed = 10;
+    player.maxChargeTime = 90;
+    player.arrowCooldown = 20;
+    player.chargeBarScale = 0.7;
   } else if (type === "knight") {
     player = new Player(KnightActionUp, KnightActionDown, KnightActionLeft, KnightActionRight, KnightActionIntro, KnightActionAttackUp, KnightActionAttackDown, KnightActionAttackLeft, KnightActionAttackRight, 50.75, 100, 50.75, 100, 43.5, 79, 50.75, 100, 50.67, 79, 100, 100, 100, 150, 150, 150, 150, 150, type);
     player.attackPower = 10;
@@ -439,7 +392,7 @@ function initPlayer(type) {
     player.lifesteal = 0;
     player.thorns = 0;
   }
-  wave = 1; // 新增：重置波数
+  wave = 1;
   enemies = [];
 
   generateInitialObstacles();
@@ -448,17 +401,15 @@ function initPlayer(type) {
   gameState = "guide";
 }
 
-// display函数
-// ===== HUD及波数显示 =====
+//display related functions
 function displayHUD(elapsedTime) {
   push();
   fill(255);
   textSize(14);
   textAlign(LEFT, TOP);
-  text(`Time: ${elapsedTime}s`, 10, 60); // 向下移动
-  text(`Enemies Killed: ${normalEnemiesDefeated}`, 10, 80); // 向下移动
-  text(`Bosses Defeated: ${bossDefeated}`, 10, 100); // 向下移动
-
+  text(`Time: ${elapsedTime}s`, 10, 60);
+  text(`Enemies Killed: ${normalEnemiesDefeated}`, 10, 80);
+  text(`Bosses Defeated: ${bossDefeated}`, 10, 100);
   textSize(24);
   textAlign(CENTER, TOP);
   text(`WAVE ${wave}`, width / 2, 10);
@@ -483,7 +434,7 @@ function displayHUD(elapsedTime) {
   pop();
 }
 
-// ===== UI 及输入 =====
+//UI and input
 function drawUIElements() {
   switch (gameState) {
     case "petSelection":
@@ -503,7 +454,6 @@ function drawUIElements() {
   if (bossActive) displayBossHealthBar();
 }
 
-// ===== 显示角色属性预览 =====
 function displayAttributes() {
   push();
   fill(0, 200);
@@ -536,9 +486,7 @@ function displayAttributes() {
 }
 
 function displaySettingPage() {
-  // 每次进入设置页面时显示控件
   if (!volumeSlider) {
-    // 首次进入时创建设置元素
     volumeSlider = createSlider(0, 1, volume, 0.1);
     volumeSlider.position(width / 2 - 100, 200);
 
@@ -546,38 +494,31 @@ function displaySettingPage() {
     backButton.position(width / 2 - 50, 300);
     backButton.mousePressed(() => {
       buttonsound.play();
-      gameState = 'mainMenu'; // 返回主菜单
-      hideSettingsElements(); // 隐藏设置控件
+      gameState = 'mainMenu';
+      hideSettingsElements();
     });
   } else {
-    // 非首次进入时显示控件
     showSettingsElements();
   }
 
-  // 实时更新全局变量
   volume = volumeSlider.value();
 
-  // 绘制设置界面文字
   fill(0);
   textSize(20);
   text('Volume', width / 2 - 150, 220);
 }
 
-// 显示设置控件
 function showSettingsElements() {
   volumeSlider.show();
   backButton.show();
 }
 
-// 隐藏设置控件
 function hideSettingsElements() {
   volumeSlider.hide();
   backButton.hide();
 }
 
-// === 显示Boss血条 ===
 function displayBossHealthBar() {
-  // 只计算活跃的Boss
   if (gameState == "game") {
     let activeBosses = enemies.filter(e => e instanceof Boss && e.isActive);
     if (activeBosses.length === 0) {
@@ -585,31 +526,28 @@ function displayBossHealthBar() {
       return;
     }
 
-    // 计算活跃Boss的总血量
     let totalMaxHealth = 0;
     let totalCurrentHealth = 0;
     for (let boss of activeBosses) {
       totalMaxHealth += boss.maxHealth;
-      totalCurrentHealth += Math.max(0, boss.health); // 确保不会出现负数
+      totalCurrentHealth += Math.max(0, boss.health);
     }
 
-    // 绘制血条
+    //draw health bar
     const barWidth = width * 0.6;
     const barHeight = 20;
     const x = width / 2 - barWidth / 2;
     const y = 30;
 
-    // 血条背景
     stroke(255, 215, 0);
     strokeWeight(2);
     fill(50);
     rect(x, y, barWidth, barHeight, 5);
     noStroke();
 
-    // 当前血量
-    if (totalMaxHealth > 0) { // 添加检查以避免除以零
+    if (totalMaxHealth > 0) {
       let healthPercentage = totalCurrentHealth / totalMaxHealth;
-      healthPercentage = constrain(healthPercentage, 0, 1); // 确保百分比在0-1之间
+      healthPercentage = constrain(healthPercentage, 0, 1);
 
       fill(255, 0, 0);
       rect(x + 2, y + 2, barWidth - 4, barHeight - 4, 3);
@@ -623,7 +561,7 @@ function displayBossHealthBar() {
       );
     }
 
-    // 显示血量数值
+    //show health value
     fill(255);
     textAlign(CENTER);
     textSize(14);
@@ -633,7 +571,6 @@ function displayBossHealthBar() {
       y + barHeight + 15
     );
 
-    // 只显示活跃Boss的单独血量
     if (activeBosses.length > 1) {
       textSize(12);
       activeBosses.forEach((boss, index) => {
@@ -648,7 +585,7 @@ function displayBossHealthBar() {
   }
 }
 
-// ===== 其他UI函数 =====
+//UI display
 function displayMainMenu() {
   if (!mainMenuSound.isPlaying()) {
     mainMenuSound.play();
@@ -666,8 +603,8 @@ function displayStoryPage1() {
 
   buttonW = 100;
   buttonH = 30;
-  buttonX = width - buttonW - 20; // 距离右侧 20 像素
-  buttonY = height - buttonH - 20; // 距离底部 20 像素
+  buttonX = width - buttonW - 20;
+  buttonY = height - buttonH - 20;
 }
 
 function displayStoryPage2() {
@@ -675,8 +612,8 @@ function displayStoryPage2() {
 
   buttonW = 100;
   buttonH = 30;
-  buttonX = width - buttonW - 20; // 距离右侧 20 像素
-  buttonY = height - buttonH - 20; // 距离底部 20 像素
+  buttonX = width - buttonW - 20;
+  buttonY = height - buttonH - 20;
 }
 
 function displayStoryPage3() {
@@ -684,8 +621,8 @@ function displayStoryPage3() {
 
   buttonW = 100;
   buttonH = 30;
-  buttonX = width - buttonW - 20; // 距离右侧 20 像素
-  buttonY = height - buttonH - 20; // 距离底部 20 像素
+  buttonX = width - buttonW - 20;
+  buttonY = height - buttonH - 20;
 }
 
 function displayStoryPage4() {
@@ -693,8 +630,8 @@ function displayStoryPage4() {
 
   buttonW = 100;
   buttonH = 30;
-  buttonX = width - buttonW - 20; // 距离右侧 20 像素
-  buttonY = height - buttonH - 20; // 距离底部 20 像素
+  buttonX = width - buttonW - 20;
+  buttonY = height - buttonH - 20;
 }
 
 function displayStoryPage5() {
@@ -702,8 +639,8 @@ function displayStoryPage5() {
 
   buttonW = 100;
   buttonH = 30;
-  buttonX = width - buttonW - 20; // 距离右侧 20 像素
-  buttonY = height - buttonH - 20; // 距离底部 20 像素
+  buttonX = width - buttonW - 20;
+  buttonY = height - buttonH - 20;
 }
 
 function displayVictoryPage1() {
@@ -712,8 +649,8 @@ function displayVictoryPage1() {
 
   buttonW = 100;
   buttonH = 30;
-  buttonX = width - buttonW - 20; // 距离右侧 20 像素
-  buttonY = height - buttonH - 20; // 距离底部 20 像素
+  buttonX = width - buttonW - 20;
+  buttonY = height - buttonH - 20;
 }
 
 function displayCharacterSelection() {
@@ -732,8 +669,8 @@ function displayGuidePage() {
 
   buttonW = 100;
   buttonH = 30;
-  buttonX = width - buttonW - 20; // 距离右侧 20 像素
-  buttonY = height - buttonH - 20; // 距离底部 20 像素
+  buttonX = width - buttonW - 20;
+  buttonY = height - buttonH - 20;
 }
 
 function displayPauseMenu() {
@@ -742,7 +679,6 @@ function displayPauseMenu() {
   textSize(25);
   fill(255);
   textAlign(CENTER, CENTER);
-  // 计算并显示暂停时间
   let pausedTime = floor((millis() - pauseStartTime) / 1000);
   text(`Paused for: ${pausedTime}s`, width / 2, height / 3 + 30);
 
@@ -751,7 +687,6 @@ function displayPauseMenu() {
   text(`XP: ${player.exp}`, width / 2, height / 2 + 60);
   text("Return to Main Menu (Press 'M')", width / 2, height / 2 + 90);
   text("Resume (Press 'P')", width / 2, height / 2 + 120);
-  // 添加无敌模式说明
   text("Toggle Invincible Mode (Press 'I')", width / 2, height / 2 + 150);
   pop();
 }
@@ -770,7 +705,6 @@ function displayGameOverScreen() {
   image(gameOverPage, 0, 0, width, height);
 }
 
-// ===== 生成障碍物 =====
 function generateInitialObstacles() {
   const corridorWidth = 50;
   const minDistanceFromPlayer = 150;
@@ -813,7 +747,6 @@ function generateInitialObstacles() {
   }
 }
 
-// ===== 升级界面 =====
 function drawUpgradeScreen() {
   image(skillPage, 0, 0, width, height);
   fill(0, 0, 0, 200);
@@ -845,7 +778,7 @@ function drawUpgradeScreen() {
   textAlign(LEFT);
 }
 
-// ===== 升级选项 =====
+//upgrade options
 function generateUpgradeOptions() {
   let allUpgrades;
   if (player.characterType == "gunner") {
@@ -1099,7 +1032,6 @@ function generateUpgradeOptions() {
   }
   upgradeOptions = [];
   let availableUpgrades = allUpgrades.filter((upg) => {
-    // 确保使用Set的has方法
     if (upg.oneTime) {
       return !(player.unlockedUpgrades instanceof Set
         ? player.unlockedUpgrades.has(upg.value)
@@ -1120,46 +1052,39 @@ function updateArrows() {
     arrow.update();
     arrow.display();
 
-    // 检测箭矢与敌人的碰撞
     for (let j = enemies.length - 1; j >= 0; j--) {
       let enemy = enemies[j];
       if (arrow.pos.dist(enemy.pos) < enemy.size) {
         if (arrow.handleCollision(enemy)) {
-          // 如果箭矢没有穿透，销毁箭矢
           arrows.splice(i, 1);
         }
-        arrow.split(); // 处理散射
+        arrow.split();
         break;
       }
     }
   }
 }
 
-// ===== 根据当前波数生成敌人 =====
+//generate enemies
 function spawnEnemiesForWave(waveNumber) {
-  console.log("Spawning enemies for wave", waveNumber);
-
-  // 第9关开启雾效果
+  // fog effect
   if (waveNumber === 15) {
     levelFogEnabled = true;
-    console.log("Wave 15: Level fog effect enabled");
   } else if (waveNumber > 15) {
-    // 第9关之后禁用雾效果
     levelFogEnabled = false;
   }
 
   enemies = [];
 
   if (waveNumber === 5) {
-    // Boss 关 1：SlimeBoss
-    // 停止普通波音乐
+    // stop normal music
     if (normalMusic12 && normalMusic12.isPlaying()) { normalMusic12.stop(); }
     if (normalMusic45 && normalMusic45.isPlaying()) { normalMusic45.stop(); }
     if (normalMusic78 && normalMusic78.isPlaying()) { normalMusic78.stop(); }
-    // 停止其他 Boss 音乐
+    // stop other music
     if (bossMusic2 && bossMusic2.isPlaying()) { bossMusic2.stop(); }
     if (bossMusic3 && bossMusic3.isPlaying()) { bossMusic3.stop(); }
-    // 播放 Boss 音乐
+    // plsy boss music
     if (bossMusic1 && !bossMusic1.isPlaying()) {
       bossMusic1.play();
     }
@@ -1169,7 +1094,6 @@ function spawnEnemiesForWave(waveNumber) {
     let boss3 = new SlimeBoss(slimeBoss2Image, "poison");
     let boss4 = new SlimeBoss(slimeBoss2Image, "wind");
 
-    // 设置不同位置
     boss1.pos = createVector(width / 2 - 200, height / 2 - 270);
     boss2.pos = createVector(width / 2 + 210, height / 2 - 210);
     boss3.pos = createVector(width / 2 - 220, height / 2 + 150);
@@ -1187,7 +1111,6 @@ function spawnEnemiesForWave(waveNumber) {
     boss4.skillDelay = 240;
     boss4.skillCooldown = Math.floor(Math.random() * boss4.skillDelay);
 
-    // 移动距离
     boss1.moveDistance1 = 40;
     boss1.moveDistance2 = 60;
 
@@ -1200,7 +1123,6 @@ function spawnEnemiesForWave(waveNumber) {
     boss4.moveDistance1 = 55;
     boss4.moveDistance2 = 45;
 
-    // 错开起跳
     boss1.initialStopDelay = 0;
     boss2.initialStopDelay = 500;
     boss3.initialStopDelay = 800;
@@ -1213,20 +1135,19 @@ function spawnEnemiesForWave(waveNumber) {
   }
 
   else if (waveNumber === 10) {
-    // Boss 关 2：BirdBoss
-    // 停止普通波音乐
+    // stop normal music
     if (normalMusic12 && normalMusic12.isPlaying()) { normalMusic12.stop(); }
     if (normalMusic45 && normalMusic45.isPlaying()) { normalMusic45.stop(); }
     if (normalMusic78 && normalMusic78.isPlaying()) { normalMusic78.stop(); }
-    // 停止其他 Boss 音乐
+    // stop other music
     if (bossMusic1 && bossMusic1.isPlaying()) { bossMusic1.stop(); }
     if (bossMusic3 && bossMusic3.isPlaying()) { bossMusic3.stop(); }
-    // 播放 Boss 音乐
+    // display boss music
     if (bossMusic2 && !bossMusic2.isPlaying()) {
       bossMusic2.play();
     }
 
-    // 生成 BirdBoss
+    // Birdboss
     let bossPos = getValidSpawnPosition();
     let boss = new BirdBoss(bossAction);
     boss.pos = bossPos;
@@ -1235,20 +1156,18 @@ function spawnEnemiesForWave(waveNumber) {
     bossActive = true;
   }
 
-  else if (waveNumber === 15) {  // Boss 关 3：BugBoss
-    // 停止普通波音乐
+  else if (waveNumber === 15) {  //Bugboss
+    // stop normal music
     if (normalMusic12 && normalMusic12.isPlaying()) { normalMusic12.stop(); }
     if (normalMusic45 && normalMusic45.isPlaying()) { normalMusic45.stop(); }
     if (normalMusic78 && normalMusic78.isPlaying()) { normalMusic78.stop(); }
-    // 停止其他 Boss 音乐
+    // stop other music
     if (bossMusic1 && bossMusic1.isPlaying()) { bossMusic1.stop(); }
     if (bossMusic2 && bossMusic2.isPlaying()) { bossMusic2.stop(); }
-    // 播放 Boss 音乐
+    // display boss music
     if (bossMusic3 && !bossMusic3.isPlaying()) {
       bossMusic3.play();
     }
-
-    console.log("生成第9波boss");  // 调试日志
     let bossPos = getValidSpawnPosition();
     let boss = new BugBoss();
     boss.pos = bossPos;
@@ -1258,13 +1177,12 @@ function spawnEnemiesForWave(waveNumber) {
   }
 
   else {
-    // 普通敌人生成逻辑
-    // 停止所有 Boss 音乐
+    //stop music
     if (bossMusic1 && bossMusic1.isPlaying()) { bossMusic1.stop(); }
     if (bossMusic2 && bossMusic2.isPlaying()) { bossMusic2.stop(); }
     if (bossMusic3 && bossMusic3.isPlaying()) { bossMusic3.stop(); }
 
-    // 根据 wave 数值播放对应的普通敌人背景音乐
+    //play music
     if (waveNumber === 1 || waveNumber === 2 || waveNumber === 3 || waveNumber === 4) {
       if (normalMusic45 && normalMusic45.isPlaying()) { normalMusic45.stop(); }
       if (normalMusic78 && normalMusic78.isPlaying()) { normalMusic78.stop(); }
@@ -1332,23 +1250,18 @@ function spawnEnemiesForWave(waveNumber) {
   }
 }
 
-
-
-// 新增函数：获取有效的生成位置
 function getValidSpawnPosition() {
   let pos;
   let isValid = false;
   let attempts = 0;
   const maxAttempts = 50;
-  const safeMargin = 150; // 修改后的缓冲距离
+  const safeMargin = 150;
 
   while (!isValid && attempts < maxAttempts) {
     pos = createVector(random(width), random(height));
 
-    // 检查是否离玩家太近
     let tooCloseToPlayer = player && p5.Vector.dist(pos, player.pos) < safeMargin;
 
-    // 检查是否在障碍物内或太靠近障碍物
     let nearObstacle = false;
     for (let obs of obstacles) {
       if (obs.collidesWith(pos, safeMargin, safeMargin)) {
@@ -1364,22 +1277,21 @@ function getValidSpawnPosition() {
     attempts++;
   }
 
-  // 如果尝试多次仍找不到合适位置，则在地图边缘生成，并确保不在障碍物内
   if (!isValid) {
     let side = floor(random(4));
-    let margin = safeMargin; // 使用安全边距
+    let margin = safeMargin;
     do {
       switch (side) {
-        case 0: // 上边
+        case 0:
           pos = createVector(random(margin, width - margin), -margin);
           break;
-        case 1: // 右边
+        case 1:
           pos = createVector(width + margin, random(margin, height - margin));
           break;
-        case 2: // 下边
+        case 2:
           pos = createVector(random(margin, width - margin), height + margin);
           break;
-        case 3: // 左边
+        case 3:
           pos = createVector(-margin, random(margin, height - margin));
           break;
       }
@@ -1397,7 +1309,7 @@ function getValidSpawnPosition() {
   return pos;
 }
 
-// 药水相关
+// potion related
 function choosePotion() {
   choosingPotion = true;
   gameState = "paused";
@@ -1493,9 +1405,6 @@ function choosePotion() {
   );
 }
 
-// ===== 辅助函数 =====
-
-// 获取一个远离玩家的随机生成点
 function getRandomSpawnPosition() {
   let x, y;
   do {
@@ -1505,7 +1414,7 @@ function getRandomSpawnPosition() {
   return createVector(x, y);
 }
 
-// 计算点到线段的距离
+// count distance
 function distToLine(point, lineStart, lineEnd) {
   let a = point.x - lineStart.x;
   let b = point.y - lineStart.y;
@@ -1528,12 +1437,10 @@ function distToLine(point, lineStart, lineEnd) {
   return dist(point.x, point.y, xx, yy);
 }
 
-// 显示浮动文字
 function showFloatingText(text, x, y, col) {
   floatingTexts.push(new FloatingText(text, x, y, col));
 }
 
-// 添加宠物类定义
 class Pet {
   constructor(x, y) {
     this.pos = createVector(x, y);
@@ -1617,7 +1524,7 @@ class Pet2 {
       if (this.shieldTimer <= 0) {
         this.isShieldActive = false;
         player.invincible = false;
-        showFloatingText("🛡️ 护盾消失", player.pos.x, player.pos.y - 40, color(100));
+        showFloatingText("🛡️ Shield Disappear!", player.pos.x, player.pos.y - 40, color(100));
       }
     }
   }
@@ -1626,7 +1533,7 @@ class Pet2 {
     this.isShieldActive = true;
     this.shieldTimer = this.shieldDuration;
     player.invincible = true;
-    showFloatingText("🛡️ 护盾激活!", player.pos.x, player.pos.y - 40, color(0, 200, 255));
+    showFloatingText("🛡️ Shield Active!", player.pos.x, player.pos.y - 40, color(0, 200, 255));
   }
 
   display() {
@@ -1657,9 +1564,9 @@ class Pet3 {
   constructor() {
     this.pos = createVector(0, 0);
     this.radius = 15;
-    this.healAmount = 0.4; // 每秒回复量
+    this.healAmount = 0.4; //heal amount per second
     this.healTick = 0;
-    this.healInterval = 60; // 每60帧（约1秒）治疗一次
+    this.healInterval = 60;
     this.angle = 0;
     this.orbitRadius = 30;
   }
@@ -1691,13 +1598,12 @@ class Pet3 {
 
   display() {
     push();
-    // 绘制治疗光环
+    // heal circle
     noFill();
     stroke(0, 255, 150, 100);
     strokeWeight(2);
     ellipse(this.pos.x, this.pos.y, this.radius * 2);
 
-    // 绘制宠物本体
     fill(0, 255, 150);
     noStroke();
     beginShape();
@@ -1712,7 +1618,7 @@ class Pet3 {
   }
 }
 
-// 添加游戏胜利界面相关内容
+//game victory
 function displayVictoryScreen() {
   background(0, 150);
   image(victoryPage, 0, 0, width, height);
@@ -1724,7 +1630,7 @@ function displayVictoryScreen() {
   text(`Bosses Defeated: ${finalStats.bosses}`, width / 2, height / 3 + 230);
 }
 
-// 创建按钮
+// create button
 function setupVictoryButtons() {
   victoryButtons = [
     new Button(width / 2 - 120, height - 100, 100, 40, "Main Menu", () => {
@@ -1740,14 +1646,13 @@ function setupVictoryButtons() {
   ];
 }
 
-// 添加一个新函数来生成多个Boss并分散它们
 function spawnMultipleElementalBosses() {
   const bossTypes = ["fire", "water", "poison", "wind"];
   const positions = [
-    { x: -100, y: -100 }, // 左上
-    { x: 100, y: -100 },  // 右上
-    { x: -100, y: 100 },  // 左下
-    { x: 100, y: 100 }    // 右下
+    { x: -100, y: -100 },
+    { x: 100, y: -100 },
+    { x: -100, y: 100 },
+    { x: 100, y: 100 }
   ];
 
   for (let i = 0; i < bossTypes.length; i++) {
@@ -1765,16 +1670,13 @@ function spawnMultipleElementalBosses() {
 function updateDeathEffect(enemy) {
   const FRAME_DURATION = 80;
 
-  // 初始化时间戳（保险措施）
   if (!enemy.effectStartTime) {
     enemy.effectStartTime = millis();
   }
 
-  // 计算进度
   const elapsed = millis() - enemy.effectStartTime;
   enemy.deathFrame = floor(elapsed / FRAME_DURATION);
 
-  // 结束处理
   if (enemy.deathFrame >= 4) {
     enemy.isDying = false;
     enemy.dead = true;
@@ -1782,14 +1684,12 @@ function updateDeathEffect(enemy) {
     let index = enemies.indexOf(enemy);
     enemies.splice(index, 1);
 
-    // 执行完成回调
     if (enemy.onEffectComplete) {
       enemy.onEffectComplete();
     }
     return;
   }
 
-  // 绘制逻辑保持不变
   const frameWidth = deathEffect1.width / 4;
   push();
   image(deathEffect1,
@@ -1802,54 +1702,44 @@ function updateDeathEffect(enemy) {
   pop();
 }
 
-// 优化雾气效果 - 改进可视区域的质量和性能
 function drawLevelFogEffect() {
-  // 如果不需要雾气，就降低不透明度或直接return
   if (!levelFogEnabled) {
     levelFogOpacity = Math.max(0, levelFogOpacity - fogTransitionSpeed);
     if (levelFogOpacity <= 0) return;
   } else {
     levelFogOpacity = Math.min(maxLevelFogOpacity, levelFogOpacity + fogTransitionSpeed);
   }
-  
-  // 计算玩家中心点
+
   const playerCenterX = player.pos.x + player.ImageWidth / 2;
   const playerCenterY = player.pos.y + player.ImageHeight / 2;
-  
-  // 先用暗色覆盖整个画面
+
   push();
   noStroke();
   fill(16, 16, 26, levelFogOpacity * 0.95);
   rect(0, 0, width, height);
-  
-  // 切换到擦除模式，开始"擦除"可视区域
+
   erase();
-  
-  // 准备画一个从中心透明度最高到外圈逐渐变化的渐变
-  const steps = 60; // 减少步数以提高性能，但仍保持平滑效果
+
+  const steps = 60;
   
   for (let i = steps; i >= 0; i--) {
-    let ratio = i / steps;          // 比例从 1.0 递减到 0
-    let r = levelFogRadius * ratio; // 当前圆的半径
-    
-    // 调整透明度曲线，使中心区域更清晰，边缘更加模糊
-    let alphaValue = 2.5 * (1 - ratio * ratio); // 使用二次曲线提供更自然的渐变
+    let ratio = i / steps;
+    let r = levelFogRadius * ratio;
+
+    let alphaValue = 2.5 * (1 - ratio * ratio);
     
     noStroke();
     fill(200, alphaValue);
     ellipse(playerCenterX, playerCenterY, r * 2, r * 2);
   }
-  
-  // 恢复默认模式，结束"擦除"阶段
+
   noErase();
-  
-  // 添加轻微的边缘光晕效果，增强可视区域的边界
+
   noFill();
   noStroke();
   strokeWeight(8);
   ellipse(playerCenterX, playerCenterY, levelFogRadius * 2 - 5, levelFogRadius * 2 - 5);
   
-  // 再添加一个更薄的光晕
   noStroke();
   strokeWeight(3);
   ellipse(playerCenterX, playerCenterY, levelFogRadius * 2, levelFogRadius * 2);
