@@ -241,12 +241,20 @@ Our first step was to identify all relevant stakeholders involved in or affected
 
 ![Onion Model of Stakeholders](docs/requirements/Onion_Model.png)
 
-- **Level 1: System** – Glitchwood (the game itself).
-- **Level 2: Containing System** – Testers, Players.
-- **Level 3: Wider Environment** – Instructors, Designers, Team Members.
-- **Level 4: External Environment** – Game Platform, Influencers, Competitors, Public.
+- **Level 1: System** – *Glitchwood* itself, the game we built.
+- **Level 2: Containing System** –  
+  - **Testers** who provided feedback and helped us find bugs.  
+  - **Players** who care about fun, challenge, and gameplay experience.
+- **Level 3: Wider Environment** –  
+  - **Instructors** who assessed our work and expected us to apply course knowledge.  
+  - **Design inspirations**, including mechanics and themes from other games that influenced our direction.
+- **Level 4: External Environment** –  
+  - **Game Platform** (GitHub), used for hosting and sharing the game.  
+  - **Influencers**, like bloggers or classmates, who may share or comment on the game.  
+  - **Competitors**, both student projects and similar games in the market.  
+  - **Public**, meaning anyone who might play or hear about the game.
 
-This layered structure helped us balance the technical, experiential, and market considerations during the development process.
+This layered structure helped us consider technical goals, user needs, and broader context throughout development.
 
 ---
 
@@ -667,29 +675,53 @@ The decision to use P5.js, a lightweight JavaScript library, was made with perfo
 
 ## 9 Conclusion
 
-The development of **Glitchwood** has been an enriching and multifaceted journey that has not only enhanced our technical capabilities but also challenged our ability to integrate various game development aspects, such as narrative design, game mechanics, and sustainability considerations. As computer science students, this project allowed us to explore the intricate balance between creative design and technical development within the context of game development.
-
-One of the core takeaways from this project is the importance of adopting an **agile development methodology**. Throughout the project, we followed agile principles, breaking the development into manageable sprints. This allowed our team to iterate quickly and refine the game based on continuous feedback from both stakeholders and players. A key part of our agile process was **refining user stories** and **acceptance criteria**, which helped ensure that every feature met the game’s core standards and aligned with user expectations. Moreover, heuristic evaluation was crucial in identifying usability issues early in the process, which helped in keeping the game accessible for both new players and those more experienced in roguelike games.
-
-### 9.1 Key Challenges and Solutions
-
-The most significant challenge we faced was **integrating the narrative with the game mechanics**. Balancing an immersive story with interactive gameplay demanded multiple iterations. For instance, we focused on ensuring the background art, music, and atmosphere were synchronized with the fast-paced combat mechanics to avoid overwhelming the player. Initially, we encountered technical issues with inconsistent frame rates when implementing dynamic animations based on enemy movement directions. To address this, we relied on performance testing and iterated our design to prioritize visual clarity while maintaining smooth gameplay performance.
-
-Another challenge was the **implementation of complex game mechanics** such as collision detection, dynamic obstacles, and the constantly changing weather system. These elements required careful consideration in terms of both design and coding. Our approach was to utilize **modular coding practices**, which allowed us to compartmentalize different game mechanics, ensuring each could be updated or expanded in future iterations without disrupting the overall system. The pet system, for example, required a delicate balance between enhancing player experience and maintaining game balance. We used modular development to integrate this system seamlessly into the game without negatively affecting the core mechanics.
-
-**Sustainability** was also a key focus throughout the development. We optimized the game’s performance by minimizing computational resources used for rendering visual effects and animations, aiming to reduce its environmental footprint. In addition, we ensured that the game was designed with sustainability in mind by applying efficient coding practices and making the game accessible even on lower-spec hardware. This aligns with the growing importance of sustainable game development practices, which we learned during the project.
+The development of *Glitchwood* has been a complex and rewarding journey that challenged our skills in game design, implementation, testing, and ethical responsibility. This section reflects on the full project lifecycle, key technical challenges, our team’s learning outcomes, and how we see the game evolving in the future.
 
 ---
 
-### 9.2 Reflections and Future Work
+### 9.1 What This Project Taught Us
 
-Reflecting on the development process, one of the most valuable lessons we learned was the significance of **team collaboration** and clear communication. Working with such a diverse team, we quickly realized that regular meetings and continuous collaboration were essential to keeping everyone on the same page. As the project progressed, we adopted more effective communication methods, ensuring smoother coordination between team members. Tools like **JIRA** and **GitHub** allowed us to track our progress and manage tasks efficiently, but face-to-face discussions were crucial for solving more complex issues and brainstorming solutions.
+As computer science students, this project allowed us to explore the intersection of creative design and technical development. We followed an **agile development methodology**, organizing work into sprints and refining features through stakeholder feedback and structured evaluations.
 
-Looking ahead, there are several areas for future improvement and development. **Narrative integration** remains an area that could be further refined. We aim to experiment with **adaptive narrative elements** that dynamically change based on player choices and progress. Additionally, the **AI for enemies and weather dynamics** can be enhanced to create a more responsive and reactive game environment. In terms of usability, more **user testing** will be conducted to ensure the game is accessible to a broader audience, especially those with different levels of experience with roguelike games.
+A key lesson was the importance of **early architectural planning**—our use of class diagrams and modular structure helped avoid large-scale refactoring later. Additionally, using tools like GitHub, JIRA, and collaborative testing methods helped the team stay aligned throughout the process. Integrating gameplay, narrative, and accessibility pushed us to consider broader user needs while staying technically grounded.
 
-Finally, optimizing the game’s performance, ensuring it runs smoothly on a wider range of devices, and continuing to enhance **sustainability** by reducing the environmental impact of server usage will remain central to our future work. These steps will ensure that **Glitchwood** not only remains an engaging experience for players but also a project that reflects responsible and sustainable game development.
+---
 
-In summary, the development of **Glitchwood** has allowed us to combine agile development, technical challenges, and ethical considerations into a cohesive and rewarding project. The lessons learned during this process, from game design and programming to team collaboration and sustainability practices, will undoubtedly benefit our future careers as developers. We have gained a deeper understanding of how to balance creativity with technical feasibility, and how to design games that are not only enjoyable but also socially and environmentally responsible.
+### 9.2 Overcoming Key Development Challenges
+
+**Integrating narrative with gameplay** was a major challenge. We iterated extensively to ensure that story elements complemented mechanics rather than disrupting flow. Performance issues with dynamic animations were resolved by simplifying visual logic and testing framerate impact.
+
+Implementing **modular yet interconnected game systems**—such as collision detection, pet abilities, and weather effects—required careful system design. The pet system, in particular, had to feel impactful without overpowering the gameplay. We used encapsulated modules and events to keep these features manageable and testable.
+
+We also prioritized **sustainable performance**, reducing graphical overhead and ensuring the game ran well even on lower-spec devices. These choices reflect our growing awareness of environmentally responsible software design.
+
+---
+
+### 9.3 Takeaways from Collaboration and Testing
+
+Team collaboration proved to be both a challenge and a breakthrough point. Initially, coordination issues and asynchronous work led to delays. Over time, regular check-ins and a shared understanding of user stories helped unify our approach.
+
+Through **heuristic evaluations** and both **qualitative and quantitative testing**, we identified usability issues we hadn’t anticipated—such as vague tutorials or weak feedback for in-game events. These insights led to concrete improvements, from clearer visual cues to simplified onboarding sequences.
+
+We also came to value the balance between **technical feasibility and user experience**, and how small details—like animation timing or interface clarity—can significantly impact gameplay satisfaction.
+
+---
+
+### 9.4 Evolving *Glitchwood*: What Comes Next
+
+Looking forward, we see several directions for future development:
+
+- Introduce **dynamic storylines** influenced by player choices
+- Enhance **AI behavior** and real-time environmental responsiveness
+- Conduct **broader usability testing** for diverse user profiles
+- Continue **performance optimization** and expand hardware compatibility
+- Minimize runtime and hosting resource usage for **sustainable deployment**
+
+With these improvements, *Glitchwood* can grow into an even richer, more inclusive game—both technically polished and ethically aligned.
+
+---
+
+In summary, *Glitchwood* has been more than just a game project—it has been an opportunity to apply software engineering principles in a real-world, creative context. We leave this experience with stronger technical skills, deeper design awareness, and a clearer sense of how to build thoughtful, impactful digital experiences.
 
 
 ## 10 Appendix
