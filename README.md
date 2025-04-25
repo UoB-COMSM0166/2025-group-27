@@ -94,16 +94,25 @@
 **Glitchwood** is a **2D roguelike action RPG** developed using P5.js. Players choose from **three uniquely designed characters**—each with distinct combat styles and upgrade preferences—to battle through procedurally generated stages filled with enemies, traps, and unpredictable challenges.
 
 <div align="center">
-  <img src="docs/introduction/start.gif" alt="Start Animation" width="265" height="155"/>
-  <img src="docs/introduction/char.gif" alt="Character Animation" width="265" height="155"/>
-  <img src="docs/introduction/boss.gif" alt="Boss Animation" width="265" height="155"/>
+  <img src="docs/introduction/char.gif" alt="Character Animation" width="580" height="350"/>
+  <p><em>Character selection screen.</em></p>
+</div>
+
+<div align="center">
+  <img src="docs/introduction/boss.gif" alt="Boss Animation" width="580" height="350"/>
+  <p><em>Boss battle screen.</em></p>
 </div>
 
 The game emphasizes **randomness and replayability**, introducing features like dynamic **weather effects**, **support pets**, **enemy variants**, and **environmental obstacles**. As players progress through increasingly difficult waves, they earn upgrades and eventually unlock an **Endless Mode** to test their endurance.
 
 <div align="center">
-  <img src="docs/introduction/pet.gif" alt="Pet Animation" width="265" height="155"/>
-  <img src="docs/introduction/weather.gif" alt="Weather Animation" width="265" height="155"/>
+  <img src="docs/introduction/pet.gif" alt="Pet Animation" width="580" height="350"/>
+  <p><em>Pet selection screen.</em></p>
+</div>
+
+<div align="center">
+  <img src="docs/introduction/weather.gif" alt="Weather Animation" width="580" height="350"/>
+  <p><em>Weather effects screen.</em></p>
 </div>
 
 Designed for both **newcomers and roguelike veterans**, Glitchwood includes a built-in tutorial, intuitive controls, and two difficulty levels. Its gameplay is tied to a deeper theme—**a developer lost inside their own creation**, fighting to escape.
@@ -123,9 +132,10 @@ Our game design was inspired by two modern roguelike hits:
 - ❗ Limitation: Lack of manual input can reduce player agency  
 - ✅ Takeaway: We adopted **wave-based survival**, **upgrade choices**, and **enemy escalation**
   
-<p align="center">
+<div align="center">
   <img src="docs/game_idea/Vampire_Survivors.jpg" alt="Vampire Survivors" width="580" height="360">
-</p>
+  <p><em>Reference image from the game Vampire Survivors.</em></p>
+</div>
 
 🎯 **20 Minutes Till Dawn**
 - Twin-stick shooter with precise aiming and movement  
@@ -134,9 +144,10 @@ Our game design was inspired by two modern roguelike hits:
 - ❗ Limitation: Somewhat short progression loop, less narrative  
 - ✅ Takeaway: We embraced **manual aiming**, **responsive controls**, and **fast-paced combat**
 
-<p align="center">
+<div align="center">
   <img src="docs/game_idea/20_Minutes_Till_Dawn.jpg" alt="20 Minutes Till Dawn" width="580" height="350">
-</p>
+  <p><em>Reference image from the game 20 Minutes Till Dawn.</em></p>
+</div>
 
 ---
 
@@ -172,7 +183,7 @@ Glitchwood brings several innovations to the roguelike format, blending symbolic
 | <img src="docs/assets/selected_images/bossgif/Bugboss.gif" height="100px"> | **Bugboss** | Disrupts vision and summons ghost flames. Sudden high-damage attacks — stay alert! |
 
 
-### Weather
+#### Weather
 
 | Image | Name | Description |
 |:-----:|:----:|:-----------|
@@ -180,7 +191,7 @@ Glitchwood brings several innovations to the roguelike format, blending symbolic
 | <img src="docs/introduction/lightning.gif" height="100px"> | **Lightning** | Deals damage to characters and enemies within its range. |
 | <img src="docs/introduction/sun.gif" height="100px"> | **Sun** | Causes gradual health loss over time for both players and enemies. |
 
-### Pets
+#### Pets
 
 | Image | Name | Description |
 |:-----:|:----:|:-----------|
@@ -214,9 +225,10 @@ Before selecting and developing Glitchwood, our team explored two original game 
 
 ### 2.1 Game Idea 1: Survival Roguelike
 
-<p align="center">
+<div align="center">
   <img src="docs/game_idea/Survival_Shooting_Game(Rogue_like_Elements).png" alt="Survival Shooting Game" width="820" height="570">
-</p>
+  <p><em>Creative mind map for the Survival Roguelike game.</em></p>
+</div>
 
 **Core Concept**  
 A wave-based roguelike where players control one of several programmer-themed characters navigating glitchy environments filled with enemies, hazards, and random upgrades. Players adapt to ever-changing weather, pet abilities, and environmental effects while progressing toward high scores or survival.
@@ -229,9 +241,18 @@ A wave-based roguelike where players control one of several programmer-themed ch
 - **Endless mode** and increasing difficulty to encourage replayability
   
 <div align="center">
-  <img src="docs/introduction/start.gif" alt="Start Animation" width="265" height="155"/>
-  <img src="docs/introduction/char.gif" alt="Character Animation" width="265" height="155"/>
-  <img src="docs/introduction/boss.gif" alt="Boss Animation" width="265" height="155"/>
+  <img src="docs/game_idea/game1_who.gif" alt="Start Animation" width="580" height="350"/>
+  <p><em>Creative character selection screen for the Survival Roguelike game.</em></p>
+</div>
+
+<div align="center">
+  <img src="docs/game_idea/game1_select.gif" alt="Start Animation" width="580" height="350"/>
+  <p><em>Creative pet selection screen for the Survival Roguelike game.</em></p>
+</div>
+
+<div align="center">
+  <img src="docs/game_idea/game1_attack.gif" alt="Start Animation" width="580" height="350"/>
+  <p><em>Creative combat effects screen for the Survival Roguelike game.</em></p>
 </div>
 
 **Design Strengths**
@@ -239,12 +260,9 @@ A wave-based roguelike where players control one of several programmer-themed ch
 - Modular enough to design separate upgrade logic, pet effects, and environmental systems
 - Compatible with course tools: P5.js, class/use case diagrams, agile iterations
 
-**Related Materials**
+**Paper Prototype Demo**
 
-- 📄 [**Game 1 – Survival Roguelike: Design Proposal (PDF)**](./docs/game_idea/Survival_Shooting_Game(Roguelike_Elements).pdf)  
-  _Detailed breakdown of the core mechanics, setting, and system design._
-
-- 📹 [**Game 1 – Survival Roguelike: Paper Prototype Demo (Video)**](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/docs/prototype/video/Prototype_Game_Idea_1.mp4)
+[**Game 1 – Survival Roguelike: Paper Prototype Demo (Video)**](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/docs/prototype/video/Prototype_Game_Idea_1.mp4)
 
 <div align="center">
   <a href="https://www.youtube.com/watch?v=LU3oWswBsX0" target="_blank">
@@ -257,9 +275,10 @@ A wave-based roguelike where players control one of several programmer-themed ch
   
 ### 2.2 Game Idea 2: Horror Puzzle RPG
 
-<p align="center">
+<div align="center">
   <img src="docs/game_idea/Horror_Puzzle_RPG_Game.png" alt="Horror Puzzle RPG Game" width=820" height="570">
-</p>
+  <p><em>Creative mind map for the Horror Puzzle RPG Game.</em></p>
+</div>
 
 **Core Concept**  
 A time-loop puzzle RPG set in a frozen university lab. Players explore, solve programming-themed puzzles, and uncover hidden experiments to escape a mysterious temporal trap.
@@ -271,8 +290,18 @@ A time-loop puzzle RPG set in a frozen university lab. Players explore, solve pr
 - Multiple endings based on player decisions
 
 <div align="center">
-  <img src="docs/introduction/pet.gif" alt="Pet Animation" width="265" height="155"/>
-  <img src="docs/introduction/weather.gif" alt="Weather Animation" width="265" height="155"/>
+  <img src="docs/game_idea/game2_start.gif" alt="Start Animation" width="580" height="350"/>
+  <p><em>Story introduction screen for the Horror Puzzle RPG game.</em></p>
+</div>
+
+<div align="center">
+  <img src="docs/game_idea/game2_key.gif" alt="Start Animation" width="580" height="350"/>
+  <p><em>Item-search and puzzle-solving screen for the Horror Puzzle RPG game.</em></p>
+</div>
+
+<div align="center">
+  <img src="docs/game_idea/game2_ghost.gif" alt="Start Animation" width="580" height="350"/>
+  <p><em>Monster-following gameplay screen for the Horror Puzzle RPG game.</em></p>
 </div>
 
 **Design Limitations**
@@ -281,13 +310,8 @@ A time-loop puzzle RPG set in a frozen university lab. Players explore, solve pr
 - Fewer opportunities for randomness or iterative balance tuning
 - Less suited for fast prototyping and testing in P5.js
 
-**Related Materials**
+**Paper Prototype Demo**
 
-- 📄 [**Game 2 – Horror Puzzle RPG: Design Proposal (PDF)**](./docs/game_idea/Horror_Puzzle_RPG.pdf)  
-  _Narrative structure, gameplay loops, and puzzle design overview._
-
-- 📹 [**Game 2 – Horror Puzzle RPG: Paper Prototype Demo (Video)**](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/docs/prototype/video/Prototype_Game_Idea_2.mp4)
-  
 <div align="center">
   <a href="https://www.youtube.com/watch?v=HQiOb3xbiVc" target="_blank">
     <img src="https://img.youtube.com/vi/HQiOb3xbiVc/0.jpg" alt="Prototype_Game_Idea_2" width="540" height="380">
@@ -318,6 +342,7 @@ Our first step was to identify all relevant stakeholders involved in or affected
 
 <div align="center">
   <img src="docs/requirements/Onion_Model.png" alt="Onion Model of Stakeholders" width="820" height="530">
+  <p><em>Onion model for stakeholder analysis.</em></p>
 </div>
 
 - **Level 1: System** – *Glitchwood* itself, the game we built.
@@ -349,6 +374,7 @@ The following diagram summarizes the epics, stories, and acceptance criteria acr
 
 <div align="center">
   <img src="docs/requirements/Stakeholder_Requirements.png" alt="Stakeholder Requirements" width="820" height="620">
+  <p><em>Stakeholder needs analysis using Epics, User Stories, and Acceptance Criteria.</em></p>
 </div>
 
 This visual representation allowed us to keep the entire team focused on stakeholder-driven value, while ensuring coverage of both functional and experiential aspects of the game.
@@ -396,6 +422,7 @@ The following UML class diagram captures the **static structure** of Glitchwood�
 
 <div align="center">
   <img src="docs/design/ClassDiagram.png" alt="Class Diagram" width="820" height="380">
+  <p><em>Class diagram design.</em></p>
 </div>
 
 #### 📌 Key Components
@@ -435,6 +462,7 @@ The following diagram illustrates **dynamic interaction flow** between systems i
 
 <div align="center">
   <img src="docs/design/SequenceDiagram.png" alt="Sequence Diagram" width="820" height="800">
+  <p><em>Sequence diagram design.</em></p>
 </div>
 
 #### 🎮 Key Scenarios
