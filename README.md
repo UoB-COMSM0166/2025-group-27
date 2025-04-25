@@ -30,7 +30,6 @@
     <tr>
       <th>Name</th>
       <th>Email</th>
-      <th>Role</th>
       <th>GitHub</th>
     </tr>
   </thead>
