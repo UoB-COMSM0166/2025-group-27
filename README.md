@@ -262,8 +262,6 @@ A wave-based roguelike where players control one of several programmer-themed ch
 
 **Paper Prototype Demo**
 
-[**Game 1 – Survival Roguelike: Paper Prototype Demo (Video)**](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/docs/prototype/video/Prototype_Game_Idea_1.mp4)
-
 <div align="center">
   <a href="https://www.youtube.com/watch?v=LU3oWswBsX0" target="_blank">
     <img src="https://img.youtube.com/vi/LU3oWswBsX0/0.jpg" alt="Prototype_Game_Idea_1" width="540" height="400">
