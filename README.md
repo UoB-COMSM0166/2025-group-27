@@ -317,7 +317,7 @@ Throughout the development of *Glitchwood*, we applied structured requirement pl
 Our first step was to identify all relevant stakeholders involved in or affected by the development of *Glitchwood*. To visualize the relationships and influence between them, we adopted the **Onion Model** of stakeholders, which classifies them into concentric layers from core systems to external environments.
 
 <div align="center">
-  <img src="docs/requirements/Onion_Model.png" alt="Onion Model of Stakeholders" width="820" height="570">
+  <img src="docs/requirements/Onion_Model.png" alt="Onion Model of Stakeholders" width="820" height="530">
 </div>
 
 - **Level 1: System** – *Glitchwood* itself, the game we built.
@@ -348,7 +348,7 @@ To validate each user story, we defined **Acceptance Criteria** using the "Given
 The following diagram summarizes the epics, stories, and acceptance criteria across five key stakeholder groups:
 
 <div align="center">
-  <img src="docs/requirements/Stakeholder_Requirements.png" alt="Stakeholder Requirements" width="820" height="570">
+  <img src="docs/requirements/Stakeholder_Requirements.png" alt="Stakeholder Requirements" width="820" height="620">
 </div>
 
 This visual representation allowed us to keep the entire team focused on stakeholder-driven value, while ensuring coverage of both functional and experiential aspects of the game.
@@ -395,7 +395,7 @@ We adopted an object-oriented architecture tailored for our game's modular syste
 The following UML class diagram captures the **static structure** of Glitchwood’s core gameplay systems.
 
 <div align="center">
-  <img src="docs/design/ClassDiagram.png" alt="Class Diagram" width="820" height="570">
+  <img src="docs/design/ClassDiagram.png" alt="Class Diagram" width="820" height="380">
 </div>
 
 #### 📌 Key Components
@@ -434,7 +434,7 @@ The following UML class diagram captures the **static structure** of Glitchwood�
 The following diagram illustrates **dynamic interaction flow** between systems in typical gameplay.
 
 <div align="center">
-  <img src="docs/design/SequenceDiagram.png" alt="Sequence Diagram" width="820" height="570">
+  <img src="docs/design/SequenceDiagram.png" alt="Sequence Diagram" width="820" height="800">
 </div>
 
 #### 🎮 Key Scenarios
@@ -576,7 +576,7 @@ This section presents both qualitative and quantitative evaluations of our game,
 #### 🗣️ Focus Group Q&A Summary
 
 <div align="center">
-  <img src="docs/game_idea/interview.png" alt="Interview Responses" width="820" height="1200">
+  <img src="docs/game_idea/interview.png" alt="Interview Responses" width="820" height="1300">
 </div>
 
 Below is a summary of improvement points derived from Q&A transcripts:
@@ -609,13 +609,13 @@ Using the **Wilcoxon Signed Rank Test**, we compared SUS and NASA-TLX scores bet
 - Only a **minor difference** in usability scores, indicating UI remained consistently usable across modes
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/925e05b2-e862-4e1b-9786-8f38dd1fac45" alt="Figure 1: L1 Evaluation" width="820" height="570">
+  <img src="https://github.com/user-attachments/assets/925e05b2-e862-4e1b-9786-8f38dd1fac45" alt="Figure 1: L1 Evaluation" width="820" height="620">
 </div>
 
   > In **L1**, players found the game **easy to use**, with low demand in physical and temporal areas. Frustration levels were mild (20–30 range), aligning with our goal of onboarding new players gently.
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/7263cf0b-1bda-4787-964c-b5155d597a63" alt="Figure 2: L2 Evaluation" width="820" height="570">
+  <img src="https://github.com/user-attachments/assets/7263cf0b-1bda-4787-964c-b5155d597a63" alt="Figure 2: L2 Evaluation" width="820" height="620">
 </div>
 
 > In **L2**, difficulty led to higher **effort, frustration, and mental load**. Scores for items like "I found the system unnecessarily complex" or "I needed a lot of support" increased, reflecting a more intense experience.
