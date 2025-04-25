@@ -19,7 +19,9 @@
 
 # Our Group
 
-![Group_photo](docs/assets/selected_images/member/Group27.png)
+<div style="text-align: center;">
+  <img src="docs/assets/selected_images/member/Group27.png" alt="Group Photo" style="width: 80%;">
+</div>
 
 |   Name        |   Email                                |   Role |   GitHub                                           |
 |:-------------:|:----------------------------------------:|:-------:|:--------------------------------------------------:|
@@ -48,16 +50,16 @@
 **Glitchwood** is a **2D roguelike action RPG** developed using P5.js. Players choose from **three uniquely designed characters**—each with distinct combat styles and upgrade preferences—to battle through procedurally generated stages filled with enemies, traps, and unpredictable challenges.
 
 <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
-  <img src="docs/introduction/start.gif" alt="Start Animation" width="250"/>
-  <img src="docs/introduction/char.gif" alt="Character Animation" width="250"/>
-  <img src="docs/introduction/boss.gif" alt="Boss Animation" width="250"/>
+  <img src="docs/introduction/start.gif" alt="Start Animation" width="325" height="220"/>
+  <img src="docs/introduction/char.gif" alt="Character Animation" width="325" height="220"/>
+  <img src="docs/introduction/boss.gif" alt="Boss Animation" width="325" height="220"/>
 </div>
 
 The game emphasizes **randomness and replayability**, introducing features like dynamic **weather effects**, **support pets**, **enemy variants**, and **environmental obstacles**. As players progress through increasingly difficult waves, they earn upgrades and eventually unlock an **Endless Mode** to test their endurance.
 
 <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
-  <img src="docs/introduction/pet.gif" alt="Pet Animation" width="250"/>
-  <img src="docs/introduction/weather.gif" alt="Weather Animation" width="250"/>
+  <img src="docs/introduction/pet.gif" alt="Pet Animation" width="325" height="220"/>
+  <img src="docs/introduction/weather.gif" alt="Weather Animation" width="325" height="220"/>
 </div>
 
 Designed for both **newcomers and roguelike veterans**, Glitchwood includes a built-in tutorial, intuitive controls, and two difficulty levels. Its gameplay is tied to a deeper theme—**a developer lost inside their own creation**, fighting to escape.
@@ -66,18 +68,40 @@ Designed for both **newcomers and roguelike veterans**, Glitchwood includes a bu
 
 ### 1.2 Inspiration
 
-Glitchwood draws inspiration from roguelike games like **Vampire Survivors** and **20 Minutes Till Dawn**, known for their escalating difficulty and minimalist gameplay. We appreciated how these games combined randomness with short-session intensity.
+### 1.2 Inspiration
 
-<div style="display: flex; justify-content: space-around;">
-  <img src="docs/game_idea/Vampire_Survivors.jpg" height="200px" alt="Vampire Survivors">
-  <img src="docs/game_idea/20_Minutes_Till_Dawn.jpg" height="200px" alt="20 Minutes Till Dawn">
+Our game design was inspired by two modern roguelike hits:
+
+🕹️ **Vampire Survivors**
+- Auto-attack gameplay and wave-based enemy spawning  
+- Highly addictive loop with evolving upgrades  
+- Simple visuals and controls allow for fast iteration  
+- ❗ Limitation: Lack of manual input can reduce player agency  
+- ✅ Takeaway: We adopted **wave-based survival**, **upgrade choices**, and **enemy escalation**
+  
+<div style="display: flex; justify-content: center;">
+  <img src="docs/game_idea/Vampire_Survivors.jpg" alt="Vampire Survivors" style="width: 650px; height: 420px; object-fit: cover;">
 </div>
 
-However, as computer science students, we wanted to push further—infusing personal and metaphorical meaning. In Glitchwood, the player is trapped inside their own game, battling symbolic “bugs,” navigating unstable “runtime environments,” and relying on tools (weapons, pets) to debug and survive.
+🎯 **20 Minutes Till Dawn**
+- Twin-stick shooter with precise aiming and movement  
+- Strong emphasis on build variety and moment-to-moment action  
+- Effective minimalism in both UI and art direction  
+- ❗ Limitation: Somewhat short progression loop, less narrative  
+- ✅ Takeaway: We embraced **manual aiming**, **responsive controls**, and **fast-paced combat**
 
-Working within the limits of **P5.js**, we focused on modular systems like wave-based enemy spawning, straightforward combat, and randomized upgrades—balancing feasibility with creative depth.
+<div style="display: flex; justify-content: center;">
+  <img src="docs/game_idea/20_Minutes_Till_Dawn.jpg" alt="20 Minutes Till Dawn" style="width: 650px; height: 410px; object-fit: cover;">
+</div>
 
-Ultimately, Glitchwood merges familiar roguelike gameplay with **personal meaning and developer culture**.
+---
+
+Unlike those titles, **Glitchwood** takes a more **symbolic approach**. Here, the player is a developer trapped in their own game, confronting metaphorical bugs, runtime failures, and digital entropy. Every mechanic—from **dynamic weather** to **pets as debugging tools**—echoes real-world challenges in software development.
+
+Working within **P5.js**, we designed modular systems that allow:
+- Rapid iteration and extensibility  
+- Distinct character behaviors and upgrade paths  
+- Thematic consistency between gameplay and metaphor  
 
 ---
 
@@ -159,9 +183,9 @@ A wave-based roguelike where players control one of several programmer-themed ch
 - **Endless mode** and increasing difficulty to encourage replayability
   
 <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
-  <img src="docs/game_idea/game1_who.gif" alt="Game1 Who Animation" width="250"/>
-  <img src="docs/game_idea/game1_select.gif" alt="Game1 Select Animation" width="250"/>
-  <img src="docs/game_idea/game1_attack.gif" alt="Game1 Attack Animation" width="250"/>
+  <img src="docs/game_idea/game1_who.gif" alt="Game1 Who Animation" width="325" height="220"/>
+  <img src="docs/game_idea/game1_select.gif" alt="Game1 Select Animation" width="325" height="220"/>
+  <img src="docs/game_idea/game1_attack.gif" alt="Game1 Attack Animation" width="325" height="220"/>
 </div>
 
 **Design Strengths**
@@ -196,9 +220,9 @@ A time-loop puzzle RPG set in a frozen university lab. Players explore, solve pr
 - Multiple endings based on player decisions
 
 <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
-  <img src="docs/game_idea/game2_start.gif" alt="Game2 Start Animation" width="250"/>
-  <img src="docs/game_idea/game2_key.gif" alt="Game2 Key Animation" width="250"/>
-  <img src="docs/game_idea/game2_ghost.gif" alt="Game2 Ghost Animation" width="250"/>
+  <img src="docs/game_idea/game2_start.gif" alt="Game2 Start Animation" width="325" height="220"/>
+  <img src="docs/game_idea/game2_key.gif" alt="Game2 Key Animation" width="325" height="220"/>
+  <img src="docs/game_idea/game2_ghost.gif" alt="Game2 Ghost Animation" width="325" height="220"/>
 </div>
 
 **Design Limitations**
