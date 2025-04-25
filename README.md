@@ -76,12 +76,12 @@
 
 <div align="center">
   <img src="docs/kanban/kanban1.png" alt="Boss Animation" width="580" height="350"/>
-  <p><em>Boss battle screen.</em></p>
+  <p><em>Project progress presentation</em></p>
   
 </div>
 <div align="center">
   <img src="docs/kanban/kanban2.png" alt="Boss Animation" width="580" height="350"/>
-  <p><em>Boss battle screen.</em></p>
+  <p><em>Completed tasks demonstration</em></p>
 </div>
 
 # Project Report
