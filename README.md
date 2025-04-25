@@ -136,7 +136,7 @@ Our game design was inspired by two modern roguelike hits:
 - ✅ Takeaway: We adopted **wave-based survival**, **upgrade choices**, and **enemy escalation**
   
 <div align="center">
-  <img src="docs/game_idea/Vampire_Survivors.jpg" alt="Vampire Survivors" width="580" height="360">
+  <img src="docs/introduction/Vampire_Survivors.jpg" alt="Vampire Survivors" width="580" height="360">
   <p><em>Reference image from the game Vampire Survivors.</em></p>
 </div>
 
@@ -148,7 +148,7 @@ Our game design was inspired by two modern roguelike hits:
 - ✅ Takeaway: We embraced **manual aiming**, **responsive controls**, and **fast-paced combat**
 
 <div align="center">
-  <img src="docs/game_idea/20_Minutes_Till_Dawn.jpg" alt="20 Minutes Till Dawn" width="580" height="350">
+  <img src="docs/introduction/20_Minutes_Till_Dawn.jpg" alt="20 Minutes Till Dawn" width="580" height="350">
   <p><em>Reference image from the game 20 Minutes Till Dawn.</em></p>
 </div>
 
@@ -605,7 +605,7 @@ This section presents both qualitative and quantitative evaluations of our game,
 #### 🗣️ Focus Group Q&A Summary
 
 <div align="center">
-  <img src="docs/game_idea/interview.png" alt="Interview Responses" width="820" height="1300">
+  <img src="docs/evaluation/interview.png" alt="Interview Responses" width="820" height="1300">
 </div>
 
 Below is a summary of improvement points derived from Q&A transcripts:
@@ -736,16 +736,46 @@ To ensure smooth collaboration and efficient development, we utilized the follow
 
 ### 7.3 Agile Development Methodology and Iteration Process
 
-We followed an **Agile development** approach throughout the project, with a focus on **iterative development** and **continuous feedback**. Our process included the following steps:
+<div align="center">
+  <img src="docs/management/Glitchwood_Management.png" alt="Sequence Diagram" width="820" height="800">
+  <p><em> Glitchwood development timeline and team workflow overview.</em></p>
+</div>
 
-#### Sprint Planning and Execution:
-- **Sprint Duration**: Each Sprint lasted two weeks, during which we focused on specific features or tasks.
-- **Sprint Planning Meetings**: We held meetings at the start of each Sprint to discuss the tasks for the next two weeks, allocate responsibilities, and set deadlines.
-- **Daily Stand-ups**: A quick meeting where each team member discussed their progress, any blockers they encountered, and their plans for the day.
-- **Sprint Review**: At the end of each Sprint, we demonstrated the completed work, reviewed the progress made, and received feedback.
-- **Sprint Retrospectives**: We held meetings at the end of each Sprint to reflect on the process, discuss what went well, and identify areas for improvement.
+#### 🗓 Weekly Planning & Review
 
-This iterative process allowed us to remain flexible, quickly adapt to changes, and continuously improve the project based on feedback from both team members and stakeholders.
+- Every **Monday**, we held an **offline in-person meeting** to:
+  - Review previous progress
+  - Plan the weekly development focus
+  - Assign tasks based on availability and skill
+  - Update our shared Kanban board on GitHub
+
+- Every **weekend**, we held **online meetings** (via Discord/Zoom) where each member:
+  - Reported on their individual task completion
+  - Flagged blockers or difficulties
+  - Synchronized with others on integration points
+
+#### 🌀 Sprint-Based Iteration
+
+- We divided our semester into **bi-weekly Sprints**.
+- Each Sprint included:
+  - A development focus (e.g., core combat, weather, pets, evaluation integration)
+  - A testing goal (e.g., L1 user test, L2 feedback)
+  - Mid-sprint check-ins and end-of-sprint reviews
+
+#### 📌 Task Management
+
+- Tasks were tracked using a **GitHub Kanban board**, where columns represented different stages of development: `Backlog`, `In Progress`, `Review`, and `Completed`.
+- Each team member was responsible for updating their task status and assigning issues via pull requests.
+
+#### 🔁 Retrospectives & Adaptation
+
+- After each sprint, we reflected on what went well, what needed improvement, and how to better support each other.
+- This helped us continuously adjust our process—for example:
+  - Shifting from daily stand-ups to weekly async updates
+  - Clarifying coding conventions and review standards
+  - Rebalancing workload based on exam schedules
+
+By combining clear weekly structure with flexible sprint goals, we stayed coordinated while allowing room for creativity and iteration. This lightweight but disciplined process helped our team deliver a polished and thematically rich final product.
 
 ---
 
