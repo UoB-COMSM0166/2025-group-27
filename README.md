@@ -19,18 +19,62 @@
 
 # Our Group
 
-<div style="text-align: center;">
-  <img src="docs/assets/selected_images/member/Group27.png" alt="Group Photo" style="width: 80%;">
+<div align="center">
+  <img src="docs/assets/selected_images/member/Group27.png" alt="Group Photo" width="75%">
 </div>
 
-|   Name        |   Email                                |   Role |   GitHub                                           |
-|:-------------:|:----------------------------------------:|:-------:|:--------------------------------------------------:|
-| Chengjun Yi   | [lw24658@bristol.ac.uk](mailto:lw24658@bristol.ac.uk) | TBD     | [realYDIAN](https://github.com/realYDIAN)         |
-| Qiutong Zhao  | [fa24741@bristol.ac.uk](mailto:fa24741@bristol.ac.uk) | TBD     | [AQIU20](https://github.com/AQIU20)               |
-| Heng Zhang    | [gg24694@bristol.ac.uk](mailto:gg24694@bristol.ac.uk) | TBD     | [chrisheng456](https://github.com/chrisheng456)   |
-| Tong Yu       | [mp24824@bristol.ac.uk](mailto:mp24824@bristol.ac.uk) | TBD     | [CelesteYt](https://github.com/CelesteYt)         |
-| Feihang Yan   | [vj24070@bristol.ac.uk](mailto:vj24070@bristol.ac.uk) | TBD     | [Feihang027](https://github.com/Feihang027)       |
-| Xianhang Peng | [ge24600@bristol.ac.uk](mailto:ge24600@bristol.ac.uk) | TBD     | [capybara131](https://github.com/capybara131)     |
+<div align="center">
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>GitHub</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Chengjun Yi</td>
+      <td><a href="mailto:lw24658@bristol.ac.uk">lw24658@bristol.ac.uk</a></td>
+      <td>TBD</td>
+      <td><a href="https://github.com/realYDIAN">realYDIAN</a></td>
+    </tr>
+    <tr>
+      <td>Qiutong Zhao</td>
+      <td><a href="mailto:fa24741@bristol.ac.uk">fa24741@bristol.ac.uk</a></td>
+      <td>TBD</td>
+      <td><a href="https://github.com/AQIU20">AQIU20</a></td>
+    </tr>
+    <tr>
+      <td>Heng Zhang</td>
+      <td><a href="mailto:gg24694@bristol.ac.uk">gg24694@bristol.ac.uk</a></td>
+      <td>TBD</td>
+      <td><a href="https://github.com/chrisheng456">chrisheng456</a></td>
+    </tr>
+    <tr>
+      <td>Tong Yu</td>
+      <td><a href="mailto:mp24824@bristol.ac.uk">mp24824@bristol.ac.uk</a></td>
+      <td>TBD</td>
+      <td><a href="https://github.com/CelesteYt">CelesteYt</a></td>
+    </tr>
+    <tr>
+      <td>Feihang Yan</td>
+      <td><a href="mailto:vj24070@bristol.ac.uk">vj24070@bristol.ac.uk</a></td>
+      <td>TBD</td>
+      <td><a href="https://github.com/Feihang027">Feihang027</a></td>
+    </tr>
+    <tr>
+      <td>Xianhang Peng</td>
+      <td><a href="mailto:ge24600@bristol.ac.uk">ge24600@bristol.ac.uk</a></td>
+      <td>TBD</td>
+      <td><a href="https://github.com/capybara131">capybara131</a></td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
 
 # Kanban Board
 
@@ -49,17 +93,17 @@
 
 **Glitchwood** is a **2D roguelike action RPG** developed using P5.js. Players choose from **three uniquely designed characters**—each with distinct combat styles and upgrade preferences—to battle through procedurally generated stages filled with enemies, traps, and unpredictable challenges.
 
-<div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
-  <img src="docs/introduction/start.gif" alt="Start Animation" width="325" height="220"/>
-  <img src="docs/introduction/char.gif" alt="Character Animation" width="325" height="220"/>
-  <img src="docs/introduction/boss.gif" alt="Boss Animation" width="325" height="220"/>
+<div align="center">
+  <img src="docs/introduction/start.gif" alt="Start Animation" width="265" height="155"/>
+  <img src="docs/introduction/char.gif" alt="Character Animation" width="265" height="155"/>
+  <img src="docs/introduction/boss.gif" alt="Boss Animation" width="265" height="155"/>
 </div>
 
 The game emphasizes **randomness and replayability**, introducing features like dynamic **weather effects**, **support pets**, **enemy variants**, and **environmental obstacles**. As players progress through increasingly difficult waves, they earn upgrades and eventually unlock an **Endless Mode** to test their endurance.
 
-<div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
-  <img src="docs/introduction/pet.gif" alt="Pet Animation" width="325" height="220"/>
-  <img src="docs/introduction/weather.gif" alt="Weather Animation" width="325" height="220"/>
+<div align="center">
+  <img src="docs/introduction/pet.gif" alt="Pet Animation" width="265" height="155"/>
+  <img src="docs/introduction/weather.gif" alt="Weather Animation" width="265" height="155"/>
 </div>
 
 Designed for both **newcomers and roguelike veterans**, Glitchwood includes a built-in tutorial, intuitive controls, and two difficulty levels. Its gameplay is tied to a deeper theme—**a developer lost inside their own creation**, fighting to escape.
@@ -79,9 +123,9 @@ Our game design was inspired by two modern roguelike hits:
 - ❗ Limitation: Lack of manual input can reduce player agency  
 - ✅ Takeaway: We adopted **wave-based survival**, **upgrade choices**, and **enemy escalation**
   
-<div style="display: flex; justify-content: center;">
-  <img src="docs/game_idea/Vampire_Survivors.jpg" alt="Vampire Survivors" style="width: 650px; height: 420px; object-fit: cover;">
-</div>
+<p align="center">
+  <img src="docs/game_idea/Vampire_Survivors.jpg" alt="Vampire Survivors" width="580" height="360">
+</p>
 
 🎯 **20 Minutes Till Dawn**
 - Twin-stick shooter with precise aiming and movement  
@@ -90,9 +134,9 @@ Our game design was inspired by two modern roguelike hits:
 - ❗ Limitation: Somewhat short progression loop, less narrative  
 - ✅ Takeaway: We embraced **manual aiming**, **responsive controls**, and **fast-paced combat**
 
-<div style="display: flex; justify-content: center;">
-  <img src="docs/game_idea/20_Minutes_Till_Dawn.jpg" alt="20 Minutes Till Dawn" style="width: 650px; height: 410px; object-fit: cover;">
-</div>
+<p align="center">
+  <img src="docs/game_idea/20_Minutes_Till_Dawn.jpg" alt="20 Minutes Till Dawn" width="580" height="350">
+</p>
 
 ---
 
@@ -170,7 +214,9 @@ Before selecting and developing Glitchwood, our team explored two original game 
 
 ### 2.1 Game Idea 1: Survival Roguelike
 
-![Survival Shooting Game](docs/game_idea/Survival_Shooting_Game(Rogue_like_Elements).png)
+<p align="center">
+  <img src="docs/game_idea/Survival_Shooting_Game(Rogue_like_Elements).png" alt="Survival Shooting Game" width="820" height="570">
+</p>
 
 **Core Concept**  
 A wave-based roguelike where players control one of several programmer-themed characters navigating glitchy environments filled with enemies, hazards, and random upgrades. Players adapt to ever-changing weather, pet abilities, and environmental effects while progressing toward high scores or survival.
@@ -182,10 +228,10 @@ A wave-based roguelike where players control one of several programmer-themed ch
 - **Pets with combat effects** (attack, heal, shield), acquired after boss battles
 - **Endless mode** and increasing difficulty to encourage replayability
   
-<div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
-  <img src="docs/game_idea/game1_who.gif" alt="Game1 Who Animation" width="325" height="220"/>
-  <img src="docs/game_idea/game1_select.gif" alt="Game1 Select Animation" width="325" height="220"/>
-  <img src="docs/game_idea/game1_attack.gif" alt="Game1 Attack Animation" width="325" height="220"/>
+<div align="center">
+  <img src="docs/introduction/start.gif" alt="Start Animation" width="265" height="155"/>
+  <img src="docs/introduction/char.gif" alt="Character Animation" width="265" height="155"/>
+  <img src="docs/introduction/boss.gif" alt="Boss Animation" width="265" height="155"/>
 </div>
 
 **Design Strengths**
@@ -200,15 +246,20 @@ A wave-based roguelike where players control one of several programmer-themed ch
 
 - 📹 [**Game 1 – Survival Roguelike: Paper Prototype Demo (Video)**](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/docs/prototype/video/Prototype_Game_Idea_1.mp4)
 
-  [![Prototype_Game_Idea_1](https://img.youtube.com/vi/LU3oWswBsX0/0.jpg)](https://www.youtube.com/watch?v=LU3oWswBsX0)
-  
-  _Early-stage gameplay exploration through paper prototyping._
+<div align="center">
+  <a href="https://www.youtube.com/watch?v=LU3oWswBsX0" target="_blank">
+    <img src="https://img.youtube.com/vi/LU3oWswBsX0/0.jpg" alt="Prototype_Game_Idea_1" width="580" height="420">
+  </a>
+    <p><em>Early-stage gameplay exploration through paper prototyping.</em></p>
+</div>
 
   ---
   
 ### 2.2 Game Idea 2: Horror Puzzle RPG
 
-![Horror Puzzle RPG Game](docs/game_idea/Horror_Puzzle_RPG_Game.png)
+<p align="center">
+  <img src="docs/game_idea/Horror_Puzzle_RPG_Game.png" alt="Horror Puzzle RPG Game" width=820" height="570">
+</p>
 
 **Core Concept**  
 A time-loop puzzle RPG set in a frozen university lab. Players explore, solve programming-themed puzzles, and uncover hidden experiments to escape a mysterious temporal trap.
@@ -219,10 +270,9 @@ A time-loop puzzle RPG set in a frozen university lab. Players explore, solve pr
 - Supernatural horror events and evolving world state
 - Multiple endings based on player decisions
 
-<div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
-  <img src="docs/game_idea/game2_start.gif" alt="Game2 Start Animation" width="325" height="220"/>
-  <img src="docs/game_idea/game2_key.gif" alt="Game2 Key Animation" width="325" height="220"/>
-  <img src="docs/game_idea/game2_ghost.gif" alt="Game2 Ghost Animation" width="325" height="220"/>
+<div align="center">
+  <img src="docs/introduction/pet.gif" alt="Pet Animation" width="265" height="155"/>
+  <img src="docs/introduction/weather.gif" alt="Weather Animation" width="265" height="155"/>
 </div>
 
 **Design Limitations**
@@ -238,9 +288,12 @@ A time-loop puzzle RPG set in a frozen university lab. Players explore, solve pr
 
 - 📹 [**Game 2 – Horror Puzzle RPG: Paper Prototype Demo (Video)**](https://github.com/UoB-COMSM0166/2025-group-27/blob/main/docs/prototype/video/Prototype_Game_Idea_2.mp4)
   
-    [![Prototype_Game_Idea_2](https://img.youtube.com/vi/HQiOb3xbiVc/0.jpg)](https://www.youtube.com/watch?v=HQiOb3xbiVc)
-  
-  _Walkthrough of story-driven puzzle concepts via paper prototype._
+<div align="center">
+  <a href="https://www.youtube.com/watch?v=HQiOb3xbiVc" target="_blank">
+    <img src="https://img.youtube.com/vi/HQiOb3xbiVc/0.jpg" alt="Prototype_Game_Idea_2" width="580" height="420">
+  </a>
+  <p><em>Walkthrough of story-driven puzzle concepts via paper prototype.</em></p>
+</div>
 
   ---
   
@@ -263,7 +316,9 @@ Throughout the development of *Glitchwood*, we applied structured requirement pl
 
 Our first step was to identify all relevant stakeholders involved in or affected by the development of *Glitchwood*. To visualize the relationships and influence between them, we adopted the **Onion Model** of stakeholders, which classifies them into concentric layers from core systems to external environments.
 
-![Onion Model of Stakeholders](docs/requirements/Onion_Model.png)
+<div align="center">
+  <img src="docs/requirements/Onion_Model.png" alt="Onion Model of Stakeholders" width="820" height="570">
+</div>
 
 - **Level 1: System** – *Glitchwood* itself, the game we built.
 - **Level 2: Containing System** –  
@@ -292,7 +347,9 @@ To validate each user story, we defined **Acceptance Criteria** using the "Given
 
 The following diagram summarizes the epics, stories, and acceptance criteria across five key stakeholder groups:
 
-![Stakeholder Requirements](docs/requirements/Stakeholder_Requirements.png)
+<div align="center">
+  <img src="docs/requirements/Stakeholder_Requirements.png" alt="Stakeholder Requirements" width="820" height="570">
+</div>
 
 This visual representation allowed us to keep the entire team focused on stakeholder-driven value, while ensuring coverage of both functional and experiential aspects of the game.
 
@@ -337,7 +394,9 @@ We adopted an object-oriented architecture tailored for our game's modular syste
 
 The following UML class diagram captures the **static structure** of Glitchwood’s core gameplay systems.
 
-![Class Diagram](docs/design/ClassDiagram.png)
+<div align="center">
+  <img src="docs/design/ClassDiagram.png" alt="Class Diagram" width="820" height="570">
+</div>
 
 #### 📌 Key Components
 
@@ -374,7 +433,9 @@ The following UML class diagram captures the **static structure** of Glitchwood�
 
 The following diagram illustrates **dynamic interaction flow** between systems in typical gameplay.
 
-![Sequence Diagram](docs/design/SequenceDiagram.png)
+<div align="center">
+  <img src="docs/design/SequenceDiagram.png" alt="Sequence Diagram" width="820" height="570">
+</div>
 
 #### 🎮 Key Scenarios
 
@@ -514,7 +575,9 @@ This section presents both qualitative and quantitative evaluations of our game,
 
 #### 🗣️ Focus Group Q&A Summary
 
-![Interview Responses](docs/game_idea/interview.png)
+<div align="center">
+  <img src="docs/game_idea/interview.png" alt="Interview Responses" width="820" height="1200">
+</div>
 
 Below is a summary of improvement points derived from Q&A transcripts:
 
@@ -545,11 +608,15 @@ Using the **Wilcoxon Signed Rank Test**, we compared SUS and NASA-TLX scores bet
 - A **statistically significant increase** in workload under L2
 - Only a **minor difference** in usability scores, indicating UI remained consistently usable across modes
 
-![Figure 1: L1 Evaluation](https://github.com/user-attachments/assets/925e05b2-e862-4e1b-9786-8f38dd1fac45)
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/925e05b2-e862-4e1b-9786-8f38dd1fac45" alt="Figure 1: L1 Evaluation" width="820" height="570">
+</div>
 
-> In **L1**, players found the game **easy to use**, with low demand in physical and temporal areas. Frustration levels were mild (20–30 range), aligning with our goal of onboarding new players gently.
+  > In **L1**, players found the game **easy to use**, with low demand in physical and temporal areas. Frustration levels were mild (20–30 range), aligning with our goal of onboarding new players gently.
 
-![Figure 2: L2 Evaluation](https://github.com/user-attachments/assets/7263cf0b-1bda-4787-964c-b5155d597a63)
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/7263cf0b-1bda-4787-964c-b5155d597a63" alt="Figure 2: L2 Evaluation" width="820" height="570">
+</div>
 
 > In **L2**, difficulty led to higher **effort, frustration, and mental load**. Scores for items like "I found the system unnecessarily complex" or "I needed a lot of support" increased, reflecting a more intense experience.
 
