@@ -248,7 +248,7 @@ A wave-based roguelike where players control one of several programmer-themed ch
 
 <div align="center">
   <a href="https://www.youtube.com/watch?v=LU3oWswBsX0" target="_blank">
-    <img src="https://img.youtube.com/vi/LU3oWswBsX0/0.jpg" alt="Prototype_Game_Idea_1" width="580" height="420">
+    <img src="https://img.youtube.com/vi/LU3oWswBsX0/0.jpg" alt="Prototype_Game_Idea_1" width="540" height="400">
   </a>
     <p><em>Early-stage gameplay exploration through paper prototyping.</em></p>
 </div>
@@ -290,7 +290,7 @@ A time-loop puzzle RPG set in a frozen university lab. Players explore, solve pr
   
 <div align="center">
   <a href="https://www.youtube.com/watch?v=HQiOb3xbiVc" target="_blank">
-    <img src="https://img.youtube.com/vi/HQiOb3xbiVc/0.jpg" alt="Prototype_Game_Idea_2" width="580" height="420">
+    <img src="https://img.youtube.com/vi/HQiOb3xbiVc/0.jpg" alt="Prototype_Game_Idea_2" width="540" height="380">
   </a>
   <p><em>Walkthrough of story-driven puzzle concepts via paper prototype.</em></p>
 </div>
