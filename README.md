@@ -74,6 +74,16 @@
 - 📋 [**Kanban Board (Jira)**](https://1971026049.atlassian.net/jira/software/projects/KAN/boards/1)  
   _Follow our team’s agile workflow and development progress._
 
+<div align="center">
+  <img src="docs/kanban/kanban1.png" alt="Boss Animation" width="580" height="350"/>
+  <p><em>Boss battle screen.</em></p>
+  
+</div>
+<div align="center">
+  <img src="docs/kanban/kanban2.png" alt="Boss Animation" width="580" height="350"/>
+  <p><em>Boss battle screen.</em></p>
+</div>
+
 # Project Report
 
 ## Table of Contents
