@@ -38,37 +38,31 @@
     <tr>
       <td>Chengjun Yi</td>
       <td><a href="mailto:lw24658@bristol.ac.uk">lw24658@bristol.ac.uk</a></td>
-      <td>TBD</td>
       <td><a href="https://github.com/realYDIAN">realYDIAN</a></td>
     </tr>
     <tr>
       <td>Qiutong Zhao</td>
       <td><a href="mailto:fa24741@bristol.ac.uk">fa24741@bristol.ac.uk</a></td>
-      <td>TBD</td>
       <td><a href="https://github.com/AQIU20">AQIU20</a></td>
     </tr>
     <tr>
       <td>Heng Zhang</td>
       <td><a href="mailto:gg24694@bristol.ac.uk">gg24694@bristol.ac.uk</a></td>
-      <td>TBD</td>
       <td><a href="https://github.com/chrisheng456">chrisheng456</a></td>
     </tr>
     <tr>
       <td>Tong Yu</td>
       <td><a href="mailto:mp24824@bristol.ac.uk">mp24824@bristol.ac.uk</a></td>
-      <td>TBD</td>
       <td><a href="https://github.com/CelesteYt">CelesteYt</a></td>
     </tr>
     <tr>
       <td>Feihang Yan</td>
       <td><a href="mailto:vj24070@bristol.ac.uk">vj24070@bristol.ac.uk</a></td>
-      <td>TBD</td>
       <td><a href="https://github.com/Feihang027">Feihang027</a></td>
     </tr>
     <tr>
       <td>Xianhang Peng</td>
       <td><a href="mailto:ge24600@bristol.ac.uk">ge24600@bristol.ac.uk</a></td>
-      <td>TBD</td>
       <td><a href="https://github.com/capybara131">capybara131</a></td>
     </tr>
   </tbody>
