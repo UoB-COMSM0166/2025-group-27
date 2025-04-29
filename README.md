@@ -488,7 +488,7 @@ By mapping these needs to specific game features (e.g., combat mechanics, weathe
 The picture below shows the use-case diagram and use-case specification of our game.
 
 <div align="center">
-  <img src="docs/design/use_case_diagram.png" alt="Use Case Diagram and Specification" width="960" height="580">
+  <img src="docs/requirements/use_case_diagram.png" alt="Use Case Diagram and Specification" width="960" height="580">
   <p><em>Use-Case Diagram And Use-Case Specification.</em></p>
 </div>
 
