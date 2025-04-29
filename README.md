@@ -118,8 +118,10 @@
       - [Key Components](#key-components)
     - [4.3 Sequence Diagram](#43-sequence-diagram)
       - [🎮 Key Scenarios](#-key-scenarios)
-    - [4.4 Design Reflection](#44-design-reflection)
-    - [4.5 Design Reflection](#45-design-reflection)
+    - [4.4 Reflection and Conclusion](#44-reflection-and-conclusion)
+      - [Key OOD Principles in Practice](#key-ood-principles-in-practice)
+      - [Role of UML Diagrams](#role-of-uml-diagrams)
+      - [Benefits to Our Development Process](#benefits-to-our-development-process)
   - [5 Implementation](#5-implementation)
     - [5.1 Basic Implementation](#51-basic-implementation)
     - [5.2 Code Architecture Overview](#52-code-architecture-overview)
@@ -129,10 +131,8 @@
       - [2. **Integrating Pet System with Dynamic Obstacle Regeneration**](#2-integrating-pet-system-with-dynamic-obstacle-regeneration)
       - [3. **Managing Upgrade Interactions: Piercing and Splitting Effects**](#3-managing-upgrade-interactions-piercing-and-splitting-effects)
       - [Additional Challenge: Seamless Integration of Narrative and Gameplay](#additional-challenge-seamless-integration-of-narrative-and-gameplay)
-      - [Additional Challenge: Seamless Integration of Narrative and Gameplay](#additional-challenge-seamless-integration-of-narrative-and-gameplay-1)
     - [Summary Table of Challenges](#summary-table-of-challenges)
-    - [5.5 Optimizing Game Performance and Compatibility](#55-optimizing-game-performance-and-compatibility)
-    - [5.6 Conclusion of the Implementation Challenges](#56-conclusion-of-the-implementation-challenges)
+    - [5.5 Reflection and Conclusion](#55-reflection-and-conclusion)
   - [6 Evaluation](#6-evaluation)
     - [6.1 Qualitative Evaluation](#61-qualitative-evaluation)
       - [Artistic Style \& Interaction Design](#artistic-style--interaction-design)
@@ -573,45 +573,26 @@ The following diagram illustrates **dynamic interaction flow** between systems i
 
 ---
 
-### 4.4 Design Reflection
+### 4.4 Reflection and Conclusion
 
-Throughout the development of **Glitchwood**, early-stage design played a crucial role in shaping our system's clarity, flexibility, and maintainability.
+#### Key OOD Principles in Practice
+- **Encapsulation**: Each entity (e.g., `Player`, `Enemy`, `Pet`, `Weather`) contains its own data and logic, reducing side effects and improving reusability.
+- **Abstraction**: Shared behaviors like `move()` or `attack()` are defined in parent classes such as `Figures`, enabling simple and clear extension.
+- **Inheritance**: Relationships like `Enemy → Boss` and `Pet → Cat/Bird/Elf` reduce redundancy and make new entity creation easier.
+- **Polymorphism**: Methods like `attack()` and `affectWeather()` behave differently depending on the object type, supporting flexible interactions.
+- **Composition**: Complex entities, such as a player with a pet, are constructed by combining simpler components.
 
-We adhered closely to fundamental **Object-Oriented Design (OOD)** principles:
+#### Role of UML Diagrams
+- The **Class Diagram** helped us define the system structure before implementation.
+- The **Sequence Diagram** illustrated dynamic gameplay interactions (e.g., combat, potion use), improving team understanding and task assignment.
 
-- **Encapsulation**  
-  Each game entity (e.g., Player, Enemy, Pet, Weather) encapsulates its own data and behavior, ensuring modularity and preventing unintended side effects.
+#### Benefits to Our Development Process
+- **Clarity**: Reduced ambiguity when assigning or reviewing code responsibilities.
+- **Scalability**: Easily added new content (e.g., pets, weather, bosses) without major changes.
+- **Efficiency**: Fewer bugs and faster iteration thanks to clean system boundaries.
+- **Agility**: Design models supported sprint planning, code reviews, and refactoring.
 
-- **Abstraction**  
-  Common behaviors such as movement or attack logic were abstracted into parent classes like `Figures`, allowing subclasses to specialize without exposing internal complexity.
-
-- **Inheritance**  
-  Relationships such as `Enemy → Boss` and `Pet → Bird/Elf/Cat` demonstrate clear inheritance hierarchies, reducing redundancy and improving code reuse.
-
-- **Polymorphism**  
-  Functions like `attack()` and `affectWeather()` are designed polymorphically, allowing diverse entities to interact through unified interfaces, enhancing system flexibility.
-
-- **Composition**  
-  Complex gameplay behaviors (e.g., a `Player` with an attached `Pet`) are modeled through composition, enabling dynamic feature assembly from simpler components.
-
-Our **UML Class Diagram** provided a static overview of the core system structure, while the **Sequence Diagram** captured key dynamic interactions such as attack execution, potion use, and weather effects. These visual models significantly enhanced communication within the team and aligned with agile development practices, particularly during refactoring and feature expansion phases.
-
-In modeling relationships among entities, we deliberately applied **association**, **aggregation**, and **generalization**, ensuring that structural dependencies reflected real-world interactions (e.g., players owning pets, enemies organizing attacks).
-
-Grounding our architecture in solid OOD practices enabled us to build a flexible, extensible, and maintainable foundation.  
-This investment not only accelerated feature development but also positioned Glitchwood for future scalability, such as adding new weather types, pets, or boss challenges, with minimal disruption.
-
----
-
-### 4.5 Design Reflection
-
-These early design models were crucial in guiding our team during implementation. They:
-
-- Reduced ambiguity in code responsibilities  
-- Provided a foundation for debugging and feature expansion  
-- Made onboarding easier when assigning new tasks
-
-As we moved from prototypes to full development, the visual clarity of our architecture helped us iterate faster and avoid major refactors. Looking forward, this structure supports the addition of new levels, enemies, or even multiplayer logic with minimal disruption.
+This strong architectural foundation allowed us to develop features in parallel, avoid large-scale rewrites, and remain confident in the system’s extensibility—laying the groundwork for future updates like multiplayer or branching narratives.
 
 [Back to Table of Contents](#table-of-contents)
 
@@ -704,20 +685,6 @@ These upgrades were easy to manage individually, but combining them led to **con
   <p><em>Code 2.</em></p>
 </div>
 
-
-#### Additional Challenge: Seamless Integration of Narrative and Gameplay
-
-While the above challenges focused on code, a **core design goal** of *Glitchwood* was to reflect the **emotional experience of a developer** trapped in their own creation.
-
-We avoided long dialogues or cutscenes, instead weaving narrative through:
-- **Visual Design**: Glitch effects, corrupted assets, and bug-themed bosses.
-- **Gameplay Mechanics**: Themes of **debugging**, **instability**, and **progression** embedded in systems like weather effects, upgrades, and character roles.
-- **Metaphorical Elements**: Pets as “tools,” weather as “system failures,” enemies as “bugs.”
-
-This required ongoing alignment between **art**, **narrative**, and **gameplay** teams, ensuring metaphor and mechanics were **symbolically and mechanically cohesive**.
-
----
-
 #### Additional Challenge: Seamless Integration of Narrative and Gameplay
 
 While the above challenges focused on code, a **core design goal** of *Glitchwood* was to reflect the **emotional experience of a developer** trapped in their own creation.
@@ -742,15 +709,12 @@ This required ongoing alignment between **art**, **narrative**, and **gameplay**
 
 ---
 
-### 5.5 Optimizing Game Performance and Compatibility
+### 5.5 Reflection and Conclusion
+Developing *Glitchwood* taught us to manage the tension between creative design and technical execution. From optimizing real-time performance to modularizing combat, pets, and weather systems, we faced significant architectural and gameplay challenges. 
 
-**Performance optimization** was a key consideration, especially given the graphical and gameplay complexity. By using **modular coding practices** and optimizing resource-heavy components like animations and special effects, we ensured the game runs efficiently across different devices. However, performance bottlenecks were noted, especially in scenarios with complex weather effects and high enemy counts, which may require future refinements.
+A key takeaway was the importance of **object-oriented clarity**: early reliance on centralized logic (e.g., upgrades inside the `Player` class) made combined effects difficult to manage, which we resolved through refactoring and encapsulation. We also learned that gameplay systems like **pets or dynamic obstacles** require not only functional code, but also cross-system awareness (e.g., pathfinding re-evaluation after map regeneration).
 
-  ---
-
-### 5.6 Conclusion of the Implementation Challenges
-
-The development of **Glitchwood** involved tackling numerous technical and design challenges, from integrating the narrative into gameplay to optimizing performance. The modular architecture allowed us to develop features iteratively and improve the game based on continuous feedback. Moving forward, there are opportunities to refine the **AI behavior**, **enhance the pet system**, and optimize **performance** further. Each challenge we faced helped us develop a deeper understanding of how to balance creativity, performance, and usability in game development.
+While some optimizations (such as performance tuning in high-enemy scenarios) remain areas for improvement, our modular approach enabled consistent iteration, debugging, and feature addition. These lessons shaped our final product and will inform future development work.
 
 [Back to Table of Contents](#table-of-contents)
 
