@@ -111,7 +111,8 @@
     - [3.1 Stakeholder Identification: The Onion Model](#31-stakeholder-identification-the-onion-model)
     - [3.2 Requirements Analysis: Epics, User Stories, and Acceptance Criteria](#32-requirements-analysis-epics-user-stories-and-acceptance-criteria)
     - [3.3 Applying Requirements to Our Game](#33-applying-requirements-to-our-game)
-    - [3.4 Reflection and Conclusion](#34-reflection-and-conclusion)
+    - [3.4 Use-Case Diagram and Use-Case Specification](#34-use-case-diagram-and-use-case-specification)
+    - [3.5 Reflection and Conclusion](#35-reflection-and-conclusion)
   - [4 Design](#4-design)
     - [4.1 System Architecture Overview](#41-system-architecture-overview)
     - [4.2 Class Diagram](#42-class-diagram)
@@ -482,7 +483,18 @@ By mapping these needs to specific game features (e.g., combat mechanics, weathe
 
 ---
 
-### 3.4 Reflection and Conclusion
+### 3.4 Use-Case Diagram and Use-Case Specification
+
+The picture below shows the use-case diagram and use-case specification of our game.
+
+<div align="center">
+  <img src="docs/design/use_case_diagram.png" alt="Use Case Diagram and Specification" width="960" height="580">
+  <p><em>Use-Case Diagram And Use-Case Specification.</em></p>
+</div>
+
+---
+
+### 3.5 Reflection and Conclusion
 
 Using Epics, User Stories, and Acceptance Criteria helped us move from vague design ideas to a concrete, testable structure. It reduced miscommunication, supported iterative planning, and clarified the purpose of every system we implemented.
 
@@ -672,7 +684,7 @@ The **archer character (Mousegirl)** features two notable upgrades:
 These upgrades were easy to manage individually, but combining them led to **conflicts and nested logic** when upgrades were implemented inside the `Player` class. Eventually, we migrated upgrade logic into the `Arrow` class, allowing each instance to **independently handle its effects**. This **object-oriented redesign** improved clarity, maintainability, and future scalability.
 
 <div align="center">
-  <img src="docs/implementation/code_image.png" alt="Sequence Diagram" width="820" height="800">
+  <img src="docs/implementation/code_image.png" alt="Sequence Diagram" width="960" height="851">
   <p><em>Code 1: Handling simultaneous Pierce and Split upgrades in the Arrow class.</em></p>
 </div>
 
