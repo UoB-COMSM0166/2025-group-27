@@ -87,7 +87,16 @@
 # Project Report
 
 ## Table of Contents
-
+- [1. Introduction](https://github.com/UoB-COMSM0166/2025-group-27?tab=readme-ov-file#1-introduction)
+- [2. Ideation](https://github.com/UoB-COMSM0166/2025-group-27?tab=readme-ov-file#2-ideation)
+- [3. Requirements](https://github.com/UoB-COMSM0166/2025-group-27?tab=readme-ov-file#3-requirements)
+- [4. Design](https://github.com/UoB-COMSM0166/2025-group-27?tab=readme-ov-file#4-design)
+- [5. Implementation](https://github.com/UoB-COMSM0166/2025-group-27?tab=readme-ov-file#5-implementation)
+- [6. Evaluation](https://github.com/UoB-COMSM0166/2025-group-27?tab=readme-ov-file#6-evaluation)
+- [7. Process](https://github.com/UoB-COMSM0166/2025-group-27?tab=readme-ov-file#7-process)
+- [8. Sustainability, Ethics, and Accessibility](https://github.com/UoB-COMSM0166/2025-group-27?tab=readme-ov-file#8-sustainability,-ethics,-and-accessibility)
+- [9. Conclusion](https://github.com/UoB-COMSM0166/2025-group-27?tab=readme-ov-file#9-conclusion)
+- [10. Appendix](https://github.com/UoB-COMSM0166/2025-group-27?tab=readme-ov-file#10-appendix)
 
 
 ## 1 Introduction
