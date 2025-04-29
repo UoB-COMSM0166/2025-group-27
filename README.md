@@ -685,7 +685,7 @@ They were asked to test specific mechanics and UI elements. Key takeaways:
 
 ---
 
-### ✅ Conclusion
+### 6.4 Conclusion
 
 Our **evaluation process** helped shape a more responsive and accessible gameplay experience. Key insights include:
 
