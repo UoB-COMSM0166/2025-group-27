@@ -595,6 +595,14 @@ The code architecture of **Glitchwood** is modular and follows object-oriented p
 
    - **Upgrade implementation**: For coder, one of the most difficult parts for game implementation is the upgrade part. This section is closely related to the game's vitality and attraction. Engaging upgrades can significantly enhance the player's experience, but at the same time, they introduce new coding challenges. For example, this part of the code(in picture) deals with upgrading the archer character, where we needed to implement **two distinct upgrades: pierce and split**. These upgrades are not inherently difficult to code—pierce allows arrows to remain active after hitting an enemy **(simply keeping arrow.isActive as true when pierce is enabled)**, while split requires arrows to spawn two new arrows in different directions upon impact. The real challenge emerged when both upgrades were active simultaneously. Initially, we handled upgrades **within the Player class**, but this approach reached its limits when combining both effects. Eventually, we realized that applying the upgrades **within the Arrow class** was a more logical solution. As shown in the image, this change allowed us to overcome the difficulty.
 
+   - **Pet System Integration**: For coders, one of the toughest parts of the project was integrating a dynamic obstacle wave system with autonomous pets without breaking game balance. In the snippet above (in picture), you can see how we implemented **two core pet behaviors: orbital following and auto-attack** in the **`AttackPet`** class.  Orbital following uses a circular offset and `lerp()` for smooth movement around the player.  Auto-attack detects and damages the nearest enemy on cooldown (**simply decrementing `attackCooldown` and checking distance**).  The real challenge emerged when we tried syncing pet timers, animations, and obstacle spawns in a central update routine—it quickly became unmanageable as more pets and effects were added.  We solved this by moving both state transitions and rendering into each pet’s own methods: **`follow()`**, **`attack()`**, **`activateShield()`** / **`deactivateShield()`**, etc. This isolated complexity, kept the core loop clean, and finally achieved a flexible, balanced pet system that scales with wave progression.
+
+<div align="center">
+  <img src="docs/implementation/code2_image.png" alt="code_image" width="800" height="800">
+  <p><em>Code 2.</em></p>
+</div>
+
+
   ---
 
 ### 5.5 Optimizing Game Performance and Compatibility
