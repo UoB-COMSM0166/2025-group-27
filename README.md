@@ -129,9 +129,8 @@
       - [2. **Integrating Pet System with Dynamic Obstacle Regeneration**](#2-integrating-pet-system-with-dynamic-obstacle-regeneration)
       - [3. **Managing Upgrade Interactions: Piercing and Splitting Effects**](#3-managing-upgrade-interactions-piercing-and-splitting-effects)
       - [Additional Challenge: Seamless Integration of Narrative and Gameplay](#additional-challenge-seamless-integration-of-narrative-and-gameplay)
-    - [Summary Table of Challenges](#summary-table-of-challenges)
       - [Additional Challenge: Seamless Integration of Narrative and Gameplay](#additional-challenge-seamless-integration-of-narrative-and-gameplay-1)
-    - [Summary Table of Challenges](#summary-table-of-challenges-1)
+    - [Summary Table of Challenges](#summary-table-of-challenges)
     - [5.5 Optimizing Game Performance and Compatibility](#55-optimizing-game-performance-and-compatibility)
     - [5.6 Conclusion of the Implementation Challenges](#56-conclusion-of-the-implementation-challenges)
   - [6 Evaluation](#6-evaluation)
@@ -719,17 +718,6 @@ This required ongoing alignment between **art**, **narrative**, and **gameplay**
 
 ---
 
-### Summary Table of Challenges
-
-| Challenge | Summary |
-|:----------|:--------|
-| **Collision System** | Real-time hitbox detection and air wall boundary handling |
-| **Pet + Obstacle Integration** | Pets dynamically reposition after map obstacle regeneration |
-| **Upgrade System** | Refactored upgrade logic into `Arrow` class for combined effects |
-| **Narrative Design** | Embedded symbolic narrative through gameplay and visuals |
-
----
-
 #### Additional Challenge: Seamless Integration of Narrative and Gameplay
 
 While the above challenges focused on code, a **core design goal** of *Glitchwood* was to reflect the **emotional experience of a developer** trapped in their own creation.
@@ -753,7 +741,6 @@ This required ongoing alignment between **art**, **narrative**, and **gameplay**
 | **Narrative Design** | Embedded symbolic narrative through gameplay and visuals |
 
 ---
->>>>>>> 1367652 (Update 4 and 5)
 
 ### 5.5 Optimizing Game Performance and Compatibility
 
