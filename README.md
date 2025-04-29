@@ -130,6 +130,8 @@
       - [3. **Managing Upgrade Interactions: Piercing and Splitting Effects**](#3-managing-upgrade-interactions-piercing-and-splitting-effects)
       - [Additional Challenge: Seamless Integration of Narrative and Gameplay](#additional-challenge-seamless-integration-of-narrative-and-gameplay)
     - [Summary Table of Challenges](#summary-table-of-challenges)
+      - [Additional Challenge: Seamless Integration of Narrative and Gameplay](#additional-challenge-seamless-integration-of-narrative-and-gameplay-1)
+    - [Summary Table of Challenges](#summary-table-of-challenges-1)
     - [5.5 Optimizing Game Performance and Compatibility](#55-optimizing-game-performance-and-compatibility)
     - [5.6 Conclusion of the Implementation Challenges](#56-conclusion-of-the-implementation-challenges)
   - [6 Evaluation](#6-evaluation)
@@ -696,6 +698,14 @@ These upgrades were easy to manage individually, but combining them led to **con
 
 ---
 
+ - **Pet System Integration**: For coders, one of the toughest parts of the project was integrating a dynamic obstacle wave system with autonomous pets without breaking game balance. In the snippet above (in picture), you can see how we implemented **two core pet behaviors: orbital following and auto-attack** in the **`AttackPet`** class.  Orbital following uses a circular offset and `lerp()` for smooth movement around the player.  Auto-attack detects and damages the nearest enemy on cooldown (**simply decrementing `attackCooldown` and checking distance**).  The real challenge emerged when we tried syncing pet timers, animations, and obstacle spawns in a central update routine—it quickly became unmanageable as more pets and effects were added.  We solved this by moving both state transitions and rendering into each pet’s own methods: **`follow()`**, **`attack()`**, **`activateShield()`** / **`deactivateShield()`**, etc. This isolated complexity, kept the core loop clean, and finally achieved a flexible, balanced pet system that scales with wave progression.
+
+<div align="center">
+  <img src="docs/implementation/code2_image.png" alt="code_image" width="800" height="800">
+  <p><em>Code 2.</em></p>
+</div>
+
+
 #### Additional Challenge: Seamless Integration of Narrative and Gameplay
 
 While the above challenges focused on code, a **core design goal** of *Glitchwood* was to reflect the **emotional experience of a developer** trapped in their own creation.
@@ -719,6 +729,31 @@ This required ongoing alignment between **art**, **narrative**, and **gameplay**
 | **Narrative Design** | Embedded symbolic narrative through gameplay and visuals |
 
 ---
+
+#### Additional Challenge: Seamless Integration of Narrative and Gameplay
+
+While the above challenges focused on code, a **core design goal** of *Glitchwood* was to reflect the **emotional experience of a developer** trapped in their own creation.
+
+We avoided long dialogues or cutscenes, instead weaving narrative through:
+- **Visual Design**: Glitch effects, corrupted assets, and bug-themed bosses.
+- **Gameplay Mechanics**: Themes of **debugging**, **instability**, and **progression** embedded in systems like weather effects, upgrades, and character roles.
+- **Metaphorical Elements**: Pets as “tools,” weather as “system failures,” enemies as “bugs.”
+
+This required ongoing alignment between **art**, **narrative**, and **gameplay** teams, ensuring metaphor and mechanics were **symbolically and mechanically cohesive**.
+
+---
+
+### Summary Table of Challenges
+
+| Challenge | Summary |
+|:----------|:--------|
+| **Collision System** | Real-time hitbox detection and air wall boundary handling |
+| **Pet + Obstacle Integration** | Pets dynamically reposition after map obstacle regeneration |
+| **Upgrade System** | Refactored upgrade logic into `Arrow` class for combined effects |
+| **Narrative Design** | Embedded symbolic narrative through gameplay and visuals |
+
+---
+>>>>>>> 1367652 (Update 4 and 5)
 
 ### 5.5 Optimizing Game Performance and Compatibility
 
