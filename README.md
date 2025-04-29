@@ -882,7 +882,7 @@ In summary, *Glitchwood* has been more than just a game project—it has been an
 
 ## 10 Appendix
 
-## 10.1 Contributions of Team Members
+### 10.1 Contributions of Team Members
 
 | Name          | Contribution                                                                                                                           | Weight |
 |---------------|----------------------------------------------------------------------------------------------------------------------------------------|--------|
