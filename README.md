@@ -124,8 +124,6 @@ Designed for both **newcomers and roguelike veterans**, Glitchwood includes a bu
 
 ### 1.2 Inspiration
 
-### 1.2 Inspiration
-
 Our game design was inspired by two modern roguelike hits:
 
 🕹️ **Vampire Survivors**
@@ -151,8 +149,6 @@ Our game design was inspired by two modern roguelike hits:
   <img src="docs/introduction/20_Minutes_Till_Dawn.jpg" alt="20 Minutes Till Dawn" width="580" height="350">
   <p><em>Reference image from the game 20 Minutes Till Dawn.</em></p>
 </div>
-
----
 
 Unlike those titles, **Glitchwood** takes a more **symbolic approach**. Here, the player is a developer trapped in their own game, confronting metaphorical bugs, runtime failures, and digital entropy. Every mechanic—from **dynamic weather** to **pets as debugging tools**—echoes real-world challenges in software development.
 
@@ -531,6 +527,8 @@ As for the game logic, enemies spawn outside obstacle zones and at a certain dis
 
 Regarding the pet and weather systems, after defeating the first boss, players can choose one of three pets, each granting a unique blessing—such as generating a shield, restoring health, or automatically attacking enemies. Additionally, the game introduces a dynamic weather system that changes every 30 seconds. **This is implemented using time-related functions provided by p5.js, along with random number generation to determine the type of weather effect.**
 
+  ---
+
 ### 5.2 Code Architecture Overview
 
 The code architecture of **Glitchwood** is modular and follows object-oriented principles. Key components like **Player**, **Enemies**, **Bullets**, **Pets**, and **Weather Effects** are encapsulated in separate classes. This modular design allows us to scale the game and add new features easily without disrupting existing functionalities.
@@ -546,6 +544,8 @@ The code architecture of **Glitchwood** is modular and follows object-oriented p
    - **Pet System**: After defeating a boss, players can choose a pet (e.g., shield, attack, healing), and the selected pet follows the player during gameplay, impacting the strategy with unique abilities.
    - **Weather Effects**: The dynamic weather system that alters gameplay every 30 seconds, affecting player and enemy movements (e.g., slowing down in snow or damaging in thunderstorms).
 
+  ---
+
 ### 5.3 Key Features and Highlights
 
 1. **Dynamic Map and Obstacle Generation**:
@@ -560,6 +560,8 @@ The code architecture of **Glitchwood** is modular and follows object-oriented p
 4. **Weather System**:
    The weather system influences gameplay significantly, providing varied environmental conditions that players must adapt to. Snow slows movement, lightning damages enemies and players, and sunlight can be both a benefit and a detriment. This system is implemented using **time-based functions** to control the intervals and transitions between different weather conditions.
 
+  ---
+
 ### 5.4 Challenges Faced in Implementing Game Mechanics
 
 1. **Integrating Story with Gameplay**:
@@ -571,16 +573,20 @@ The code architecture of **Glitchwood** is modular and follows object-oriented p
    - **Collision and Boundary Detection**: Fine-tuning the game’s **collision detection** for both enemies and players was complex. Implementing invisible "air walls" around the game world and ensuring that the characters' movements did not interfere with these boundaries was challenging. Moreover, handling **attack hitboxes** and making sure projectiles interacted appropriately with enemies was a critical part of the gameplay.
    - **Obstacle and Pet System Integration**: Dynamic obstacles presented the challenge of creating a flexible system that could spawn and destroy obstacles as waves progressed, while ensuring that the pet system didn't disrupt the balance of the game.
 
+  ---
+
 ### 5.5 Optimizing Game Performance and Compatibility
 
 **Performance optimization** was a key consideration, especially given the graphical and gameplay complexity. By using **modular coding practices** and optimizing resource-heavy components like animations and special effects, we ensured the game runs efficiently across different devices. However, performance bottlenecks were noted, especially in scenarios with complex weather effects and high enemy counts, which may require future refinements.
+
+  ---
 
 ### 5.6 Conclusion of the Implementation Challenges
 
 The development of **Glitchwood** involved tackling numerous technical and design challenges, from integrating the narrative into gameplay to optimizing performance. The modular architecture allowed us to develop features iteratively and improve the game based on continuous feedback. Moving forward, there are opportunities to refine the **AI behavior**, **enhance the pet system**, and optimize **performance** further. Each challenge we faced helped us develop a deeper understanding of how to balance creativity, performance, and usability in game development.
 
 
-## 6 🔍 Evaluation
+## 6 Evaluation
 
 This section presents both qualitative and quantitative evaluations of our game, **Glitchwood**. We conducted structured user interviews and employed established metrics like **SUS** (System Usability Scale) and **NASA-TLX** (Task Load Index) to assess the game's usability, workload, and player experience across both difficulty modes.
 
@@ -827,8 +833,6 @@ The decision to use P5.js, a lightweight JavaScript library, was made with perfo
 
 The development of *Glitchwood* has been a complex and rewarding journey that challenged our skills in game design, implementation, testing, and ethical responsibility. This section reflects on the full project lifecycle, key technical challenges, our team’s learning outcomes, and how we see the game evolving in the future.
 
----
-
 ### 9.1 What This Project Taught Us
 
 As computer science students, this project allowed us to explore the intersection of creative design and technical development. We followed an **agile development methodology**, organizing work into sprints and refining features through stakeholder feedback and structured evaluations.
@@ -870,6 +874,8 @@ Looking forward, we see several directions for future development:
 With these improvements, *Glitchwood* can grow into an even richer, more inclusive game—both technically polished and ethically aligned.
 
 ---
+
+### 9.5 Conclusion
 
 In summary, *Glitchwood* has been more than just a game project—it has been an opportunity to apply software engineering principles in a real-world, creative context. We leave this experience with stronger technical skills, deeper design awareness, and a clearer sense of how to build thoughtful, impactful digital experiences.
 
