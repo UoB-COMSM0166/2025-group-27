@@ -226,6 +226,7 @@ Technically, we aimed to push the boundaries of what P5.js can handle in a real-
 
 Looking ahead, Glitchwood could evolve in many directions: deeper roguelike branching, community-designed upgrades, or even as a learning platform to demonstrate code-as-world metaphors. Our vision is to keep expanding Glitchwood not just as a game, but as a **sandbox for experimentation in gameplay, storytelling, and system design**.
 
+[Back to Table of Contents](#table-of-contents)
 
 ## 2 Ideation
 
@@ -337,6 +338,7 @@ After structured comparison, we selected **Game Idea 1** as the foundation for G
 - **Higher alignment with learning goals**: The idea allowed us to explore randomness, system balance, and symbolic design while reinforcing CS themes (e.g., bugs, debugging, resilience).
 - **Better fit for team collaboration**: Each subsystem (combat, environment, pet system) could be assigned clearly, allowing us to coordinate through GitHub and version control.
 
+[Back to Table of Contents](#table-of-contents)
 
 ## 3 Requirements
 
@@ -407,6 +409,7 @@ Using Epics, User Stories, and Acceptance Criteria helped us move from vague des
 
 Most importantly, this process improved our **collaboration**, **task management**, and **feature validation**, all of which were crucial for maintaining project velocity. Moving forward, this approach will remain a valuable framework for future projects and professional practice in both game development and software engineering.
 
+[Back to Table of Contents](#table-of-contents)
 
 ## 4 Design
 
@@ -521,6 +524,7 @@ These early design models were crucial in guiding our team during implementation
 
 As we moved from prototypes to full development, the visual clarity of our architecture helped us iterate faster and avoid major refactors. Looking forward, this structure supports the addition of new levels, enemies, or even multiplayer logic with minimal disruption.
 
+[Back to Table of Contents](#table-of-contents)
 
 ## 5 Implementation
 
@@ -594,6 +598,7 @@ The code architecture of **Glitchwood** is modular and follows object-oriented p
 
 The development of **Glitchwood** involved tackling numerous technical and design challenges, from integrating the narrative into gameplay to optimizing performance. The modular architecture allowed us to develop features iteratively and improve the game based on continuous feedback. Moving forward, there are opportunities to refine the **AI behavior**, **enhance the pet system**, and optimize **performance** further. Each challenge we faced helped us develop a deeper understanding of how to balance creativity, performance, and usability in game development.
 
+[Back to Table of Contents](#table-of-contents)
 
 ## 6 Evaluation
 
@@ -705,6 +710,8 @@ Our **evaluation process** helped shape a more responsive and accessible gamepla
 
 This user-centered approach aligns closely with course goals on **evaluation methodology**, **usability engineering**, and **data-informed iteration**.
 
+[Back to Table of Contents](#table-of-contents)
+
 ## 7 Process
 
 Our team worked closely together throughout the project, ensuring clear communication, efficient collaboration, and a structured development process. This section outlines the team's roles and responsibilities, the tools we used, our Agile development methodology, and the lessons learned from our collaborative experience.
@@ -815,6 +822,7 @@ We also learned the importance of **flexible planning**. Sometimes tasks took lo
 
 Our collaboration during the development of **Glitchwood** has been highly successful due to clear role definitions, effective use of collaboration tools, and an iterative Agile process. We’ve learned valuable lessons in communication, problem-solving, and teamwork that will be useful for future projects. The experience not only helped us improve the game but also allowed us to develop a deeper understanding of Agile development and its application in real-world projects.
 
+[Back to Table of Contents](#table-of-contents)
 
 ## 8 Sustainability, Ethics, and Accessibility
 
@@ -837,6 +845,7 @@ Technically, the game employs modular and efficient code, which not only ensures
 
 The decision to use P5.js, a lightweight JavaScript library, was made with performance optimization in mind, ensuring the game runs efficiently across a variety of devices. This choice also supports accessibility, as it makes the game playable on lower-spec hardware, reducing the need for players to have high-performance systems to enjoy the game. **Reflection**: While P5.js was a suitable choice for the scope and goals of the project, its limitations became apparent as we encountered performance bottlenecks in handling more complex game mechanics. In future projects, we might explore more robust frameworks or game engines to provide better performance for more intricate game designs. This would also allow us to implement additional technical features that could enhance gameplay and user experience, without compromising performance.
 
+[Back to Table of Contents](#table-of-contents)
 
 ## 9 Conclusion
 
@@ -888,6 +897,7 @@ With these improvements, *Glitchwood* can grow into an even richer, more inclusi
 
 In summary, *Glitchwood* has been more than just a game project—it has been an opportunity to apply software engineering principles in a real-world, creative context. We leave this experience with stronger technical skills, deeper design awareness, and a clearer sense of how to build thoughtful, impactful digital experiences.
 
+[Back to Table of Contents](#table-of-contents)
 
 ## 10 Appendix
 
@@ -901,3 +911,5 @@ In summary, *Glitchwood* has been more than just a game project—it has been an
 | **Tong Yu**       | Designed the game’s visual art and front-end UI, ensuring that animation and design were well integrated with gameplay. Contributed to the storyline development and played a key role in optimizing the project report. | 1      |
 | **Feihang Yan**   | Developed the pet system, including its behavior modeling, interaction logic, and state management. Contributed creatively to pet design and participated in video creation. Also assisted with debugging and optimization. | 1      |
 | **Xianhang Peng** | Focused on front-end development, including UI elements like the main menu and score display. Played a key role in map design and optimizing the game’s interaction logic. Contributed to video creation and participated in creative brainstorming. | 1      |
+
+[Back to Table of Contents](#table-of-contents)
