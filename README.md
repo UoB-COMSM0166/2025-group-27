@@ -586,6 +586,15 @@ The code architecture of **Glitchwood** is modular and follows object-oriented p
    - **Collision and Boundary Detection**: Fine-tuning the game’s **collision detection** for both enemies and players was complex. Implementing invisible "air walls" around the game world and ensuring that the characters' movements did not interfere with these boundaries was challenging. Moreover, handling **attack hitboxes** and making sure projectiles interacted appropriately with enemies was a critical part of the gameplay.
    - **Obstacle and Pet System Integration**: Dynamic obstacles presented the challenge of creating a flexible system that could spawn and destroy obstacles as waves progressed, while ensuring that the pet system didn't disrupt the balance of the game.
 
+3. **Code Examples**:
+
+<div align="center">
+  <img src="docs/implementation/code_image.png" alt="code_image" width="800" height="800">
+  <p><em>Code 1.</em></p>
+</div>
+
+   - **Upgrade implementation**: For coder, one of the most difficult parts for game implementation is the upgrade part. This section is closely related to the game's vitality and attraction. Engaging upgrades can significantly enhance the player's experience, but at the same time, they introduce new coding challenges. For example, this part of the code(in picture) deals with upgrading the archer character, where we needed to implement two distinct upgrades: pierce and split. These upgrades are not inherently difficult to code—pierce allows arrows to remain active after hitting an enemy (simply keeping arrow.isActive as true when pierce is enabled), while split requires arrows to spawn two new arrows in different directions upon impact. The real challenge emerged when both upgrades were active simultaneously. Initially, we handled upgrades within the Player class, but this approach reached its limits when combining both effects. Eventually, we realized that applying the upgrades within the Arrow class was a more logical solution. As shown in the image, this change allowed us to overcome the difficulty.
+
   ---
 
 ### 5.5 Optimizing Game Performance and Compatibility
