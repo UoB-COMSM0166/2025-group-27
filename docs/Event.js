@@ -92,7 +92,6 @@ function mouseReleased() {
 
 function keyPressed() {
   if (keyCode === 69 && player.characterType == "knight" && player.spinningSlash == true) { //E
-    console.log("E");
     player.performSpinningSlash();
   }
   if ((gameState === "game" || gameState === "paused") && keyCode === 9) {

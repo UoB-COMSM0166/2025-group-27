@@ -1,0 +1,46 @@
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLActor</id><coordinates><x>150</x><y>440</y><w>60</w><h>110</h></coordinates><panel_attributes>Player</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLActor</id><coordinates><x>710</x><y>430</y><w>80</w><h>110</h></coordinates><panel_attributes>Developer</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>190</x><y>450</y><w>140</w><h>80</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;10;120;60</additional_attributes></element><element><id>Relation</id><coordinates><x>190</x><y>360</y><w>140</w><h>120</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;100;120;10</additional_attributes></element><element><id>Relation</id><coordinates><x>190</x><y>430</y><w>140</w><h>50</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;30;120;10</additional_attributes></element><element><id>Relation</id><coordinates><x>640</x><y>440</y><w>110</w><h>190</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;170;90;10</additional_attributes></element><element><id>UMLUseCase</id><coordinates><x>310</x><y>350</y><w>120</w><h>40</h></coordinates><panel_attributes>*Start Game*</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLUseCase</id><coordinates><x>310</x><y>420</y><w>120</w><h>40</h></coordinates><panel_attributes>*Save Game*</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLUseCase</id><coordinates><x>310</x><y>490</y><w>120</w><h>40</h></coordinates><panel_attributes>*Load Game*</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLUseCase</id><coordinates><x>530</x><y>590</y><w>120</w><h>40</h></coordinates><panel_attributes>*Game Update*</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLUseCase</id><coordinates><x>550</x><y>320</y><w>120</w><h>40</h></coordinates><panel_attributes>*Choose Difficulty*</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLUseCase</id><coordinates><x>560</x><y>390</y><w>120</w><h>40</h></coordinates><panel_attributes>*Choose Character*</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLUseCase</id><coordinates><x>530</x><y>460</y><w>120</w><h>40</h></coordinates><panel_attributes>*Choose Upgrade*</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>190</x><y>450</y><w>140</w><h>150</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;10;120;130</additional_attributes></element><element><id>UMLUseCase</id><coordinates><x>310</x><y>560</y><w>120</w><h>40</h></coordinates><panel_attributes>*Game Setting*</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>260</x><y>310</y><w>440</w><h>350</h></coordinates><panel_attributes>Glitchwood
+halign=left</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>800</x><y>200</y><w>290</w><h>560</h></coordinates><panel_attributes>Use Case Name : 
+Complete Game
+--
+Actors : 
+Player
+--
+Precondition : 
+Choose the appropriate settings
+Player is ready for the game
+--
+Postcondition :
+Game Status Update
+Player's Attribute Update
+Score Update
+--
+Basic Flow :
+Choose Difficulty
+Choose Character
+Fight Against Enemies
+Level Up And Choose Upgrades
+Fight Boss
+Choose "Finish Game" Or "Infinite Game Mode"
+Return To Main Menu
+--
+Alternative Flow :
+Alternative A : Defeated
+View Player's Score
+Press "R" To Return To Main Menu
+
+Alternative B : Infinite Mode
+Continue Game
+Fight Enemies
+Get Upgrades
+View Final Score
+--
+Special Requirements :
+Random Upgrade
+Higher Level, More Difficult To Level Up
+Enemies Increase As The Wave Increases
+The Weather Changes Every 40 Seconds
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>420</x><y>330</y><w>150</w><h>60</h></coordinates><panel_attributes>lt=.&gt;
+&lt;&lt;includes&gt;&gt;</panel_attributes><additional_attributes>10;40;130;10</additional_attributes></element><element><id>Relation</id><coordinates><x>420</x><y>360</y><w>160</w><h>70</h></coordinates><panel_attributes>lt=.&gt;
+&lt;&lt;includes&gt;&gt;</panel_attributes><additional_attributes>10;10;140;50</additional_attributes></element><element><id>Relation</id><coordinates><x>420</x><y>360</y><w>140</w><h>140</h></coordinates><panel_attributes>lt=.&gt;
+&lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>10;10;110;120</additional_attributes></element><element><id>UMLUseCase</id><coordinates><x>460</x><y>520</y><w>120</w><h>40</h></coordinates><panel_attributes>*View Stats*</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>420</x><y>360</y><w>100</w><h>200</h></coordinates><panel_attributes>lt=.&gt;
+&lt;&lt;extends&gt;&gt;</panel_attributes><additional_attributes>10;10;40;180</additional_attributes></element></diagram>
