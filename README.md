@@ -499,7 +499,7 @@ By mapping these needs to specific game features (e.g., combat mechanics, weathe
 The picture below shows the use-case diagram and use-case specification of our game.
 
 <div align="center">
-  <img src="docs/requirements/use_case_diagram.png" alt="Use Case Diagram and Specification" width="960" height="580">
+  <img src="docs/requirements/use_case_diagram.png" alt="Use Case Diagram and Specification" width="1100" height="580">
   <p><em>Figure 19. Use-case diagram and specification for Glitchwood.</em></p>
 </div>
 
