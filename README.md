@@ -97,15 +97,31 @@
   - [1 Introduction](#1-introduction)
     - [1.1 Overview](#11-overview)
     - [1.2 Inspiration](#12-inspiration)
+      - [**Vampire Survivors**](#vampire-survivors)
+      - [**20 Minutes Till Dawn**](#20-minutes-till-dawn)
     - [1.3 Innovation](#13-innovation)
-      - [Characters](#characters)
-      - [Bosses](#bosses)
-      - [Weather](#weather)
-      - [Pets](#pets)
+      - [Mechanical Innovations](#mechanical-innovations)
+        - [▶ Characters](#-characters)
+        - [▶ Bosses](#-bosses)
+        - [▶ Weather Effects](#-weather-effects)
+        - [▶ Pet System](#-pet-system)
+      - [Narrative Innovation](#narrative-innovation)
+      - [Visual \& Thematic Innovation](#visual--thematic-innovation)
     - [1.4 Vision](#14-vision)
+      - [Gameplay Vision](#gameplay-vision)
+      - [Technical Vision](#technical-vision)
+      - [Forward-Looking Possibilities](#forward-looking-possibilities)
   - [2 Ideation](#2-ideation)
     - [2.1 Game Idea 1: Survival Roguelike](#21-game-idea-1-survival-roguelike)
+      - [**Core Concept**](#core-concept)
+      - [**Key Mechanics**](#key-mechanics)
+      - [**Design Strengths**](#design-strengths)
+      - [**Paper Prototype Demo**](#paper-prototype-demo)
     - [2.2 Game Idea 2: Horror Puzzle RPG](#22-game-idea-2-horror-puzzle-rpg)
+      - [**Core Concept**](#core-concept-1)
+      - [**Key Mechanics**](#key-mechanics-1)
+      - [**Design Limitations**](#design-limitations)
+      - [**Paper Prototype Demo**](#paper-prototype-demo-1)
     - [2.3 Why We Chose Game Idea 1](#23-why-we-chose-game-idea-1)
   - [3 Requirements](#3-requirements)
     - [3.1 Stakeholder Identification: The Onion Model](#31-stakeholder-identification-the-onion-model)
@@ -128,11 +144,11 @@
     - [5.2 Code Architecture Overview](#52-code-architecture-overview)
     - [5.3 Key Features and Highlights](#53-key-features-and-highlights)
     - [5.4 Three Key Technical Challenges in Glitchwood's Development](#54-three-key-technical-challenges-in-glitchwoods-development)
-      - [1. Fine-Grained Collision Detection and Boundary Enforcement](#1-fine-grained-collision-detection-and-boundary-enforcement)
-      - [2. Integrating Pet System with Dynamic Obstacle Regeneration](#2-integrating-pet-system-with-dynamic-obstacle-regeneration)
-      - [3. Managing Upgrade Interactions: Piercing and Splitting Effects](#3-managing-upgrade-interactions-piercing-and-splitting-effects)
-      - [Additional Challenge: Seamless Integration of Narrative and Gameplay](#additional-challenge-seamless-integration-of-narrative-and-gameplay)
-    - [Summary Table of Challenges](#summary-table-of-challenges)
+      - [**1. Fine-Grained Collision Detection and Boundary Enforcement**](#1-fine-grained-collision-detection-and-boundary-enforcement)
+      - [**2. Integrating Pet System with Dynamic Obstacle Regeneration**](#2-integrating-pet-system-with-dynamic-obstacle-regeneration)
+      - [**3. Managing Upgrade Interactions: Piercing and Splitting Effects**](#3-managing-upgrade-interactions-piercing-and-splitting-effects)
+      - [**Additional Challenge: Seamless Integration of Narrative and Gameplay**](#additional-challenge-seamless-integration-of-narrative-and-gameplay)
+      - [Summary Table of Challenges](#summary-table-of-challenges)
     - [5.5 Reflection and Conclusion](#55-reflection-and-conclusion)
   - [6 Evaluation](#6-evaluation)
     - [6.1 Qualitative Evaluation](#61-qualitative-evaluation)
@@ -215,28 +231,28 @@ Designed for both **newcomers and roguelike veterans**, Glitchwood includes a bu
 
 Our game design was inspired by two modern roguelike hits:
 
-🕹️ **Vampire Survivors**
+#### **Vampire Survivors**
 - Auto-attack gameplay and wave-based enemy spawning  
 - Highly addictive loop with evolving upgrades  
 - Simple visuals and controls allow for fast iteration  
-- ❗ Limitation: Lack of manual input can reduce player agency  
-- ✅ Takeaway: We adopted **wave-based survival**, **upgrade choices**, and **enemy escalation**
+- Limitation: Lack of manual input can reduce player agency  
+- Takeaway: We adopted **wave-based survival**, **upgrade choices**, and **enemy escalation**
   
 <div align="center">
   <img src="docs/introduction/Vampire_Survivors.jpg" alt="Vampire Survivors" width="580" height="360">
-  <p><em>Figure 5. Screenshot from Vampire Survivors.</em></p>
+  <p><em>Figure 5. Screenshot from <i>Vampire Survivors</i>.</em></p>
 </div>
 
-🎯 **20 Minutes Till Dawn**
+#### **20 Minutes Till Dawn**
 - Twin-stick shooter with precise aiming and movement  
 - Strong emphasis on build variety and moment-to-moment action  
 - Effective minimalism in both UI and art direction  
-- ❗ Limitation: Somewhat short progression loop, less narrative  
-- ✅ Takeaway: We embraced **manual aiming**, **responsive controls**, and **fast-paced combat**
+- Limitation: Somewhat short progression loop, less narrative  
+- Takeaway: We embraced **manual aiming**, **responsive controls**, and **fast-paced combat**
 
 <div align="center">
   <img src="docs/introduction/20_Minutes_Till_Dawn.jpg" alt="20 Minutes Till Dawn" width="580" height="350">
-  <p><em>Figure 6. Screenshot from 20 Minutes Till Dawn.</em></p>
+  <p><em>Figure 6. Screenshot from <i>20 Minutes Till Dawn</i>.</em></p>
 </div>
 
 Unlike those titles, **Glitchwood** takes a more **symbolic approach**. Here, the player is a developer trapped in their own game, confronting metaphorical bugs, runtime failures, and digital entropy. Every mechanic—from **dynamic weather** to **pets as debugging tools**—echoes real-world challenges in software development.
@@ -250,11 +266,21 @@ Working within **P5.js**, we designed modular systems that allow:
 
 ### 1.3 Innovation
 
-Glitchwood brings several innovations to the roguelike format, blending symbolic design with engaging mechanics.
+**Glitchwood** brings several innovations to the roguelike format, blending symbolic design with engaging mechanics, narrative, and visual cohesion.
 
-**Mechanically**, the game offers three characters with distinct **combat roles and upgrade styles**, not a shared progression path. We also introduced a **pet system**: after defeating a boss, players choose a pet (attack, shield, or heal) that influences combat strategy. A **dynamic weather system** further alters gameplay: **snow slows movement**, **lightning causes damage**, and **sunlight drains health**—affecting both players and enemies.
+#### Mechanical Innovations
 
-#### Characters
+The game introduces multiple gameplay systems that enrich replayability and strategic depth:
+
+- **Three distinct characters**, each with unique combat roles and upgrade styles (rather than a shared progression tree).
+- A **pet system**: after defeating a boss, players select one of three pets—**attack**, **shield**, or **heal**—which significantly influence combat tactics.
+- A **dynamic weather system** that alters gameplay every 30 seconds:
+  - **Snow** slows movement
+  - **Lightning** causes random damage
+  - **Sunlight** gradually drains health  
+  All weather effects apply symmetrically to both players and enemies.
+
+##### ▶ Characters
 
 |                                             Image                                             |      Name       | Description                                                                                                   |
 | :-------------------------------------------------------------------------------------------: | :-------------: | :------------------------------------------------------------------------------------------------------------ |
@@ -262,7 +288,7 @@ Glitchwood brings several innovations to the roguelike format, blending symbolic
 | <img src="docs/assets/selected_images/characters/intro/computerboy_intro.gif" height="100px"> | **Computerboy** | Easy-to-use character with strong bullet-based attacks. Upgrades boost attributes and firepower.              |
 | <img src="docs/assets/selected_images/characters/intro/keyboardman_intro.gif" height="100px"> | **Keyboardman** | Melee fighter with high AoE damage. Needs to stay close. Upgrades emphasize survivability and special traits. |
 
-#### Bosses
+##### ▶ Bosses
 
 |                                    Image                                     |     Name      | Description                                                                                 |
 | :--------------------------------------------------------------------------: | :-----------: | :------------------------------------------------------------------------------------------ |
@@ -270,8 +296,7 @@ Glitchwood brings several innovations to the roguelike format, blending symbolic
 | <img src="docs/assets/selected_images/bossgif/Birdboss.gif" height="100px">  | **Birdboss**  | Shrine-dwelling boss with dash and restriction skills. Stay outside its range to stay safe. |
 |  <img src="docs/assets/selected_images/bossgif/Bugboss.gif" height="100px">  |  **Bugboss**  | Disrupts vision and summons ghost flames. Sudden high-damage attacks — stay alert!          |
 
-
-#### Weather
+##### ▶ Weather Effects
 
 |                           Image                            |     Name      | Description                                                        |
 | :--------------------------------------------------------: | :-----------: | :----------------------------------------------------------------- |
@@ -279,7 +304,7 @@ Glitchwood brings several innovations to the roguelike format, blending symbolic
 | <img src="docs/introduction/lightning.gif" height="100px"> | **Lightning** | Deals damage to characters and enemies within its range.           |
 |    <img src="docs/introduction/sun.gif" height="100px">    |    **Sun**    | Causes gradual health loss over time for both players and enemies. |
 
-#### Pets
+##### ▶ Pet System
 
 |                         Image                          |    Name    | Description                                                                    |
 | :----------------------------------------------------: | :--------: | :----------------------------------------------------------------------------- |
@@ -287,24 +312,63 @@ Glitchwood brings several innovations to the roguelike format, blending symbolic
 |  <img src="docs/introduction/cow.gif" height="100px">  | **Aegis**  | Protects the player, preventing damage from enemies and environmental hazards. |
 | <img src="docs/introduction/fairy.gif" height="100px"> | **Aurora** | Heals the player by restoring health over time.                                |
 
+#### Narrative Innovation
 
-**Narratively**, the game metaphorically reflects a programmer's journey through burnout, bugs, and problem-solving. These ideas are not explained through text, but embedded in every mechanic.
+The story metaphorically reflects a **programmer's emotional journey** through:
 
-**Visually**, Glitchwood uses pixel art to reflect different programmer archetypes, with UI elements nodding to coding culture. Combined with minimalist sound effects and dynamic visuals, it creates a distinctive atmosphere.
+- **Burnout**
+- **Debugging and bugs**
+- **Problem-solving under stress**
 
-With two difficulty modes, three bosses, and endless replayability, Glitchwood offers not just challenge, but also introspection.
+Rather than using explicit dialogue, these themes are **embedded in mechanics and visuals**, creating a symbolic rather than literal narrative.
+
+#### Visual & Thematic Innovation
+
+- Pixel art characters represent **programmer archetypes**.
+- UI elements resemble **code editors and console logs**.
+- **Glitch effects and corrupted sprites** evoke software instability.
+- Sound design is minimal and ambient, reinforcing immersion.
 
 ---
 
 ### 1.4 Vision
 
-Glitchwood was created with dual objectives: to deliver a polished and replayable roguelike experience, and to explore how technical and creative systems can reflect real-world development processes.
+**Glitchwood** was built with two core objectives:
 
-From a gameplay perspective, our goal was to build modular systems—such as the weather engine, pet integration, and enemy generation—that could be scaled or repurposed. We focused on clean architecture and maintainable code to support future content expansions, difficulty tuning, and possibly co-op play.
+1. Deliver a polished, replayable roguelike experience.
+2. Explore how technical and creative systems can metaphorically reflect real-world software development.
 
-Technically, we aimed to push the boundaries of what P5.js can handle in a real-time action game. The project provided valuable experience in managing collisions, animation states, and responsive input under performance constraints.
+#### Gameplay Vision
 
-Looking ahead, Glitchwood could evolve in many directions: deeper roguelike branching, community-designed upgrades, or even as a learning platform to demonstrate code-as-world metaphors. Our vision is to keep expanding Glitchwood not just as a game, but as a **sandbox for experimentation in gameplay, storytelling, and system design**.
+We aimed to create **modular, extensible systems**—such as:
+
+- The **weather engine**
+- The **pet integration system**
+- **Enemy generation logic**
+
+These were intentionally designed for scalability, supporting future additions like new abilities, difficulty adjustments, or even **multiplayer co-op**. Our architecture prioritized **clean, maintainable code** that facilitates rapid iteration and long-term evolution.
+
+#### Technical Vision
+
+Using **P5.js** as our engine of choice, we set out to **push its real-time performance limits** while maintaining smooth responsiveness. This involved tackling challenges like:
+
+- **Collision detection** under load
+- **Animation state management**
+- **Fluid input handling**
+
+Through this, we deepened our understanding of performance optimization within browser-based interactive environments.
+
+#### Forward-Looking Possibilities
+
+*Glitchwood* is more than a game—it’s a **framework for experimentation**. Potential future directions include:
+
+- Deeper **roguelike branching paths** and player-driven storylines
+- **Community-generated upgrades** or modding support
+- Educational use as a **code-as-metaphor learning platform**
+- Expansion into **cooperative multiplayer**
+- Continued **performance and accessibility tuning**
+
+Our long-term vision is to grow *Glitchwood* into a **living sandbox**—one that bridges gameplay, storytelling, and system design while staying grounded in both technical and emotional authenticity.
 
 [Back to Table of Contents](#table-of-contents)
 
@@ -319,10 +383,10 @@ Before selecting and developing Glitchwood, our team explored two original game 
   <p><em>Figure 7. Mind map for Survival Roguelike idea.</em></p>
 </div>
 
-**Core Concept**  
+#### **Core Concept**  
 A wave-based roguelike where players control one of several programmer-themed characters navigating glitchy environments filled with enemies, hazards, and random upgrades. Players adapt to ever-changing weather, pet abilities, and environmental effects while progressing toward high scores or survival.
 
-**Key Mechanics**
+#### **Key Mechanics**
 - **Distinct characters** with different combat styles and upgrade preferences
 - **Dynamic weather system** (e.g., lightning, snow, sunlight) affecting all characters and enemies
 - **Wave-based enemy spawning**, with bosses and random rewards scaling over time
@@ -344,12 +408,12 @@ A wave-based roguelike where players control one of several programmer-themed ch
   <p><em>Figure 10. Combat demo from prototype.</em></p>
 </div>
 
-**Design Strengths**
+#### **Design Strengths**
 - Straightforward system to prototype with paper diagrams and early demos
 - Modular enough to design separate upgrade logic, pet effects, and environmental systems
 - Compatible with course tools: P5.js, class/use case diagrams, agile iterations
 
-**Paper Prototype Demo**
+#### **Paper Prototype Demo**
 
 <div align="center">
   <a href="https://www.youtube.com/watch?v=LU3oWswBsX0" target="_blank">
@@ -367,10 +431,10 @@ A wave-based roguelike where players control one of several programmer-themed ch
   <p><em>Figure 12. Mind map for Horror Puzzle RPG idea.</em></p>
 </div>
 
-**Core Concept**  
+#### **Core Concept**  
 A time-loop puzzle RPG set in a frozen university lab. Players explore, solve programming-themed puzzles, and uncover hidden experiments to escape a mysterious temporal trap.
 
-**Key Mechanics**
+#### **Key Mechanics**
 - Environmental puzzles (logic, object-based, memory)
 - Repeated time loops revealing more story and areas
 - Supernatural horror events and evolving world state
@@ -391,13 +455,13 @@ A time-loop puzzle RPG set in a frozen university lab. Players explore, solve pr
   <p><em>Figure 15. Monster-chase scene from prototype.</em></p>
 </div>
 
-**Design Limitations**
+#### **Design Limitations**
 - Requires extensive narrative scripting and state control
 - Harder to modularize for team collaboration
 - Fewer opportunities for randomness or iterative balance tuning
 - Less suited for fast prototyping and testing in P5.js
 
-**Paper Prototype Demo**
+#### **Paper Prototype Demo**
 
 <div align="center">
   <a href="https://www.youtube.com/watch?v=HQiOb3xbiVc" target="_blank">
@@ -628,38 +692,38 @@ Regarding the pet and weather systems, after defeating the first boss, players c
 
 The code architecture of **Glitchwood** is modular and follows object-oriented principles. Key components like **Player**, **Enemies**, **Bullets**, **Pets**, and **Weather Effects** are encapsulated in separate classes. This modular design allows us to scale the game and add new features easily without disrupting existing functionalities.
 
-1. **Main Game Loop**:
+- **Main Game Loop**:
    - The core game logic is driven by a main loop where the game state is constantly updated, including player movements, collisions, enemy spawning, and state transitions (e.g., between gameplay, pet selection, and boss fights).
    - The loop also handles **event-driven interactions**, using methods like `keyPressed()` for player movement and `mouseClicked()` for attacks.
    
-2. **Modular Classes**:
-   - **Player Class**: Handles the player character’s attributes, movement, upgrades, and attack mechanisms. It includes both melee and ranged combat modes, as seen in the characters like `Mousegirl` and `Keyboardman`.
+- **Modular Classes**:
+   - **Player Class**: Handles the player character’s attributes, movement, upgrades, and  attack mechanisms. It includes both melee and ranged combat modes, as seen in the characters like `Mousegirl` and `Keyboardman`.
    - **Enemy Class**: A superclass for all enemy types, defining basic behaviors like movement, attack patterns, and interactions with obstacles. More complex enemies (e.g., **Bosses**) are subclasses with specialized behaviors.
-   - **Bullet Class**: Manages the projectile logic, including hit detection and boundary handling. Specific projectiles like **EnemyBullets** and **WebProjectiles** are subclasses with additional features.
-   - **Pet System**: After defeating a boss, players can choose a pet (e.g., shield, attack, healing), and the selected pet follows the player during gameplay, impacting the strategy with unique abilities.
-   - **Weather Effects**: The dynamic weather system that alters gameplay every 30 seconds, affecting player and enemy movements (e.g., slowing down in snow or damaging in thunderstorms).
+  - **Bullet Class**: Manages the projectile logic, including hit detection and boundary handling. Specific projectiles like **EnemyBullets** and **WebProjectiles** are subclasses with additional features.
+  - **Pet System**: After defeating a boss, players can choose a pet (e.g., shield, attack, healing), and the selected pet follows the player during gameplay, impacting the strategy with unique abilities.
+  - **Weather Effects**: The dynamic weather system that alters gameplay every 30 seconds, affecting player and enemy movements (e.g., slowing down in snow or damaging in thunderstorms).
 
   ---
 
 ### 5.3 Key Features and Highlights
 
-1. **Dynamic Map and Obstacle Generation**:
-   The game generates unique maps with randomized obstacles that block movement and attacks. The **stack-based approach** allows obstacles to be dynamically added and removed as new waves of enemies are generated.
+- **Dynamic Map and Obstacle Generation**:
+The game generates unique maps with randomized obstacles that block movement and attacks. The **stack-based approach** allows obstacles to be dynamically added and removed as new waves of enemies are generated.
 
-2. **Complex Collision Detection**:
-   Collision detection in the game is handled meticulously to ensure a fair and responsive combat experience. **Attack hitboxes** and **enemy collisions** are calculated with precision. The inclusion of **"air walls"** prevents players from exiting the intended play area, using boundary logic.
+- **Complex Collision Detection**:
+Collision detection in the game is handled meticulously to ensure a fair and responsive combat experience. **Attack hitboxes** and **enemy collisions** are calculated with precision. The inclusion of **"air walls"** prevents players from exiting the intended play area, using boundary logic.
 
-3. **Pet System**:
-   The pet system introduces an additional layer of complexity, allowing players to choose pets with distinct abilities. Each pet follows the player, interacts with the game environment, and impacts gameplay mechanics (e.g., shields, attack boosts, or healing). Ensuring that the pets don't disrupt gameplay balance while adding depth was a key challenge.
+- **Pet System**:
+The pet system introduces an additional layer of complexity, allowing players to choose pets with distinct abilities. Each pet follows the player, interacts with the game environment, and impacts gameplay mechanics (e.g., shields, attack boosts, or healing). Ensuring that the pets don't disrupt gameplay balance while adding depth was a key challenge.
 
-4. **Weather System**:
-   The weather system influences gameplay significantly, providing varied environmental conditions that players must adapt to. Snow slows movement, lightning damages enemies and players, and sunlight can be both a benefit and a detriment. This system is implemented using **time-based functions** to control the intervals and transitions between different weather conditions.
+- **Weather System**:
+The weather system influences gameplay significantly, providing varied environmental conditions that players must adapt to. Snow slows movement, lightning damages enemies and players, and sunlight can be both a benefit and a detriment. This system is implemented using **time-based functions** to control the intervals and transitions between different weather conditions.
 
   ---
 
 ### 5.4 Three Key Technical Challenges in Glitchwood's Development
 
-#### 1. Fine-Grained Collision Detection and Boundary Enforcement
+#### **1. Fine-Grained Collision Detection and Boundary Enforcement**
 
 Precise collision handling was essential for maintaining a fair and fluid combat experience in *Glitchwood*. We had to manage collisions among **players**, **enemies**, **projectiles**, and **obstacles**, while enforcing invisible **"air walls"** to restrict player movement within the intended play area.
 
@@ -667,7 +731,7 @@ To ensure both responsiveness and accuracy, we implemented collision detection b
 
 ---
 
-#### 2. Integrating Pet System with Dynamic Obstacle Regeneration
+#### **2. Integrating Pet System with Dynamic Obstacle Regeneration**
 
 Every five waves, a **new map is procedurally generated** with updated obstacles. While this enriched gameplay variety, it presented a unique challenge for the **pet system**. Pets are designed to follow the player and provide combat support, but they risked becoming stuck or desynced due to the newly placed obstacles.
 
@@ -675,7 +739,7 @@ To address this, we introduced **pet movement re-evaluation logic** triggered af
 
 ---
 
-#### 3. Managing Upgrade Interactions: Piercing and Splitting Effects
+#### **3. Managing Upgrade Interactions: Piercing and Splitting Effects**
 
 The **archer character (Mousegirl)** features two notable upgrades:
 - **Pierce**: Arrows remain active after hitting an enemy.
@@ -697,7 +761,7 @@ These upgrades were easy to manage individually, but combining them led to **con
   <p><em>Figure 23. Code snippet showing pet behavior implementation.</em></p>
 </div>
 
-#### Additional Challenge: Seamless Integration of Narrative and Gameplay
+#### **Additional Challenge: Seamless Integration of Narrative and Gameplay**
 
 While the above challenges focused on code, a **core design goal** of *Glitchwood* was to reflect the **emotional experience of a developer** trapped in their own creation.
 
@@ -710,7 +774,7 @@ This required ongoing alignment between **art**, **narrative**, and **gameplay**
 
 ---
 
-### Summary Table of Challenges
+#### Summary Table of Challenges
 
 | Challenge | Summary |
 |:----------|:--------|
