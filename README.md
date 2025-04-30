@@ -4,7 +4,9 @@
 
 # 🌟 Game: Glitchwood
 
-![Glitchwood_Poster](docs/assets/selected_images/poster/Glitchwood.png)
+<div align="center">
+  <img src="docs/assets/selected_images/poster/Glitchwood.png" alt="Group Photo" width="120%">
+</div>
 
 ## 🚀 Quick Start
 
@@ -87,41 +89,16 @@
 # 📝 Project Report
 
 ## Table of Contents
-- [2025-group-27](#2025-group-27)
-- [🌟 Game: Glitchwood](#-game-glitchwood)
-  - [🚀 Quick Start](#-quick-start)
-- [👥 Our Group](#-our-group)
-- [🗂️ Kanban Board](#️-kanban-board)
 - [📝 Project Report](#-project-report)
   - [Table of Contents](#table-of-contents)
   - [1 Introduction](#1-introduction)
     - [1.1 Overview](#11-overview)
     - [1.2 Inspiration](#12-inspiration)
-      - [**Vampire Survivors**](#vampire-survivors)
-      - [**20 Minutes Till Dawn**](#20-minutes-till-dawn)
     - [1.3 Innovation](#13-innovation)
-      - [Mechanical Innovations](#mechanical-innovations)
-        - [▶ Characters](#-characters)
-        - [▶ Bosses](#-bosses)
-        - [▶ Weather Effects](#-weather-effects)
-        - [▶ Pet System](#-pet-system)
-      - [Narrative Innovation](#narrative-innovation)
-      - [Visual \& Thematic Innovation](#visual--thematic-innovation)
     - [1.4 Vision](#14-vision)
-      - [Gameplay Vision](#gameplay-vision)
-      - [Technical Vision](#technical-vision)
-      - [Forward-Looking Possibilities](#forward-looking-possibilities)
   - [2 Ideation](#2-ideation)
     - [2.1 Game Idea 1: Survival Roguelike](#21-game-idea-1-survival-roguelike)
-      - [**Core Concept**](#core-concept)
-      - [**Key Mechanics**](#key-mechanics)
-      - [**Design Strengths**](#design-strengths)
-      - [**Paper Prototype Demo**](#paper-prototype-demo)
     - [2.2 Game Idea 2: Horror Puzzle RPG](#22-game-idea-2-horror-puzzle-rpg)
-      - [**Core Concept**](#core-concept-1)
-      - [**Key Mechanics**](#key-mechanics-1)
-      - [**Design Limitations**](#design-limitations)
-      - [**Paper Prototype Demo**](#paper-prototype-demo-1)
     - [2.3 Why We Chose Game Idea 1](#23-why-we-chose-game-idea-1)
   - [3 Requirements](#3-requirements)
     - [3.1 Stakeholder Identification: The Onion Model](#31-stakeholder-identification-the-onion-model)
@@ -132,53 +109,25 @@
   - [4 Design](#4-design)
     - [4.1 System Architecture Overview](#41-system-architecture-overview)
     - [4.2 Class Diagram](#42-class-diagram)
-      - [Key Components](#key-components)
     - [4.3 Sequence Diagram](#43-sequence-diagram)
-      - [Key Scenarios](#key-scenarios)
     - [4.4 Reflection and Conclusion](#44-reflection-and-conclusion)
-      - [Key OOD Principles in Practice](#key-ood-principles-in-practice)
-      - [Role of UML Diagrams](#role-of-uml-diagrams)
-      - [Benefits to Our Development Process](#benefits-to-our-development-process)
+
   - [5 Implementation](#5-implementation)
     - [5.1 Basic Implementation](#51-basic-implementation)
     - [5.2 Code Architecture Overview](#52-code-architecture-overview)
     - [5.3 Key Features and Highlights](#53-key-features-and-highlights)
     - [5.4 Three Key Technical Challenges in Glitchwood's Development](#54-three-key-technical-challenges-in-glitchwoods-development)
-      - [**1. Fine-Grained Collision Detection and Boundary Enforcement**](#1-fine-grained-collision-detection-and-boundary-enforcement)
-      - [**2. Integrating Pet System with Dynamic Obstacle Regeneration**](#2-integrating-pet-system-with-dynamic-obstacle-regeneration)
-      - [**3. Managing Upgrade Interactions: Piercing and Splitting Effects**](#3-managing-upgrade-interactions-piercing-and-splitting-effects)
-      - [**Additional Challenge: Seamless Integration of Narrative and Gameplay**](#additional-challenge-seamless-integration-of-narrative-and-gameplay)
-      - [Summary Table of Challenges](#summary-table-of-challenges)
     - [5.5 Reflection and Conclusion](#55-reflection-and-conclusion)
   - [6 Evaluation](#6-evaluation)
     - [6.1 Qualitative Evaluation](#61-qualitative-evaluation)
-      - [Artistic Style \& Interaction Design](#artistic-style--interaction-design)
-      - [Difficulty \& Game Flow](#difficulty--game-flow)
-      - [Story \& Immersion](#story--immersion)
-      - [Focus Group Q\&A Summary](#focus-group-qa-summary)
     - [6.2 Quantitative Evaluation](#62-quantitative-evaluation)
-      - [NASA-TLX Results](#nasa-tlx-results)
-      - [SUS Analysis](#sus-analysis)
-      - [Summary Comparison](#summary-comparison)
     - [6.3 Code Test \& Usability Interviews](#63-code-test--usability-interviews)
     - [6.4 Reflection and Conclusion](#64-reflection-and-conclusion)
   - [7 Process](#7-process)
     - [7.1 Team Roles and Division of Tasks](#71-team-roles-and-division-of-tasks)
     - [7.2 Tools and Collaborative Platforms](#72-tools-and-collaborative-platforms)
-      - [Version Control and Collaborative Development:](#version-control-and-collaborative-development)
-      - [Task and Project Management:](#task-and-project-management)
-      - [Communication Tools:](#communication-tools)
-      - [Design and Visualization Tools:](#design-and-visualization-tools)
-      - [Media and Presentation Tools:](#media-and-presentation-tools)
     - [7.3 Agile Development Methodology and Iteration Process](#73-agile-development-methodology-and-iteration-process)
-      - [Weekly Planning \& Review](#weekly-planning--review)
-      - [Sprint-Based Iteration](#sprint-based-iteration)
-      - [Task Management](#task-management)
-      - [Retrospectives \& Adaptation](#retrospectives--adaptation)
     - [7.4 Team Reflection and Continuous Improvement](#74-team-reflection-and-continuous-improvement)
-      - [7.4.1 Reflection on Team Communication](#741-reflection-on-team-communication)
-      - [7.4.2 Task Management and Workflow Optimization](#742-task-management-and-workflow-optimization)
-      - [7.4.3 Challenges and Adjustments](#743-challenges-and-adjustments)
     - [7.5 Reflection and Conclusion](#75-reflection-and-conclusion)
   - [8 Sustainability, Ethics, and Accessibility](#8-sustainability-ethics-and-accessibility)
     - [8.1 Environmental Impact](#81-environmental-impact)
@@ -192,8 +141,6 @@
     - [9.5 Conclusion](#95-conclusion)
   - [10 Appendix](#10-appendix)
     - [10.1 Contributions of Team Members](#101-contributions-of-team-members)
-
-<!-- TOC -->
 
 ## 1 Introduction
 
@@ -231,7 +178,7 @@ Designed for both **newcomers and roguelike veterans**, Glitchwood includes a bu
 
 Our game design was inspired by two modern roguelike hits:
 
-#### **Vampire Survivors**
+#### Vampire Survivors
 - Auto-attack gameplay and wave-based enemy spawning  
 - Highly addictive loop with evolving upgrades  
 - Simple visuals and controls allow for fast iteration  
@@ -243,7 +190,7 @@ Our game design was inspired by two modern roguelike hits:
   <p><em>Figure 5. Screenshot from <i>Vampire Survivors</i>.</em></p>
 </div>
 
-#### **20 Minutes Till Dawn**
+#### 20 Minutes Till Dawn
 - Twin-stick shooter with precise aiming and movement  
 - Strong emphasis on build variety and moment-to-moment action  
 - Effective minimalism in both UI and art direction  
@@ -383,10 +330,10 @@ Before selecting and developing Glitchwood, our team explored two original game 
   <p><em>Figure 7. Mind map for Survival Roguelike idea.</em></p>
 </div>
 
-#### **Core Concept**  
+#### Core Concept
 A wave-based roguelike where players control one of several programmer-themed characters navigating glitchy environments filled with enemies, hazards, and random upgrades. Players adapt to ever-changing weather, pet abilities, and environmental effects while progressing toward high scores or survival.
 
-#### **Key Mechanics**
+#### Key Mechanics
 - **Distinct characters** with different combat styles and upgrade preferences
 - **Dynamic weather system** (e.g., lightning, snow, sunlight) affecting all characters and enemies
 - **Wave-based enemy spawning**, with bosses and random rewards scaling over time
@@ -408,12 +355,12 @@ A wave-based roguelike where players control one of several programmer-themed ch
   <p><em>Figure 10. Combat demo from prototype.</em></p>
 </div>
 
-#### **Design Strengths**
+#### Design Strengths
 - Straightforward system to prototype with paper diagrams and early demos
 - Modular enough to design separate upgrade logic, pet effects, and environmental systems
 - Compatible with course tools: P5.js, class/use case diagrams, agile iterations
 
-#### **Paper Prototype Demo**
+#### Paper Prototype Demo
 
 <div align="center">
   <a href="https://www.youtube.com/watch?v=LU3oWswBsX0" target="_blank">
@@ -431,10 +378,10 @@ A wave-based roguelike where players control one of several programmer-themed ch
   <p><em>Figure 12. Mind map for Horror Puzzle RPG idea.</em></p>
 </div>
 
-#### **Core Concept**  
+#### Core Concept
 A time-loop puzzle RPG set in a frozen university lab. Players explore, solve programming-themed puzzles, and uncover hidden experiments to escape a mysterious temporal trap.
 
-#### **Key Mechanics**
+#### Key Mechanics
 - Environmental puzzles (logic, object-based, memory)
 - Repeated time loops revealing more story and areas
 - Supernatural horror events and evolving world state
@@ -455,13 +402,13 @@ A time-loop puzzle RPG set in a frozen university lab. Players explore, solve pr
   <p><em>Figure 15. Monster-chase scene from prototype.</em></p>
 </div>
 
-#### **Design Limitations**
+#### Design Limitations
 - Requires extensive narrative scripting and state control
 - Harder to modularize for team collaboration
 - Fewer opportunities for randomness or iterative balance tuning
 - Less suited for fast prototyping and testing in P5.js
 
-#### **Paper Prototype Demo**
+#### Paper Prototype Demo
 
 <div align="center">
   <a href="https://www.youtube.com/watch?v=HQiOb3xbiVc" target="_blank">
@@ -723,7 +670,7 @@ The weather system influences gameplay significantly, providing varied environme
 
 ### 5.4 Three Key Technical Challenges in Glitchwood's Development
 
-#### **1. Fine-Grained Collision Detection and Boundary Enforcement**
+#### 1. Fine-Grained Collision Detection and Boundary Enforcement
 
 Precise collision handling was essential for maintaining a fair and fluid combat experience in *Glitchwood*. We had to manage collisions among **players**, **enemies**, **projectiles**, and **obstacles**, while enforcing invisible **"air walls"** to restrict player movement within the intended play area.
 
@@ -731,7 +678,7 @@ To ensure both responsiveness and accuracy, we implemented collision detection b
 
 ---
 
-#### **2. Integrating Pet System with Dynamic Obstacle Regeneration**
+#### 2. Integrating Pet System with Dynamic Obstacle Regeneration
 
 Every five waves, a **new map is procedurally generated** with updated obstacles. While this enriched gameplay variety, it presented a unique challenge for the **pet system**. Pets are designed to follow the player and provide combat support, but they risked becoming stuck or desynced due to the newly placed obstacles.
 
@@ -739,7 +686,7 @@ To address this, we introduced **pet movement re-evaluation logic** triggered af
 
 ---
 
-#### **3. Managing Upgrade Interactions: Piercing and Splitting Effects**
+#### 3. Managing Upgrade Interactions: Piercing and Splitting Effects
 
 The **archer character (Mousegirl)** features two notable upgrades:
 - **Pierce**: Arrows remain active after hitting an enemy.
@@ -761,7 +708,7 @@ These upgrades were easy to manage individually, but combining them led to **con
   <p><em>Figure 23. Code snippet showing pet behavior implementation.</em></p>
 </div>
 
-#### **Additional Challenge: Seamless Integration of Narrative and Gameplay**
+#### Additional Challenge: Seamless Integration of Narrative and Gameplay
 
 While the above challenges focused on code, a **core design goal** of *Glitchwood* was to reflect the **emotional experience of a developer** trapped in their own creation.
 
