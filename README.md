@@ -363,7 +363,7 @@ A wave-based roguelike where players control one of several programmer-themed ch
 #### Paper Prototype Demo
 
 <div align="center">
-  <video src="docs/prototype/Prototype_Game_Idea_1.mp4" controls width="540">
+  <video src="https://github.com/user-attachments/assets/141335507/439241019-1799972f-5791-44f3-937b-22e1397587ac.mp4" controls width="540">
     Your browser does not support the video tag.
   </video>
   <p><em>Figure 11. Paper prototype video for Game Idea 1.</em></p>
@@ -414,7 +414,7 @@ A time-loop puzzle RPG set in a frozen university lab. Players explore, solve pr
   <video src="https://github.com/user-attachments/assets/141335507/439230948-ebbef71e-5e4e-4bac-967e-0046e64da9a3.mp4" controls width="540">
     Your browser does not support the video tag.
   </video>
-  <p><em>Figure 11. Paper prototype video for Game Idea 1.</em></p>
+  <p><em>Figure 11. Paper prototype video for Game Idea 2.</em></p>
 </div>
 
   ---
