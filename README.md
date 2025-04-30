@@ -363,10 +363,10 @@ A wave-based roguelike where players control one of several programmer-themed ch
 #### Paper Prototype Demo
 
 <div align="center">
-  <a href="https://www.youtube.com/watch?v=LU3oWswBsX0" target="_blank">
-    <img src="https://img.youtube.com/vi/LU3oWswBsX0/0.jpg" alt="Prototype_Game_Idea_1" width="540" height="400">
-  </a>
-    <p><em>Figure 11. Paper prototype video for Game Idea 1.</em></p>
+  <video src="docs/prototype/Prototype_Game_Idea_1.mp4" controls width="540">
+    Your browser does not support the video tag.
+  </video>
+  <p><em>Figure 11. Paper prototype video for Game Idea 1.</em></p>
 </div>
 
   ---
@@ -411,10 +411,10 @@ A time-loop puzzle RPG set in a frozen university lab. Players explore, solve pr
 #### Paper Prototype Demo
 
 <div align="center">
-  <a href="https://www.youtube.com/watch?v=HQiOb3xbiVc" target="_blank">
-    <img src="https://img.youtube.com/vi/HQiOb3xbiVc/0.jpg" alt="Prototype_Game_Idea_2" width="540" height="380">
-  </a>
-  <p><em>Figure 16. Paper prototype video for Game Idea 2.</em></p>
+  <video src="[docs/video/prototype.mp4](https://private-user-images.githubusercontent.com/141335507/439230948-ebbef71e-5e4e-4bac-967e-0046e64da9a3.mp4?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDYwMTcyNTEsIm5iZiI6MTc0NjAxNjk1MSwicGF0aCI6Ii8xNDEzMzU1MDcvNDM5MjMwOTQ4LWViYmVmNzFlLTVlNGUtNGJhYy05NjdlLTAwNDZlNjRkYTlhMy5tcDQ_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNDMwJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDQzMFQxMjQyMzFaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1jM2Y2YjA3OGE0NmY1MjJmMGRhYWMwM2U4ZGI0ZTQzOTJjZTQwYjk0ODM3ZWIzZjI1OWY0YjJmYTIxZDllOWRlJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.qoOjf2W92XLtFDvZ-KDAFOxKf16K8h9SsKmtCfFV_fk)" controls width="540">
+    Your browser does not support the video tag.
+  </video>
+  <p><em>Figure 11. Paper prototype video for Game Idea 1.</em></p>
 </div>
 
   ---
