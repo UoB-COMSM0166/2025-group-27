@@ -118,7 +118,7 @@
     - [4.2 Class Diagram](#42-class-diagram)
       - [Key Components](#key-components)
     - [4.3 Sequence Diagram](#43-sequence-diagram)
-      - [🎮 Key Scenarios](#-key-scenarios)
+      - [Key Scenarios](#key-scenarios)
     - [4.4 Reflection and Conclusion](#44-reflection-and-conclusion)
       - [Key OOD Principles in Practice](#key-ood-principles-in-practice)
       - [Role of UML Diagrams](#role-of-uml-diagrams)
@@ -128,9 +128,9 @@
     - [5.2 Code Architecture Overview](#52-code-architecture-overview)
     - [5.3 Key Features and Highlights](#53-key-features-and-highlights)
     - [5.4 Three Key Technical Challenges in Glitchwood's Development](#54-three-key-technical-challenges-in-glitchwoods-development)
-      - [1. **Fine-Grained Collision Detection and Boundary Enforcement**](#1-fine-grained-collision-detection-and-boundary-enforcement)
-      - [2. **Integrating Pet System with Dynamic Obstacle Regeneration**](#2-integrating-pet-system-with-dynamic-obstacle-regeneration)
-      - [3. **Managing Upgrade Interactions: Piercing and Splitting Effects**](#3-managing-upgrade-interactions-piercing-and-splitting-effects)
+      - [1. Fine-Grained Collision Detection and Boundary Enforcement](#1-fine-grained-collision-detection-and-boundary-enforcement)
+      - [2. Integrating Pet System with Dynamic Obstacle Regeneration](#2-integrating-pet-system-with-dynamic-obstacle-regeneration)
+      - [3. Managing Upgrade Interactions: Piercing and Splitting Effects](#3-managing-upgrade-interactions-piercing-and-splitting-effects)
       - [Additional Challenge: Seamless Integration of Narrative and Gameplay](#additional-challenge-seamless-integration-of-narrative-and-gameplay)
     - [Summary Table of Challenges](#summary-table-of-challenges)
     - [5.5 Reflection and Conclusion](#55-reflection-and-conclusion)
@@ -187,24 +187,24 @@
 
 <div align="center">
   <img src="docs/introduction/char.gif" alt="Character Animation" width="580" height="350"/>
-  <p><em>Character selection screen.</em></p>
+  <p><em>Figure 1. Character selection screen.</em></p>
 </div>
 
 <div align="center">
   <img src="docs/introduction/boss.gif" alt="Boss Animation" width="580" height="350"/>
-  <p><em>Boss battle screen.</em></p>
+  <p><em>Figure 2. Boss battle screen.</em></p>
 </div>
 
 The game emphasizes **randomness and replayability**, introducing features like dynamic **weather effects**, **support pets**, **enemy variants**, and **environmental obstacles**. As players progress through increasingly difficult waves, they earn upgrades and eventually unlock an **Endless Mode** to test their endurance.
 
 <div align="center">
   <img src="docs/introduction/pet.gif" alt="Pet Animation" width="580" height="350"/>
-  <p><em>Pet selection screen.</em></p>
+  <p><em>Figure 3. Pet selection screen.</em></p>
 </div>
 
 <div align="center">
   <img src="docs/introduction/weather.gif" alt="Weather Animation" width="580" height="350"/>
-  <p><em>Weather effects screen.</em></p>
+  <p><em>Figure 4. Weather effects screen.</em></p>
 </div>
 
 Designed for both **newcomers and roguelike veterans**, Glitchwood includes a built-in tutorial, intuitive controls, and two difficulty levels. Its gameplay is tied to a deeper theme—**a developer lost inside their own creation**, fighting to escape.
@@ -224,7 +224,7 @@ Our game design was inspired by two modern roguelike hits:
   
 <div align="center">
   <img src="docs/introduction/Vampire_Survivors.jpg" alt="Vampire Survivors" width="580" height="360">
-  <p><em>Reference image from the game Vampire Survivors.</em></p>
+  <p><em>Figure 5. Screenshot from Vampire Survivors.</em></p>
 </div>
 
 🎯 **20 Minutes Till Dawn**
@@ -236,7 +236,7 @@ Our game design was inspired by two modern roguelike hits:
 
 <div align="center">
   <img src="docs/introduction/20_Minutes_Till_Dawn.jpg" alt="20 Minutes Till Dawn" width="580" height="350">
-  <p><em>Reference image from the game 20 Minutes Till Dawn.</em></p>
+  <p><em>Figure 6. Screenshot from 20 Minutes Till Dawn.</em></p>
 </div>
 
 Unlike those titles, **Glitchwood** takes a more **symbolic approach**. Here, the player is a developer trapped in their own game, confronting metaphorical bugs, runtime failures, and digital entropy. Every mechanic—from **dynamic weather** to **pets as debugging tools**—echoes real-world challenges in software development.
@@ -316,7 +316,7 @@ Before selecting and developing Glitchwood, our team explored two original game 
 
 <div align="center">
   <img src="docs/game_idea/Survival_Shooting_Game(Rogue_like_Elements).png" alt="Survival Shooting Game" width="820" height="570">
-  <p><em>Creative mind map for the Survival Roguelike game.</em></p>
+  <p><em>Figure 7. Mind map for Survival Roguelike idea.</em></p>
 </div>
 
 **Core Concept**  
@@ -331,17 +331,17 @@ A wave-based roguelike where players control one of several programmer-themed ch
   
 <div align="center">
   <img src="docs/game_idea/game1_who.gif" alt="Start Animation" width="580" height="350"/>
-  <p><em>Creative character selection screen for the Survival Roguelike game.</em></p>
+  <p><em>Figure 8. Character selection screen from prototype.</em></p>
 </div>
 
 <div align="center">
   <img src="docs/game_idea/game1_select.gif" alt="Start Animation" width="580" height="350"/>
-  <p><em>Creative pet selection screen for the Survival Roguelike game.</em></p>
+  <p><em>Figure 9. Pet selection screen from prototype.</em></p>
 </div>
 
 <div align="center">
   <img src="docs/game_idea/game1_attack.gif" alt="Start Animation" width="580" height="350"/>
-  <p><em>Creative combat effects screen for the Survival Roguelike game.</em></p>
+  <p><em>Figure 10. Combat demo from prototype.</em></p>
 </div>
 
 **Design Strengths**
@@ -355,7 +355,7 @@ A wave-based roguelike where players control one of several programmer-themed ch
   <a href="https://www.youtube.com/watch?v=LU3oWswBsX0" target="_blank">
     <img src="https://img.youtube.com/vi/LU3oWswBsX0/0.jpg" alt="Prototype_Game_Idea_1" width="540" height="400">
   </a>
-    <p><em>Early-stage gameplay exploration through paper prototyping.</em></p>
+    <p><em>Figure 11. Paper prototype video for Game Idea 1.</em></p>
 </div>
 
   ---
@@ -364,7 +364,7 @@ A wave-based roguelike where players control one of several programmer-themed ch
 
 <div align="center">
   <img src="docs/game_idea/Horror_Puzzle_RPG_Game.png" alt="Horror Puzzle RPG Game" width=820" height="570">
-  <p><em>Creative mind map for the Horror Puzzle RPG Game.</em></p>
+  <p><em>Figure 12. Mind map for Horror Puzzle RPG idea.</em></p>
 </div>
 
 **Core Concept**  
@@ -378,17 +378,17 @@ A time-loop puzzle RPG set in a frozen university lab. Players explore, solve pr
 
 <div align="center">
   <img src="docs/game_idea/game2_start.gif" alt="Start Animation" width="580" height="350"/>
-  <p><em>Story introduction screen for the Horror Puzzle RPG game.</em></p>
+  <p><em>Figure 13. Story introduction screen from prototype.</em></p>
 </div>
 
 <div align="center">
   <img src="docs/game_idea/game2_key.gif" alt="Start Animation" width="580" height="350"/>
-  <p><em>Item-search and puzzle-solving screen for the Horror Puzzle RPG game.</em></p>
+  <p><em>Figure 14. Puzzle-solving screen from prototype.</em></p>
 </div>
 
 <div align="center">
   <img src="docs/game_idea/game2_ghost.gif" alt="Start Animation" width="580" height="350"/>
-  <p><em>Monster-following gameplay screen for the Horror Puzzle RPG game.</em></p>
+  <p><em>Figure 15. Monster-chase scene from prototype.</em></p>
 </div>
 
 **Design Limitations**
@@ -403,7 +403,7 @@ A time-loop puzzle RPG set in a frozen university lab. Players explore, solve pr
   <a href="https://www.youtube.com/watch?v=HQiOb3xbiVc" target="_blank">
     <img src="https://img.youtube.com/vi/HQiOb3xbiVc/0.jpg" alt="Prototype_Game_Idea_2" width="540" height="380">
   </a>
-  <p><em>Walkthrough of story-driven puzzle concepts via paper prototype.</em></p>
+  <p><em>Figure 16. Paper prototype video for Game Idea 2.</em></p>
 </div>
 
   ---
@@ -430,7 +430,7 @@ Our first step was to identify all relevant stakeholders involved in or affected
 
 <div align="center">
   <img src="docs/requirements/Onion_Model.png" alt="Onion Model of Stakeholders" width="820" height="530">
-  <p><em>Onion model for stakeholder analysis.</em></p>
+  <p><em>Figure 17. Onion model diagram for stakeholder analysis.</em></p>
 </div>
 
 - **Level 1: System** – *Glitchwood* itself, the game we built.
@@ -462,7 +462,7 @@ The following diagram summarizes the epics, stories, and acceptance criteria acr
 
 <div align="center">
   <img src="docs/requirements/Stakeholder_Requirements.png" alt="Stakeholder Requirements" width="820" height="620">
-  <p><em>Stakeholder needs analysis using Epics, User Stories, and Acceptance Criteria.</em></p>
+  <p><em>Figure 18. Stakeholder requirements mapped via epics and user stories.</em></p>
 </div>
 
 This visual representation allowed us to keep the entire team focused on stakeholder-driven value, while ensuring coverage of both functional and experiential aspects of the game.
@@ -489,7 +489,7 @@ The picture below shows the use-case diagram and use-case specification of our g
 
 <div align="center">
   <img src="docs/requirements/use_case_diagram.png" alt="Use Case Diagram and Specification" width="960" height="580">
-  <p><em>Use-Case Diagram And Use-Case Specification.</em></p>
+  <p><em>Figure 19. Use-case diagram and specification for Glitchwood.</em></p>
 </div>
 
 ---
@@ -522,7 +522,7 @@ The following UML class diagram captures the **static structure** of Glitchwood�
 
 <div align="center">
   <img src="docs/design/ClassDiagram.png" alt="Class Diagram" width="820" height="380">
-  <p><em>Class diagram design.</em></p>
+  <p><em>Figure 20. UML class diagram of core gameplay systems.</em></p>
 </div>
 
 #### Key Components
@@ -562,10 +562,10 @@ The following diagram illustrates **dynamic interaction flow** between systems i
 
 <div align="center">
   <img src="docs/design/SequenceDiagram.png" alt="Sequence Diagram" width="820" height="800">
-  <p><em>Sequence diagram design.</em></p>
+  <p><em>Figure 21. Sequence diagram illustrating gameplay interactions.</em></p>
 </div>
 
-#### 🎮 Key Scenarios
+#### Key Scenarios
 
 - **Character Selection & Attacks**
   - Player selects a role via `chooseRole()`.
@@ -659,7 +659,7 @@ The code architecture of **Glitchwood** is modular and follows object-oriented p
 
 ### 5.4 Three Key Technical Challenges in Glitchwood's Development
 
-#### 1. **Fine-Grained Collision Detection and Boundary Enforcement**
+#### 1. Fine-Grained Collision Detection and Boundary Enforcement
 
 Precise collision handling was essential for maintaining a fair and fluid combat experience in *Glitchwood*. We had to manage collisions among **players**, **enemies**, **projectiles**, and **obstacles**, while enforcing invisible **"air walls"** to restrict player movement within the intended play area.
 
@@ -667,7 +667,7 @@ To ensure both responsiveness and accuracy, we implemented collision detection b
 
 ---
 
-#### 2. **Integrating Pet System with Dynamic Obstacle Regeneration**
+#### 2. Integrating Pet System with Dynamic Obstacle Regeneration
 
 Every five waves, a **new map is procedurally generated** with updated obstacles. While this enriched gameplay variety, it presented a unique challenge for the **pet system**. Pets are designed to follow the player and provide combat support, but they risked becoming stuck or desynced due to the newly placed obstacles.
 
@@ -675,7 +675,7 @@ To address this, we introduced **pet movement re-evaluation logic** triggered af
 
 ---
 
-#### 3. **Managing Upgrade Interactions: Piercing and Splitting Effects**
+#### 3. Managing Upgrade Interactions: Piercing and Splitting Effects
 
 The **archer character (Mousegirl)** features two notable upgrades:
 - **Pierce**: Arrows remain active after hitting an enemy.
@@ -685,7 +685,7 @@ These upgrades were easy to manage individually, but combining them led to **con
 
 <div align="center">
   <img src="docs/implementation/code_image.png" alt="Sequence Diagram" width="960" height="851">
-  <p><em>Code 1: Handling simultaneous Pierce and Split upgrades in the Arrow class.</em></p>
+  <p><em>Figure 22. Code snippet handling Pierce and Split upgrades in the Arrow class.</em></p>
 </div>
 
 ---
@@ -694,7 +694,7 @@ These upgrades were easy to manage individually, but combining them led to **con
 
 <div align="center">
   <img src="docs/implementation/code2_image.png" alt="code_image" width="800" height="800">
-  <p><em>Code 2.</em></p>
+  <p><em>Figure 23. Code snippet showing pet behavior implementation.</em></p>
 </div>
 
 #### Additional Challenge: Seamless Integration of Narrative and Gameplay
@@ -755,7 +755,13 @@ This section presents both qualitative and quantitative evaluations of our game,
 #### Focus Group Q&A Summary
 
 <div align="center">
+  <img src="docs/implementation/code2_image.png" alt="code_image" width="800" height="800">
+  <p><em>Figure 23. Code snippet showing pet behavior implementation.</em></p>
+</div>
+
+<div align="center">
   <img src="docs/evaluation/interview.png" alt="Interview Responses" width="820" height="1300">
+  <p><em>Figure 24. Summary of focus group interview responses and improvement actions.</em></p>
 </div>
 
 Below is a summary of improvement points derived from Q&A transcripts:
@@ -789,12 +795,14 @@ Using the **Wilcoxon Signed Rank Test**, we compared SUS and NASA-TLX scores bet
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/925e05b2-e862-4e1b-9786-8f38dd1fac45" alt="Figure 1: L1 Evaluation" width="820" height="620">
+  <p><em>Figure 25. NASA-TLX and SUS analysis results for L1 (Easy Mode).</em></p>
 </div>
 
   > In **L1**, players found the game **easy to use**, with low demand in physical and temporal areas. Frustration levels were mild (20–30 range), aligning with our goal of onboarding new players gently.
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/7263cf0b-1bda-4787-964c-b5155d597a63" alt="Figure 2: L2 Evaluation" width="820" height="620">
+  <p><em>Figure 26. NASA-TLX and SUS analysis results for L2 (Hard Mode).</em></p>
 </div>
 
 > In **L2**, difficulty led to higher **effort, frustration, and mental load**. Scores for items like "I found the system unnecessarily complex" or "I needed a lot of support" increased, reflecting a more intense experience.
@@ -890,7 +898,7 @@ To ensure smooth collaboration and efficient development, we utilized the follow
 
 <div align="center">
   <img src="docs/management/Glitchwood_Management.png" alt="Sequence Diagram" width="820" height="800">
-  <p><em> Glitchwood development timeline and team workflow overview.</em></p>
+  <p><em>Figure 27. Glitchwood's sprint timeline and team workflow overview.</em></p>
 </div>
 
 #### Weekly Planning & Review
