@@ -675,7 +675,7 @@ As for the game logic, enemies spawn outside obstacle zones and at a certain dis
 
 Regarding the pet and weather systems, after defeating the first boss, players can choose one of three pets, each granting a unique blessing—such as generating a shield, restoring health, or automatically attacking enemies. Additionally, the game introduces a dynamic weather system that changes every 30 seconds. **This is implemented using time-related functions provided by p5.js, along with random number generation to determine the type of weather effect.**
 
-  ---
+---
 
 ### 5.2 Code Architecture Overview
 
@@ -692,7 +692,7 @@ The code architecture of **Glitchwood** is modular and follows object-oriented p
   - **Pet System**: After defeating a boss, players can choose a pet (e.g., shield, attack, healing), and the selected pet follows the player during gameplay, impacting the strategy with unique abilities.
   - **Weather Effects**: The dynamic weather system that alters gameplay every 30 seconds, affecting player and enemy movements (e.g., slowing down in snow or damaging in thunderstorms).
 
-  ---
+---
 
 ### 5.3 Key Features and Highlights
 
@@ -708,7 +708,7 @@ The pet system introduces an additional layer of complexity, allowing players to
 - **Weather System**:
 The weather system influences gameplay significantly, providing varied environmental conditions that players must adapt to. Snow slows movement, lightning damages enemies and players, and sunlight can be both a benefit and a detriment. This system is implemented using **time-based functions** to control the intervals and transitions between different weather conditions.
 
-  ---
+---
 
 ### 5.4 Three Key Technical Challenges in Glitchwood's Development
 
