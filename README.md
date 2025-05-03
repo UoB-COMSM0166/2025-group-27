@@ -678,11 +678,18 @@ To ensure both responsiveness and accuracy, we implemented collision detection b
 
 ---
 
-#### 2. Integrating Pet System with Dynamic Obstacle Regeneration
+#### 2. Pet System Integration
 
 Every five waves, a **new map is procedurally generated** with updated obstacles. While this enriched gameplay variety, it presented a unique challenge for the **pet system**. Pets are designed to follow the player and provide combat support, but they risked becoming stuck or desynced due to the newly placed obstacles.
 
 To address this, we introduced **pet movement re-evaluation logic** triggered after obstacle regeneration. This allowed pets to **dynamically reposition** and maintain **consistent pathing**, preserving their reliability across shifting environments without disrupting game flow.
+
+ In detailed, For coders, one of the toughest parts of the project was integrating a dynamic obstacle wave system with autonomous pets without breaking game balance. In the snippet above (in picture), you can see how we implemented **two core pet behaviors: orbital following and auto-attack** in the **`AttackPet`** class.  Orbital following uses a circular offset and `lerp()` for smooth movement around the player.  Auto-attack detects and damages the nearest enemy on cooldown (**simply decrementing `attackCooldown` and checking distance**).  The real challenge emerged when we tried syncing pet timers, animations, and obstacle spawns in a central update routine—it quickly became unmanageable as more pets and effects were added.  We solved this by moving both state transitions and rendering into each pet’s own methods: **`follow()`**, **`attack()`**, **`activateShield()`** / **`deactivateShield()`**, etc. This isolated complexity, kept the core loop clean, and finally achieved a flexible, balanced pet system that scales with wave progression.
+
+<div align="center">
+  <img src="docs/implementation/code2_image.png" alt="code_image" width="596" height="1260">
+  <p><em>Figure 22. Code snippet showing pet behavior implementation.</em></p>
+</div>
 
 ---
 
@@ -696,17 +703,10 @@ These upgrades were easy to manage individually, but combining them led to **con
 
 <div align="center">
   <img src="docs/implementation/code_image.png" alt="Sequence Diagram" width="960" height="851">
-  <p><em>Figure 22. Code snippet handling Pierce and Split upgrades in the Arrow class.</em></p>
+  <p><em>Figure 23. Code snippet handling Pierce and Split upgrades in the Arrow class.</em></p>
 </div>
 
 ---
-
- - **Pet System Integration**: For coders, one of the toughest parts of the project was integrating a dynamic obstacle wave system with autonomous pets without breaking game balance. In the snippet above (in picture), you can see how we implemented **two core pet behaviors: orbital following and auto-attack** in the **`AttackPet`** class.  Orbital following uses a circular offset and `lerp()` for smooth movement around the player.  Auto-attack detects and damages the nearest enemy on cooldown (**simply decrementing `attackCooldown` and checking distance**).  The real challenge emerged when we tried syncing pet timers, animations, and obstacle spawns in a central update routine—it quickly became unmanageable as more pets and effects were added.  We solved this by moving both state transitions and rendering into each pet’s own methods: **`follow()`**, **`attack()`**, **`activateShield()`** / **`deactivateShield()`**, etc. This isolated complexity, kept the core loop clean, and finally achieved a flexible, balanced pet system that scales with wave progression.
-
-<div align="center">
-  <img src="docs/implementation/code2_image.png" alt="code_image" width="800" height="800">
-  <p><em>Figure 23. Code snippet showing pet behavior implementation.</em></p>
-</div>
 
 #### Additional Challenge: Seamless Integration of Narrative and Gameplay
 
@@ -764,11 +764,6 @@ This section presents both qualitative and quantitative evaluations of our game,
 - Characters were described as symbolic yet relatable. Some players recommended **enhancing plot transitions** through more dialogue and scripted events.
 
 #### Focus Group Q&A Summary
-
-<div align="center">
-  <img src="docs/implementation/code2_image.png" alt="code_image" width="800" height="800">
-  <p><em>Figure 23. Code snippet showing pet behavior implementation.</em></p>
-</div>
 
 <div align="center">
   <img src="docs/evaluation/interview.png" alt="Interview Responses" width="820" height="1300">
