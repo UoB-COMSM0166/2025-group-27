@@ -503,6 +503,48 @@ The picture below shows the use-case diagram and use-case specification of our g
   <p><em>Figure 19. Use-case diagram and specification for Glitchwood.</em></p>
 </div>
 
+**Actors:**
+
+Player: Interacts with the game by starting, saving, loading, and customizing gameplay(eg. setting background music volume of game).
+
+Developer: Responsible for updating the game (Game Update).
+
+**Main Use Cases:**
+
+The player:
+Start Game → includes: Choose Difficulty, Background Story, Choose Character;
+Fight Enemies → extends: Game Victory, Game Over, Invincible Mode;
+Choose Upgrade;
+Save Game, Load Game;
+Game Setting → includes: Adjust Volume;
+Infinite Mode → extends: Goto Main Menu;
+Pause Game, View Stats;
+Goto Main Menu
+
+The developer:
+Release New Version Of Game
+
+**Use Case Description:**
+
+Use Case Name: Complete Game
+
+Precondition: Player chooses appropriate settings and is ready to play game.
+
+Postcondition: Game status, player attributes, and scores are updated.
+
+Basic Flow:
+Choose Difficulty → Choose Character → Fight Enemies → Level Up and Choose Upgrades → Fight Boss → Choose to “Finish Game” or “Enter Infinite Mode” → Return to Main Menu
+
+Alternative Flows:
+A: Defeated → View Score → Press "R" to return to main menu
+B: Infinite Mode → Continue Game → Get Upgrades → View Final Score
+
+Special Requirements:
+Random Upgrades
+Harder to level up as level increases
+More enemies as waves progress
+Weather changes every 40 seconds
+
 ---
 
 ### 3.5 Reflection and Conclusion
