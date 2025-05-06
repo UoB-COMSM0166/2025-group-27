@@ -116,7 +116,15 @@ function keyPressed() {
     if (key === "1") initPlayer("gunner");
     if (key === "2") initPlayer("archer");
   } else if (gameState === "paused" && !choosingPotion) {
-    if (key === "M" || key === "m") gameState = "mainMenu";
+    if (key === "M" || key === "m") {
+      gameState = "mainMenu";
+      normalMusic12.stop();
+      normalMusic45.stop();
+      normalMusic78.stop();
+      bossMusic1.stop();
+      bossMusic2.stop();
+      bossMusic3.stop();
+    }
     if (key === "P" || key === "p") gameState = "game";
     if (key === "I" || key === "i") {
       player.isInvincible = !player.isInvincible;
