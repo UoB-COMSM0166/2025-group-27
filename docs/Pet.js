@@ -505,6 +505,6 @@ function displayPetReveal() {
 function finishPetSelection() {
   player.needsPetSelection = false;
   wave++;
-  spawnEnemiesForWave(wave);
   gameState = "game";
+  spawnEnemiesForWave(wave);
 }

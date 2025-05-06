@@ -1254,8 +1254,8 @@ function getValidSpawnPosition() {
   let pos;
   let isValid = false;
   let attempts = 0;
-  const maxAttempts = 50;
-  const safeMargin = 150;
+  const maxAttempts = 200;
+  const safeMargin = 200;
 
   while (!isValid && attempts < maxAttempts) {
     pos = createVector(random(width), random(height));
@@ -1269,14 +1269,11 @@ function getValidSpawnPosition() {
         break;
       }
     }
-
     if (!tooCloseToPlayer && !nearObstacle) {
       isValid = true;
     }
-
     attempts++;
   }
-
   if (!isValid) {
     let side = floor(random(4));
     let margin = safeMargin;
@@ -1297,7 +1294,7 @@ function getValidSpawnPosition() {
       }
       let inObstacle = false;
       for (let obs of obstacles) {
-        if (obs.collidesWith(pos, safeMargin, safeMargin)) {
+        if (obs.collidesWithCircle(pos, safeMargin)) {
           inObstacle = true;
           break;
         }
