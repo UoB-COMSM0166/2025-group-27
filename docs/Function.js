@@ -1405,15 +1405,6 @@ function choosePotion() {
   );
 }
 
-function getRandomSpawnPosition() {
-  let x, y;
-  do {
-    x = random(width);
-    y = random(height);
-  } while (player && p5.Vector.dist(createVector(x, y), player.pos) < 100);
-  return createVector(x, y);
-}
-
 // count distance
 function distToLine(point, lineStart, lineEnd) {
   let a = point.x - lineStart.x;

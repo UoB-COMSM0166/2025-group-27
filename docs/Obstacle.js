@@ -63,9 +63,9 @@ class Obstacle {
       
     } else if(wave>10 && wave<=15){
       if(this.isVertical){
-        image(obstacle5, this.pos.x, this.pos.y, 100, 100);
+        image(obstacle5, this.pos.x-2, this.pos.y-2, 100, 100);
         } else {
-        image(obstacle7, this.pos.x, this.pos.y, 70, 70);
+        image(obstacle7, this.pos.x-2, this.pos.y-2, 70, 70);
         }
     } else {
       if(this.isVertical){
