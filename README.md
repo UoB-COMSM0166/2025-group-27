@@ -1001,7 +1001,7 @@ To ensure smooth collaboration and efficient development, we utilized the follow
 
 <div align="center">
   <img src="docs/management/Glitchwood_Management.png" alt="Sequence Diagram" width="820" height="800">
-  <p><em>Figure 27. Glitchwood's sprint timeline and team workflow overview.</em></p>
+  <p><em>Figure 33. Glitchwood's sprint timeline and team workflow overview.</em></p>
 </div>
 
 #### Weekly Planning & Review
