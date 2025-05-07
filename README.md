@@ -729,7 +729,11 @@ To address this, we introduced **pet movement re-evaluation logic** triggered af
  In detailed, For coders, one of the toughest parts of the project was integrating a dynamic obstacle wave system with autonomous pets without breaking game balance. In the snippet above (in picture), you can see how we implemented **two core pet behaviors: orbital following and auto-attack** in the **`AttackPet`** class.  Orbital following uses a circular offset and `lerp()` for smooth movement around the player.  Auto-attack detects and damages the nearest enemy on cooldown (**simply decrementing `attackCooldown` and checking distance**).  The real challenge emerged when we tried syncing pet timers, animations, and obstacle spawns in a central update routine—it quickly became unmanageable as more pets and effects were added.  We solved this by moving both state transitions and rendering into each pet’s own methods: **`follow()`**, **`attack()`**, **`activateShield()`** / **`deactivateShield()`**, etc. This isolated complexity, kept the core loop clean, and finally achieved a flexible, balanced pet system that scales with wave progression.
 
 <div align="center">
+<<<<<<< HEAD
   <img src="docs/implementation/code2_image.png" alt="code2_image" width="955" height="324">
+=======
+  <img src="docs/implementation/code2_image.png" alt="code2_image" width="820" height="60">
+>>>>>>> 03c3e360ac0a0e06b359199683345ef0c48ecb6d
   <p><em>Figure 22. Code snippet showing pet behavior implementation.</em></p>
 </div>
 
@@ -744,7 +748,7 @@ The **archer character (Mousegirl)** features two notable upgrades:
 These upgrades were easy to manage individually, but combining them led to **conflicts and nested logic** when upgrades were implemented inside the `Player` class. Eventually, we migrated upgrade logic into the `Arrow` class, allowing each instance to **independently handle its effects**. This **object-oriented redesign** improved clarity, maintainability, and future scalability.
 
 <div align="center">
-  <img src="docs/implementation/code_image.png" alt="code_image" width="962" height="370">
+  <img src="docs/implementation/code_image.png" alt="code_image" width="820" height="345">
   <p><em>Figure 23. Code snippet handling Pierce and Split upgrades in the Arrow class.</em></p>
 </div>
 
@@ -787,39 +791,53 @@ While some optimizations (such as performance tuning in high-enemy scenarios) re
 
 This section presents both qualitative and quantitative evaluations of our game, **Glitchwood**. We conducted structured user interviews and employed established metrics like **SUS** (System Usability Scale) and **NASA-TLX** (Task Load Index) to assess the game's usability, workload, and player experience across both difficulty modes.
 
+
 ### 6.1 Qualitative Evaluation
 
-#### Artistic Style & Interaction Design
+To better understand how players experienced **Glitchwood**, we applied two qualitative methods: a lightweight **Think Aloud protocol** and **follow-up interviews**. This combination helped us capture both real-time reactions and reflective feedback.
 
-- Players praised the **minimalist interface**, especially the clean layout of the character selection screen. The visual tutorial helped new players get started quickly.
-- The game's **programmer-themed aesthetic**, including pixel art, code-like icons, and glitch effects, was frequently mentioned as unique and memorable.
-- Dynamic elements like **weather effects**, **particle systems**, and **lighting gradients** added visual depth and made each playthrough feel distinctive.
+---
 
-#### Difficulty & Game Flow
+#### Think Aloud Testing
 
-- **L1 (Easy Mode)**: All test participants were able to complete the level. Most described the combat rhythm as smooth, upgrade pacing as intuitive, and boss mechanics as well-balanced.
-- **L2 (Hard Mode)**: Introduced significantly higher challenge through increased enemy density, more aggressive boss behavior, and frequent random events (e.g., lightning storms). Players found it more stressful but also more rewarding.
+Testers (mainly classmates and friends) played the game while **describing their thoughts aloud**. Each session lasted 15–20 minutes and was conducted in person or via screen sharing. This method surfaced interaction issues that weren’t obvious during internal testing.
 
-#### Story & Immersion
+> Real-time comments like _“What just hit me?”_ or _“Is my pet even working?”_ revealed usability gaps and unclear mechanics.
 
-- The storyline—centered around a developer trapped in their own creation—resonated with players, especially those with technical backgrounds.
-- Characters were described as symbolic yet relatable. Some players recommended **enhancing plot transitions** through more dialogue and scripted events.
+##### Key Observations & Iterative Improvements
 
-#### Focus Group Q&A Summary
+| Area                 | What Happened                                             | Player Reactions               | Action Taken                                                   |
+|----------------------|-----------------------------------------------------------|-------------------------------|----------------------------------------------------------------|
+| **Pet Feedback**     | Unclear if healing/shielding was active                   | “Am I healing or not?”        | Added glow effects and pet-specific icons                      |
+| **Boss Warnings**    | Attacks lacked obvious cues                               | “I didn’t see that coming!”   | Introduced charge-up visuals and warning sounds                |
+| **Weather Effects**  | Slowness caught players off guard                         | “Why am I slow all of a sudden?” | Added HUD icons and ambient sound for weather change          |
+| **Pause Function**   | Some players didn’t know how to pause                     | “Wait, how do I pause?”       | Added tutorial hint for ‘P’ key                                |
+
+---
+
+#### Post-Game Interviews
+
+After testing, we conducted brief **semi-structured interviews** with three participants, covering topics like UI, difficulty, feedback, and narrative. This validated our Think Aloud observations and offered broader context.
 
 <div align="center">
-  <img src="docs/evaluation/interview.png" alt="Interview Responses" width="820" height="1300">
-  <p><em>Figure 24. Summary of focus group interview responses and improvement actions.</em></p>
+  <img src="docs/evaluation/interview.png" alt="Interview Responses" width="820" height="1000">
+  <p><em>Figure 24. Summary of focus group responses and improvement actions.</em></p>
 </div>
 
-Below is a summary of improvement points derived from Q&A transcripts:
+##### Summary of Key Takeaways
 
-| Issue Area           | User Feedback                                                | Improvement Action                                                |
-| -------------------- | ------------------------------------------------------------ | ----------------------------------------------------------------- |
-| **Boss Alerts**      | Skills lack audio/visual warnings                            | Added visual overlays and sound cues during boss charge-up phases |
-| **Performance Lag**  | Too many visual effects cause frame drops                    | Implemented object pooling and reduced particle frequency         |
-| **Plot Transitions** | Some cutscenes feel abrupt or disjointed                     | Introduced smoother scene fade-ins and narrative pacing tweaks    |
-| **Tutorial Clarity** | Visuals and text in the guide were scattered and unintuitive | Consolidated tutorial content and improved UI alignment           |
+| Theme                | Feedback Highlights                                                                 |
+|----------------------|--------------------------------------------------------------------------------------|
+| **UI & Aesthetics**  | Interface was praised as clean and intuitive (avg. rating: 4–5/5)                    |
+| **Difficulty Modes** | Clear contrast between Easy and Hard modes; the latter felt more engaging           |
+| **Boss Feedback**    | Players wanted clearer skill warnings                                               |
+| **Tutorial Info**    | Pause function and key controls now clarified in the guide                          |
+
+---
+
+#### Conclusion
+
+The **Think Aloud method** revealed **micro-interaction issues**, while **interviews** helped us understand players’ general expectations. Together, they helped us prioritize feasible, high-impact fixes—like improving feedback clarity and tutorial usability.
 
 ---
 
