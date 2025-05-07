@@ -840,44 +840,69 @@ The **Think Aloud method** revealed **micro-interaction issues**, while **interv
 
 ### 6.2 Quantitative Evaluation
 
-To validate the experience in **L1 (Easy Mode)** and **L2 (Hard Mode)**, we collected quantitative data using:
+To evaluate user experience in **L1 (Easy Mode)** and **L2 (Hard Mode)**, we collected quantitative feedback using two standardized instruments:
 
-- **System Usability Scale (SUS)**: Assesses ease of use and interface clarity
-- **NASA-TLX**: Measures user workload across six dimensions: Mental, Physical, Temporal, Performance, Effort, and Frustration
+- **System Usability Scale (SUS)**: Assesses perceived usability and user satisfaction.
+- **NASA-TLX**: Measures perceived workload across six dimensions—Mental, Physical, and Temporal Demand, Effort, Frustration, and Performance.
+
+---
 
 #### NASA-TLX Results
 
-In **L1 Mode**, participants reported low mental and physical demand. The average **Mental Demand** was around **60**, compared to **80** in **L2 Mode**. Frustration scores also rose significantly in L2.
+We first examined average workload scores across all dimensions.
+
+<div align="center">
+  <img src="NASA_bar.png" alt="NASA Bar Chart" width="760">
+  <p><em>Figure 25. NASA-TLX average workload scores per factor in L1 and L2.</em></p>
+</div>
+
+The data shows a consistent increase in workload for **L2**, especially in **Mental Demand** (61.5 → 78.5), **Frustration** (53.5 → 79.5), and **Temporal Demand** (54 → 78). Performance scores, conversely, dropped (72 → 59.5), indicating users struggled more under the harder mode.
+
+To visualize this shift across workload factors holistically, we used a radar plot:
+
+<div align="center">
+  <img src="NASA_radar.png" alt="NASA Radar Chart" width="600">
+  <p><em>Figure 26. NASA-TLX workload profile comparison between L1 and L2.</em></p>
+</div>
+
+> Players in **L1** reported the game felt manageable, with low time pressure and mild frustration. In contrast, **L2** induced higher stress and required more sustained attention.
+
+---
 
 #### SUS Analysis
 
-Using the **Wilcoxon Signed Rank Test**, we compared SUS and NASA-TLX scores between L1 and L2. Results showed:
+While workload increased, usability ratings via the **SUS** remained more nuanced. We used bar charts to compare each participant’s SUS score to the industry benchmark of **68**, revealing how users perceived the system across difficulty levels.
 
-- A **statistically significant increase** in workload under L2
-- Only a **minor difference** in usability scores, indicating UI remained consistently usable across modes
-
-<div align="center">
-  <img src="https://github.com/user-attachments/assets/925e05b2-e862-4e1b-9786-8f38dd1fac45" alt="Figure 1: L1 Evaluation" width="820" height="620">
-  <p><em>Figure 25. NASA-TLX and SUS analysis results for L1 (Easy Mode).</em></p>
-</div>
-
-  > In **L1**, players found the game **easy to use**, with low demand in physical and temporal areas. Frustration levels were mild (20–30 range), aligning with our goal of onboarding new players gently.
+##### L1: Easy Mode
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/7263cf0b-1bda-4787-964c-b5155d597a63" alt="Figure 2: L2 Evaluation" width="820" height="620">
-  <p><em>Figure 26. NASA-TLX and SUS analysis results for L2 (Hard Mode).</em></p>
+  <img src="SUS_easy_bar.png" alt="SUS Easy Mode Bar" width="700">
+  <p><em>Figure 27. SUS scores by user in Easy Mode. Benchmark line at 68.</em></p>
 </div>
 
-> In **L2**, difficulty led to higher **effort, frustration, and mental load**. Scores for items like "I found the system unnecessarily complex" or "I needed a lot of support" increased, reflecting a more intense experience.
+> In **Easy Mode**, the **average SUS score was 69**, slightly above the benchmark. Most users found the interface clear and usable, with high ratings from participants like U2, U4, and U9.
+
+##### L2: Hard Mode
+
+<div align="center">
+  <img src="SUS_hard_bar.png" alt="SUS Hard Mode Bar" width="700">
+  <p><em>Figure 28. SUS scores by user in Hard Mode. Benchmark line at 68.</em></p>
+</div>
+
+> In **Hard Mode**, the **average SUS score dropped to 40.5**, significantly below the acceptable usability threshold. Although the UI design remained functional, the increased difficulty led many users to perceive the system as more challenging or even frustrating.
+
+> **This feedback was crucial**: the SUS results indicated that the difficulty level in L2 might have crossed a usability threshold. Based on these insights, **we have already made adjustments** to L2 to better balance challenge and usability.
+
+---
 
 #### Summary Comparison
 
-| Metric               | L1 Easy Mode                     | L2 Hard Mode                              |
-| -------------------- | -------------------------------- | ----------------------------------------- |
-| SUS Usability        | High ease-of-use, low complexity | Slight drop in intuitiveness              |
-| NASA Mental Load     | Avg: 60                          | Avg: 80                                   |
-| Effort & Frustration | Low                              | High                                      |
-| Time Pressure        | Mild decision-making pace        | Required rapid reflex and micro-decisions |
+| Metric               | L1 Easy Mode                          | L2 Hard Mode                             |
+| -------------------- | ------------------------------------- | ---------------------------------------- |
+| SUS Usability        | Avg: 69 – Above benchmark             | Avg: 40.5 – Below benchmark              |
+| NASA Mental Load     | Avg: 61.5                             | Avg: 78.5                                |
+| Effort & Frustration | Low (Effort: 65, Frustration: 53.5)   | High (Effort: 72.5, Frustration: 79.5)   |
+| Time Pressure        | Mild                                  | Intense, fast-paced interactions         |
 
 ---
 
