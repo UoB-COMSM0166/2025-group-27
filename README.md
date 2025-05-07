@@ -729,7 +729,7 @@ To address this, we introduced **pet movement re-evaluation logic** triggered af
  In detailed, For coders, one of the toughest parts of the project was integrating a dynamic obstacle wave system with autonomous pets without breaking game balance. In the snippet above (in picture), you can see how we implemented **two core pet behaviors: orbital following and auto-attack** in the **`AttackPet`** class.  Orbital following uses a circular offset and `lerp()` for smooth movement around the player.  Auto-attack detects and damages the nearest enemy on cooldown (**simply decrementing `attackCooldown` and checking distance**).  The real challenge emerged when we tried syncing pet timers, animations, and obstacle spawns in a central update routine—it quickly became unmanageable as more pets and effects were added.  We solved this by moving both state transitions and rendering into each pet’s own methods: **`follow()`**, **`attack()`**, **`activateShield()`** / **`deactivateShield()`**, etc. This isolated complexity, kept the core loop clean, and finally achieved a flexible, balanced pet system that scales with wave progression.
 
 <div align="center">
-  <img src="docs/implementation/code2_image.png" alt="code2_image" width="851" height="58">
+  <img src="docs/implementation/code2_image.png" alt="code2_image" width="820" height="60">
   <p><em>Figure 22. Code snippet showing pet behavior implementation.</em></p>
 </div>
 
@@ -744,7 +744,7 @@ The **archer character (Mousegirl)** features two notable upgrades:
 These upgrades were easy to manage individually, but combining them led to **conflicts and nested logic** when upgrades were implemented inside the `Player` class. Eventually, we migrated upgrade logic into the `Arrow` class, allowing each instance to **independently handle its effects**. This **object-oriented redesign** improved clarity, maintainability, and future scalability.
 
 <div align="center">
-  <img src="docs/implementation/code_image.png" alt="code_image" width="962" height="370">
+  <img src="docs/implementation/code_image.png" alt="code_image" width="820" height="345">
   <p><em>Figure 23. Code snippet handling Pierce and Split upgrades in the Arrow class.</em></p>
 </div>
 
@@ -816,7 +816,7 @@ Testers (mainly classmates and friends) played the game while **describing their
 After testing, we conducted brief **semi-structured interviews** with three participants, covering topics like UI, difficulty, feedback, and narrative. This validated our Think Aloud observations and offered broader context.
 
 <div align="center">
-  <img src="docs/evaluation/interview.png" alt="Interview Responses" width="820" height="1300">
+  <img src="docs/evaluation/interview.png" alt="Interview Responses" width="820" height="1000">
   <p><em>Figure 24. Summary of focus group responses and improvement actions.</em></p>
 </div>
 
