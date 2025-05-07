@@ -787,39 +787,53 @@ While some optimizations (such as performance tuning in high-enemy scenarios) re
 
 This section presents both qualitative and quantitative evaluations of our game, **Glitchwood**. We conducted structured user interviews and employed established metrics like **SUS** (System Usability Scale) and **NASA-TLX** (Task Load Index) to assess the game's usability, workload, and player experience across both difficulty modes.
 
+
 ### 6.1 Qualitative Evaluation
 
-#### Artistic Style & Interaction Design
+To better understand how players experienced **Glitchwood**, we applied two qualitative methods: a lightweight **Think Aloud protocol** and **follow-up interviews**. This combination helped us capture both real-time reactions and reflective feedback.
 
-- Players praised the **minimalist interface**, especially the clean layout of the character selection screen. The visual tutorial helped new players get started quickly.
-- The game's **programmer-themed aesthetic**, including pixel art, code-like icons, and glitch effects, was frequently mentioned as unique and memorable.
-- Dynamic elements like **weather effects**, **particle systems**, and **lighting gradients** added visual depth and made each playthrough feel distinctive.
+---
 
-#### Difficulty & Game Flow
+#### Think Aloud Testing
 
-- **L1 (Easy Mode)**: All test participants were able to complete the level. Most described the combat rhythm as smooth, upgrade pacing as intuitive, and boss mechanics as well-balanced.
-- **L2 (Hard Mode)**: Introduced significantly higher challenge through increased enemy density, more aggressive boss behavior, and frequent random events (e.g., lightning storms). Players found it more stressful but also more rewarding.
+Testers (mainly classmates and friends) played the game while **describing their thoughts aloud**. Each session lasted 15–20 minutes and was conducted in person or via screen sharing. This method surfaced interaction issues that weren’t obvious during internal testing.
 
-#### Story & Immersion
+> Real-time comments like _“What just hit me?”_ or _“Is my pet even working?”_ revealed usability gaps and unclear mechanics.
 
-- The storyline—centered around a developer trapped in their own creation—resonated with players, especially those with technical backgrounds.
-- Characters were described as symbolic yet relatable. Some players recommended **enhancing plot transitions** through more dialogue and scripted events.
+##### Key Observations & Iterative Improvements
 
-#### Focus Group Q&A Summary
+| Area                 | What Happened                                             | Player Reactions               | Action Taken                                                   |
+|----------------------|-----------------------------------------------------------|-------------------------------|----------------------------------------------------------------|
+| **Pet Feedback**     | Unclear if healing/shielding was active                   | “Am I healing or not?”        | Added glow effects and pet-specific icons                      |
+| **Boss Warnings**    | Attacks lacked obvious cues                               | “I didn’t see that coming!”   | Introduced charge-up visuals and warning sounds                |
+| **Weather Effects**  | Slowness caught players off guard                         | “Why am I slow all of a sudden?” | Added HUD icons and ambient sound for weather change          |
+| **Pause Function**   | Some players didn’t know how to pause                     | “Wait, how do I pause?”       | Added tutorial hint for ‘P’ key                                |
+
+---
+
+#### Post-Game Interviews
+
+After testing, we conducted brief **semi-structured interviews** with three participants, covering topics like UI, difficulty, feedback, and narrative. This validated our Think Aloud observations and offered broader context.
 
 <div align="center">
   <img src="docs/evaluation/interview.png" alt="Interview Responses" width="820" height="1300">
-  <p><em>Figure 24. Summary of focus group interview responses and improvement actions.</em></p>
+  <p><em>Figure 24. Summary of focus group responses and improvement actions.</em></p>
 </div>
 
-Below is a summary of improvement points derived from Q&A transcripts:
+##### Summary of Key Takeaways
 
-| Issue Area           | User Feedback                                                | Improvement Action                                                |
-| -------------------- | ------------------------------------------------------------ | ----------------------------------------------------------------- |
-| **Boss Alerts**      | Skills lack audio/visual warnings                            | Added visual overlays and sound cues during boss charge-up phases |
-| **Performance Lag**  | Too many visual effects cause frame drops                    | Implemented object pooling and reduced particle frequency         |
-| **Plot Transitions** | Some cutscenes feel abrupt or disjointed                     | Introduced smoother scene fade-ins and narrative pacing tweaks    |
-| **Tutorial Clarity** | Visuals and text in the guide were scattered and unintuitive | Consolidated tutorial content and improved UI alignment           |
+| Theme                | Feedback Highlights                                                                 |
+|----------------------|--------------------------------------------------------------------------------------|
+| **UI & Aesthetics**  | Interface was praised as clean and intuitive (avg. rating: 4–5/5)                    |
+| **Difficulty Modes** | Clear contrast between Easy and Hard modes; the latter felt more engaging           |
+| **Boss Feedback**    | Players wanted clearer skill warnings                                               |
+| **Tutorial Info**    | Pause function and key controls now clarified in the guide                          |
+
+---
+
+#### Conclusion
+
+The **Think Aloud method** revealed **micro-interaction issues**, while **interviews** helped us understand players’ general expectations. Together, they helped us prioritize feasible, high-impact fixes—like improving feedback clarity and tutorial usability.
 
 ---
 
