@@ -1196,3 +1196,11 @@ Becker, C., Betz, S., Chitchyan, R., Duboc, L., Easterbrook, S. M., Penzenstadle
 Duboc, L., Betz, S., Penzenstadler, B., Akinli Kocak, S., Chitchyan, R., Leifler, O., Porras, J., Seyff, N., & Venters, C. C. (2019). Do we really know what we are building? Raising awareness of potential sustainability effects of software systems in requirements engineering. In D. Damian, A. Perini, & S.-W. Lee (Eds.), *Proceedings of the 27th IEEE International Requirements Engineering Conference* (pp. 6–16). IEEE. https://doi.org/10.1109/RE.2019.00013
 
 Hilty, L. M., & Aebischer, B. (2015). ICT for sustainability: An emerging research field. In L. M. Hilty & B. Aebischer (Eds.), *ICT Innovations for Sustainability* (pp. 3–36). Springer. https://doi.org/10.1007/978-3-319-09228-7_1
+
+---
+
+### 10.3 Byebye
+
+<div align="center">
+  <img src="docs/report/bye.gif" alt="Byebye" width="580"  height="330">
+</div>
