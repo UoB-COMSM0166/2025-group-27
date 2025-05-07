@@ -1191,8 +1191,8 @@ Piraveenan, M. (2019). Applications of game theory in project management: A stru
 
 Maratou, V., Chatzidaki, E., & Xenos, M. (2014). Enhance learning on software project management through a role-play game in a virtual world. *Interactive Learning Environments*, 24(4), 897–915. https://doi.org/10.1080/10494820.2014.937345
 
-Becker, C., Betz, S., Chitchyan, R., Duboc, L., Easterbrook, S. M., Penzenstadler, B., et al. (2015). Requirements: The key to sustainability. *IEEE Software*, 33(1), 56–65.
+Becker, C., Betz, S., Chitchyan, R., Duboc, L., Easterbrook, S. M., Penzenstadler, B., et al. (2015). Requirements: The key to sustainability. *IEEE Software*, 33(1), 56–65. https://doi.org/10.1109/MS.2015.158
 
-Duboc, L., et al. (2019). Do we really know what we are building? In *Proceedings of the International Conference on Requirements Engineering*.
+Duboc, L., Betz, S., Penzenstadler, B., Akinli Kocak, S., Chitchyan, R., Leifler, O., Porras, J., Seyff, N., & Venters, C. C. (2019). Do we really know what we are building? Raising awareness of potential sustainability effects of software systems in requirements engineering. In D. Damian, A. Perini, & S.-W. Lee (Eds.), *Proceedings of the 27th IEEE International Requirements Engineering Conference* (pp. 6–16). IEEE. https://doi.org/10.1109/RE.2019.00013
 
-Hilty, L., & Aebischer, B. (2015). ICT for sustainability: An emerging research field. In L. Hilty & B. Aebischer (Eds.), *ICT innovations for sustainability* (pp. 3–36). Springer.
+Hilty, L. M., & Aebischer, B. (2015). ICT for sustainability: An emerging research field. In L. M. Hilty & B. Aebischer (Eds.), *ICT Innovations for Sustainability* (pp. 3–36). Springer. https://doi.org/10.1007/978-3-319-09228-7_1
