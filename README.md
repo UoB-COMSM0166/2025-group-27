@@ -141,6 +141,7 @@
     - [9.5 Conclusion](#95-conclusion)
   - [10 Appendix](#10-appendix)
     - [10.1 Contributions of Team Members](#101-contributions-of-team-members)
+    - [10.2 References](#102-references)
 
 ## 1 Introduction
 
@@ -1111,5 +1112,14 @@ In summary, *Glitchwood* has been more than just a game project—it has been an
 | **Tong Yu**       | Designed the game’s visual art and front-end UI, ensuring that animation and design were well integrated with gameplay. Contributed to the storyline development and played a key role in optimizing the project report.                             | 1      |
 | **Feihang Yan**   | Developed the pet system, including its behavior modeling, interaction logic, and state management. Contributed creatively to pet design and participated in video creation. Also assisted with debugging and optimization.                          | 1      |
 | **Xianhang Peng** | Focused on front-end development, including UI elements like the main menu and score display. Played a key role in map design and optimizing the game’s interaction logic. Contributed to video creation and participated in creative brainstorming. | 1      |
+
+---
+
+### 10.2 References
+
+VODÁK J. (2024). 2D ROGUE-LIKE GAME WITH PROCEDURAL ELEMENTS, 2024, 30-34. https://theses.cz/id/s86g0y/
+
+Wu B, Wang A I. (2012). A Guideline for Game Development‐Based Learning: A Literature Review, 2012(1): 103710. https://onlinelibrary.wiley.com/doi/full/10.1155/2012/103710
+
 
 [Back to Table of Contents](#table-of-contents)
