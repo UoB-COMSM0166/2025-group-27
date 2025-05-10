@@ -6,9 +6,12 @@ function drawHeatHaze() {
   allImage = sunpic;
   frameWidth = allImage.width / totalFrames;
   frameHeight = allImage.height;
+  // Compute current frame of background animation
   let sx = currentFrame * frameWidth;
+
   push();
   noStroke();
+  // Draw the animated background
   image(allImage, 0, 0, 1062, 600, sx, 0, frameWidth, frameHeight);
   for (let y = 0; y < height; y += 5) {
     let offset = map(noise(y * 0.01, millis() * 0.002), 0, 1, -10, 10);
@@ -29,6 +32,7 @@ class Snowflake {
     this.size = random(8, 20);
     this.speed = random(0.5, 1.5);
   }
+  // Move the snowflake downwards; reset to top if it falls off
   update() {
     this.y += this.speed;
     if (this.y > height) {
@@ -36,19 +40,22 @@ class Snowflake {
       this.x = random(width);
     }
   }
+  // Draw the snowflake sprite
   display() {
     noStroke();
     fill(255, 255, 255, 200);
     image(snowflakepic, this.x, this.y, this.size, this.size);
-    // ellipse(this.x, this.y, this.size);
   }
 }
+
 let snowflakes = [];
+// Initialize a pool of snowflakes
 function setupSnow() {
   for (let i = 0; i < 100; i++) {
     snowflakes.push(new Snowflake());
   }
 }
+// Update and draw all snowflakes each frame
 function drawSnow() {
   for (let s of snowflakes) {
     s.update();
@@ -63,6 +70,7 @@ function updateLightningFlash() {
   if (millis() - lightningTimer > 3000) {
     lightningFlash = true;
     lightningTimer = millis();
+    // Turn off flash shortly after
     setTimeout(() => { lightningFlash = false; }, 100);
   }
 }
@@ -99,6 +107,7 @@ function updateWeather() {
       lastWeatherChange = currentTime;
       weatherStartTime = currentTime;
 
+      // Initialize lightning chain positions if stormy
       if (weather === "thunderstorm") {
         lightningZone = player.pos.copy();
         lightningChain = [lightningZone];
@@ -107,12 +116,14 @@ function updateWeather() {
     }
   }
 
+  // Revert to normal after the duration elapses
   if (weather !== "normal" && currentTime - weatherStartTime > 20000) {
     weather = "normal";
   }
 }
 
 function applyWeatherEffects(now) {
+  // Hot weather slows fire‐rate, snowy slows movement
   player.fireRate = weather === "hot" ? 12 : 10;
   player.speed = weather === "snowy" ? 3 : 5;
   enemies.forEach((enemy) => {
@@ -158,6 +169,7 @@ function applyWeatherEffects(now) {
         lightningChain.push(newPos);
         lastLightningTime = now;
       }
+      // Reset chain occasionally to re‐center on the player
       if (lightningChain.length >= maxLightningChain && now - lastLightningTime > lightningDelay * 2) {
         lightningZone = player.pos.copy();
         lightningChain = [lightningZone];
