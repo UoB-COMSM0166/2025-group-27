@@ -1,5 +1,13 @@
 class Player {
-  constructor(actionImgUp, actionImgDown, actionImgLeft, actionImgRight, actionImgIntro, AttackImageUp, AttackImageDown, AttackImageLeft, AttackImageRight, chWidthUp, chHeightUp, chWidthDown, chHeightDown, chWidthLeft, chHeightLeft, chWidthRight, chHeightRight, chWidthIntro, chHeightIntro, attackWidthUp, attackHeightUp, attackWidthDown, attackHeightDown, attackWidthLeft, attackHeightLeft, attackWidthRight, attackHeightRight, type) {
+  constructor(actionImgUp, actionImgDown, actionImgLeft, actionImgRight,
+    actionImgIntro, AttackImageUp, AttackImageDown, AttackImageLeft,
+    AttackImageRight, chWidthUp, chHeightUp, chWidthDown, chHeightDown,
+    chWidthLeft, chHeightLeft, chWidthRight, chHeightRight, chWidthIntro,
+    chHeightIntro, attackWidthUp, attackHeightUp, attackWidthDown,
+    attackHeightDown, attackWidthLeft, attackHeightLeft, attackWidthRight,
+    attackHeightRight, type
+  ) {
+    // Store all directional and intro sprites + their frame dimensions
     this.actionImgUp = actionImgUp;
     this.actionImgDown = actionImgDown;
     this.actionImgLeft = actionImgLeft;
@@ -35,6 +43,7 @@ class Player {
         right: [0, 1, 2, 3]
       };
     } else if (type == "knight") {
+      // Knight attack sprites
       this.attackImgUp = AttackImageUp;
       this.attackImgDown = AttackImageDown;
       this.attackImgLeft = AttackImageLeft;
@@ -68,12 +77,14 @@ class Player {
         right: [0, 1, 2, 3]
       };
     }
+    // Animation control
     this.currentAnimation = this.animations.idle;
     this.frameIndex = 0;
     this.animationDelay = 6;
     this.animationCounter = 0;
     this.direction = 'idle';
 
+    // Core stats
     this.speed = 5;
     this.radius = 20;
     this.health = 100;
@@ -88,16 +99,19 @@ class Player {
     this.healthRegen = 0;
     this.expBonus = 0;
     this.armorPenetration = 0;
+    // Character classification
     this.characterType = type || "gunner";
     this.bulletType = "shotgun";
     this.passiveSkills = [];
     this.shotgunLevel = 0;
     this.unlockedUpgrades = new Set();
+    // Status effects
     this.isWebbed = false;
     this.webDuration = 0;
     this.bulletTypes = new Set(this.bulletTypes || []);
     this.hitFlashTimer = 0;
     this.xp = 0;
+    // Attack properties (knight vs. gunner vs. archer)
     this.attackPower = this.characterType === "gunner" ? 10 : 8;
     this.attackDamage = this.characterType === "gunner" ? 10 : 8;
     this.attackSpeed = this.characterType === "gunner" ? 500 : 300;
@@ -120,24 +134,22 @@ class Player {
     this.currentAttackFrame = 0;
     this.attackAnimationSpeed = 3;
     this.knightType = "normal";
+    // Knight dash/spin mechanics
     this.reborn = false;
     this.spinningSlash = false;
     this.dash = false;
-
     this.dashing = false;
-    this.dashDuration = 0; 
+    this.dashDuration = 0;
     this.dashCooldown = 0;
     this.dashSpeedMultiplier = 1.8;
     this.canAttack = true;
-    
     this.spinningSlashCooldown = 0;
     this.spinningSlashRange = 80;
-    
     this.rebornUsed = false;
     this.giantMode = false;
     this.berserkerMode = false;
 
-    // Archer类
+    // Archer class
     this.arrowDamage = 30;
     this.arrowSpeed = 12;
     this.arrowSize = 12;
@@ -152,9 +164,9 @@ class Player {
     this.chargeBarScale = 0.7;
 
     // Archer updrade
-    this.arrowPierce = false; 
+    this.arrowPierce = false;
     this.arrowSplit = false;
-    this.doubleShot = false; 
+    this.doubleShot = false;
     this.lifesteal = 0;
     this.autoCharge = false;
 
@@ -170,13 +182,15 @@ class Player {
     this.isInvincible = false;
   }
 
+  // Handle incoming damage, including defense, reborn, and invincibility
   takeDamage(amount) {
     if (this.isInvincible) {
       showFloatingText("Invincible!", this.pos.x, this.pos.y - 20, color(255, 215, 0), 18);
       return;
     }
-    
-    if (this.reborn){
+
+    // Knight “reborn” mechanic triggers when dropping below threshold
+    if (this.reborn) {
       if (this.health > 10 && (this.health - amount) <= 10 && !this.rebornUsed) {
         this.health = Math.min(100, this.maxHealth); // reborn
         this.rebornUsed = true;
@@ -185,6 +199,7 @@ class Player {
       }
     }
     if (this.invincible) return;
+    // Apply defense reduction
     let actual = amount * (1 - this.defense * 0.1);
     this.health -= actual;
     this.hitFlashTimer = 10;
@@ -196,6 +211,7 @@ class Player {
     );
   }
 
+  // Prevent passing through obstacles by backtracking along velocity
   resolveCollision() {
     if (!this.vel) {
       this.vel = createVector(0, 0);
@@ -203,7 +219,9 @@ class Player {
 
     for (let obs of obstacles) {
       if (obs.collidesWith(this.pos, this.ImageWidth, this.ImageHeight)) {
+        // Test moving only in X direction
         let xOnly = createVector(this.pos.x - this.vel.x, this.pos.y);
+        // Test moving only in Y direction
         let yOnly = createVector(this.pos.x, this.pos.y - this.vel.y);
 
         if (!obs.collidesWith(xOnly, this.ImageWidth, this.ImageHeight)) {
@@ -213,12 +231,14 @@ class Player {
           this.pos = yOnly;
         }
         else {
+          // Otherwise, retract completely
           this.pos.sub(this.vel);
         }
       }
     }
   }
 
+  // Gain experience, trigger level-ups (skips at wave 5 boss)
   gainExp(amount) {
     if (wave === 5) return;
 
@@ -239,6 +259,7 @@ class Player {
     }
   }
 
+  // Increase level
   levelUp() {
     this.level++;
     this.exp -= this.expToNextLevel;
@@ -258,8 +279,9 @@ class Player {
       gameState = "upgrading";
     }
   }
-
+  // Apply a single upgrade to the player, updating stats and showing feedback text
   applyUpgrade(upgrade) {
+    // If it’s a one-time unlock, record it
     if (upgrade.oneTime) {
       this.unlockedUpgrades.add(upgrade.value);
     }
@@ -291,12 +313,12 @@ class Player {
         this.critRate = this.critRate || 0;
         this.criticalChance += upgrade.value;
         this.critRate += upgrade.value;
-        showFloatingText(`+${upgrade.value*100}% Crit`, this.pos.x, this.pos.y - 30, color(255, 50, 50));
+        showFloatingText(`+${upgrade.value * 100}% Crit`, this.pos.x, this.pos.y - 30, color(255, 50, 50));
         break;
       case "expBonus":
         this.expBonus = this.expBonus || 0;
         this.expBonus += upgrade.value;
-        showFloatingText(`+${upgrade.value*100}% EXP`, this.pos.x, this.pos.y - 30, color(150, 255, 150));
+        showFloatingText(`+${upgrade.value * 100}% EXP`, this.pos.x, this.pos.y - 30, color(150, 255, 150));
         break;
       case "armorPen":
         this.armorPenetration = this.armorPenetration || 0;
@@ -310,7 +332,7 @@ class Player {
           if (this.bulletType === "shotgun") {
             this.shotgunLevel = this.shotgunLevel || 0;
             this.shotgunLevel++;
-            showFloatingText(`Shotgun Level ${this.shotgunLevel+1}`, this.pos.x, this.pos.y - 30, color(255, 200, 50));
+            showFloatingText(`Shotgun Level ${this.shotgunLevel + 1}`, this.pos.x, this.pos.y - 30, color(255, 200, 50));
           } else {
             this.bulletType = "shotgun";
             this.shotgunLevel = 0;
@@ -405,29 +427,30 @@ class Player {
     choosingUpgrade = false;
   }
 
+  // Perform the knight’s spinning slash attack in a circular area
   performSpinningSlash() {
     if (!this.spinningSlash || this.spinningSlashCooldown > 0) return;
-    
+
     this.spinningSlashCooldown = 180;
     showFloatingText("Spinning Slash!", this.pos.x, this.pos.y - 30, color(255, 150, 0));
-    
+
     const radius = this.attackRange || 100;
     const angle = this.attackAngle || 360;
-    
+
     push();
     noFill();
     stroke(255, 150, 0, 150);
     strokeWeight(3);
-    ellipse(this.pos.x + this.ImageWidth/2, this.pos.y + this.ImageHeight/2, radius*2);
+    ellipse(this.pos.x + this.ImageWidth / 2, this.pos.y + this.ImageHeight / 2, radius * 2);
     pop();
-    
+
     for (let i = enemies.length - 1; i >= 0; i--) {
       const enemy = enemies[i];
       const dist = p5.Vector.dist(
-        createVector(this.pos.x + this.ImageWidth/2, this.pos.y + this.ImageHeight/2),
+        createVector(this.pos.x + this.ImageWidth / 2, this.pos.y + this.ImageHeight / 2),
         createVector(enemy.pos.x + enemy.radius, enemy.pos.y + enemy.radius)
       );
-      
+
       if (dist <= radius) {
         //count damage
         let damage = this.attackDamage || 30;
@@ -436,7 +459,7 @@ class Player {
           damage *= (this.critDamage || 1.5);
           showFloatingText("CRIT!", enemy.pos.x, enemy.pos.y - 20, color(255, 0, 0), 18);
         }
-        
+
         let killed = enemy.hit(damage);
         if (killed) {
           enemy.startDeathEffect();
@@ -449,7 +472,7 @@ class Player {
             this.gainExp(enemy.expValue);
             enemy.gainExp = true;
           }
-          
+
           if (enemy.dead) {
             enemies.splice(i, 1);
           }
@@ -457,7 +480,7 @@ class Player {
       }
     }
   }
-
+  // Handle player movement input
   move() {
     if (this.stunned) {
       this.stunDuration--;
@@ -466,385 +489,399 @@ class Player {
       }
       return;
     }
-
-    if(this.characterType == "knight" && this.dash){
-  if (this.dashCooldown <= 0 && keyIsDown(16)) { //shift
-    this.dashing = true;
-    this.dashDuration = 90;
-    this.dashCooldown = 180;
-    this.canAttack = false;
-  }
-
-  let currentSpeed = this.speed;
-  if (this.dashing) {
-    currentSpeed *= this.dashSpeedMultiplier;
-    this.dashDuration--;
-    if (this.dashDuration <= 0) {
-      this.dashing = false;
-      this.canAttack = true;
-    }
-  }
-
-  let moving = false;
-  if (this.isWebbed) {
-    this.webDuration--;
-    if (this.webDuration <= 0) this.isWebbed = false;
-    return;
-  }
-
-  let moveVec = createVector(0, 0);
-
-  let dx = mouseX - this.pos.x;
-  let dy = this.pos.y - mouseY;
-  let angle = atan2(dy, dx);
-  if (angle < 0) angle += TWO_PI;
-
-  if (keyIsDown(87)) { //W
-    this.y -= currentSpeed;
-    this.currentAnimation = this.animations.up;
-    this.direction = 'up';
-    moving = true;
-    moveVec.y -= 1;
-    if (mouseIsPressed && this.characterType != "knight") {
-      if (angle >= PI / 4 && angle < 3 * PI / 4) {       // 45°~135° → up
-        this.currentAnimation = this.animations.up;
-        this.direction = "up";
+    // Knight dash logic
+    if (this.characterType == "knight" && this.dash) {
+      if (this.dashCooldown <= 0 && keyIsDown(16)) { //shift
+        this.dashing = true;
+        this.dashDuration = 90;
+        this.dashCooldown = 180;
+        this.canAttack = false;
       }
-      else if (angle >= 3 * PI / 4 && angle < 5 * PI / 4) { // 135°~225° → left
-        this.currentAnimation = this.animations.left;
-        this.direction = "left";
-      }
-      else if (angle >= 5 * PI / 4 && angle < 7 * PI / 4) { // 225°~315° → down
-        this.currentAnimation = this.animations.down;
-        this.direction = "down";
-      }
-      else {                                       // 315°~45° → right
-        this.currentAnimation = this.animations.right;
-        this.direction = "right";
-      }
-    }
-  } else if (keyIsDown(83)) { //S
-    this.y += currentSpeed;
-    this.currentAnimation = this.animations.down;
-    this.direction = 'down';
-    moving = true;
-    moveVec.y += 1;
-    if (mouseIsPressed && this.characterType != "knight") {
-      if (angle >= PI / 4 && angle < 3 * PI / 4) {
-        this.currentAnimation = this.animations.up;
-        this.direction = "up";
-      }
-      else if (angle >= 3 * PI / 4 && angle < 5 * PI / 4) {
-        this.currentAnimation = this.animations.left;
-        this.direction = "left";
-      }
-      else if (angle >= 5 * PI / 4 && angle < 7 * PI / 4) {
-        this.currentAnimation = this.animations.down;
-        this.direction = "down";
-      }
-      else {
-        this.currentAnimation = this.animations.right;
-        this.direction = "right";
-      }
-    }
-  }
-
-  if (keyIsDown(65)) { //A
-    this.x -= currentSpeed;
-    this.currentAnimation = this.animations.left;
-    this.direction = 'left';
-    moving = true;
-    moveVec.x -= 1;
-    if (mouseIsPressed && this.characterType != "knight") {
-      if (angle >= PI / 4 && angle < 3 * PI / 4) {
-        this.currentAnimation = this.animations.up;
-        this.direction = "up";
-      }
-      else if (angle >= 3 * PI / 4 && angle < 5 * PI / 4) {
-        this.currentAnimation = this.animations.left;
-        this.direction = "left";
-      }
-      else if (angle >= 5 * PI / 4 && angle < 7 * PI / 4) {
-        this.currentAnimation = this.animations.down;
-        this.direction = "down";
-      }
-      else {
-        this.currentAnimation = this.animations.right;
-        this.direction = "right";
-      }
-    }
-  } else if (keyIsDown(68)) { //D
-    this.x += currentSpeed;
-    this.currentAnimation = this.animations.right;
-    this.direction = 'right';
-    moving = true;
-    moveVec.x += 1;
-    if (mouseIsPressed && this.characterType != "knight") {
-      if (angle >= PI / 4 && angle < 3 * PI / 4) {
-        this.currentAnimation = this.animations.up;
-        this.direction = "up";
-      }
-      else if (angle >= 3 * PI / 4 && angle < 5 * PI / 4) {
-        this.currentAnimation = this.animations.left;
-        this.direction = "left";
-      }
-      else if (angle >= 5 * PI / 4 && angle < 7 * PI / 4) {
-        this.currentAnimation = this.animations.down;
-        this.direction = "down";
-      }
-      else {
-        this.currentAnimation = this.animations.right;
-        this.direction = "right";
-      }
-    }
-  }
-
-  if (!moving && !this.isAttacking) {
-    this.currentAnimation = this.animations.idle;
-    this.direction = 'idle';
-  }
-
-  if (this.characterType === "knight" && mouseIsPressed) {
-    let dx = mouseX - this.pos.x;
-    let dy = this.pos.y - mouseY;
-    let angle = atan2(dy, dx);
-
-    if (angle < 0) angle += TWO_PI;
-    console.log("angle: " + angle);
-    if (angle >= PI / 4 && angle < 3 * PI / 4 && !this.dashing) {
-      this.currentAnimation = this.animations.attackup;
-      this.direction = "attackup";
-    }
-    else if (angle >= 3 * PI / 4 && angle < 5 * PI / 4 && !this.dashing) {
-      this.currentAnimation = this.animations.attackleft;
-      this.direction = "attackleft";
-    }
-    else if (angle >= 5 * PI / 4 && angle < 7 * PI / 4 && !this.dashing) {
-      this.currentAnimation = this.animations.attackdown;
-      this.direction = "attackdown";
-    }
-    else {
-      if(!this.dashing){
-      this.currentAnimation = this.animations.attackright;
-      this.direction = "attackright";
-      }
-    }
-  }
-
-  this.animate();
-
-  if (moveVec.mag() > 0) {
-    moveVec.setMag(currentSpeed);
-    this.vel = moveVec.copy();
-    let newPos = p5.Vector.add(this.pos, moveVec);
-    let canMove = true;
-    for (let obs of obstacles) {
-      if (obs.collidesWith(newPos, this.ImageWidth, this.ImageHeight)) {
-        let xOnly = createVector(newPos.x, this.pos.y);
-        let yOnly = createVector(this.pos.x, newPos.y);
-
-        if (!obs.collidesWith(xOnly, this.ImageWidth, this.ImageHeight)) {
-          newPos = xOnly;
-        } else if (!obs.collidesWith(yOnly, this.ImageWidth, this.ImageHeight)) {
-          newPos = yOnly;
-        } else {
-          canMove = false;
-        }
-        break;
-      }
-    }
-    if (canMove) {
-      this.pos = newPos;
-      this.pos.x = constrain(this.pos.x, 0, width);
-      this.pos.y = constrain(this.pos.y, 0, height);
-    }
-  }
-  this.resolveCollision();
-  
-    } else {
-    let moving = false;
-    if (this.isWebbed) {
-      this.webDuration--;
-      if (this.webDuration <= 0) this.isWebbed = false;
-      return;
-    }
-    let moveVec = createVector(0, 0);
-
-    let dx = mouseX - this.pos.x;
-    let dy = this.pos.y - mouseY;
-    let angle = atan2(dy, dx);
-    if (angle < 0) angle += TWO_PI;
-
-    if (keyIsDown(87)) { //W
-      this.y -= this.speed;
-      this.currentAnimation = this.animations.up;
-      this.direction = 'up';
-      moving = true;
-      moveVec.y -= 1;
-      if (mouseIsPressed && this.characterType != "knight") {
-        if (angle >= PI / 4 && angle < 3 * PI / 4) {
-          this.currentAnimation = this.animations.up;
-          this.direction = "up";
-        }
-        else if (angle >= 3 * PI / 4 && angle < 5 * PI / 4) {
-          this.currentAnimation = this.animations.left;
-          this.direction = "left";
-        }
-        else if (angle >= 5 * PI / 4 && angle < 7 * PI / 4) {
-          this.currentAnimation = this.animations.down;
-          this.direction = "down";
-        }
-        else {
-          this.currentAnimation = this.animations.right;
-          this.direction = "right";
-        }
-      }
-    } else if (keyIsDown(83)) { //S
-      this.y += this.speed;
-      this.currentAnimation = this.animations.down;
-      this.direction = 'down';
-      moving = true;
-      moveVec.y += 1;
-      if (mouseIsPressed && this.characterType != "knight") {
-        if (angle >= PI / 4 && angle < 3 * PI / 4) {
-          this.currentAnimation = this.animations.up;
-          this.direction = "up";
-        }
-        else if (angle >= 3 * PI / 4 && angle < 5 * PI / 4) {
-          this.currentAnimation = this.animations.left;
-          this.direction = "left";
-        }
-        else if (angle >= 5 * PI / 4 && angle < 7 * PI / 4) {
-          this.currentAnimation = this.animations.down;
-          this.direction = "down";
-        }
-        else {
-          this.currentAnimation = this.animations.right;
-          this.direction = "right";
-        }
-      }
-    }
-
-    if (keyIsDown(65)) { //A
-      this.x -= this.speed;
-      this.currentAnimation = this.animations.left;
-      this.direction = 'left';
-      moving = true;
-      moveVec.x -= 1;
-      if (mouseIsPressed && this.characterType != "knight") {
-        if (angle >= PI / 4 && angle < 3 * PI / 4) {
-          this.currentAnimation = this.animations.up;
-          this.direction = "up";
-        }
-        else if (angle >= 3 * PI / 4 && angle < 5 * PI / 4) {
-          this.currentAnimation = this.animations.left;
-          this.direction = "left";
-        }
-        else if (angle >= 5 * PI / 4 && angle < 7 * PI / 4) {
-          this.currentAnimation = this.animations.down;
-          this.direction = "down";
-        }
-        else {
-          this.currentAnimation = this.animations.right;
-          this.direction = "right";
+      // Compute current speed, applying dash multiplier if active
+      let currentSpeed = this.speed;
+      if (this.dashing) {
+        currentSpeed *= this.dashSpeedMultiplier;
+        this.dashDuration--;
+        if (this.dashDuration <= 0) {
+          this.dashing = false;
+          this.canAttack = true;
         }
       }
 
-    } else if (keyIsDown(68)) {
-      this.x += this.speed;
-      this.currentAnimation = this.animations.right;
-      this.direction = 'right';
-      moving = true;
-      moveVec.x += 1;
-      if (mouseIsPressed && this.characterType != "knight") {
-        if (angle >= PI / 4 && angle < 3 * PI / 4) {
-          this.currentAnimation = this.animations.up;
-          this.direction = "up";
-        }
-        else if (angle >= 3 * PI / 4 && angle < 5 * PI / 4) {
-          this.currentAnimation = this.animations.left;
-          this.direction = "left";
-        }
-        else if (angle >= 5 * PI / 4 && angle < 7 * PI / 4) {
-          this.currentAnimation = this.animations.down;
-          this.direction = "down";
-        }
-        else {
-          this.currentAnimation = this.animations.right;
-          this.direction = "right";
-        }
+      let moving = false;
+      // Handle web slowdown
+      if (this.isWebbed) {
+        this.webDuration--;
+        if (this.webDuration <= 0) this.isWebbed = false;
+        return;
       }
-    }
-    if (!moving && !this.isAttacking) {
-      this.currentAnimation = this.animations.idle;
-      this.direction = 'idle';
-    }
 
-    if (this.characterType === "knight" && mouseIsPressed) {
+      let moveVec = createVector(0, 0);
+      // Vector from player to mouse for aiming/orientation
       let dx = mouseX - this.pos.x;
       let dy = this.pos.y - mouseY;
       let angle = atan2(dy, dx);
-
       if (angle < 0) angle += TWO_PI;
-      console.log("angle: " + angle);
-      if (angle >= PI / 4 && angle < 3 * PI / 4) {
-        this.currentAnimation = this.animations.attackup;
-        this.direction = "attackup";
-      }
-      else if (angle >= 3 * PI / 4 && angle < 5 * PI / 4) {
-        this.currentAnimation = this.animations.attackleft;
-        this.direction = "attackleft";
-      }
-      else if (angle >= 5 * PI / 4 && angle < 7 * PI / 4) {
-        this.currentAnimation = this.animations.attackdown;
-        this.direction = "attackdown";
-      }
-      else {
-        this.currentAnimation = this.animations.attackright;
-        this.direction = "attackright";
-      }
-    }
 
-    this.animate();
-
-    if (moveVec.mag() > 0) {
-      moveVec.setMag(this.speed);
-      this.vel = moveVec.copy();
-      let newPos = p5.Vector.add(this.pos, moveVec);
-      let canMove = true;
-      for (let obs of obstacles) {
-        if (obs.collidesWith(newPos, this.ImageWidth, this.ImageHeight)) {
-          let xOnly = createVector(newPos.x, this.pos.y);
-          let yOnly = createVector(this.pos.x, newPos.y);
-
-          if (!obs.collidesWith(xOnly, this.ImageWidth, this.ImageHeight)) {
-            newPos = xOnly;
-          } else if (!obs.collidesWith(yOnly, this.ImageWidth, this.ImageHeight)) {
-            newPos = yOnly;
-          } else {
-            canMove = false;
+      // WASD movement with directional animation logic
+      if (keyIsDown(87)) { //W
+        this.y -= currentSpeed;
+        this.currentAnimation = this.animations.up;
+        this.direction = 'up';
+        moving = true;
+        moveVec.y -= 1;
+        if (mouseIsPressed && this.characterType != "knight") {
+          if (angle >= PI / 4 && angle < 3 * PI / 4) {       // 45°~135° → up
+            this.currentAnimation = this.animations.up;
+            this.direction = "up";
           }
-          break;
+          else if (angle >= 3 * PI / 4 && angle < 5 * PI / 4) { // 135°~225° → left
+            this.currentAnimation = this.animations.left;
+            this.direction = "left";
+          }
+          else if (angle >= 5 * PI / 4 && angle < 7 * PI / 4) { // 225°~315° → down
+            this.currentAnimation = this.animations.down;
+            this.direction = "down";
+          }
+          else {                                       // 315°~45° → right
+            this.currentAnimation = this.animations.right;
+            this.direction = "right";
+          }
+        }
+      } else if (keyIsDown(83)) { //S
+        this.y += currentSpeed;
+        this.currentAnimation = this.animations.down;
+        this.direction = 'down';
+        moving = true;
+        moveVec.y += 1;
+        if (mouseIsPressed && this.characterType != "knight") {
+          if (angle >= PI / 4 && angle < 3 * PI / 4) {
+            this.currentAnimation = this.animations.up;
+            this.direction = "up";
+          }
+          else if (angle >= 3 * PI / 4 && angle < 5 * PI / 4) {
+            this.currentAnimation = this.animations.left;
+            this.direction = "left";
+          }
+          else if (angle >= 5 * PI / 4 && angle < 7 * PI / 4) {
+            this.currentAnimation = this.animations.down;
+            this.direction = "down";
+          }
+          else {
+            this.currentAnimation = this.animations.right;
+            this.direction = "right";
+          }
         }
       }
-      if (canMove) {
-        this.pos = newPos;
-        this.pos.x = constrain(this.pos.x, 0, width);
-        this.pos.y = constrain(this.pos.y, 0, height);
-      }
-    }
-    this.resolveCollision();
-  }
-  }
 
+      // Move left when A is held
+      if (keyIsDown(65)) { //A
+        this.x -= currentSpeed;
+        this.currentAnimation = this.animations.left;
+        this.direction = 'left';
+        moving = true;
+        moveVec.x -= 1;
+        // If firing with mouse (and not knight), override facing based on angle
+        if (mouseIsPressed && this.characterType != "knight") {
+          if (angle >= PI / 4 && angle < 3 * PI / 4) {
+            this.currentAnimation = this.animations.up;
+            this.direction = "up";
+          }
+          else if (angle >= 3 * PI / 4 && angle < 5 * PI / 4) {
+            this.currentAnimation = this.animations.left;
+            this.direction = "left";
+          }
+          else if (angle >= 5 * PI / 4 && angle < 7 * PI / 4) {
+            this.currentAnimation = this.animations.down;
+            this.direction = "down";
+          }
+          else {
+            this.currentAnimation = this.animations.right;
+            this.direction = "right";
+          }
+        }
+        // Move right when D is held
+      } else if (keyIsDown(68)) { //D
+        this.x += currentSpeed;
+        this.currentAnimation = this.animations.right;
+        this.direction = 'right';
+        moving = true;
+        moveVec.x += 1;
+        // Same angle‐based facing override when shooting
+        if (mouseIsPressed && this.characterType != "knight") {
+          if (angle >= PI / 4 && angle < 3 * PI / 4) {
+            this.currentAnimation = this.animations.up;
+            this.direction = "up";
+          }
+          else if (angle >= 3 * PI / 4 && angle < 5 * PI / 4) {
+            this.currentAnimation = this.animations.left;
+            this.direction = "left";
+          }
+          else if (angle >= 5 * PI / 4 && angle < 7 * PI / 4) {
+            this.currentAnimation = this.animations.down;
+            this.direction = "down";
+          }
+          else {
+            this.currentAnimation = this.animations.right;
+            this.direction = "right";
+          }
+        }
+      }
+      // If not moving or attacking, revert to idle animation
+      if (!moving && !this.isAttacking) {
+        this.currentAnimation = this.animations.idle;
+        this.direction = 'idle';
+      }
+      // Knight attack input: change animation based on mouse angle
+      if (this.characterType === "knight" && mouseIsPressed) {
+        let dx = mouseX - this.pos.x;
+        let dy = this.pos.y - mouseY;
+        let angle = atan2(dy, dx);
+
+        if (angle < 0) angle += TWO_PI;
+        console.log("angle: " + angle);
+        if (angle >= PI / 4 && angle < 3 * PI / 4 && !this.dashing) {
+          this.currentAnimation = this.animations.attackup;
+          this.direction = "attackup";
+        }
+        else if (angle >= 3 * PI / 4 && angle < 5 * PI / 4 && !this.dashing) {
+          this.currentAnimation = this.animations.attackleft;
+          this.direction = "attackleft";
+        }
+        else if (angle >= 5 * PI / 4 && angle < 7 * PI / 4 && !this.dashing) {
+          this.currentAnimation = this.animations.attackdown;
+          this.direction = "attackdown";
+        }
+        else {
+          if (!this.dashing) {
+            this.currentAnimation = this.animations.attackright;
+            this.direction = "attackright";
+          }
+        }
+      }
+      this.animate();
+      // If there is motion vector, attempt to move and check obstacle collisions
+      if (moveVec.mag() > 0) {
+        moveVec.setMag(currentSpeed);
+        this.vel = moveVec.copy();
+        let newPos = p5.Vector.add(this.pos, moveVec);
+        let canMove = true;
+        for (let obs of obstacles) {
+          if (obs.collidesWith(newPos, this.ImageWidth, this.ImageHeight)) {
+            // try sliding along X only
+            let xOnly = createVector(newPos.x, this.pos.y);
+            // try sliding along Y only
+            let yOnly = createVector(this.pos.x, newPos.y);
+
+            if (!obs.collidesWith(xOnly, this.ImageWidth, this.ImageHeight)) {
+              newPos = xOnly;
+            } else if (!obs.collidesWith(yOnly, this.ImageWidth, this.ImageHeight)) {
+              newPos = yOnly;
+            } else {
+              canMove = false;
+            }
+            break;
+          }
+        }
+        // If movement is valid, update position and clamp to bounds
+        if (canMove) {
+          this.pos = newPos;
+          this.pos.x = constrain(this.pos.x, 0, width);
+          this.pos.y = constrain(this.pos.y, 0, height);
+        }
+      }
+      this.resolveCollision();
+
+    } else {
+      // If not in “combat” mode, simpler movement logic below
+      let moving = false;
+      // Web effect prevents movement until expired
+      if (this.isWebbed) {
+        this.webDuration--;
+        if (this.webDuration <= 0) this.isWebbed = false;
+        return;
+      }
+      let moveVec = createVector(0, 0);
+      // Compute angle to mouse for aiming/facing
+      let dx = mouseX - this.pos.x;
+      let dy = this.pos.y - mouseY;
+      let angle = atan2(dy, dx);
+      if (angle < 0) angle += TWO_PI;
+
+      if (keyIsDown(87)) { //W
+        this.y -= this.speed;
+        this.currentAnimation = this.animations.up;
+        this.direction = 'up';
+        moving = true;
+        moveVec.y -= 1;
+        // override facing while shooting if not knight
+        if (mouseIsPressed && this.characterType != "knight") {
+          if (angle >= PI / 4 && angle < 3 * PI / 4) {
+            this.currentAnimation = this.animations.up;
+            this.direction = "up";
+          }
+          else if (angle >= 3 * PI / 4 && angle < 5 * PI / 4) {
+            this.currentAnimation = this.animations.left;
+            this.direction = "left";
+          }
+          else if (angle >= 5 * PI / 4 && angle < 7 * PI / 4) {
+            this.currentAnimation = this.animations.down;
+            this.direction = "down";
+          }
+          else {
+            this.currentAnimation = this.animations.right;
+            this.direction = "right";
+          }
+        }
+      } else if (keyIsDown(83)) { //S
+        this.y += this.speed;
+        this.currentAnimation = this.animations.down;
+        this.direction = 'down';
+        moving = true;
+        moveVec.y += 1;
+        if (mouseIsPressed && this.characterType != "knight") {
+          if (angle >= PI / 4 && angle < 3 * PI / 4) {
+            this.currentAnimation = this.animations.up;
+            this.direction = "up";
+          }
+          else if (angle >= 3 * PI / 4 && angle < 5 * PI / 4) {
+            this.currentAnimation = this.animations.left;
+            this.direction = "left";
+          }
+          else if (angle >= 5 * PI / 4 && angle < 7 * PI / 4) {
+            this.currentAnimation = this.animations.down;
+            this.direction = "down";
+          }
+          else {
+            this.currentAnimation = this.animations.right;
+            this.direction = "right";
+          }
+        }
+      }
+
+      if (keyIsDown(65)) { //A
+        this.x -= this.speed;
+        this.currentAnimation = this.animations.left;
+        this.direction = 'left';
+        moving = true;
+        moveVec.x -= 1;
+        if (mouseIsPressed && this.characterType != "knight") {
+          if (angle >= PI / 4 && angle < 3 * PI / 4) {
+            this.currentAnimation = this.animations.up;
+            this.direction = "up";
+          }
+          else if (angle >= 3 * PI / 4 && angle < 5 * PI / 4) {
+            this.currentAnimation = this.animations.left;
+            this.direction = "left";
+          }
+          else if (angle >= 5 * PI / 4 && angle < 7 * PI / 4) {
+            this.currentAnimation = this.animations.down;
+            this.direction = "down";
+          }
+          else {
+            this.currentAnimation = this.animations.right;
+            this.direction = "right";
+          }
+        }
+
+      } else if (keyIsDown(68)) {
+        this.x += this.speed;
+        this.currentAnimation = this.animations.right;
+        this.direction = 'right';
+        moving = true;
+        moveVec.x += 1;
+        if (mouseIsPressed && this.characterType != "knight") {
+          if (angle >= PI / 4 && angle < 3 * PI / 4) {
+            this.currentAnimation = this.animations.up;
+            this.direction = "up";
+          }
+          else if (angle >= 3 * PI / 4 && angle < 5 * PI / 4) {
+            this.currentAnimation = this.animations.left;
+            this.direction = "left";
+          }
+          else if (angle >= 5 * PI / 4 && angle < 7 * PI / 4) {
+            this.currentAnimation = this.animations.down;
+            this.direction = "down";
+          }
+          else {
+            this.currentAnimation = this.animations.right;
+            this.direction = "right";
+          }
+        }
+      }
+      // Reset to idle if not moving or attacking
+      if (!moving && !this.isAttacking) {
+        this.currentAnimation = this.animations.idle;
+        this.direction = 'idle';
+      }
+
+      // Knight attack facing logic again
+      if (this.characterType === "knight" && mouseIsPressed) {
+        let dx = mouseX - this.pos.x;
+        let dy = this.pos.y - mouseY;
+        let angle = atan2(dy, dx);
+
+        if (angle < 0) angle += TWO_PI;
+        console.log("angle: " + angle);
+        if (angle >= PI / 4 && angle < 3 * PI / 4) {
+          this.currentAnimation = this.animations.attackup;
+          this.direction = "attackup";
+        }
+        else if (angle >= 3 * PI / 4 && angle < 5 * PI / 4) {
+          this.currentAnimation = this.animations.attackleft;
+          this.direction = "attackleft";
+        }
+        else if (angle >= 5 * PI / 4 && angle < 7 * PI / 4) {
+          this.currentAnimation = this.animations.attackdown;
+          this.direction = "attackdown";
+        }
+        else {
+          this.currentAnimation = this.animations.attackright;
+          this.direction = "attackright";
+        }
+      }
+      this.animate();
+
+      // Move and obstacle‐check if vector is nonzero
+      if (moveVec.mag() > 0) {
+        moveVec.setMag(this.speed);
+        this.vel = moveVec.copy();
+        let newPos = p5.Vector.add(this.pos, moveVec);
+        let canMove = true;
+        for (let obs of obstacles) {
+          if (obs.collidesWith(newPos, this.ImageWidth, this.ImageHeight)) {
+            let xOnly = createVector(newPos.x, this.pos.y);
+            let yOnly = createVector(this.pos.x, newPos.y);
+
+            if (!obs.collidesWith(xOnly, this.ImageWidth, this.ImageHeight)) {
+              newPos = xOnly;
+            } else if (!obs.collidesWith(yOnly, this.ImageWidth, this.ImageHeight)) {
+              newPos = yOnly;
+            } else {
+              canMove = false;
+            }
+            break;
+          }
+        }
+        if (canMove) {
+          this.pos = newPos;
+          this.pos.x = constrain(this.pos.x, 0, width);
+          this.pos.y = constrain(this.pos.y, 0, height);
+        }
+      }
+      this.resolveCollision();
+    }
+  }
+  // Advance the current animation frames for movement/idle
   animate() {
     this.animationCounter++;
     if (this.animationCounter >= this.animationDelay) {
       this.animationCounter = 0;
+      // Loop frame index within the current animation sequence
       this.frameIndex = (this.frameIndex + 1) % this.currentAnimation.length;
     }
   }
-
+  // Advance frames for attack animations, then exit attack state
   animateAttack() {
     this.animationCounter++;
     if (this.animationCounter >= this.animationDelay) {
@@ -854,22 +891,28 @@ class Player {
     }
   }
 
+  // Handle player firing logic for all character types
   shoot() {
     if (this.stunned) {
       return;
     }
 
-    if(!mouseIsPressed && this.characterType == "archer" && this.autoCharge == true){
+    // Automatic charge for archers when autoCharge unlocked
+    if (!mouseIsPressed && this.characterType == "archer" && this.autoCharge == true) {
       this.startCharge();
+      // lifesteal on auto-charge
       if (this.unlockedUpgrades.has("lifesteal")) {
         this.health = min(this.health + this.attackDamage * 0.1, this.maxHealth);
       }
     }
-    if(mouseIsPressed && this.characterType == "archer" && this.autoCharge == true){
+    // Release arrow if charging and autoCharge
+    if (mouseIsPressed && this.characterType == "archer" && this.autoCharge == true) {
       this.releaseArrow();
     }
+    // Primary fire when cooldown allows
     if (mouseIsPressed && this.fireCooldown <= 0) {
       if (this.characterType === "gunner") {
+        // Determine cardinal direction based on mouse angle
         let angle = atan2(mouseY - player.pos.y, mouseX - player.pos.x);
         if (angle < 0) {
           angle += TWO_PI;
@@ -894,13 +937,14 @@ class Player {
           centerY = this.pos.y;
         }
         gunsound.play();
+        // Compute normalized direction to mouse
         let direction = p5.Vector.sub(
           createVector(mouseX, mouseY),
           createVector(centerX, centerY)
         ).normalize();
 
         let bulletStart = createVector(centerX, centerY);
-
+        // Spawn bullets based on current bulletType
         switch (this.bulletType) {
           case "bounce":
             bullets.push(new Bullet(
@@ -910,6 +954,7 @@ class Player {
             ));
             break;
           case "shotgun":
+            // Spread multiple pellets
             let count = this.shotgunLevel + 1;
             let totalWidth = (count - 1) * 15;
             let startOffset = -totalWidth / 2;
@@ -943,10 +988,11 @@ class Player {
             break;
         }
       } else if (this.characterType === "knight" && !this.isAttacking && this.dashing == false) {
+        // Initiate a melee attack
         this.isAttacking = true;
         this.currentAttackFrame = 0;
         this.currentAttackCooldown = this.attackCooldown;
-
+        // Compute attack direction towards mouse
         let center = createVector(
           this.pos.x + this.ImageWidth / 2,
           this.pos.y + this.ImageHeight / 2
@@ -971,7 +1017,7 @@ class Player {
       this.attackCooldown--;
     }
   }
-
+  // Melee attack collision detection for knight
   detectAttack() {
     keyboardsound.play();
     let center = createVector(
@@ -981,41 +1027,42 @@ class Player {
 
     for (let i = enemies.length - 1; i >= 0; i--) {
       let enemy = enemies[i];
-      if(enemy.attackDetect){
-      let enemyPos = enemy.pos.copy();
-      let toEnemy = p5.Vector.sub(enemyPos, center);
-      let distance = toEnemy.mag();
+      if (enemy.attackDetect) {
+        let enemyPos = enemy.pos.copy();
+        let toEnemy = p5.Vector.sub(enemyPos, center);
+        let distance = toEnemy.mag();
+        // Check range and angle cone
+        if (distance <= this.attackRange) {
+          let angleBetween = degrees(this.attackDirection.angleBetween(toEnemy));
+          if (abs(angleBetween) <= this.attackAngle / 2) {
+            // Critical chance
+            let isCrit = random() < this.critRate;
+            let damage = isCrit ? this.attackDamage * this.critDamage : this.attackDamage;
 
-      if (distance <= this.attackRange) {
-        let angleBetween = degrees(this.attackDirection.angleBetween(toEnemy));
-        if (abs(angleBetween) <= this.attackAngle / 2) {
-          let isCrit = random() < this.critRate;
-          let damage = isCrit ? this.attackDamage * this.critDamage : this.attackDamage;
+            let killed = enemy.hit(damage);
+            if (killed) {
+              enemy.startDeathEffect();
+              if (enemy instanceof Boss) {
+                bossDefeated++;
+                bossDefeatedCount++;
+              }
+              normalEnemiesDefeated++;
+              if (enemy.gainExp == false) {
+                this.gainExp(enemy.expValue);
+                enemy.gainExp = true;
+              }
 
-          let killed = enemy.hit(damage);
-          if (killed) {
-            enemy.startDeathEffect();
-            if (enemy instanceof Boss) {
-              bossDefeated++;
-              bossDefeatedCount++;
+              if (enemy.dead) {
+                enemies.splice(i, 1);
+              }
             }
-            normalEnemiesDefeated++;
-            if(enemy.gainExp == false) {
-              this.gainExp(enemy.expValue);
-              enemy.gainExp = true;
+            // Lifesteal from melee
+            if (this.lifesteal > 0) {
+              this.health = min(this.maxHealth, this.health + damage * this.lifesteal);
             }
-            
-            if(enemy.dead){
-              enemies.splice(i, 1);
-            }
-          }
-
-          if (this.lifesteal > 0) {
-            this.health = min(this.maxHealth, this.health + damage * this.lifesteal);
           }
         }
       }
-    }
     }
   }
 
@@ -1028,7 +1075,7 @@ class Player {
       this.critRate = 0.5;
       this.critDamage = 2.0;
     }
-
+    // Advance knight attack animation frames
     if (this.isAttacking) {
       if (frameCount % this.attackAnimationSpeed === 0) {
         if (this.currentAttackFrame < this.attackFrames - 1) {
@@ -1039,7 +1086,7 @@ class Player {
         }
       }
     }
-
+    // Clamp player inside the world
     player.pos.x = constrain(player.pos.x, 0, width - player.ImageWidth);
     player.pos.y = constrain(player.pos.y, 0, height - player.ImageHeight);
 
@@ -1050,13 +1097,13 @@ class Player {
     if (this.currentArrowCooldown > 0) {
       this.currentArrowCooldown--;
     }
-
+    // handle arrow movement & collisions
     this.updateArrows();
-
+    // Update pet if one is active
     if (this.pet) {
       this.pet.update(this);
     }
-
+    // Passive health regen each second
     if (this.healthRegen && frameCount % 60 === 0) {
       const healAmount = this.healthRegen;
       if (this.health < this.maxHealth) {
@@ -1064,7 +1111,7 @@ class Player {
         showFloatingText(`+${healAmount}`, this.pos.x, this.pos.y - 20, color(0, 255, 0), 14);
       }
     }
-    
+    // Adjust speed when holding SHIFT in dash mode
     if (this.dash && keyIsDown(SHIFT)) {
       this.baseSpeed = this.baseSpeed || this.speed;
       this.speed = this.baseSpeed * 1.5; //speed up 50%
@@ -1073,7 +1120,7 @@ class Player {
       this.speed = this.baseSpeed;
     }
   }
-
+  // Render the player sprite each frame
   display() {
     if (this.characterType === "knight") {
       if (this.isAttacking === false) {
@@ -1200,7 +1247,7 @@ class Player {
     }
   }
 
-  // Archer related
+  // Begin charging an archer shot
   startCharge() {
     if (this.currentArrowCooldown <= 0 && !this.isCharging) {
       this.isCharging = true;
@@ -1208,7 +1255,7 @@ class Player {
       this.currentCharge = 0;
     }
   }
-
+  // Compute charge parameters (damage, speed, size) based on charge percent
   calculateCharge() {
     if (this.isCharging) {
       const chargeFrames = frameCount - this.chargeStartTime;
@@ -1229,21 +1276,19 @@ class Player {
       size: this.arrowSize
     };
   }
-
+  // Fire the charged arrow and reset charge state
   releaseArrow() {
     if (!this.isCharging) return;
-
     const chargeParams = this.calculateCharge();
     const center = createVector(
       this.pos.x + this.ImageWidth / 2,
       this.pos.y + this.ImageHeight / 2
     );
-
     const target = createVector(mouseX, mouseY);
     const direction = p5.Vector.sub(target, center).normalize();
-
     arrowsound.play();
 
+    // Determine arrow sprite orientation by mouse angle
     let angle = atan2(mouseY - player.pos.y, mouseX - player.pos.x);
     if (angle < 0) {
       angle += TWO_PI;
@@ -1251,6 +1296,7 @@ class Player {
     let state;
     if (angle > 0.25 * PI && angle < 0.75 * PI) {
       state = "v";
+      // Spawn the arrow
       this.arrows.push(new Arrow(
         center.x, center.y,
         direction,
@@ -1307,11 +1353,11 @@ class Player {
     this.currentCharge = 0;
     this.currentArrowCooldown = this.arrowCooldown;
   }
-
+  // Update all active arrows
   updateArrows() {
     for (let i = this.arrows.length - 1; i >= 0; i--) {
       let arrow = this.arrows[i];
-      
+
       arrow.vel.mult(0.99);
 
       arrow.pos.add(arrow.vel);
@@ -1324,79 +1370,80 @@ class Player {
 
       for (let j = enemies.length - 1; j >= 0; j--) {
         let enemy = enemies[j];
-        if(enemy.attackDetect){
-        let enemyCenter = createVector(
-          enemy.pos.x + enemy.enWidth * 0.5,
-          enemy.pos.y + enemy.enHeight * 0.5
-        );
+        if (enemy.attackDetect) {
+          let enemyCenter = createVector(
+            enemy.pos.x + enemy.enWidth * 0.5,
+            enemy.pos.y + enemy.enHeight * 0.5
+          );
 
-        let distVec = p5.Vector.sub(arrow.pos, enemyCenter);
-        if (distVec.mag() < enemy.enHeight * 1.0) {
-          if (arrow.handleCollision(enemy)) {
-            let isCrit = random() < this.critRate;
-            let finalDamage = isCrit ?
+          let distVec = p5.Vector.sub(arrow.pos, enemyCenter);
+          if (distVec.mag() < enemy.enHeight * 1.0) {
+            if (arrow.handleCollision(enemy)) {
+              let isCrit = random() < this.critRate;
+              let finalDamage = isCrit ?
                 arrow.damage * this.critDamage :
                 arrow.damage;
-            if(this.doubleShot) {
-              finalDamage = finalDamage * 2;
-            }
-            let killed = enemy.hit(finalDamage);
-            if (killed) {
-              enemy.startDeathEffect();
-                
+              if (this.doubleShot) {
+                finalDamage = finalDamage * 2;
+              }
+              let killed = enemy.hit(finalDamage);
+              if (killed) {
+                enemy.startDeathEffect();
+
                 if (enemy instanceof Boss) {
-                    bossDefeated++;
-                    bossDefeatedCount++;
+                  bossDefeated++;
+                  bossDefeatedCount++;
                 }
                 normalEnemiesDefeated++;
-                if(enemy.gainExp == false) {
+                if (enemy.gainExp == false) {
                   player.gainExp(enemy.expValue);
                   enemy.gainExp = true;
                 }
-                
-                if(enemy.dead){
+
+                if (enemy.dead) {
                   enemies.splice(j, 1);
                 }
-            }
+              }
 
-          //life steal
-          if (this.lifesteal > 0) {
-            this.health = Math.min(
-              this.maxHealth,
-              this.health + finalDamage * this.lifesteal
-            );
+              //life steal
+              if (this.lifesteal > 0) {
+                this.health = Math.min(
+                  this.maxHealth,
+                  this.health + finalDamage * this.lifesteal
+                );
+              }
+              //pierce and split
+              if (!arrow.canPierce) {
+                arrow.isActive = false;
+              }
+              if (arrow.canSplit) {
+                arrow.split();
+              }
+              break;
+            }
           }
-          //pierce and split
-          if (!arrow.canPierce) {
-            arrow.isActive = false;
-          }
-          if (arrow.canSplit) {
-            arrow.split();
-          }
-          break;
         }
       }
-      }
-      }
-
+      // Remove inactive arrows
       if (!arrow.isActive) {
         this.arrows.splice(i, 1);
       }
     }
   }
-
+  // Draw the UI charge bar for archer charging
   drawChargeBar() {
     const baseBarWidth = 80 * this.chargeBarScale;
     const barHeight = 8 * this.chargeBarScale;
     const posX = this.pos.x + this.ImageWidth / 2 - baseBarWidth / 2;
     const posY = this.pos.y - 30;
-
+    // Draw background bar
     fill(50, 150);
     rect(posX, posY,
       baseBarWidth * (0.5 + this.currentCharge * 0.5),
       barHeight,
       3 * this.chargeBarScale);
 
+    // Draw animated fill bar that oscillates slightly
     const animatedPower = this.currentCharge * (1 + sin(frameCount * 0.2) * 0.1);
     fill(
       lerpColor(
@@ -1410,6 +1457,7 @@ class Player {
       barHeight,
       3 * this.chargeBarScale);
 
+    // Draw percentage text
     fill(255);
     textSize(10 * this.chargeBarScale);
     textAlign(CENTER);
