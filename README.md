@@ -16,8 +16,8 @@
 - [**Source Code Directory**](./docs)  
   _All development files and assets are located in the `/docs` folder._
 
-- **Demo Video**: *Coming soon!*  
-  _A brief gameplay showcase will be added here when finalized._
+- [**Demo Video**](https://www.youtube.com/watch?v=EkpubyUN88Y/)
+  _A brief gameplay showcase._
 
 # 👥 Our Group
 
