@@ -16,8 +16,8 @@
 - [**Source Code Directory**](./docs)  
   _All development files and assets are located in the `/docs` folder._
 
-- [**Demo Video**](https://www.youtube.com/watch?v=EkpubyUN88Y/)
-  _A brief gameplay showcase._
+- [**Watch the Demo Video**](https://www.youtube.com/watch?v=EkpubyUN88Y/)  
+  _See Glitchwood in action with a narrated gameplay showcase._
 
 # 👥 Our Group
 
@@ -248,11 +248,11 @@ The game introduces multiple gameplay systems that enrich replayability and stra
 
 ##### ▶ Weather Effects
 
-|                           Image                            |     Name      | Description                                                        |
-| :--------------------------------------------------------: | :-----------: | :----------------------------------------------------------------- |
-|   <img src="docs/introduction/flake.gif" height="100px">   |   **Snow**    | Slows the movement speed of both characters and enemies.           |
-| <img src="docs/introduction/lightning.gif" height="100px"> | **Lightning** | Deals damage to characters and enemies within its range.           |
-|    <img src="docs/introduction/sun.gif" height="100px">    |    **Sun**    | Causes gradual health loss over time for both players and enemies. |
+|                           Image                            |     Name      | Description                                                                      |
+| :--------------------------------------------------------: | :-----------: | :------------------------------------------------------------------------------- |
+|   <img src="docs/introduction/flake.gif" height="100px">   |   **Snow**    | Slows the movement speed of all characters and enemies.                          |
+| <img src="docs/introduction/lightning.gif" height="100px"> | **Lightning** | Strikes randomly within the field, dealing damage to any target it hits.         |
+|    <img src="docs/introduction/sun.gif" height="100px">    |    **Sun**    | Increases attack speed for both players and enemies, leading to faster combat.   |
 
 ##### ▶ Pet System
 
