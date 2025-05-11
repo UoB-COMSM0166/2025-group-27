@@ -55,6 +55,9 @@ class Enemy {
     this.collisionHeight = this.enHeight || this.radius * 2;
   }
 
+  /**
+   * Adjusts position to avoid obstacles.
+   */
   resolveCollision() {
     for (let obs of obstacles) {
       if (obs.collidesWith(this.pos, this.enWidth, this.enHeight)) {
@@ -74,6 +77,9 @@ class Enemy {
     }
   }
 
+  /**
+   * Initiates the enemy's death animation.
+   */
   startDeathEffect() {
     this.isDying = true;
     this.deathFrame = 0;
@@ -84,6 +90,9 @@ class Enemy {
     return this.isDying && this.deathFrame >= 4;
   }
 
+  /**
+   * Handles enemy movement, attacks, and animation updates.
+   */
   update() {
     if (this.health <= 0) {
       this.dead = true;
@@ -244,6 +253,9 @@ class Enemy {
 
 
 
+  /**
+   * Cycles through animation frames.
+   */
   animate() {
     this.enCounter++;
     if (this.enCounter >= this.enDelay) {
@@ -858,6 +870,9 @@ class BirdBoss extends Boss {
     this.animate();
   }
 
+  /**
+   * Cycles through animation frames.
+   */
   animate() {
     this.animationCounter++;
     if (this.animationCounter >= this.animationDelay) {
@@ -1073,6 +1088,9 @@ class SlimeBoss extends Boss {
     }
   }
 
+  /**
+   * Cycles through animation frames.
+   */
   animate() {
     this.animationCounter++;
     if (this.animationCounter >= this.animationDelay) {
