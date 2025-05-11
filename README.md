@@ -777,8 +777,6 @@ Both systems are implemented via independent classes and rely on the global time
 
 > Decoupling pets and weather from the main game loop allows for easy tuning, testing, and future expansion.
 
----
-
 ### 4.2 Code Architecture Overview
 
 Glitchwood’s codebase follows a modular, event-driven structure grounded in object-oriented design. Each system—combat, weather, pets, upgrades—was encapsulated into standalone components to maximize scalability and reduce coupling.
@@ -827,8 +825,6 @@ Each visual or logical phase is associated with a rendering function (`drawStart
 > This approach simplified phase transitions without relying on third-party state machines, keeping logic transparent and testable.
 
 This architecture allowed us to independently develop features while maintaining a unified flow. Features such as new enemies, weapon types, or pets could be added without modifying core systems, enabling safe
-
----
 
 ### 4.3 Key Features and Highlights
 
@@ -890,8 +886,6 @@ This mechanic keeps gameplay unpredictable and encourages real-time adaptation. 
 ### 4.4 Three Key Technical Challenges in Glitchwood's Development
 
 During implementation, we encountered several significant technical hurdles that tested our ability to design scalable, maintainable, and responsive game systems. Below we highlight the three most complex challenges and how we resolved them.
-
----
 
 #### 1. Fine-Grained Collision and Boundary Control
 
@@ -1188,255 +1182,151 @@ From this process, we extracted several enduring lessons:
 
 ## 6 Process
 
-Our team worked closely together throughout the project, ensuring clear communication, efficient collaboration, and a structured development process. This section outlines the team's roles and responsibilities, the tools we used, our Agile development methodology, and the lessons learned from our collaborative experience.
+Our team collaborated closely throughout the project, ensuring clear communication, efficient workflows, and a structured development process. This section covers the team's roles, tools used, Agile methodology, and key lessons learned.
 
 ### 6.1 Team Roles and Division of Tasks
 
-To ensure efficient parallel development and minimize integration overhead, we assigned each team member distinct, domain-specific roles based on individual strengths and interests. These roles were designed to reflect real-world game development pipelines, allowing us to simulate team-based software engineering under agile conditions.
+To ensure efficient parallel development and reduce integration overhead, we assigned each team member distinct roles. This approach mirrored real-world game development pipelines.
 
-#### Technical Development & System Architecture
+| Name             | Role                           | Responsibilities                                                                                           |
+|------------------|--------------------------------|------------------------------------------------------------------------------------------------------------|
+| **Chengjun Yi**  | Lead Developer & Debug Lead    | Managed codebase structure, module integration, and performance optimization. Led debugging efforts.       |
+| **Heng Zhang**   | Core Gameplay Engineer         | Developed enemy AI, boss behaviors, collision systems, and weather logic. Integrated game mechanics.       |
+| **Feihang Yan**  | Pet System Engineer            | Designed and implemented autonomous pet logic and integration with combat and upgrades.                    |
+| **Tong Yu**      | Art Director & UI Developer     | Created pixel art assets, animations, and UI design, built visual layout using p5.js.                      |
+| **Xianhang Peng**| Front-End Developer             | Developed interactive front-end systems, menus, stats, and map UI.                                        |
+| **Qiutong Zhao** | Project Coordinator & Media Producer| Managed project scheduling, sprint tracking, and media production. Directed demo video and contributed to testing. |
 
-| Name              | Role                           | Responsibilities                                                                                                           |
-|-------------------|----------------------------------|----------------------------------------------------------------------------------------------------------------------------|
-| **Chengjun Yi**   | Lead Developer & Debug Team Lead | Directed overall codebase structure, module integration, and performance tuning. Coordinated debugging tasks across sprints. |
-| **Heng Zhang**    | Core Gameplay Engineer           | Developed enemy AI, boss behaviors, collision systems, and weather logic. Integrated game physics and combat feedback.       |
-| **Feihang Yan**   | Pet System Engineer              | Designed and implemented autonomous pet logic, state transitions, and cross-module integration with combat and upgrades.    |
-
-#### Front-End, Visuals & UX
-
-| Name              | Role                            | Responsibilities                                                                                                            |
-|-------------------|----------------------------------|-----------------------------------------------------------------------------------------------------------------------------|
-| **Tong Yu**       | Art Director & UI Developer      | Created all pixel art assets, animation frames, and screen transitions. Built the visual layout and HUD using p5.js.         |
-| **Xianhang Peng** | Front-End Gameplay Developer     | Built interactive front-end systems (menus, prompts, stats), and handled map UI and visual feedback mechanics.               |
-
-#### Coordination, Testing & Media
-
-| Name              | Role                                | Responsibilities                                                                                                              |
-|-------------------|--------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
-| **Qiutong Zhao**  | Project Coordinator & Media Producer | Managed task scheduling, sprint tracking, and team alignment. Directed and edited demo video. Contributed to debugging.       |
-
-#### Reflections on Division Strategy
-
-This role distribution allowed us to decouple core systems, avoid code ownership conflict, and support asynchronous work. Developers responsible for complex logic (e.g., pets, bosses, weather) were paired with teammates managing visuals and interaction layers, creating clean integration points.
-
-> By aligning technical, visual, and coordination efforts early, we avoided bottlenecks during final integration and testing phases. The clear ownership structure ensured accountability while enabling rapid iteration and cross-checks.
-
----
+> Clear role ownership led to rapid iteration and reduced integration bottlenecks.
 
 ### 6.2 Tools and Collaborative Platforms
 
-To manage the complexity of real-time game development and team collaboration, we adopted a suite of tools across five functional domains: **version control**, **project tracking**, **communication**, **design**, and **media production**. These tools enabled asynchronous development, clear task allocation, and rapid iteration throughout the project.
+We used a variety of tools to manage the complexity of the project, focusing on **version control**, **task management**, **communication**, **design**, and **media production**.
 
 #### 1. Version Control and Code Review
 
-- **GitHub (private repo → public GitHub Pages site)**  
-  We used a **branch-based workflow**, where each team member committed code under personal branches. Pull requests (PRs) were used to merge features into the main branch after peer review.
+- **GitHub**: Branch-based workflow with peer-reviewed pull requests for feature integration.  
+- **JIRA**: Tasks linked to pull requests and tracked via a Kanban board for smooth task progression.
 
-- **PR Review Comments & Issue Linking**  
-  Each PR was linked to JIRA tasks, and discussion threads helped catch bugs early and align implementation with system design.
-
-> This allowed us to maintain a clean, testable main branch and integrate features incrementally without blocking other members.
+> These tools helped maintain code clarity and ensure smooth feature integration.
 
 #### 2. Task Management and Workflow Planning
 
-- **JIRA (Kanban Board)**  
-  Our project was organized into Sprints using epics and stories. We maintained a Kanban board with `To Do → In Progress → Code Review → Done` columns, updated weekly.
+- **JIRA**: Sprint planning with a Kanban board, organized into `To Do → In Progress → Code Review → Done`.  
+- **Sprint Meetings**: Weekly planning on Mondays and reviews on Fridays, ensuring team alignment and quick issue resolution.
 
-- **Sprint Review Meetings (in-person Mondays + online Fridays)**  
-  In-person planning every Monday set weekly goals. End-of-week online sessions ensured integration readiness and surfaced blockers early.
-
-> This structure kept the team aligned and minimized last-minute bottlenecks, especially near deadlines.
-
+> This structure kept the project moving smoothly, especially near deadlines.
 
 #### 3. Communication and Coordination
 
-- **WeChat**  
-  Used for daily asynchronous check-ins, task updates, and quick bug discussions. It acted as our “stand-up” substitute during busy weeks.
+- **WeChat**: Daily asynchronous check-ins for task updates and bug discussions.  
+- **Google Meet/Discord**: Used for live screen-sharing during feature integration and demos.
 
-- **Google Meet / Discord**  
-  Reserved for live screen-sharing sessions during feature integration or demo walkthroughs.
-
-> Real-time channels enabled fast debugging and UI alignment, especially between logic and visual engineers.
+> These tools facilitated quick feedback and ensured UI and logic alignment across teams.
 
 #### 4. Visual Design and Game Asset Creation
 
-- **Aseprite**  
-  All pixel art, character sprites, animations, and tile assets were created in Aseprite. Sprite sheets were exported for use in p5.js.
+- **Aseprite**: Created pixel art, character sprites, and animations.  
+- **Figma**: Designed UI wireframes and flowcharts for co-editing visual elements.
 
-- **Figma**  
-  Used for early-stage UI layout drafts, HUD wireframes, and visual flowcharts. Allowed visual and frontend members to co-edit screen structures.
-
-- **UMLEtino**  
-  UML diagrams (Class Diagram, Sequence Diagram) were created collaboratively to guide code architecture decisions.
-
-> These tools enabled parallel work between UI developers, gameplay engineers, and designers without version conflicts.
+> These tools allowed parallel design and development without conflicts.
 
 #### 5. Media and Presentation Tools
 
-- **Adobe Premiere Pro + Photoshop**  
-  Used to edit our gameplay demo, trailer, and character intros. Also supported polishing cutscenes and transitions.
+- **Adobe Premiere Pro + Photoshop**: Edited demo, trailer, and character intros.  
+- **OBS Studio**: Used to record gameplay footage for bug reporting and showcases.
 
-- **OBS Studio**  
-  Used to record gameplay footage for evaluation, bug reporting, and showcase segments.
-
-> These tools allowed us to present Glitchwood professionally and efficiently iterate on the feedback.
+> These tools allowed professional-level presentations and iterative feedback.
 
 #### Summary
 
-Our toolchain reflected real-world software team practices: modular commits, visual-first design, centralized task tracking, and seamless remote collaboration. This foundation enabled us to develop, test, and deliver a playable, polished experience within a constrained timeline.
+Our toolset enabled modular development, efficient task tracking, and seamless collaboration, allowing us to deliver a polished game on time.
 
-> In short, the right tools didn’t just speed us up—they made our collaboration more structured, traceable, and quality-assured.
+> These tools helped structure our workflow and ensured quality in every phase.
 
----
+### 6.3 Agile Development Methodology
 
-### 6.3 Agile Development Methodology and Iteration Process
-
-We adopted an agile-inspired workflow tailored to student team constraints. Our focus was on maintaining **regular feedback loops**, **incremental deliverables**, and **cross-functional collaboration** across design, development, and evaluation phases.
-
-#### Weekly Work Rhythm
-
-Our development cycle followed a **weekly sprint structure**, with clearly scheduled checkpoints:
-
-- **Monday (Offline)**: Sprint kickoff, planning, and role alignment
-- **Midweek**: Independent development and intra-subgroup communication (e.g., logic → UI handoff)
-- **Friday–Sunday (Online)**: Sprint review, bug triage, integration testing, and demo recording
-
-Each sprint targeted a concrete milestone—such as implementing pets, integrating the upgrade system, or preparing for user testing—ensuring **visible progress** and **early risk exposure**.
-
-> This rhythm mirrored Scrum principles of short cycles, continuous delivery, and retrospective-driven refinement.
-
-#### Task Tracking with Kanban
-
-We managed tasks using a GitHub-based **Kanban board**, customized to fit our sprint stages:
-
-| Column         | Meaning                         |
-|----------------|----------------------------------|
-| `Backlog`      | Ideas and non-prioritized tasks |
-| `To Do`        | Sprint-scoped deliverables      |
-| `In Progress`  | Actively implemented features   |
-| `Code Review`  | Awaiting PR review + integration |
-| `Done`         | Fully tested and merged items   |
-
-Tasks were defined at the “story” level (e.g., “Weather should affect enemies too”) and linked to pull requests. Developers self-assigned tasks and updated the board asynchronously after major commits.
+We used an Agile-inspired process to maintain regular feedback loops, incremental deliverables, and cross-functional collaboration across design, development, and evaluation.
 
 <div align="center">
   <img src="docs/management/Glitchwood_Management.png" alt="Sprint Timeline and Kanban Overview" width="820" height="800">
   <p><em>Figure 27. Sprint timeline with team role highlights and Kanban status flows.</em></p>
 </div>
 
-**Diagram Analysis**:  
-- Each member had domain-aligned goals per sprint (e.g., boss behavior, pet AI, UI overlays)  
-- Parallel feature development was synchronized via shared deadlines and test milestones  
-- MVP freeze week was followed by a “code lock + polish sprint” to improve gameplay feel and feedback
+#### Weekly Work Rhythm
 
-#### Sprint Refinement and Adaptive Planning
+We structured our sprints as follows:
 
-Throughout development, we refined our sprint process in response to:
+- **Monday**: Sprint planning and task allocation.  
+- **Midweek**: Development and subgroup communication.  
+- **Friday–Sunday**: Sprint reviews, bug triage, and integration testing.
 
-- **Integration challenges**: Feature modules clashing (e.g., pets + obstacles) prompted earlier pair programming
-- **Burnout risk**: Some sprints had overly ambitious scopes; we switched to value-based prioritization mid-project
-- **Testing turnaround**: We allocated fixed “playtest hours” per sprint instead of testing on-demand
+> This cycle kept progress visible and allowed for early identification of issues.
 
-> These adjustments reflect core agile principles: welcome change, sustain team health, and deliver working features continuously.
+#### Task Tracking with Kanban
+
+We used **GitHub’s Kanban board** to track progress:
+
+| Column          | Meaning                           |
+|-----------------|----------------------------------|
+| `Backlog`       | Non-prioritized tasks            |
+| `To Do`         | Tasks for the current sprint     |
+| `In Progress`   | Tasks being actively worked on   |
+| `Code Review`   | Awaiting peer review             |
+| `Done`          | Completed and tested tasks       |
+
+> This system ensured transparency and kept everyone aligned.
+
+#### Sprint Refinement and Planning
+
+We adjusted sprints based on:
+
+- **Integration challenges**: Early pair programming helped resolve feature clashes.  
+- **Scope management**: We shifted to value-based prioritization, focusing on playable features.
+
+> These adjustments kept the team on track and allowed for continuous improvement.
 
 #### Reflection
 
-While not a textbook Scrum implementation, our agile-lite process enabled:
+Our Agile-inspired process allowed us to:
 
-- Frequent checkpoints and visible progress
-- Fast feedback from both users and team testers
-- Clear accountability and decoupled task ownership
-- High alignment between code and design expectations
+- Continuously improve through feedback loops.  
+- Break down tasks into manageable increments.  
+- Align design and code effectively, ensuring a high-quality final product.
 
-> In short, agile wasn't just our workflow—it was our mindset: start small, ship often, and adjust fast.
+> Agile wasn’t just our workflow—it was our mindset.
 
 ### 6.4 Team Reflection and Continuous Improvement
 
-Over the course of Glitchwood’s development, our team encountered several coordination and workflow challenges. Rather than rigidly sticking to a plan, we continually adjusted our strategies to maintain progress, reduce friction, and preserve team morale.
+We faced several coordination challenges but adapted our workflow to maintain progress and morale.
 
-#### Communication: From Ad-Hoc to Synchronized
+#### Communication: From Ad-Hoc to Structured
 
-**Initial Issue**:  
-Early coordination heavily relied on asynchronous WeChat messaging, which often led to delays or misunderstandings—especially around integration requirements.
+**Initial Issue**: Over-reliance on asynchronous communication led to delays.  
+**Adjustment**: We implemented regular check-ins and live discussions for complex decisions.
 
-**Adjustment**:  
-We shifted to structured check-ins: offline meetings every Monday (planning) and online syncs every Friday (review + bug triage). Critical decisions—like combat balancing or asset delivery—were discussed face-to-face or over live screenshare to avoid ambiguity.
+> **Lesson**: Real-time communication is essential for complex tasks.
 
-> **Lesson**: For complex interactions (e.g., logic ↔ visuals), real-time discussion beats async updates.
+#### Task Granularity: Managing Dependencies
 
-#### Task Granularity: Managing Cross-Module Dependencies
+**Initial Issue**: Large stories created confusion and integration issues.  
+**Adjustment**: We broke tasks into smaller, clearer chunks, improving ownership and execution.
 
-**Initial Issue**:  
-Some stories—like “Implement weather system” or “Finish boss behavior”—were too large, mixing logic, visuals, and balancing. This made it unclear who owned what, and how to test partial progress.
+> **Lesson**: Granular tasks enhance clarity and parallel execution.
 
-**Adjustment**:  
-We restructured backlog items into finer-grained tasks, categorized by deliverable type (e.g., “Add lightning logic”, “Create thunder VFX”, “Link weather effect to enemy speed modifier”).
+#### Integration Challenges: MVP Collision
 
-> **Lesson**: Granular, role-specific tasks improved ownership clarity and enabled parallel execution.
+**Problem**: Feature modules clashed during integration.  
+**Solution**: We conducted full-day integration sessions to merge systems and resolve issues.
 
-#### Integration Challenges: MVP Collision and Rescue
+> **Lesson**: Co-location accelerates integration and enhances team awareness.
 
-**Problem**:  
-During MVP sprint, several independently developed modules (e.g., pet system, map generator, upgrade UI) conflicted in runtime or broke progression flow.
+#### Planning Flexibility: Handling Delays
 
-**Response**:  
-We hosted a full-day “Game Jam” style integration sprint: all members met physically, iteratively merged systems, fixed context-specific bugs, and aligned interfaces.
+**Issue**: Delays disrupted some sprint plans.  
+**Solution**: We shifted to a value-based approach, prioritizing key features for the MVP.
 
-> **Lesson**: Periodic co-location accelerates high-risk merges and improves team awareness of system interdependencies.
-
-#### Planning Flexibility: Navigating Resource Fluctuations
-
-**Issue**:  
-Unexpected delays (personal commitments, bugs, design rework) disrupted several sprint plans. Fixed-size stories often became unrealistic.
-
-**Response**:  
-We switched to **value-based sprint scoping**—prioritizing playable features over complete implementations. For example, we shipped a functional pet selection screen first, and added animations later.
-
-> **Lesson**: Agility means adjusting scope, not just shifting deadlines.
-
-#### Summary
-
-Across these experiences, we learned that **coordination is a living system**: it evolves with team size, task type, and external constraints. Successful collaboration came not from strict rules, but from shared intent and timely adaptation.
-
-> In short, we grew not just as developers—but as collaborators. Our workflows became faster, our decisions clearer, and our product stronger through constant team-level reflection.
-
-### 6.5 Reflection and Conclusion
-
-The development of Glitchwood was not only a technical challenge—it was a test of collaboration, adaptability, and shared responsibility. Our team functioned as a cross-disciplinary unit, balancing engineering, design, coordination, and evaluation across an evolving agile process.
-
-#### Summary of Team Achievements
-
-We successfully:
-
-- Built a fully playable, modular, browser-based game within academic constraints
-- Coordinated parallel development across six team members with minimal conflict
-- Applied agile planning, version control, and design-first thinking to manage complexity
-- Delivered gameplay systems (pets, weather, upgrades) that were integrated and user-tested
-
-These outcomes reflect not just individual productivity, but a synchronized, intentional team effort grounded in iterative feedback and role ownership.
-
-#### Personal and Collective Growth
-
-Over the course of the project, we each developed:
-
-- **Technical confidence** in system design, refactoring, and debugging under pressure
-- **Communication fluency**—knowing when to document, when to sync live, and how to escalate blockers
-- **Empathy in collaboration**, especially when adjusting timelines or helping others debug unfamiliar modules
-
-> These soft and hard skills will carry over to future group projects, internships, and professional work—especially in fast-moving, cross-functional teams.
-
-#### Guidance for Future Teams
-
-Reflecting on our own journey, we would recommend that future teams:
-
-- Prioritize real-time communication early, especially during system design and integration
-- Break down tasks by testable deliverables, not vague outcomes
-- Plan for failure—some features will take longer, break others, or need to be cut
-- Make retrospectives routine, not reactive
-
-> Above all, treat coordination as part of the software—not just the process. Good collaboration is a feature of good engineering.
-
-Through Glitchwood, we became more than contributors—we became a team. And that may be the most valuable deliverable of all.
+> **Lesson**: Flexibility in planning helps manage unforeseen setbacks.
 
 [Back to Table of Contents](#table-of-contents)
 
