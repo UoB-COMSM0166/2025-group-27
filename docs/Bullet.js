@@ -184,8 +184,6 @@ class EnemyBullet {
   }
 
   // Updates the enemy bullet's state each frame.
-  // Moves the bullet and checks for collisions with obstacles or screen boundaries.
-  // Returns false if the bullet should be destroyed, true otherwise.
   update() {
     this.pos.add(this.vel);
     for (let obs of obstacles) {
@@ -210,9 +208,7 @@ class EnemyBullet {
 
 // --- WebProjectile Class ---
 // Represents a specialized enemy projectile that creates a web effect.
-// Extends EnemyBullet and adds animation for the web.
 class WebProjectile extends EnemyBullet {
-  // Constructor for the WebProjectile class.
   // Initializes web-specific properties like radius and animation parameters.
   constructor(x, y, vel) {
     super(x, y, vel);
@@ -226,8 +222,7 @@ class WebProjectile extends EnemyBullet {
   }
 
   // Updates the web projectile's state each frame.
-  // Moves the projectile and progresses its animation.
-  // Returns false if the bullet should be destroyed (e.g., went off-screen), true otherwise.
+
   update() {
     this.pos.add(this.vel);
 
@@ -241,7 +236,6 @@ class WebProjectile extends EnemyBullet {
   }
 
   // Displays the web projectile on the screen.
-  // Renders the animated web image if available, with rotation based on velocity.
   // Falls back to a simple ellipse if the image is not loaded.
   display() {
     if (typeof webEffectImg !== 'undefined' && webEffectImg) {
@@ -287,9 +281,7 @@ class WebProjectile extends EnemyBullet {
 
 // --- GhostFire Class ---
 // Represents a homing projectile fired by enemies, which seeks the player.
-// Includes animation and particle effects on collision.
 class GhostFire {
-  // Constructor for the GhostFire class.
   // Initializes properties for homing behavior, damage, animation, and visual effects.
   constructor(x, y) {
     this.pos = createVector(x, y);
@@ -362,7 +354,6 @@ class GhostFire {
   }
 
   // Displays the ghost fire on the screen.
-  // Renders the animated ghost fire image.
   display() {
     push();
     imageMode(CENTER);

@@ -571,8 +571,6 @@ class BirdBoss extends Boss {
 
     let offsets = [
       createVector(-30, -30),
-      createVector(30, -30),
-      createVector(-15, 0),
       createVector(15, 0)
     ];
 
@@ -791,25 +789,6 @@ class BirdBoss extends Boss {
   performPoisonAttack() {
     if (this.trailCounter >= 10) {
       const MAX_POISON_TRAILS = 20;
-      if (poisonTrails.length < MAX_POISON_TRAILS) {
-        for (let i = 0; i < 4; i++) {
-          let angle = (i * PI) / 2;
-          let offset = createVector(cos(angle) * 40, sin(angle) * 40);
-          let poisonPos = p5.Vector.add(this.pos, offset);
-
-          poisonTrails.push({
-            pos: poisonPos,
-            radius: 20,
-            startTime: millis(),
-            duration: 4000,
-            frameIndex: 0,
-            frameCount: 4,
-            frameDelay: 8,
-            frameCounter: 0,
-            colorMod: color(255, 200, 50, 220)
-          });
-        }
-      }
       this.trailCounter = 0;
     }
   }
@@ -913,7 +892,7 @@ class BirdBoss extends Boss {
   }
 
   featherAttack() {
-    const rows = 2;
+    const rows = 1;
     const feathersPerRow = 8;
     const rowSpacing = 40;
 
@@ -962,7 +941,7 @@ class BirdBoss extends Boss {
       baseAngle = dirToPlayer.heading();
     }
 
-    let numberOfBlades = 10;
+    let numberOfBlades = 6;
     let angleIncrement = TWO_PI / numberOfBlades;
 
     for (let i = 0; i < numberOfBlades; i++) {
@@ -1684,7 +1663,7 @@ class SlimeBoss extends Boss {
   }
 
   featherAttack() {
-    const rows = 2;
+    const rows = 1;
     const feathersPerRow = 8;
     const rowSpacing = 40;
 
@@ -2222,7 +2201,7 @@ class FeatherProjectile {
     pop();
 
     //trail effects
-    if (frameCount % 2 === 0) {
+    if (frameCount % 5 === 0) {
       poisonTrails.push({
         pos: createVector(
           this.pos.x,
