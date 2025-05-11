@@ -144,18 +144,20 @@ function handleGameplay(now) {
         imageMode(CENTER);
 
         let frameWidth = poisonPoolEffectImg.width / trail.frameCount;
-        let frameHeight = poisonPoolEffectImg.height;
+        let frameHeight = poisonPoolEffectImg.height;//set the frame height
 
         drawingContext.imageSmoothingEnabled = false;
 
         let alpha = map(millis() - trail.startTime, 0, trail.duration * 0.7, 255, 100);
         if (trail.colorMod) {
+          //if the trail has a color modifier, tint the image with the color modifier
           tint(red(trail.colorMod), green(trail.colorMod), blue(trail.colorMod), alpha);
         } else {
+          //if the trail does not have a color modifier, tint the image with white
           tint(255, 255, 255, alpha);
         }
 
-        let displaySize = trail.radius * 2.2;
+        let displaySize = trail.radius * 2.2;//set the display size
 
         image(
           poisonPoolEffectImg,
@@ -190,6 +192,7 @@ function handleGameplay(now) {
       let alpha = map(millis() - trail.startTime, 0, trail.duration, 255, 0);
       tint(255, alpha);
 
+      //display the ghost death effect
       image(
         ghostDeathEffect,
         trail.pos.x,
@@ -207,11 +210,12 @@ function handleGameplay(now) {
     }
 
     if (p5.Vector.dist(player.pos, trail.pos) < trail.radius) {
-      player.takeDamage(0.5);
+      player.takeDamage(0.5);//take damage
     }
   }
 
   if (enemies.length === 0) {
+    //if the enemies are 0, check if the game state is not game
     if (gameState !== "game") {
       return;
     }
@@ -229,7 +233,7 @@ function handleGameplay(now) {
       return;
     }
 
-    wave++;
+    wave++;//increment the wave
     waveTextAnimation = 30;
     spawnEnemiesForWave(wave);
     showFloatingText(
@@ -241,17 +245,18 @@ function handleGameplay(now) {
   }
 
   if (waveTextAnimation > 0) {
+    //if the wave text animation is greater than 0
     push();
     waveTextAnimation--;
     textSize(24 + waveTextAnimation);
     fill(255, 200 + waveTextAnimation * 5, 0);
     textAlign(CENTER);
-    text(`WAVE ${wave}`, width / 2, height / 2 - 50);
+    text(`WAVE ${wave}`, width / 2, height / 2 - 50);//display the wave text
     pop();
   }
 
   let elapsedTime = floor((now - gameStartTime) / 1000);
-  displayHUD(elapsedTime);
+  displayHUD(elapsedTime);//display the HUD
 
   if (player.health <= 0) {
     finalStats = {
@@ -260,18 +265,18 @@ function handleGameplay(now) {
       level: player.level,
       attackPower: player.attackPower,
       attackSpeed: player.attackSpeed,
-      attackDamage: player.attackDamage,
+      attackDamage: player.attackDamage,//set the final stats
     };
     gameState = "gameOver";
   }
-
+  //if the choosing upgrade is true, draw the upgrade screen
   if (choosingUpgrade) {
     drawUpgradeScreen();
   }
 
-  applyWeatherEffects(now);
+  applyWeatherEffects(now);//apply the weather effects
 
-  drawLevelFogEffect();
+  drawLevelFogEffect();//draw the level fog effect  
 }
 //initial function
 function initButtons() {
@@ -280,28 +285,28 @@ function initButtons() {
 
   mainMenuButtons = [
     new Button(width / 2 - 100, baseY + 50, 200, 40, "Start Game(easy)", () => {
-      buttonsound.play();
+      buttonsound.play();//play the button sound
       wave = 1;
       normalEnemiesDefeated = 0;
       bossDefeated = 0;
-      gameState = "story1";
+      gameState = "story1"; //set the game state to story1  
       difficult = "easy";
     }),
     new Button(width / 2 - 100, baseY + 100, 200, 40, "Start Game(hard)", () => {
-      buttonsound.play();
+      buttonsound.play();//play the button sound
       wave = 1;
       normalEnemiesDefeated = 0;
       bossDefeated = 0;
-      gameState = "story1";
+      gameState = "story1"; //set the game state to story1
       difficult = "hard";
     }),
     new Button(width / 2 - 100, baseY + 150, 200, 40, "Setting", () => {
-      buttonsound.play();
-      gameState = "setting";
+      buttonsound.play();//play the button sound
+      gameState = "setting";//set the game state to setting
     }),
     new Button(width / 2 - 100, baseY + 200, 200, 40, "Quit Game", () => {
-      buttonsound.play();
-      noLoop()
+      buttonsound.play();//play the button sound
+      noLoop();//stop the loop
     }),
   ];
 
@@ -332,6 +337,7 @@ function initButtons() {
       }),
   ];
 
+  //create the pause buttons
   pauseButtons = [
     new Button(width / 2 - 100, height / 2 - 40, 200, 40, "resume game (P)", function () {
       gameState = "game";
@@ -345,7 +351,7 @@ function initButtons() {
       player && player.isInvincible ? "close Invincible Mode (I)" : "open Invincible Mode (I)",
       function () {
         if (player) {
-          player.isInvincible = !player.isInvincible;
+          player.isInvincible = !player.isInvincible;//toggle the invincible mode
           this.label = player.isInvincible ? "close Invincible Mode (I)" : "open Invincible Mode (I)";
           showFloatingText(player.isInvincible ? "Invincible Mode is opened!" : "Invincible Mode is closed!",
             width / 2, height / 2 - 100,
@@ -398,10 +404,10 @@ function initPlayer(type) {
   wave = 1;
   enemies = [];
 
-  generateInitialObstacles();
+  generateInitialObstacles();//generate the initial obstacles 
 
-  spawnEnemiesForWave(wave);
-  gameState = "guide";
+  spawnEnemiesForWave(wave);//spawn the enemies for the wave
+  gameState = "guide";//set the game state to guide
 }
 
 //display related functions
@@ -417,6 +423,7 @@ function displayHUD(elapsedTime) {
   textAlign(CENTER, TOP);
   text(`WAVE ${wave}`, width / 2, 10);
 
+  //if the wave is not divisible by 5, draw the progress bar
   if (wave % 5 !== 0) {
     let totalEnemies = Math.floor(6 + wave * 0.8);
     let progress = (enemies.length / totalEnemies) * 100;
@@ -457,6 +464,7 @@ function drawUIElements() {
   if (bossActive) displayBossHealthBar();
 }
 
+//display the attributes
 function displayAttributes() {
   push();
   fill(0, 200);
@@ -488,6 +496,7 @@ function displayAttributes() {
   pop();
 }
 
+//display the setting page
 function displaySettingPage() {
   if (!volumeSlider) {
     volumeSlider = createSlider(0, 1, volume, 0.1);
@@ -522,6 +531,7 @@ function hideSettingsElements() {
 }
 
 function displayBossHealthBar() {
+  //display the boss health bar
   if (gameState == "game") {
     let activeBosses = enemies.filter(e => e instanceof Boss && e.isActive);
     if (activeBosses.length === 0) {
@@ -542,12 +552,14 @@ function displayBossHealthBar() {
     const x = width / 2 - barWidth / 2;
     const y = 30;
 
+    //draw the health bar
     stroke(255, 215, 0);
     strokeWeight(2);
     fill(50);
     rect(x, y, barWidth, barHeight, 5);
     noStroke();
 
+    //if the total max health is greater than 0, draw the health bar
     if (totalMaxHealth > 0) {
       let healthPercentage = totalCurrentHealth / totalMaxHealth;
       healthPercentage = constrain(healthPercentage, 0, 1);
@@ -569,12 +581,12 @@ function displayBossHealthBar() {
     textAlign(CENTER);
     textSize(14);
     text(
-      `Boss HP: ${Math.ceil(totalCurrentHealth)} / ${totalMaxHealth}`,
+      `Boss HP: ${Math.ceil(totalCurrentHealth)} / ${totalMaxHealth}`,//display the boss health
       width / 2,
       y + barHeight + 15
     );
 
-    if (activeBosses.length > 1) {
+    if (activeBosses.length > 1) {//if the active bosses are more than 1
       textSize(12);
       activeBosses.forEach((boss, index) => {
         fill(255);
@@ -600,7 +612,7 @@ function displayMainMenu() {
   visibleButtons.push(mainMenuButtons[1], mainMenuButtons[2], mainMenuButtons[3], mainMenuButtons[4]);
   image(mainMenuPage, 0, 0, 1062, 600);
 }
-
+//display the story page
 function displayStoryPage1() {
   image(story1, 0, 0, width, height);
 
@@ -618,7 +630,7 @@ function displayStoryPage2() {
   buttonX = width - buttonW - 20;
   buttonY = height - buttonH - 20;
 }
-
+//display the story page
 function displayStoryPage3() {
   image(story3, 0, 0, width, height);
 
@@ -656,7 +668,7 @@ function displayVictoryPage1() {
   buttonY = height - buttonH - 20;
 }
 
-function displayCharacterSelection() {
+function displayCharacterSelection() {//display the character selection
   fill(255);
   textSize(24);
   textAlign(CENTER, CENTER);
@@ -666,7 +678,7 @@ function displayCharacterSelection() {
   image(knightpic, width / 2 + 250, height / 2 - 100, 100, 200);
 }
 
-function displayGuidePage() {
+function displayGuidePage() {//display the guide page
   mainMenuSound.stop();
   image(guidePage, 0, 0, width, height);
 
@@ -676,7 +688,7 @@ function displayGuidePage() {
   buttonY = height - buttonH - 20;
 }
 
-function displayPauseMenu() {
+function displayPauseMenu() {//display the pause menu
   push();
   image(pausePage, 0, 0, width, height);
   textSize(25);
@@ -684,7 +696,7 @@ function displayPauseMenu() {
   textAlign(CENTER, CENTER);
   let pausedTime = floor((millis() - pauseStartTime) / 1000);
   text(`Paused for: ${pausedTime}s`, width / 2, height / 3 + 30);
-
+  //display the level, health, and XP
   text(`Level: ${player.level}`, width / 2, height / 2);
   text(`Health: ${Math.round(player.health)}`, width / 2, height / 2 + 30);
   text(`XP: ${player.exp}`, width / 2, height / 2 + 60);
@@ -708,7 +720,7 @@ function displayGameOverScreen() {
   image(gameOverPage, 0, 0, width, height);
 }
 
-function generateInitialObstacles() {
+function generateInitialObstacles() {//generate the initial obstacles
   const corridorWidth = 50;
   const minDistanceFromPlayer = 150;
   const minDistanceBetweenObstacles = 200;
@@ -750,7 +762,7 @@ function generateInitialObstacles() {
   }
 }
 
-function drawUpgradeScreen() {
+function drawUpgradeScreen() {//draw the upgrade screen
   image(skillPage, 0, 0, width, height);
   fill(0, 0, 0, 200);
   fill(255);
@@ -953,7 +965,7 @@ function generateUpgradeOptions() {
         oneTime: true,
       },
     ];
-  } else if (player.characterType == "knight") {
+  } else if (player.characterType == "knight") {//if the player is a knight
     allUpgrades = [
       {
         type: "health",
@@ -1033,12 +1045,12 @@ function generateUpgradeOptions() {
       },
     ];
   }
-  upgradeOptions = [];
-  let availableUpgrades = allUpgrades.filter((upg) => {
-    if (upg.oneTime) {
-      return !(player.unlockedUpgrades instanceof Set
-        ? player.unlockedUpgrades.has(upg.value)
-        : player.unlockedUpgrades.includes(upg.value));
+  upgradeOptions = [];//reset the upgrade options
+  let availableUpgrades = allUpgrades.filter((upg) => {//filter the available upgrades
+    if (upg.oneTime) {//if the upgrade is one time
+      return !(player.unlockedUpgrades instanceof Set//if the player has the upgrade
+        ? player.unlockedUpgrades.has(upg.value)//if the player has the upgrade
+        : player.unlockedUpgrades.includes(upg.value));//if the player has the upgrade
     }
     return true;
   });
@@ -1049,7 +1061,7 @@ function generateUpgradeOptions() {
   }
 }
 
-function updateArrows() {
+function updateArrows() {//update the arrows
   for (let i = arrows.length - 1; i >= 0; i--) {
     let arrow = arrows[i];
     arrow.update();
@@ -1134,7 +1146,7 @@ function spawnEnemiesForWave(waveNumber) {
     enemies.push(boss1, boss2, boss3, boss4);
 
     showFloatingText("Elemental Slime Bosses Appear!", width / 2, height / 2 - 40, color(0, 255, 0));
-    bossActive = true;
+    bossActive = true;//set the boss active to true
   }
 
   else if (waveNumber === 10) {
@@ -1205,7 +1217,7 @@ function spawnEnemiesForWave(waveNumber) {
         normalMusic78.play();
       }
     }
-
+    //set the base enemy count
     let baseEnemyCount;
     if (difficult == "hard") {
       baseEnemyCount = Math.floor(6 + waveNumber * 1.1);
@@ -1253,7 +1265,7 @@ function spawnEnemiesForWave(waveNumber) {
   }
 }
 
-function getValidSpawnPosition() {
+function getValidSpawnPosition() {//get the valid spawn position
   let pos;
   let isValid = false;
   let attempts = 0;
@@ -1277,10 +1289,10 @@ function getValidSpawnPosition() {
     }
     attempts++;
   }
-  if (!isValid) {
-    let side = floor(random(4));
-    let margin = safeMargin;
-    do {
+  if (!isValid) {//if the position is not valid
+    let side = floor(random(4));//get a random side
+    let margin = safeMargin;//set the margin
+    do {//do while the position is not valid
       switch (side) {
         case 0:
           pos = createVector(random(margin, width - margin), -margin);
@@ -1389,7 +1401,7 @@ function choosePotion() {
       )
     );
   }
-  potionButtons.push(
+  potionButtons.push(//add the skip upgrade button
     new Button(
       width / 2 - 75,
       startY + 3 * verticalSpacing + 20,
@@ -1430,9 +1442,9 @@ function distToLine(point, lineStart, lineEnd) {
 
 function showFloatingText(text, x, y, col) {
   floatingTexts.push(new FloatingText(text, x, y, col));
-}
+}//show the floating text
 
-class Pet {
+class Pet {//create the pet class
   constructor(x, y) {
     this.pos = createVector(x, y);
     this.radius = 15;
@@ -1444,7 +1456,7 @@ class Pet {
     this.angle = 0;
   }
 
-  follow(player) {
+  follow(player) {//follow the player
     this.angle += 0.05;
     const targetPos = createVector(
       player.pos.x + cos(this.angle) * this.orbitRadius,
@@ -1453,7 +1465,7 @@ class Pet {
     this.pos.lerp(targetPos, 0.1);
   }
 
-  attack(enemies) {
+  attack(enemies) {//attack the enemies
     this.attackCooldown--;
 
     let closest = null;
@@ -1473,7 +1485,7 @@ class Pet {
     }
   }
 
-  display() {
+  display() {//display the pet
     push();
     fill(255, 200, 0);
     noStroke();
@@ -1519,7 +1531,7 @@ class Pet2 {
       }
     }
   }
-
+  //activate the shield
   activateShield(player) {
     this.isShieldActive = true;
     this.shieldTimer = this.shieldDuration;
@@ -1538,7 +1550,7 @@ class Pet2 {
 
     fill(0, 150, 255);
     ellipse(this.pos.x, this.pos.y, this.radius * 2);
-
+    //if the shield is not active
     if (!this.isShieldActive) {
       push();
       textSize(12);
@@ -1551,7 +1563,7 @@ class Pet2 {
   }
 }
 
-class Pet3 {
+class Pet3 {//create the pet class
   constructor() {
     this.pos = createVector(0, 0);
     this.radius = 15;
@@ -1636,7 +1648,7 @@ function setupVictoryButtons() {
     })
   ];
 }
-
+//spawn multiple elemental bosses
 function spawnMultipleElementalBosses() {
   const bossTypes = ["fire", "water", "poison", "wind"];
   const positions = [
@@ -1681,7 +1693,7 @@ function updateDeathEffect(enemy) {
     return;
   }
 
-  const frameWidth = deathEffect1.width / 4;
+  const frameWidth = deathEffect1.width / 4;//set the frame width
   push();
   image(deathEffect1,
     enemy.pos.x - 20,
