@@ -1,5 +1,6 @@
 //---------------event related to mouseClick------------------
 function mouseClicked() {
+  //check if the mouse is clicked on the story1 button
   if (gameState == "story1" && mouseX > buttonX && mouseX < buttonX + buttonW &&
     mouseY > buttonY && mouseY < buttonY + buttonH) {
       buttonsound.play();
@@ -32,6 +33,7 @@ function mouseClicked() {
 }
 
 function mousePressed() {
+  //check if the game state is upgrading
   if (gameState === "upgrading") {
     for (let i = 0; i < upgradeOptions.length; i++) {
       let x = width / 4 + (i * width) / 4;
@@ -91,6 +93,7 @@ function mouseReleased() {
 }
 
 function keyPressed() {
+  //check if the player is a knight and the spinning slash is true
   if (keyCode === 69 && player.characterType == "knight" && player.spinningSlash == true) { //E
     player.performSpinningSlash();
   }
@@ -100,6 +103,7 @@ function keyPressed() {
     gameState = showAttributes ? "paused" : "game"; // switch game state
     return false;
   }
+  //check if the player is choosing a potion
   if (choosingPotion) {
     if (key >= "1" && key <= "3") {
       potionOptions[key - 1].apply();

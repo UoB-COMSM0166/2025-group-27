@@ -1,4 +1,5 @@
-class Feather {
+class Feather { 
+  // Initialize feather with optional sprite
   constructor(x, y, sprite) {
     this.pos = createVector(x, y);
     this.vel = createVector(0, 2);
@@ -6,7 +7,7 @@ class Feather {
     this.lifetime = 80;
     
     this.totalFrames = 8;
-    this.currentFrame = Math.floor(random(8));
+    this.currentFrame = Math.floor(random(8));//get a random frame
     this.frameDelay = 8;
     this.frameCounter = 0;
 
@@ -14,6 +15,7 @@ class Feather {
     this.frameHeight = this.sprite ? this.sprite.height : 0;
     
     this.size = {
+      //set the size of the feather
       width: this.frameWidth,
       height: this.frameHeight
     };
@@ -26,6 +28,7 @@ class Feather {
     this.lifetime = 80;
     
     if (sprite && this.sprite !== sprite) {
+      //if the sprite is different, update the sprite
       this.sprite = sprite;
       this.frameWidth = this.sprite.width / this.totalFrames;
       this.frameHeight = this.sprite.height;
@@ -41,6 +44,7 @@ class Feather {
   }
 
   update() {
+    //update the lifetime
     this.lifetime--;
     
     this.pos.x += this.vel.x;
@@ -52,7 +56,7 @@ class Feather {
     
     return this.lifetime > 0 && !this.isOffScreen();
   }
-
+  //display the feather
   display() {
     if (this.lifetime <= 0 || !this.sprite) return;
     
@@ -75,6 +79,7 @@ class Feather {
   }
 
   isOffScreen() {
+    //check if the feather is off the screen
     const margin = 50;
     return (this.pos.x < -margin || 
             this.pos.x > width + margin || 

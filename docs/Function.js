@@ -1,3 +1,4 @@
+//handle the gameplay
 function handleGameplay(now) {
   if (wave <= 5) {
     image(level1map, 0, 0, 1062, 600);
@@ -11,13 +12,13 @@ function handleGameplay(now) {
 
   player.move();
   player.shoot();
-  player.update();
-  player.display();
+  player.update();//update the player
+  player.display();//display the player
 
-  featherPool.update();
+  featherPool.update();//update the feather pool
   featherPool.display();
 
-  feathers = feathers.filter((feather) => {
+  feathers = feathers.filter((feather) => { //filter the feathers
     if (feathers.length > MAX_FEATHERS) {
       return false;
     }
@@ -25,13 +26,13 @@ function handleGameplay(now) {
     if (!feather.update()) {
       return false;
     }
-    feather.animate();
-    feather.display();
+    feather.animate();//animate the feather
+    feather.display();//display the feather
     return true;
   });
 
   // bullet
-  bullets = bullets.filter((bullet) => {
+  bullets = bullets.filter((bullet) => { //filter the bullets
     if (bullet.update()) {
       bullet.display();
       return true;
@@ -39,7 +40,8 @@ function handleGameplay(now) {
     return false;
   });
 
-  if (wave == 5 || wave == 10 || wave == 15) {
+  if (wave == 5 || wave == 10 || wave == 15) { 
+     //if the wave is 5, 10, or 15, set the obstacle build to false
     obstacleBuild = false;
   }
   if (wave == 11 && !obstacleBuild) {
@@ -49,14 +51,16 @@ function handleGameplay(now) {
 
   // obstacle
   obstacles.forEach((obs) => {
+    //update the obstacles
     obs.update();
     obs.display();
   });
 
   // enemies
   for (let j = enemies.length - 1; j >= 0; j--) {
+    //loop through the enemies
     let enemy = enemies[j];
-    enemy.update();
+    enemy.update();//update the enemy
     enemy.display();
 
     if (enemy.shouldRemove()) {
@@ -70,7 +74,7 @@ function handleGameplay(now) {
         enemy.drawFogEffect();
       }
     }
-
+    //if the enemy is a boss and the health is 0, increment the boss defeated count
     if ((enemy.isBoss || enemy instanceof BugBoss) && enemy.health <= 0) {
       bossDefeated++;
       enemies.splice(j, 1);
@@ -81,17 +85,18 @@ function handleGameplay(now) {
       if (wave === 15) {
         gameState = "vStory";
         finalStats = {
-          normalEnemies: normalEnemiesDefeated,
+          normalEnemies: normalEnemiesDefeated,//set the final stats
           bosses: bossDefeated,
           level: player.level,
           attackPower: player.attackPower,
           attackSpeed: player.attackSpeed,
-          attackDamage: player.attackDamage,
+          attackDamage: player.attackDamage,//set the final stats
         };
         return;
       }
 
       let remainingBosses = enemies.filter(e => e.isBoss || e instanceof BugBoss);
+      //get the remaining bosses
       console.log("Remaining bosses:", remainingBosses.length);
 
       if (remainingBosses.length === 0) {
@@ -103,10 +108,10 @@ function handleGameplay(now) {
     }
   }
 
-  enemyBullets = enemyBullets.filter((bullet) => {
-    bullet.update();
-    bullet.display();
-    return bullet.isActive;
+  enemyBullets = enemyBullets.filter((bullet) => {//filter the enemy bullets
+    bullet.update();//update the bullet
+    bullet.display();//display the bullet
+    return bullet.isActive;//return the bullet's active status
   });
 
   expOrbs = expOrbs.filter((orb) => {
@@ -119,14 +124,15 @@ function handleGameplay(now) {
     let trail = poisonTrails[i];
 
     if (trail.frameCounter !== undefined) {
-      trail.frameCounter++;
+      trail.frameCounter++;//increment the frame counter
       if (trail.frameCounter >= trail.frameDelay) {
         trail.frameCounter = 0;
         trail.frameIndex = (trail.frameIndex + 1) % trail.frameCount;
       }
     }
 
-    if (millis() - trail.startTime > trail.duration) {
+    if (millis() - trail.startTime > trail.duration) {  
+      //if the trail has been on for the duration, remove it
       poisonTrails.splice(i, 1);
       continue;
     }
