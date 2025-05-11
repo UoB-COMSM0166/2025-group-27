@@ -123,8 +123,8 @@ function updateWeather() {
 }
 
 function applyWeatherEffects(now) {
-  // Hot weather slows fire‐rate, snowy slows movement
-  player.fireRate = weather === "hot" ? 12 : 10;
+  // Hot weather slows fire‐rate, snowy slows movements
+  player.fireRate = weather === "hot" ? 18 : 10;
   player.speed = weather === "snowy" ? 3 : 5;
   enemies.forEach((enemy) => {
     enemy.speed = weather === "snowy" ? 1 : random(1, 3);
