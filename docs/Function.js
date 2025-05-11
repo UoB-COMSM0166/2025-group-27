@@ -44,6 +44,7 @@ function handleGameplay(now) {
   }
   if (wave == 6 && !obstacleBuild) {
     obstacles = [];
+  } else if (wave == 7 && !obstacleBuild) {
     generateInitialObstacles();
   } else if (wave == 11 && !obstacleBuild) {
     obstacles = [];
