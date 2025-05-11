@@ -9,7 +9,7 @@ class Bullet {
     this.bounceCount = 0;
     this.maxBounces = type === "bounce" ? 3 : 0;
     this.shootDirection;
-    // load image and static according to direction
+    // Load image and set properties according to direction
     if (state === "Up") {
       this.bImage = bImageDown;
       this.shootDirection = "up";
@@ -41,14 +41,14 @@ class Bullet {
     }
 
     this.frameIndex = 0;
-    this.animationDelay = 10; // control animation speed
+    this.animationDelay = 10; // Control animation speed
     this.animationCounter = 0;
   }
 
   update() {
     this.pos.add(this.vel);
 
-    // detect enemies
+    // Check enemy collision
     for (let i = enemies.length - 1; i >= 0; i--) {
       let enemy = enemies[i];
       if (enemy.attackDetect) {
@@ -59,7 +59,6 @@ class Bullet {
             if (enemy instanceof Boss) {
               bossDefeated++;
               bossDefeatedCount++;
-
             }
             normalEnemiesDefeated++;
             if (enemy.gainExp == false) {
@@ -116,7 +115,7 @@ class Bullet {
       }
     }
 
-    // detect map boundry
+    // Boundary check
     if (
       this.pos.x < 0 ||
       this.pos.x > width ||
@@ -166,7 +165,7 @@ class Bullet {
   }
 }
 
-//-----------class EnemyBullet-------------
+// --- EnemyBullet Class ---
 class EnemyBullet {
   constructor(x, y, vel) {
     this.pos = createVector(x, y);
@@ -195,16 +194,13 @@ class EnemyBullet {
   }
 }
 
-//-----------class WebProjectile-------------
+// --- WebProjectile Class ---
 class WebProjectile extends EnemyBullet {
   constructor(x, y, vel) {
     super(x, y, vel);
     this.radius = 10;
 
-    this.frameIndex = 0;
-    this.frameCount = 6;
-    this.frameDelay = 6;
-    this.frameCounter = 0;
+        // Animation properties    this.frameIndex = 0;    this.frameCount = 6; // acidProjectile2 image has 6 frames    this.frameDelay = 6;    this.frameCounter = 0;
   }
 
   update() {
@@ -261,7 +257,7 @@ class WebProjectile extends EnemyBullet {
   }
 }
 
-//-----------class GhostFire-------------
+// --- GhostFire Class ---
 class GhostFire {
   constructor(x, y) {
     this.pos = createVector(x, y);
@@ -293,14 +289,12 @@ class GhostFire {
   }
 
   update() {
-    // update animation
     this.frameCounter++;
     if (this.frameCounter >= this.frameDelay) {
       this.frameCounter = 0;
       this.frameIndex = (this.frameIndex + 1) % this.totalFrames;
     }
 
-    // track player
     let steer = this.seek(player.pos);
     this.acc.add(steer);
 
@@ -309,7 +303,6 @@ class GhostFire {
     this.pos.add(this.vel);
     this.acc.mult(0);
 
-    // detect collision with player
     let d = dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y);
     if (d < this.radius + player.radius) {
       player.takeDamage(this.damage);
@@ -317,23 +310,14 @@ class GhostFire {
       this.isActive = false;
     }
 
-    // detect collision with obstacles
     for (let obs of obstacles) {
       if (obs.collidesWith(this.pos, this.radius * 2, this.radius * 2)) {
         this.isActive = false;
         for (let i = 0; i < 8; i++) {
           let angle = random(TWO_PI);
-          let speed = random(1, 3);
-          let offset = random(5, 15);
-          poisonTrails.push({
-            pos: createVector(
-              this.pos.x + cos(angle) * offset,
-              this.pos.y + sin(angle) * offset
-            ),
-            radius: 15,
-            startTime: millis(),
-            duration: 1000
-          });
+          let speed = random(2, 5);
+          let velocity = p5.Vector.fromAngle(angle).mult(speed);
+          particles.push(new Particle(this.pos.x, this.pos.y, velocity, color(255, 150, 0)));
         }
         break;
       }
@@ -343,7 +327,6 @@ class GhostFire {
   display() {
     push();
     imageMode(CENTER);
-    // draw flame
     let frameWidth = ghostFireImg.width / this.totalFrames;
     let frameHeight = ghostFireImg.height;
     image(
