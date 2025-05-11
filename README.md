@@ -2,13 +2,13 @@
 
 2025 COMSM0166 group 27
 
-# 🌟 Game: Glitchwood
+# Game: Glitchwood
 
 <div align="center">
-  <img src="docs/assets/selected_images/poster/Glitchwood.png" alt="Group Photo" width="120%">
+  <img src="docs/assets/selected_images/poster/Glitchwood.png" alt="Icon" width="120%">
 </div>
 
-## 🚀 Quick Start
+## Quick Start
 
 - [**Play the Game Now!**](https://uob-comsm0166.github.io/2025-group-27/)  
   _Launch Glitchwood directly in your browser._
@@ -19,7 +19,7 @@
 - [**Watch the Demo Video**](https://www.youtube.com/watch?v=EkpubyUN88Y/)  
   _See Glitchwood in action with a narrated gameplay showcase._
 
-# 👥 Our Group
+# Our Group
 
 <div align="center">
   <img src="docs/assets/selected_images/member/Group27.png" alt="Group Photo" width="75%">
@@ -71,79 +71,83 @@
 
 </div>
 
-# 🗂️ Kanban Board
+# Kanban Board
 
-- 📋 [**Kanban Board (Jira)**](https://1971026049.atlassian.net/jira/software/projects/KAN/boards/1)  
+- [**Kanban Board (Jira)**](https://1971026049.atlassian.net/jira/software/projects/KAN/boards/1)  
   _Follow our team’s agile workflow and development progress._
 
 <div align="center">
-  <img src="docs/kanban/kanban1.png" alt="Boss Animation" width="580" height="350"/>
+  <img src="docs/kanban/kanban1.png" alt="Kanban1" width="580" height="350"/>
   <p><em>Project progress presentation</em></p>
   
 </div>
 <div align="center">
-  <img src="docs/kanban/kanban2.png" alt="Boss Animation" width="580" height="350"/>
+  <img src="docs/kanban/kanban2.png" alt="Kanban2" width="580" height="350"/>
   <p><em>Completed tasks demonstration</em></p>
 </div>
 
-# 📝 Project Report
+# Project Report
 
 ## Table of Contents
-- [📝 Project Report](#-project-report)
-  - [Table of Contents](#table-of-contents)
-  - [1 Introduction](#1-introduction)
-    - [1.1 Overview](#11-overview)
-    - [1.2 Inspiration](#12-inspiration)
-    - [1.3 Innovation](#13-innovation)
-    - [1.4 Vision](#14-vision)
-  - [2 Ideation](#2-ideation)
-    - [2.1 Game Idea 1: Survival Roguelike](#21-game-idea-1-survival-roguelike)
-    - [2.2 Game Idea 2: Horror Puzzle RPG](#22-game-idea-2-horror-puzzle-rpg)
-    - [2.3 Why We Chose Game Idea 1](#23-why-we-chose-game-idea-1)
-  - [3 Requirements](#3-requirements)
-    - [3.1 Stakeholder Identification: The Onion Model](#31-stakeholder-identification-the-onion-model)
-    - [3.2 Requirements Analysis: Epics, User Stories, and Acceptance Criteria](#32-requirements-analysis-epics-user-stories-and-acceptance-criteria)
-    - [3.3 Applying Requirements to Our Game](#33-applying-requirements-to-our-game)
-    - [3.4 Use-Case Diagram and Use-Case Specification](#34-use-case-diagram-and-use-case-specification)
-    - [3.5 Reflection and Conclusion](#35-reflection-and-conclusion)
-  - [4 Design](#4-design)
-    - [4.1 System Architecture Overview](#41-system-architecture-overview)
-    - [4.2 Class Diagram](#42-class-diagram)
-    - [4.3 Sequence Diagram](#43-sequence-diagram)
-    - [4.4 Reflection and Conclusion](#44-reflection-and-conclusion)
 
-  - [5 Implementation](#5-implementation)
-    - [5.1 Basic Implementation](#51-basic-implementation)
-    - [5.2 Code Architecture Overview](#52-code-architecture-overview)
-    - [5.3 Key Features and Highlights](#53-key-features-and-highlights)
-    - [5.4 Three Key Technical Challenges in Glitchwood's Development](#54-three-key-technical-challenges-in-glitchwoods-development)
-    - [5.5 Reflection and Conclusion](#55-reflection-and-conclusion)
-  - [6 Evaluation](#6-evaluation)
-    - [6.1 Qualitative Evaluation](#61-qualitative-evaluation)
-    - [6.2 Quantitative Evaluation](#62-quantitative-evaluation)
-    - [6.3 Code Test \& Usability Interviews](#63-code-test--usability-interviews)
-    - [6.4 Reflection and Conclusion](#64-reflection-and-conclusion)
-  - [7 Process](#7-process)
-    - [7.1 Team Roles and Division of Tasks](#71-team-roles-and-division-of-tasks)
-    - [7.2 Tools and Collaborative Platforms](#72-tools-and-collaborative-platforms)
-    - [7.3 Agile Development Methodology and Iteration Process](#73-agile-development-methodology-and-iteration-process)
-    - [7.4 Team Reflection and Continuous Improvement](#74-team-reflection-and-continuous-improvement)
-    - [7.5 Reflection and Conclusion](#75-reflection-and-conclusion)
-  - [8 Sustainability, Ethics, and Accessibility](#8-sustainability-ethics-and-accessibility)
-    - [8.1 Environmental Impact](#81-environmental-impact)
-    - [8.2 Social Impact](#82-social-impact)
-    - [8.3 Technical Impact](#83-technical-impact)
-    - [8.4 Sustainability-Oriented Requirements](#84-sustainability-oriented-requirements)
-  
-  - [9 Conclusion](#9-conclusion)
-    - [9.1 Lessons Learned from the Project](#91-lessons-learned-from-the-project)
-    - [9.2 Overcoming Key Development Challenges](#92-overcoming-key-development-challenges)
-    - [9.3 Insights from Collaboration and Testing](#93-insights-from-collaboration-and-testing)
-    - [9.4 Future Directions for Glitchwood](#94-future-directions-for-glitchwood)
-    - [9.5 Conclusion](#95-conclusion)
-  - [10 Appendix](#10-appendix)
-    - [10.1 Contributions of Team Members](#101-contributions-of-team-members)
-    - [10.2 References](#102-references)
+- [1 Introduction](#1-introduction)
+  - [1.1 Overview](#11-overview)
+  - [1.2 Ideation and Design Rationale](#12-ideation-and-design-rationale)
+  - [1.3 Inspiration](#13-inspiration)
+  - [1.4 Innovation](#14-innovation)
+  - [1.5 Vision](#15-vision)
+
+- [2 Requirements](#2-requirements)
+  - [2.1 Stakeholder Identification: The Onion Model](#21-stakeholder-identification-the-onion-model)
+  - [2.2 Requirements Analysis: Epics, User Stories, and Acceptance Criteria](#22-requirements-analysis-epics-user-stories-and-acceptance-criteria)
+  - [2.3 Applying Requirements to Our Game](#23-applying-requirements-to-our-game)
+  - [2.4 Use-Case Diagram and Specification](#24-use-case-diagram-and-specification)
+  - [2.5 Reflection and Conclusion](#25-reflection-and-conclusion)
+
+- [3 Design](#3-design)
+  - [3.1 System Architecture Overview](#31-system-architecture-overview)
+  - [3.2 Class Diagram](#32-class-diagram)
+  - [3.3 Sequence Diagram](#33-sequence-diagram)
+  - [3.4 Reflection and Conclusion](#34-reflection-and-conclusion)
+
+- [4 Implementation](#4-implementation)
+  - [4.1 Core Gameplay Implementation](#41-core-gameplay-implementation)
+  - [4.2 Code Architecture Overview](#42-code-architecture-overview)
+  - [4.3 Key Features and Highlights](#43-key-features-and-highlights)
+  - [4.4 Technical Challenges and Solutions](#44-technical-challenges-and-solutions)
+  - [4.5 Reflection and Conclusion](#45-reflection-and-conclusion)
+
+- [5 Evaluation](#5-evaluation)
+  - [5.1 Qualitative Evaluation](#51-qualitative-evaluation)
+  - [5.2 Quantitative Evaluation](#52-quantitative-evaluation)
+  - [5.3 Code Testing & Usability Interviews](#53-code-testing--usability-interviews)
+  - [5.4 Reflection and Conclusion](#54-reflection-and-conclusion)
+
+- [6 Process](#6-process)
+  - [6.1 Team Roles and Collaboration](#61-team-roles-and-collaboration)
+  - [6.2 Tools and Workflow](#62-tools-and-workflow)
+  - [6.3 Agile Practices](#63-agile-practices)
+  - [6.4 Continuous Improvement](#64-continuous-improvement)
+  - [6.5 Reflection and Conclusion](#65-reflection-and-conclusion)
+
+- [7 Sustainability, Ethics, and Accessibility](#7-sustainability-ethics-and-accessibility)
+  - [7.1 Environmental Efficiency](#71-environmental-efficiency)
+  - [7.2 Social and Narrative Themes](#72-social-and-narrative-themes)
+  - [7.3 Technical Sustainability](#73-technical-sustainability)
+  - [7.4 Accessibility & Inclusive Design](#74-accessibility--inclusive-design)
+  - [7.5 Summary](#75-summary)
+
+- [8 Conclusion](#8-conclusion)
+  - [8.1 What We Learned](#81-what-we-learned)
+  - [8.2 Challenges Overcome](#82-challenges-overcome)
+  - [8.3 Collaboration Insights](#83-collaboration-insights)
+  - [8.4 Future Directions](#84-future-directions)
+  - [8.5 Final Thoughts](#85-final-thoughts)
+
+- [9 Appendix](#9-appendix)
+  - [9.1 Contributions of Team Members](#91-contributions-of-team-members)
+  - [9.2 References](#92-references)
+  - [9.3 Goodbye from the Team](#93-goodbye-from-the-team)
 
 ## 1 Introduction
 
@@ -592,6 +596,11 @@ To evaluate user experience in **L1 (Easy Mode)** and **L2 (Hard Mode)**, we col
 - **System Usability Scale (SUS)**: Assesses perceived usability and user satisfaction.
 - **NASA-TLX**: Measures perceived workload across six dimensions—Mental, Physical, and Temporal Demand, Effort, Frustration, and Performance.
 
+We tested the game with **10 participants**, each of whom played both difficulty modes and completed both questionnaires. The group included a mix of user profiles:
+- 4 with Computer Science backgrounds
+- 3 experienced with Human-Computer Interaction (HCI)
+- 3 casual gamers or non-technical users
+
 ---
 
 #### NASA-TLX Results
@@ -599,12 +608,12 @@ To evaluate user experience in **L1 (Easy Mode)** and **L2 (Hard Mode)**, we col
 We first examined average workload scores across all dimensions.
 
 <div align="center">
-  <img src="docs/evaluation/NASA_easy.png" alt="Interview Responses" width="820" height="230">
+  <img src="docs/evaluation/NASA_easy.png" alt="NASA statistics easy" width="820" height="230">
   <p><em>Figure 15. NASA-TLX individual user scores for L1 (Easy Mode) across all workload dimensions.</em></p>
 </div>
 
 <div align="center">
-  <img src="docs/evaluation/NASA_hard.png" alt="Interview Responses" width="820" height="230">
+  <img src="docs/evaluation/NASA_hard.png" alt="NASA statistics hard" width="820" height="230">
   <p><em>Figure 16. NASA-TLX individual user scores for L2 (Hard Mode) across all workload dimensions.</em></p>
 </div>
 
@@ -826,12 +835,6 @@ We saw sustainability and ethics as design challenges:
 > Glitchwood is more than efficient—it’s empathetic.
 
 [Back to Table of Contents](#table-of-contents)
-
-### 9 Conclusion
-
-Glitchwood has been more than a course project—it has been a compact simulation of real-world software design, collaborative game development, and iterative user-centered refinement. This final chapter synthesizes the technical, creative, and collaborative insights we gained.
-
----
 
 ## 8 Conclusion
 
