@@ -2,13 +2,13 @@
 
 2025 COMSM0166 group 27
 
-# 🌟 Game: Glitchwood
+# Game: Glitchwood
 
 <div align="center">
   <img src="docs/assets/selected_images/poster/Glitchwood.png" alt="Group Photo" width="120%">
 </div>
 
-## 🚀 Quick Start
+## Quick Start
 
 - [**Play the Game Now!**](https://uob-comsm0166.github.io/2025-group-27/)  
   _Launch Glitchwood directly in your browser._
@@ -19,7 +19,7 @@
 - [**Watch the Demo Video**](https://www.youtube.com/watch?v=EkpubyUN88Y/)  
   _See Glitchwood in action with a narrated gameplay showcase._
 
-# 👥 Our Group
+# Our Group
 
 <div align="center">
   <img src="docs/assets/selected_images/member/Group27.png" alt="Group Photo" width="75%">
@@ -71,9 +71,9 @@
 
 </div>
 
-# 🗂️ Kanban Board
+# Kanban Board
 
-- 📋 [**Kanban Board (Jira)**](https://1971026049.atlassian.net/jira/software/projects/KAN/boards/1)  
+- [**Kanban Board (Jira)**](https://1971026049.atlassian.net/jira/software/projects/KAN/boards/1)  
   _Follow our team’s agile workflow and development progress._
 
 <div align="center">
@@ -86,10 +86,10 @@
   <p><em>Completed tasks demonstration</em></p>
 </div>
 
-# 📝 Project Report
+# Project Report
 
 ## Table of Contents
-- [📝 Project Report](#-project-report)
+- [Project Report](#-project-report)
   - [Table of Contents](#table-of-contents)
   - [1 Introduction](#1-introduction)
     - [1.1 Overview](#11-overview)
@@ -145,25 +145,23 @@
     - [10.1 Contributions of Team Members](#101-contributions-of-team-members)
     - [10.2 References](#102-references)
 
-## 1 Introduction
+## 1. Introduction
 
 ### 1.1 Overview
 
-**Glitchwood** is a browser-based **2D roguelike action RPG** developed using **P5.js**. At its core, the game invites players to step into the shoes of a developer lost within their own creation—a metaphorical journey through code, chaos, and debugging.
+**Glitchwood** is a browser-based 2D roguelike action RPG developed in **p5.js**, where players control a developer trapped inside their own buggy game world. They choose one of three characters—each with unique combat styles—and survive procedurally generated waves of enemies and dynamic environmental hazards.
 
-Players begin by choosing from **three unique characters**, each with distinct combat styles and upgrade paths.
+Key features include:
+- Real-time combat with manual aiming
+- Procedural maps and evolving enemy waves
+- A **dynamic weather system** that alters gameplay every 30 seconds
+- A **pet system** for healing, shielding, or offensive support
+- **Boss fights**, unlockable **Endless Mode**, and two difficulty levels
 
 <div align="center">
   <img src="docs/introduction/char.gif" alt="Character Animation" width="580" height="350"/>
   <p><em>Figure 1. Character selection screen.</em></p>
 </div>
-
-The game unfolds through **procedurally generated stages** filled with enemies, traps, and evolving hazards. As players progress, they must adapt to:
-
-- A **dynamic weather system** that alters gameplay every 30 seconds
-- A **companion (pet) system** offering tactical support (healing, shielding, attacking)
-- Increasingly difficult **boss encounters**
-- A final unlockable **Endless Mode** to test survival and skill
 
 <div align="center">
   <img src="docs/introduction/weather.gif" alt="Weather Animation" width="580" height="350"/>
@@ -180,653 +178,374 @@ The game unfolds through **procedurally generated stages** filled with enemies, 
   <p><em>Figure 4. Boss battle screen.</em></p>
 </div>
 
-Designed for both casual players and roguelike veterans, Glitchwood features:
-- **Two difficulty levels**
-- **A built-in tutorial**
-- **Mouse-and-keyboard controls for precise gameplay**
-
-Most importantly, Glitchwood is not just a game—it’s a **symbolic representation of software development**, where glitches, bugs, and system pressure are woven directly into gameplay mechanics.
+Beyond mechanics, **Glitchwood** is a metaphor: enemies represent bugs, pets symbolize debugging tools, and environmental chaos mirrors system instability.
 
 ---
 
 ### 1.2 Inspiration
 
-To design a game that balances chaos, progression, and replayability, we drew inspiration from two critically acclaimed modern roguelikes: **Vampire Survivors** and **20 Minutes Till Dawn**. Each offered valuable mechanics and design patterns—along with limitations we aimed to address.
-
----
+We drew inspiration from modern roguelikes:
 
 #### Vampire Survivors
-
-This game popularized **wave-based survival gameplay** and **automated attacks**, creating an addictive feedback loop of upgrades and enemy escalation.
-
-**What we learned and adopted:**
-- Continuous wave-based combat
-- Randomized upgrade selection
-- Simple controls for accessible gameplay
-
-**What we avoided:**
-- Over-reliance on auto-attacks, which reduce player agency
-
-> Instead, we opted for **manual aiming and dodging**, giving players more control in moment-to-moment action.
+Famous for its wave-based structure and randomized upgrades. We adopted:
+- Endless wave progression
+- Upgrade-based progression
+But avoided:
+- Auto-attacks; we prioritize manual control for skill-based combat
 
 <div align="center">
   <img src="docs/introduction/Vampire_Survivors.jpg" alt="Vampire Survivors" width="580" height="360">
-  <p><em>Figure 5. Screenshot from <i>Vampire Survivors</i>.</em></p>
+  <p><em>Figure 5. Vampire Survivors gameplay.</em></p>
 </div>
 
----
-
 #### 20 Minutes Till Dawn
-
-This twin-stick shooter focuses on **precise movement**, **aiming**, and **build diversity**, all within a minimalist but impactful visual style.
-
-**What we incorporated:**
-- Manual aiming and real-time aiming-based combat
-- Diverse character builds and weapon effects
-- Responsive control and fast pacing
-
-**What we improved:**
-- Depth of progression and environmental storytelling
+Offered manual aiming and build diversity. We were inspired by:
+- Responsive twin-stick shooting
+- Thematic minimalism
+- Quick decision-making
 
 <div align="center">
   <img src="docs/introduction/20_Minutes_Till_Dawn.jpg" alt="20 Minutes Till Dawn" width="580" height="350">
-  <p><em>Figure 6. Screenshot from <i>20 Minutes Till Dawn</i>.</em></p>
+  <p><em>Figure 6. 20 Minutes Till Dawn gameplay.</em></p>
 </div>
 
----
-
-### From Homage to Innovation
-
-Unlike our inspirations, **Glitchwood** takes a more symbolic and introspective route.
-
-The game tells the story of a **developer trapped inside their own digital world**, navigating glitches, burnout, and bugs—metaphors embedded into gameplay systems:
-
-- **Dynamic weather** represents external instability
-- **Pets** act as debugging tools or assistants
-- **Enemies and bosses** embody runtime errors and system failures
-
-To support this vision, we built **modular systems** in P5.js that are:
-- Easy to extend (e.g., new weather types, enemies, upgrades)
-- Thematically consistent
-- Visually minimal but narratively rich
+While we borrowed structure from these titles, **Glitchwood’s core theme—"a developer trapped in their own broken system"—is entirely our own.**
 
 ---
 
 ### 1.3 Innovation
 
-Glitchwood combines traditional roguelike mechanics with symbolic design and modular gameplay systems. Our innovations span mechanical systems, narrative integration, and visual presentation.
+#### 1.3.1 Mechanical Innovation
 
----
+**Character Selection and Specialization**
 
-#### 1.3.1 Mechanical Innovations
+| Image | Name | Description |
+|-------|------|-------------|
+| <img src="docs/assets/selected_images/characters/intro/mousegirl_intro.gif" height="100px"> | **Mousegirl** | Ranged attacker with charged arrows. |
+| <img src="docs/assets/selected_images/characters/intro/computerboy_intro.gif" height="100px"> | **Computerboy** | Bullet shooter with straightforward damage. |
+| <img src="docs/assets/selected_images/characters/intro/keyboardman_intro.gif" height="100px"> | **Keyboardman** | Melee fighter with AoE damage. |
 
-We introduced several gameplay systems that deepen strategic decision-making and improve replayability.
+**Companion (Pet) System**
 
-**Character Specialization**  
-Players choose from three characters, each designed with a distinct combat style and upgrade set.
+| Image | Name | Description |
+|-------|------|-------------|
+| <img src="docs/introduction/fox.gif" height="100px"> | **Blaze** | Auto-attacks enemies. |
+| <img src="docs/introduction/cow.gif" height="100px"> | **Aegis** | Generates protective shield. |
+| <img src="docs/introduction/fairy.gif" height="100px"> | **Aurora** | Slowly heals the player. |
 
-|                                             Image                                             |      Name       | Description                                                                                                   |
-| :-------------------------------------------------------------------------------------------: | :-------------: | :------------------------------------------------------------------------------------------------------------ |
-|  <img src="docs/assets/selected_images/characters/intro/mousegirl_intro.gif" height="100px">  |  **Mousegirl**  | A ranged attacker with charge mechanics. Fully charged arrows deal the highest damage.                        |
-| <img src="docs/assets/selected_images/characters/intro/computerboy_intro.gif" height="100px"> | **Computerboy** | A beginner-friendly character using bullets. Focuses on straightforward upgrades and sustained firepower.     |
-| <img src="docs/assets/selected_images/characters/intro/keyboardman_intro.gif" height="100px"> | **Keyboardman** | A melee fighter with high area-of-effect damage and strong durability-focused upgrades.                       |
+**Dynamic Weather System**
 
-**Companion System**  
-After defeating each boss, players select one of three companions with distinct roles—offensive, defensive, or healing.
+| Image | Name | Description |
+|-------|------|-------------|
+| <img src="docs/introduction/flake.gif" height="100px"> | **Snow** | Slows all movement. |
+| <img src="docs/introduction/lightning.gif" height="100px"> | **Lightning** | Strikes random areas. |
+| <img src="docs/introduction/sun.gif" height="100px"> | **Sun** | Boosts attack speed. |
 
-|                         Image                          |    Name    | Description                                                                    |
-| :----------------------------------------------------: | :--------: | :----------------------------------------------------------------------------- |
-|  <img src="docs/introduction/fox.gif" height="100px">  | **Blaze**  | Attacks nearby enemies, enhancing damage output.                               |
-|  <img src="docs/introduction/cow.gif" height="100px">  | **Aegis**  | Generates a shield that blocks damage and mitigates environmental hazards.     |
-| <img src="docs/introduction/fairy.gif" height="100px"> | **Aurora** | Gradually restores player health, improving survivability between waves.       |
-
-**Dynamic Weather System**  
-Every 30 seconds, a randomized weather effect changes gameplay conditions for both players and enemies.
-
-|                           Image                            |     Name      | Description                                                                      |
-| :--------------------------------------------------------: | :-----------: | :------------------------------------------------------------------------------- |
-|   <img src="docs/introduction/flake.gif" height="100px">   |   **Snow**    | Slows the movement speed of all characters and enemies.                          |
-| <img src="docs/introduction/lightning.gif" height="100px"> | **Lightning** | Strikes random targets with area damage.                                         |
-|    <img src="docs/introduction/sun.gif" height="100px">    |    **Sun**    | Increases attack speed for both players and enemies, accelerating combat pace.   |
-
-These three systems—specialized characters, weather shifts, and companion support—interact to create layered strategy and emergent gameplay.
+These mechanics work together to create **emergent gameplay**, requiring players to adapt constantly.
 
 ---
 
 #### 1.3.2 Narrative Innovation
 
-Rather than using dialogue or cutscenes, Glitchwood conveys its story through metaphor. The protagonist is a **developer trapped inside their own unstable game**, where every mechanic represents a real-world software development issue.
+Instead of dialogue or cutscenes, **Glitchwood** tells its story through metaphor:
+- **Bugs** = enemies
+- **Weather** = unstable systems
+- **Pets** = debugging tools
+- **Bosses** = runtime crashes
 
-Key metaphors include:
-- **Enemies** as software bugs
-- **Companions** as debugging tools
-- **Weather** as unstable system environments
-- **Boss fights** as critical runtime failures
-
-This symbolic approach allows us to merge gameplay and theme without interrupting the player experience.
+This symbolic layer deepens the game experience without breaking immersion.
 
 ---
 
 #### 1.3.3 Visual and Thematic Innovation
 
-The visual design reinforces the metaphor of "being inside a broken system":
+- **Pixel art** based on hardware motifs (keyboard, mouse, etc.)
+- **UI** styled like terminals and dev tools
+- **Visual glitches** simulate system corruption
+- **Minimalist sound design** creates a sense of digital isolation
 
-- **Characters** are rendered in pixel art, referencing coding archetypes (mouse, keyboard, computer)
-- **UI elements** resemble consoles and terminal windows
-- **Visual glitches**, flickering effects, and corrupted assets enhance immersion
-- **Sound design** is minimal and ambient, contributing to a sense of digital isolation
-
-Together, these elements create a coherent aesthetic where every visual and audio cue reinforces the game’s narrative identity.
+These choices reinforce the core narrative: fighting against systemic instability from inside the system itself.
 
 ---
 
 ### 1.4 Vision
 
-Glitchwood was designed with two core objectives:
+Our vision had two parts:
 
-1. To deliver a polished, replayable roguelike experience.
-2. To explore how gameplay systems can metaphorically reflect the process and emotional reality of software development.
+#### Gameplay Vision
+- Deliver high replayability and depth through **modular systems** (weather, pets, upgrades).
+- Enable fast content expansion and balance tweaking via object-oriented design.
 
----
+#### Technical Vision
+- Maintain **performance and modularity** within the constraints of browser-based JavaScript.
+- Use p5.js to create real-time responsiveness without engine overhead.
 
-#### Gameplay Vision: Strategic Depth Through Modular Design
+#### Long-Term Goals
+We imagine Glitchwood evolving into:
+- A **sandbox for metaphor-driven gameplay**
+- A **teaching tool** for software design and debugging
+- A base for **co-op modes**, modding support, or branching narratives
 
-We aimed to build a gameplay structure that is both fun and deeply customizable. Key systems such as the **weather engine**, **companion system**, and **enemy wave generator** were implemented as modular components. This allows:
-
-- Easy tuning of difficulty parameters
-- Rapid addition of new weather types, companions, and enemy behaviors
-- Seamless transition into advanced modes such as **Endless Mode** or potential **branching storylines**
-
-Each system was designed not only for mechanical balance but also to reinforce the game’s symbolic theme—system entropy and recovery under pressure.
-
----
-
-#### Technical Vision: Performance and Maintainability in a Lightweight Engine
-
-Working with **P5.js** in a browser environment posed clear performance constraints. Our goal was to maximize real-time responsiveness while preserving maintainable, extensible code. This required solutions for:
-
-- **Collision detection** under heavy object load
-- **State-based animation logic**
-- **Input responsiveness and timing control**
-
-The result is a codebase organized around clear, testable classes and update cycles, with built-in support for modular upgrades, powerups, and interactive systems.
-
----
-
-#### Future Directions: Extending Glitchwood as a Platform
-
-We envision Glitchwood as more than a standalone game—it is a **sandbox for metaphor-driven gameplay**, where mechanics are used to explore emotional and technical challenges faced by developers.
-
-Potential next steps include:
-
-- **Narrative expansion** via player-driven story branching
-- **Cooperative multiplayer**, allowing two developers to “debug” together
-- **Community-made upgrades or modding support**
-- **Educational deployment**, using the game to teach system design or debugging concepts
-- **Accessibility and performance optimization**, for wider reach across devices and user groups
-
-In the long term, we see Glitchwood evolving into a framework where design, metaphor, and system architecture come together to support both **creative gameplay** and **technical insight**.
+> Every system in Glitchwood—from mechanics to visuals—was crafted not just for playability, but for **meaning**.
 
 [Back to Table of Contents](#table-of-contents)
 
-## 2 Ideation
 
-Before selecting and developing Glitchwood, our team explored two original game concepts. Each was supported by early design prototypes and system planning. This allowed us to evaluate their creative potential, feasibility within our toolset (P5.js), and suitability for an agile development workflow.
+## 2. Ideation
 
-### 2.1 Game Idea 1: Survival Roguelike
-
-This was our primary concept and the basis for Glitchwood’s final design.
-
-The idea centered on a **wave-based survival roguelike**, in which players control developer-themed characters and face escalating threats in procedurally generated environments. The gameplay balances real-time action with strategic upgrades and random elements that keep each session fresh.
+Before settling on **Glitchwood**, our team explored two original game concepts, each with early-stage prototypes. This allowed us to compare creative potential, technical feasibility in **p5.js**, and compatibility with Agile development.
 
 ---
 
-#### Core Gameplay Loop
+### 2.1 Game Idea 1: Survival Roguelike *(Final Pick)*
 
-Players begin each run by selecting one of three characters, each offering a different combat style and upgrade path. As waves progress, they:
+This concept laid the foundation for Glitchwood:  
+A wave-based survival game with procedurally generated content, manual combat, randomized upgrades, and symbolic game systems.
 
-- Defeat enemies to earn experience and upgrades
-- Encounter weather effects that impact gameplay every 30 seconds
-- Fight powerful bosses every few waves
-- Unlock companions (pets) that provide combat support
-
-The overall goal is to survive increasingly difficult encounters or pursue high scores in an **Endless Mode**.
-
----
+#### Core Gameplay Loop:
+- Choose a character (ranged, melee, or gun-based)
+- Survive enemy waves
+- Gain XP and unlock upgrades
+- Defeat bosses
+- Pick a pet after each boss
+- Survive or unlock **Endless Mode**
 
 <div align="center">
-  <img src="docs/game_idea/Survival_Shooting_Game(Rogue_like_Elements).png" alt="Survival Shooting Game" width="820" height="570">
-  <p><em>Figure 7. Initial mind map for the Survival Roguelike idea.</em></p>
+  <img src="docs/game_idea/Survival_Shooting_Game(Rogue_like_Elements).png" alt="Mind map" width="820" height="570">
+  <p><em>Figure 7. Mind map of Game Idea 1.</em></p>
 </div>
 
----
+#### Early Prototypes
 
-#### Prototype Demonstrations
-
-We developed several early prototypes to visualize the player flow and core mechanics.
-
-- **Character Selection Interface**  
-  Players pick from distinct roles such as ranged, melee, or bullet-based combatants.
+**Character Selection**  
+Each character had unique weapons and scaling attributes.
 
 <div align="center">
   <img src="docs/game_idea/game1_who.gif" alt="Character Selection" width="580" height="350"/>
-  <p><em>Figure 8. Character selection screen from early prototype.</em></p>
+  <p><em>Figure 8. Early character selection prototype.</em></p>
 </div>
 
-- **Pet Selection System**  
-  After each boss, players choose a pet that modifies their combat style.
+**Pet Selection**  
+Players choose between attack, shield, or healing support.
 
 <div align="center">
   <img src="docs/game_idea/game1_select.gif" alt="Pet Selection" width="580" height="350"/>
-  <p><em>Figure 9. Pet selection interface, offering healing, shielding, or offensive support.</em></p>
+  <p><em>Figure 9. Pet selection screen prototype.</em></p>
 </div>
 
-- **Combat Flow**  
-  Core gameplay includes real-time movement, manual aiming, and area-based attacks.
+**Combat Flow**  
+Manual aiming and real-time enemy pursuit.
 
 <div align="center">
-  <img src="docs/game_idea/game1_attack.gif" alt="Combat Prototype" width="580" height="350"/>
-  <p><em>Figure 10. Sample combat sequence from the prototype.</em></p>
+  <img src="docs/game_idea/game1_attack.gif" alt="Combat Preview" width="580" height="350"/>
+  <p><em>Figure 10. Core combat gameplay.</em></p>
 </div>
+
+#### Strengths
+- Highly **modular**: Easy to assign subsystems to different developers
+- Well-suited to **Agile sprints** and early testing
+- Compatible with **p5.js**
+- Designed for **replayability**
 
 ---
 
-#### Design Strengths
+### 2.2 Game Idea 2: Horror Puzzle RPG *(Rejected)*
 
-This concept stood out due to its:
+A narrative-driven horror game, set in a frozen university lab where the player solves programming-themed puzzles across time loops.
 
-- **Modularity**: Characters, pets, weather, and upgrades could be developed independently by different team members
-- **Agile compatibility**: Iterative playtesting of mechanics (e.g., pet effects, boss phases) was feasible from early stages
-- **Tool alignment**: Well-suited for P5.js, UML modeling, and use-case driven requirements
-- **Replayability**: Randomized upgrades, weather, and waves supported long-term engagement
+#### Gameplay Concepts
+- **Exploration and puzzle-solving** across a looping timeline
+- **Narrative discovery** through environmental clues
+- **Horror elements**: sudden disruptions, ghost chases
+- **Code-based puzzles** and logic circuits
 
-  ---
-  
-### 2.2 Game Idea 2: Horror Puzzle RPG
+<div align="center">
+  <img src="docs/game_idea/Horror_Puzzle_RPG_Game.png" alt="Mind map" width="820" height="570">
+  <p><em>Figure 11. Mind map of Game Idea 2.</em></p>
+</div>
 
-Our second concept explored a more narrative-driven experience, blending psychological horror with puzzle-solving in a time-looped setting.
+#### Prototypes
 
-The game would take place in a frozen university laboratory, where the player awakens alone in a mysterious environment. To escape, they must solve programming-themed puzzles, uncover the past, and survive supernatural encounters that repeat across multiple loops.
+**Intro Sequence**  
+Narrative-based start using text overlays.
+
+<div align="center">
+  <img src="docs/game_idea/game2_start.gif" alt="Intro" width="580" height="350"/>
+  <p><em>Figure 12. Story opening prototype.</em></p>
+</div>
+
+**Puzzle Interaction**  
+In-world object puzzles and input systems.
+
+<div align="center">
+  <img src="docs/game_idea/game2_key.gif" alt="Puzzle Interaction" width="580" height="350"/>
+  <p><em>Figure 13. Key-item puzzle prototype.</em></p>
+</div>
+
+**Monster Encounter**  
+Chase scenes with loop resets on failure.
+
+<div align="center">
+  <img src="docs/game_idea/game2_ghost.gif" alt="Ghost Scene" width="580" height="350"/>
+  <p><em>Figure 14. Horror-chase prototype.</em></p>
+</div>
+
+#### Limitations
+- Complex scripting and branching logic
+- Less modular: Harder to divide tasks
+- Difficult to test iteratively
+- Time-intensive for non-linear scene management
 
 ---
 
-#### Core Concept
-
-- **Narrative-centric progression**: Players unravel a mysterious backstory with branching paths and environmental storytelling.
-- **Loop-based discovery**: Each reset adds new knowledge and unlocks different areas or puzzle outcomes.
-- **Puzzle mechanics**: Includes logic gates, key-item sequences, and memory recall challenges.
-- **Horror elements**: Sudden audio-visual changes, monster chases, and psychological tension.
-
----
-
-<div align="center">
-  <img src="docs/game_idea/Horror_Puzzle_RPG_Game.png" alt="Horror Puzzle RPG Mind Map" width=820" height="570">
-  <p><em>Figure 12. Mind map for the Horror Puzzle RPG idea.</em></p>
-</div>
-
----
-
-#### Prototype Demonstrations
-
-- **Story Introduction**  
-  An immersive text sequence introduces the setting and loop premise.
-
-<div align="center">
-  <img src="docs/game_idea/game2_start.gif" alt="Intro Sequence" width="580" height="350"/>
-  <p><em>Figure 13. Narrative opening from early prototype.</em></p>
-</div>
-
-- **Puzzle Interaction**  
-  Players interact with environmental objects, solve input-based puzzles, and manipulate triggers.
-
-<div align="center">
-  <img src="docs/game_idea/game2_key.gif" alt="Puzzle Scene" width="580" height="350"/>
-  <p><em>Figure 14. Sample puzzle interaction using in-world key systems.</em></p>
-</div>
-
-- **Monster Encounters**  
-  Chase sequences and time-sensitive evasion were planned to add tension.
-
-<div align="center">
-  <img src="docs/game_idea/game2_ghost.gif" alt="Monster Encounter" width="580" height="350"/>
-  <p><em>Figure 15. Monster-chase prototype designed to disrupt puzzle flow and increase pressure.</em></p>
-</div>
-
----
-
-#### Design Limitations
-
-While this idea offered strong narrative potential, it presented significant development challenges:
-
-- **High scripting complexity**: Required persistent state tracking and conditional branching across loops.
-- **Limited modularity**: Harder to divide work across team members due to interdependent logic flows.
-- **P5.js constraints**: Less suited to scene-based storytelling and visual scripting than action-based mechanics.
-- **Testing difficulty**: Longer sessions and binary puzzle success made iterative playtesting inefficient.
-
-Despite these limitations, this idea helped the team consider pacing, storytelling, and player immersion—factors that later informed the metaphorical design of Glitchwood.
-
-  ---
-  
 ### 2.3 Why We Chose Game Idea 1
 
-After evaluating both concepts, we selected **Game Idea 1 (Survival Roguelike)** as the foundation for Glitchwood. This decision was based on its technical feasibility, team alignment, and compatibility with the course structure.
+After comparing both concepts, we chose **Game Idea 1** due to:
+
+#### 1. **Modular Design**
+Its subsystems (combat, weather, pets, upgrades) could be developed in parallel, enabling individual ownership and faster iteration.
+
+#### 2. **Agile-Friendly**
+We could test combat, UI, and difficulty tuning from the first sprint onward—unlike the story-heavy RPG which required full scripting before meaningful playtests.
+
+#### 3. **Better Fit for Tools**
+**p5.js** is well-suited to real-time 2D action games. The horror RPG’s scene logic and looping systems would have been more difficult to manage in this environment.
+
+#### 4. **Conceptual Flexibility**
+We could embed deeper themes (developer burnout, system instability) through metaphor in a roguelike. The symbolic framing gave us narrative room without needing cinematic storytelling.
 
 ---
 
-#### 1. Strong Modularity and Parallel Development
-
-The survival roguelike structure naturally decomposes into independent subsystems—character classes, weather mechanics, pets, enemy AI, and upgrade logic. This made it well-suited for a multi-member team, allowing each contributor to own a feature without tight coupling.
-
-In contrast, the puzzle RPG required centralized scripting and complex event tracking, making task division and collaborative work more challenging.
-
----
-
-#### 2. Alignment with Agile Methodology
-
-We adopted a sprint-based agile development approach, which benefits from early testing, feedback, and iterative balance tuning. Game Idea 1 allowed us to prototype core systems—combat, upgrades, pet effects, and difficulty scaling—quickly and continuously refine them.
-
-This workflow would have been difficult with the horror puzzle concept, which required longer narrative sequences and tightly coupled logic that delayed playtesting.
-
----
-
-#### 3. Compatibility with Course Tools and Learning Goals
-
-Our chosen game idea lent itself well to the course’s emphasis on software engineering fundamentals, including:
-
-- Use case modeling (player actions, developer roles)
-- Class and sequence diagrams (object behavior and interaction)
-- Code modularity, extensibility, and maintainability
-- Reflection on system design challenges and testing
-
-Furthermore, the roguelike’s upgrade systems and glitch metaphor offered a meaningful way to embed CS themes like **bugs**, **performance bottlenecks**, and **system failure recovery** into gameplay.
-
----
-
-In summary, Game Idea 1 provided a stronger foundation for both creative development and structured software engineering. It gave us a flexible, testable, and scalable platform that aligned with our tools, timeline, and learning objectives.
+> In short, **Game Idea 1** offered greater creative freedom, clearer technical scope, and a better match for our development approach.
 
 [Back to Table of Contents](#table-of-contents)
 
-## 3 Requirements
+## 3. Requirements
 
-Throughout the development of *Glitchwood*, we applied structured requirement planning techniques to guide our design and implementation. Specifically, we used tools such as **Epics**, **User Stories**, and **Acceptance Criteria**, which are widely adopted in agile software development. These approaches helped us define goals more clearly, understand different stakeholder needs, and manage the complexity of the project in a collaborative and iterative way.
+To guide development, we adopted **agile requirement planning** using tools like **Epics**, **User Stories**, and **Acceptance Criteria**. These helped align team vision, stakeholder needs, and technical execution.
 
-### 3.1 Stakeholder Identification: The Onion Model
+---
 
-To guide our requirements planning, we used the **Onion Model** to map out the different stakeholders involved in or affected by Glitchwood’s development. This model helped us visualize not only the users of the system, but also the broader technical, academic, and social context in which the game operates.
+### 3.1 Stakeholder Identification – The Onion Model
+
+We used the **Onion Model** to identify all stakeholders, from direct users to broader contextual influences.
 
 <div align="center">
   <img src="docs/requirements/Onion_Model.png" alt="Onion Model of Stakeholders" width="820" height="530">
-  <p><em>Figure 17. Onion model diagram for stakeholder analysis.</em></p>
+  <p><em>Figure 17. Stakeholder Onion Model for Glitchwood.</em></p>
 </div>
 
----
+#### Layers Explained:
 
-#### Core Layer: The System Itself
+- **Core**: The system itself (*Glitchwood*)
+- **Inner Ring**: Primary users — players and testers
+- **Middle Ring**: Instructors, design inspirations (e.g., *Vampire Survivors*)
+- **Outer Ring**: Platform (GitHub Pages), public users, potential influencers
 
-At the center of the model is the system—**Glitchwood**. All design decisions revolve around its mechanics, interface, and player experience.
-
----
-
-#### Inner Layer: Immediate Users
-
-This includes the **players**, who directly interact with the system, and the **testers**, who provided feedback during development. Their needs shaped key usability features, such as difficulty modes, intuitive controls, and tutorials.
+This mapping ensured we designed with both gameplay and academic context in mind.
 
 ---
 
-#### Middle Layer: Institutional Context
+### 3.2 Requirements Modeling
 
-This layer includes:
+We derived formal requirements in three steps:
 
-- **Instructors**, who evaluated the project based on software engineering principles
-- **Inspirational sources**, such as Vampire Survivors and 20 Minutes Till Dawn, which influenced our mechanics and pacing
+#### 1. Define Epics  
+Grouped stakeholder needs into 5 major themes:
+- Game progression & difficulty
+- Upgrade balance
+- UI/UX clarity
+- Deployment & performance
+- Symbolic/educational value
 
-These stakeholders indirectly shaped how we interpreted project goals and technical structure.
-
----
-
-#### Outer Layer: Extended Environment
-
-The final layer captures external and social stakeholders:
-
-- The **platform (GitHub Pages)**, used for hosting and live deployment
-- **Classmates and potential influencers**, who could share or promote the game
-- **Competitor projects** from other teams
-- The **public**, representing players outside the course who may access the game post-release
-
----
-
-By structuring our stakeholder landscape in this way, we ensured our requirements reflected not just user needs, but also technical constraints, academic expectations, and broader deployment conditions. This model also provided a foundation for aligning gameplay features with stakeholder values in subsequent planning phases.
-
----
-
-### 3.2 Requirements Analysis: Epics, User Stories, and Acceptance Criteria
-
-Once we mapped out our stakeholders, we translated their needs into formal software requirements using industry-standard tools: **Epics**, **User Stories**, and **Acceptance Criteria**.
-
----
-
-#### From Stakeholders to Epics
-
-We began by grouping stakeholder needs into five major **epics**, each representing a key area of concern:
-
-- Gameplay progression and difficulty
-- Upgrade system and combat balance
-- UI clarity and accessibility
-- Deployment and performance
-- Educational and symbolic value
-
-These epics helped us align high-level goals across design, development, and evaluation.
-
----
-
-#### Writing User Stories
-
-From each epic, we derived concrete **User Stories**, following the standard format:
-
-> *As a [user], I want [feature], so that [value].*
-
-For example:
-
-> *As a casual player, I want a low-difficulty mode, so that I can enjoy the game without feeling overwhelmed.*
-
-Each story was reviewed for clarity and feasibility during sprint planning.
-
----
-
-#### Acceptance Criteria for Testability
-
-To ensure our stories were actionable and verifiable, we defined **Acceptance Criteria** using the **Given–When–Then** structure. This allowed us to write test cases that could validate features throughout development.
+#### 2. Write User Stories  
+Using the agile format:
+> *As a [type of user], I want [feature], so that [benefit].*
 
 Example:
+> *As a casual player, I want an Easy Mode so that I can enjoy the game without being overwhelmed.*
 
-> **User Story**: *As a player, I want weather to change periodically so that the gameplay feels dynamic.*  
-> **Acceptance Criteria**:  
-> - *Given* the player is in-game  
-> - *When* 30 seconds have passed  
-> - *Then* the weather system should trigger a change and apply corresponding effects
+#### 3. Set Acceptance Criteria  
+Based on the **Given–When–Then** format:
 
-This method improved communication between designers, developers, and testers, ensuring everyone understood the purpose and expected behavior of each feature.
+> **Given** I’m playing the game  
+> **When** 30 seconds pass  
+> **Then** a new weather effect should trigger and alter gameplay conditions
 
 ---
 
-#### Stakeholder Requirements Mapping
+### 3.3 Requirements in Practice
 
-The diagram below shows how we mapped user stories and acceptance criteria across stakeholder groups. Each epic is connected to specific personas, demonstrating our user-centered planning approach.
+Each system was directly informed by stakeholder-centered requirements.
+
+#### Players:
+- Easy and Hard modes
+- Tutorial overlay
+- Clear upgrade UI
+- Responsive controls
+
+#### Developers:
+- Modular weather, upgrade, and pet systems
+- Git-based collaboration and code reviews
+- Object-oriented architecture
+
+#### Instructors:
+- Use-case and UML diagrams
+- Maintainable, readable codebase
+- Demonstrated traceability between design and outcome
+
+#### Platform:
+- Browser-based p5.js game
+- Optimized for lightweight deployment on GitHub Pages
 
 <div align="center">
-  <img src="docs/requirements/Stakeholder_Requirements.png" alt="Stakeholder Requirements" width="820" height="620">
-  <p><em>Figure 18. Epics, user stories, and acceptance criteria mapped by stakeholder group.</em></p>
+  <img src="docs/requirements/Stakeholder_Requirements.png" alt="Requirements Mapping" width="820" height="620">
+  <p><em>Figure 18. Mapping user stories to epics and stakeholders.</em></p>
 </div>
 
 ---
 
-By grounding our development process in structured, testable requirements, we were able to plan features methodically, communicate goals clearly across the team, and iterate with confidence throughout each sprint.
+### 3.4 Use Case Diagram
 
----
-
-### 3.3 Applying Requirements to Our Game
-
-Once our epics and user stories were defined, we systematically translated them into concrete game features. This transformation—from stakeholder need to system behavior—formed the foundation of our design decisions.
-
----
-
-#### Mapping Requirements to Game Systems
-
-Each group of stakeholders contributed unique priorities, which we addressed through specific gameplay features, UI patterns, and code architecture.
-
----
-
-**Players**  
-Players prioritized clarity, responsiveness, and replayability. This led us to:
-
-- Develop **two difficulty modes** to accommodate varying skill levels
-- Implement a **tutorial overlay** for onboarding
-- Design randomized upgrade options for varied playthroughs
-- Create **intuitive keyboard and mouse controls**, tested across devices
-
----
-
-**Developers** (Team)  
-As the creators, we emphasized maintainability and scalability:
-
-- Built a **modular upgrade system** to allow rapid addition of effects
-- Designed **weather and pet systems** as independent classes
-- Used GitHub workflows to support collaborative, branch-based development
-- Applied class diagrams and OOP principles to isolate responsibilities
-
----
-
-**Game Platform & Deployment Context**  
-The requirement to host on **GitHub Pages** affected architectural choices:
-
-- Used P5.js for browser compatibility
-- Avoided external dependencies and large libraries
-- Focused on **performance optimization** for smooth gameplay across devices
-
----
-
-**Instructors & Academic Review**  
-We aligned our game structure with course goals:
-
-- Used **Use Case Models** to represent gameplay interactions
-- Created **UML diagrams** to explain system dynamics
-- Ensured traceability from requirements → design → implementation
-
----
-
-**Marketing & Experience Design**  
-To create a coherent and visually engaging product, we focused on:
-
-- A **pixel-art UI** that aligns with the theme of “glitchy software”
-- Clear **visual feedback** for attacks, pets, and boss skills
-- Consistent **aesthetic tone** linking gameplay to the metaphor of development struggles
-
----
-
-#### Closing the Loop: Requirements as Design Anchors
-
-By consistently referring back to our original user stories and acceptance criteria, we ensured that every system feature served a specific purpose—either fulfilling a user need, enabling better testing, or reinforcing the game’s narrative metaphor. This alignment made our development more focused, justifiable, and user-centered throughout the entire process.
-
----
-
-### 3.4 Use-Case Diagram and Use-Case Specification
-
-To structure Glitchwood’s interactive features, we developed a detailed **Use Case Diagram** that models all system-level interactions between users and the game. The diagram visualizes the primary actions available to each user role—**Player** and **Developer**—as well as the conditions under which these actions occur.
-
----
+We built a **Use Case Diagram** to visualize system interactions.
 
 <div align="center">
-  <img src="docs/requirements/use_case_diagram.png" alt="Use Case Diagram and Specification" width="1100" height="580">
-  <p><em>Figure 19. Use-case diagram and specification for Glitchwood.</em></p>
+  <img src="docs/requirements/use_case_diagram.png" alt="Use Case Diagram" width="1100" height="580">
+  <p><em>Figure 19. Use case diagram for Glitchwood.</em></p>
 </div>
 
----
+#### Key Actors:
+- **Player**: Starts the game, fights enemies, selects pets, upgrades, and enters endless mode
+- **Developer**: Releases new content or bug fixes
 
-#### Actors and Use Case Overview
+#### Representative Use Case: “Complete Game Run”
 
-- **Player**: The end user who interacts with the game interface and mechanics.
-- **Developer**: The system maintainer, responsible for updates and content expansion.
+| Step | Description |
+|------|-------------|
+| 1 | Player selects character and difficulty |
+| 2 | Survives waves, upgrades character |
+| 3 | Defeats boss → selects pet |
+| 4 | Repeats until Wave 15 |
+| 5 | Enters **Endless Mode** or finishes game |
 
-**Key player actions include:**
-
-- Starting the game → Choosing difficulty and character
-- Combat interaction → Fighting enemies, facing bosses
-- Choosing upgrades
-- Saving, pausing, resuming the game
-- Entering infinite mode or returning to main menu
-
-**Developer actions include:**
-
-- Releasing new game versions via content patches or technical updates
-
----
-
-#### Representative Use Case: Complete Game
-
-**Use Case Name**: *Complete Game*
-
-**Actor**: Player
-
-**Preconditions**: Player has selected difficulty and character.
-
-**Postconditions**: Player stats and score are saved; session ends or enters infinite mode.
-
-**Basic Flow:**
-
-1. Player selects difficulty
-2. Player selects a character
-3. Waves of enemies are fought
-4. Player gains XP, selects upgrades
-5. Boss appears at interval (e.g., wave 5, 10, 15)
-6. Player either defeats boss and continues or is defeated
-7. After wave 15, player may:
-   - Finish the game
-   - Enter infinite mode
-
-**Alternate Flows:**
-
-- *Game Over*: Player dies → score displayed → return to menu
-- *Infinite Mode*: Player continues in looped progression until death
-
-**Special Requirements:**
-
-- Weather changes every 30 seconds
-- Upgrade pool is randomized per run
-- Enemy spawn rate increases over time
-- Bosses are immune to obstacle collision
-- Game difficulty increases exponentially
+**Special Cases**:  
+- Weather triggers every 30 seconds  
+- Bosses appear every 5 waves  
+- Game ends on player death or wave completion
 
 ---
 
-This model served as a foundation for designing UI screens, menu flow, and state transitions. It also provided a reference point when debugging scene logic or implementing persistent game states like pet selection and score tracking.
+### 3.5 Reflection
 
----
+Our structured requirements process helped us:
 
-### 3.5 Reflection and Conclusion
+- Convert ideas into **concrete, testable goals**
+- Support **parallel development** via modularity
+- Align game mechanics with **stakeholder expectations**
 
-Throughout the planning phase, using structured requirement techniques helped us move from creative ambition to implementable design. This section reflects on how these methods supported our workflow and strengthened our final product.
+By grounding all features in **user stories** and **acceptance criteria**, we ensured that Glitchwood evolved with clarity, cohesion, and purpose.
 
----
-
-#### From Ambiguity to Clarity
-
-By organizing our ideas into epics, user stories, and testable acceptance criteria, we were able to convert vague concepts into concrete development goals. This reduced the risk of feature drift and ensured that every major mechanic had a clear purpose aligned with stakeholder expectations.
-
----
-
-#### Supporting Collaboration and Iteration
-
-Having a shared language around user stories and use cases improved communication across the team. During each sprint, we used these structures to review progress, prioritize backlog items, and write test cases. This consistency made it easier to onboard team members and maintain system stability across branches.
-
----
-
-#### Value Beyond the Project
-
-Beyond this single game, we now see how requirement analysis provides a bridge between creative thinking and software engineering. Whether building games, apps, or other systems, these practices help teams align user value, system behavior, and development effort in a transparent and testable way.
-
----
-
-Overall, this requirements-driven approach gave us a solid foundation—not just for building Glitchwood, but for becoming better developers and collaborators.
+> Clear requirements didn’t limit creativity — they focused it.
 
 [Back to Table of Contents](#table-of-contents)
 
@@ -1045,999 +764,671 @@ This architecture lays a strong foundation for future extensions such as multipl
 > Ultimately, our design decisions ensured not only a functional game, but also a clean, extensible, and collaborative codebase—ready for the next stage of evolution.
 
 [Back to Table of Contents](#table-of-contents)
+## 4. Design
 
-## 5 Implementation
-
-### 5.1 Basic Implementation
-
-The core gameplay loop of Glitchwood revolves around real-time movement, combat, and adaptive environmental interaction. We implemented this loop by combining player input handling, procedural environment generation, adaptive enemy logic, and modular support systems such as pets and weather.
+The design phase established Glitchwood’s architecture using UML diagrams and object-oriented principles. This guided scalable development and supported team collaboration.
 
 ---
 
-#### Player Controls and Input Handling
+### 4.1 System Architecture Overview
 
-Players control their character using keyboard keys (WASD for movement) and mouse input (aiming and clicking to attack). Internally, we rely on p5.js event functions:
+Glitchwood is organized into modular subsystems to support extensibility, performance, and parallel development.
 
-- `keyPressed()` and `keyReleased()` update movement states
-- `mouseClicked()` triggers weapon attacks based on the character's class
+#### Core Design Principles:
+- **Encapsulation**: Each system manages its own state and logic
+- **Separation of Concerns**: Combat, UI, environment, and state logic are independent
+- **Extensibility**: New content (pets, weather, upgrades) can be added with minimal changes
 
-> This separation of movement and attack input allows for simultaneous action, supporting both melee and ranged playstyles.
+#### Major Subsystems:
+1. **Entity System**:  
+   Includes `Player`, `Enemy`, `Boss`, and `Pet` classes  
+2. **Combat & Upgrade Engine**:  
+   Manages weapons, projectiles, and modular upgrade effects  
+3. **Environment System**:  
+   Procedural map generation and dynamic weather effects  
+4. **State Manager & UI**:  
+   Controls game scenes (start, wave, boss, pet selection) and UI overlays
 
----
-
-#### Procedural Map and Obstacle Generation
-
-Each map consists of randomly generated obstacles that block movement and projectiles. When a new wave begins:
-
-- All previous obstacles are cleared
-- New obstacles are placed based on current wave level
-- Obstacle layout uses a stack-based generation pattern to ensure collision-free placement
-
-Certain bosses (e.g., `Slimeboss`) are designed to **ignore obstacles**, adding a layer of unpredictability to combat.
-
-> Procedural regeneration increases replayability while forcing players to adapt their positioning strategies per wave.
+> This architecture enabled separate teams to implement features independently without code conflicts.
 
 ---
 
-#### Enemy Spawn and Pursuit Logic
+### 4.2 Class Diagram
 
-Enemies spawn outside the visible map area and at a minimum distance from the player. Their movement relies on:
-
-- Real-time vector calculation toward the player
-- Angle-based movement adjustment for obstacle avoidance
-- Progressive increase in spawn count per wave
-
-Bosses appear on **waves 5, 10, and 15**, each bringing unique abilities and challenge curves.
-
-> This algorithm balances fairness (avoid surprise spawns) and difficulty scaling as waves progress.
-
----
-
-#### Weather and Pet Systems
-
-After defeating the first boss, players select one of three pets, each providing continuous support:
-
-- `Blaze`: Attacks nearby enemies
-- `Aegis`: Generates a protective shield
-- `Aurora`: Gradually heals the player over time
-
-Separately, the **weather system** is triggered every 30 seconds, randomly selecting one of three global effects:
-
-- `Snow`: Reduces movement speed for all characters and enemies
-- `Thunder`: Deals periodic area damage
-- `Sun`: Temporarily increases player attack speed
-
-Both systems are implemented via independent classes and rely on the global time and frame counters provided by p5.js.
-
-> Decoupling pets and weather from the main game loop allows for easy tuning, testing, and future expansion.
-
----
-
-### 5.2 Code Architecture Overview
-
-Glitchwood’s codebase follows a modular, event-driven structure grounded in object-oriented design. Each system—combat, weather, pets, upgrades—was encapsulated into standalone components to maximize scalability and reduce coupling.
-
----
-
-#### Central Game Loop
-
-At the core is the **main game loop**, which runs continuously using p5.js’s `draw()` function. This loop is responsible for:
-
-- Updating player input states
-- Moving all entities (player, enemies, pets, projectiles)
-- Handling collisions and applying effects
-- Rendering game objects and UI overlays
-- Checking game state transitions (e.g., boss wave, pet selection, game over)
-
-User input events (`keyPressed()`, `mouseClicked()`) trigger immediate actions (e.g., movement, attacks), while timed events (e.g., weather transitions, pet cooldowns) rely on frame-based counters.
-
-> This architecture ensures clear separation between real-time updates and discrete triggers.
-
----
-
-#### Modular Class System
-
-Each gameplay element is encapsulated in its own class:
-
-- **Player**  
-  Stores attributes (`HP`, `speed`, `weaponType`) and handles input response, movement, and upgrade selection. Each player instance may include references to an equipped weapon and a companion pet.
-
-- **Enemy & Boss**  
-  Subclasses of a shared `Figure` superclass. Bosses override behavior methods to implement unique skills and animations.
-
-- **Projectile System**  
-  `Bullet`, `Arrow`, and enemy projectiles are autonomous instances updated every frame. Each includes collision logic and lifespan management.
-
-- **Pet System**  
-  Pets are subclassed into attacker, healer, or defender types. Each uses a combination of `follow()` and `trigger()` methods to manage position and behavior independently.
-
-- **Weather System**  
-  Implements a timed trigger using frame counters and random selection to apply a global environmental modifier every 30 seconds.
-
-> By isolating behavior within self-contained classes, we ensured system robustness and reusability.
-
----
-
-#### Special Interaction Handlers
-
-To support complex game states and transitions, we implemented a lightweight **state manager**, built around a `gameState` global variable (e.g., `"start"`, `"wave"`, `"boss"`, `"selectPet"`, `"gameOver"`).
-
-Each visual or logical phase is associated with a rendering function (`drawStartScreen()`, `drawWave()`, etc.), which is conditionally called inside `draw()`.
-
-> This approach simplified phase transitions without relying on third-party state machines, keeping logic transparent and testable.
-
----
-
-This architecture allowed us to independently develop features while maintaining a unified flow. Features such as new enemies, weapon types, or pets could be added without modifying core systems, enabling safe
-
----
-
-### 5.3 Key Features and Highlights
-
-Glitchwood's gameplay is defined by several key systems that work together to create an engaging, adaptive experience. Each of these systems was designed with modularity and replayability in mind.
-
----
-
-#### 1. Procedural Map and Obstacle Generation
-
-**Description**:  
-Every wave spawns a new battle arena with a fresh layout of obstacles that block both movement and attacks.
-
-**Implementation**:  
-Obstacles are instantiated using a stack-based generator, which ensures:
-- Random placement
-- Non-overlapping with player spawn zone
-- Obstacle shapes and density scale with wave number
-
-**Design Value**:  
-This system increases replayability and forces players to continually adapt tactics. It also introduces soft cover dynamics, rewarding positioning and spatial awareness.
-
----
-
-#### 2. Fine-Grained Collision Detection
-
-**Description**:  
-Player, enemy, projectile, pet, and obstacle collisions are handled precisely to ensure a fair and responsive combat experience.
-
-**Implementation**:  
-- All game objects implement `checkCollision()` methods based on distance, angle, or bounding box
-- Projectiles deactivate on contact
-- "Air walls" are added at the edges of the canvas to prevent unintended exits
-
-**Design Value**:  
-By centralizing and unifying hit detection logic, we achieved consistent responses across different interaction types. This minimized bugs and made testing easier.
-
----
-
-#### 3. Adaptive Pet System
-
-**Description**:  
-Pets accompany the player after boss battles, offering passive support in one of three modes: attack, heal, or defend.
-
-**Implementation**:  
-- Pets follow the player using `lerp()` smoothing
-- Each pet class includes cooldown management (`attackCooldown`, `shieldDuration`, etc.)
-- Pets detect enemies or player HP status and act accordingly
-
-**Design Value**:  
-The pet system adds strategic depth while maintaining mechanical clarity. It also gave us an opportunity to explore autonomous agent design within a real-time loop.
-
----
-
-#### 4. Dynamic Weather Engine
-
-**Description**:  
-Every 30 seconds, the game environment shifts to a new weather state that applies global effects to all characters.
-
-**Implementation**:  
-- Weather types (`Snow`, `Thunder`, `Sun`) are subclasses of a `Weather` base class
-- Effects are triggered based on `frameCount` and stored in a shared modifier object
-- Weather updates are independent of player input or enemy state
-
-**Design Value**:  
-This mechanic keeps gameplay unpredictable and encourages real-time adaptation. Because it affects enemies and players equally, it introduces tactical windows and disruption events that shape each wave differently.
-
----
-
-### 5.4 Three Key Technical Challenges in Glitchwood's Development
-
-During implementation, we encountered several significant technical hurdles that tested our ability to design scalable, maintainable, and responsive game systems. Below we highlight the three most complex challenges and how we resolved them.
-
----
-
-#### 1. Fine-Grained Collision and Boundary Control
-
-**Challenge**:  
-With multiple moving entities—players, enemies, projectiles, pets, and obstacles—we needed precise collision logic to ensure fair combat and predictable interactions.
-
-**Technical Difficulty**:  
-Naïve distance-based checks were insufficient for fast-moving projectiles and dense enemy groups. We also had to prevent players from leaving the intended play area without breaking immersion.
-
-**Solution**:  
-We implemented dynamic hitbox calculations using radial distance thresholds for general cases, and rectangular bounds for certain projectiles. Invisible "air walls" were defined at canvas edges, and every object adopted a `checkCollision()` method that unified collision detection logic.
-
-> This approach allowed us to reuse the same logic for testing attacks, movement blocking, and shield effects across all entities.
-
----
-
-#### 2. Pet System Integration with Regenerating Obstacles
-
-**Challenge**:  
-After each boss wave, the map resets with a new set of obstacles. Pets must continue to follow the player without becoming stuck or visually desynchronized.
-
-**Technical Difficulty**:  
-Pathfinding wasn’t feasible under time constraints. If we reused static following behavior, pets often got trapped behind newly generated obstacles or flickered during repositioning.
-
-**Solution**:  
-We introduced **dynamic path re-evaluation logic**, where each pet recalculates its relative offset from the player after obstacle regeneration. We used `lerp()` smoothing to ensure fluid motion and avoid visual stuttering. Additionally, key behaviors such as auto-attack and shielding were encapsulated in per-pet classes.
+We used UML to define key classes and their relationships.
 
 <div align="center">
-  <img src="docs/implementation/code2_image.png" alt="code2_image" width="955" height="324">
-  <p><em>Figure 22. Code snippet showing pet behavior: `follow()` and `autoAttack()` logic.</em></p>
+  <img src="docs/design/ClassDiagram.png" alt="Class Diagram" width="820" height="380">
+  <p><em>Figure 20. UML class diagram of core systems.</em></p>
 </div>
 
-> This modular approach kept the core game loop clean, allowing pets to operate autonomously while remaining visually synced with the player.
+#### Key Inheritance Patterns:
+- `Figure` → Base class for `Player`, `Enemy`, `Boss`
+- `Pet` → Superclass for `Healer`, `Attacker`, `Defender`
+- `Weather` → Extended by `Snow`, `Thunder`, `Sun`
+- `Weapon` → Specific logic for `Sword`, `Bow`, `Gun`
+
+> Shared interfaces enabled polymorphism in update/render/attack methods, reducing redundancy and improving testability.
 
 ---
 
-#### 3. Managing Cross-Dependent Upgrade Effects (Pierce + Split)
+### 4.3 Sequence Diagram
 
-**Challenge**:  
-For the archer character, certain upgrades like "Pierce" (arrows continue after hitting enemies) and "Split" (arrows spawn secondary projectiles) had to interact cleanly—even when applied together.
-
-**Technical Difficulty**:  
-Initially, upgrade effects were handled in the `Player` class. This created branching logic with nested conditions that became hard to debug, especially when multiple effects overlapped.
-
-**Solution**:  
-We refactored the upgrade system so that **each projectile handled its own behavior**. Logic for `onHit()` was moved into the `Arrow` class, which now independently determines whether to split, pierce, or both—based on its instantiation parameters.
+To visualize runtime behavior, we created a sequence diagram for a full gameplay loop.
 
 <div align="center">
-  <img src="docs/implementation/code_image.png" alt="code_image" width="820" height="345">
-  <p><em>Figure 23. `Arrow` class handling multiple upgrade effects independently.</em></p>
+  <img src="docs/design/SequenceDiagram.png" alt="Sequence Diagram" width="820" height="800">
+  <p><em>Figure 21. Sequence diagram showing real-time system interactions.</em></p>
 </div>
 
-> This object-oriented restructuring improved modularity, reduced bugs, and made adding future projectile effects significantly easier.
+#### Phases:
+1. **Initialization**: Character and difficulty selection
+2. **Combat**: Player attacks → projectiles spawn → collision and damage checks
+3. **Enemy AI**: Basic pursuit + boss-specific skills
+4. **Pets**: Follow player and trigger actions independently
+5. **Weather System**: Activates new effect every 30 seconds
+
+> This helped us coordinate time-based systems like weather and pet effects with real-time combat and player input.
 
 ---
 
-### 5.5 Reflection and Conclusion
+### 4.4 Reflection and Conclusion
 
-The implementation phase of Glitchwood was where design ambitions met technical constraints. Through hands-on development, we not only built complex systems—weather effects, procedural enemies, dynamic upgrades—but also learned how to refine them through modularization, refactoring, and teamwork.
+Our design phase prioritized maintainability and future extensibility. Key takeaways:
 
----
+#### Object-Oriented Benefits:
+- **Encapsulation**: Pets, weather, and projectiles manage their own logic
+- **Inheritance & Polymorphism**: Simplified code reuse across entity types
+- **Composition**: Pets combine movement and AI behavior for reusable logic
 
-#### Lessons from the Development Process
+#### Diagram Value:
+- **Class Diagrams** clarified team roles and naming conventions
+- **Sequence Diagrams** prevented logic conflicts between time-based and event-based systems
 
-Early in the project, some systems (notably upgrades and pet logic) were implemented with tightly coupled logic. This initially sped up prototyping but quickly led to debugging complexity and limited extensibility. Midway through development, we conducted several architectural refactors—moving behaviors into specialized classes and ensuring that each game object managed its own logic.
+#### Result:
+- Smooth integration of independent modules (pets, bosses, weather)
+- Minimal coupling and high scalability
+- Strong foundation for potential features like multiplayer or mod support
 
-We also encountered performance limitations with increasing enemy counts, which highlighted the need to optimize rendering and collision logic proactively.
-
-> These experiences taught us the importance of starting with clean interfaces and planning for extensibility—even under time pressure.
-
----
-
-#### Architectural Takeaways
-
-The success of our implementation largely came from embracing **object-oriented encapsulation** and **responsibility isolation**. Each system—weather, enemies, pets, upgrades—was eventually isolated into a reusable module, which made testing, debugging, and parallel development much easier.
-
-This also enabled us to:
-
-- Tune difficulty and performance independently per system
-- Reuse logic between classes (e.g., all pets inherit from a shared AI loop)
-- Quickly identify sources of bugs or performance spikes
-
-> The resulting architecture not only met our current needs but lays a foundation for future features like multiplayer support or dynamic storyline branches.
-
----
-
-#### Areas for Improvement and Future Potential
-
-Although the game was fully functional, some aspects could benefit from further optimization or abstraction:
-
-- **Performance under high entity counts**: Introducing spatial partitioning or sprite pooling could reduce frame drops in later waves.
-- **Upgrade system extension**: A data-driven upgrade registry (rather than hardcoded logic) would allow easier balancing and customization.
-- **Cross-system coordination**: While modularity helped, more formal event hooks (e.g., pub-sub pattern) could further reduce hidden dependencies.
-
-> These improvements would not only polish gameplay but improve long-term maintainability and team scalability.
-
----
-
-In conclusion, the implementation of Glitchwood was as much about building systems as it was about building habits. Through iteration, collaboration, and course-aligned design principles, we produced a game that is both technically sound and architecturally future-proof.
+> Good design doesn't just support the present—it prepares for the future.
 
 [Back to Table of Contents](#table-of-contents)
 
-## 6 Evaluation
+## 5. Implementation
 
-This section presents both qualitative and quantitative evaluations of our game, **Glitchwood**. We conducted structured user interviews and employed established metrics like **SUS** (System Usability Scale) and **NASA-TLX** (Task Load Index) to assess the game's usability, workload, and player experience across both difficulty modes.
-
-
-### 6.1 Qualitative Evaluation
-
-To gain deeper insight into how players experienced Glitchwood beyond metrics, we conducted two forms of qualitative testing: a **Think-Aloud Protocol** and **Post-Game Interviews**. These methods allowed us to identify usability issues, interaction friction, and emotional responses that would not surface through surveys alone.
+Glitchwood’s implementation phase turned architectural plans into a real-time, responsive browser game. We focused on modular systems, player interaction, and scalable logic—all powered by p5.js.
 
 ---
 
-#### Think-Aloud Testing
+### 5.1 Core Gameplay Loop
 
-**Methodology**:  
-We invited 6 participants (classmates and friends with varying game experience) to play for 15–20 minutes while **verbalizing their thoughts in real time**. Sessions were observed live or via screen share.
+The game operates in a continuous loop via `draw()` in p5.js, combining real-time input, timed events, and modular systems.
 
-**Key Observations and Reactions**:
+#### Key Components:
+- **Input Handling**:  
+  - `WASD` keys for movement  
+  - Mouse for aiming and attacking  
+- **Combat Flow**:  
+  - Each character uses a unique weapon (`Sword`, `Gun`, `Bow`)  
+  - Projectiles manage their own motion, lifespan, and effects  
+- **Procedural Map Generation**:  
+  - Obstacles are randomly placed each wave  
+  - Maps ensure safe zones around player spawn  
+- **Enemy Spawning**:  
+  - Spawn from edges  
+  - Scale with wave count  
+  - Bosses appear on waves 5, 10, and 15  
 
-| Focus Area         | Issue Identified                                 | Example Comment                  |
-|--------------------|--------------------------------------------------|----------------------------------|
-| Pet Feedback       | Effect not visually noticeable                   | “Am I healing or not?”           |
-| Weather Change     | Sudden slowdowns confused players                | “Why did I get so slow just now?”|
-| Boss Attacks       | Lacked obvious tells                             | “That came out of nowhere.”      |
-| Pause Function     | Some didn’t know the game could be paused        | “Wait, how do I pause?”          |
+#### Independent Systems:
+- **Pet AI**:  
+  Follow and assist the player (heal, shield, or attack)
+- **Weather Engine**:  
+  Triggers new global effects every 30 seconds  
+  (e.g., Snow slows movement; Thunder causes AoE damage)
 
-**Resulting Improvements**:
-
-- Added **particle effects** and **icons** for pet activation
-- Introduced **weather HUD indicators** and ambient sound
-- Added **wind-up animations** and **warning flashes** for boss skills
-- Displayed **pause key (P)** clearly in tutorial and menu
-
-> These changes directly reduced confusion and increased perceived control in subsequent tests.
-
----
-
-#### Post-Game Interviews
-
-**Methodology**:  
-Following gameplay, we conducted short semi-structured interviews (10–15 minutes) with 3 selected participants, covering topics such as difficulty, clarity, UI aesthetics, and narrative experience.
-
-**Summary of Common Themes**:
-
-| Theme            | Feedback Highlights                                                |
-|------------------|---------------------------------------------------------------------|
-| UI & Visuals     | “Clean and retro… easy to follow even with chaos on screen.”        |
-| Difficulty Modes | “Easy mode is a great intro. Hard mode feels fair but stressful.”   |
-| Narrative        | “I got the sense this is about a developer... cool metaphor.”       |
-| Feedback Clarity | “Upgrades are obvious, but boss moves need clearer warnings.”       |
-
-> We were especially encouraged by players picking up on the symbolic narrative without any explicit exposition—validating our design intent.
+> These systems are loosely coupled, making them easy to test and extend.
 
 ---
 
-#### Reflection
+### 5.2 Code Structure
 
-These qualitative insights led to **immediate design actions** that improved clarity, onboarding, and moment-to-moment feedback. While quantitative tools helped validate learnability and workload, qualitative methods uncovered **intention gaps**—places where player expectations didn’t match game behavior.
+We applied OOP and event-driven design to separate logic cleanly.
 
-> The combination of real-time reactions and reflective interviews proved essential in aligning game feedback with player mental models.
+#### Architecture Highlights:
+- **Game States** (`start`, `wave`, `boss`, `selectPet`, `gameOver`)  
+  Controlled via a central `gameState` variable
+- **Modular Classes**:  
+  - `Player`: Movement, weapon use, upgrades  
+  - `Enemy` & `Boss`: Targeting logic, phase skills  
+  - `Pet`: AI loop, collision handling  
+  - `Weather`: Timed activation, unique effects  
+  - `Projectile`: Self-managed collisions and effects
 
----
-
-### 6.2 Quantitative Evaluation
-
-To complement our qualitative insights, we applied two standardized tools to quantitatively assess Glitchwood’s usability and workload across both difficulty modes.
-
----
-
-#### Methodology
-
-- **NASA-TLX** (Task Load Index): Measures six dimensions of perceived workload—Mental Demand, Physical Demand, Temporal Demand, Performance, Effort, and Frustration.
-- **SUS** (System Usability Scale): Measures perceived usability and learnability on a 100-point scale, with 68 as the industry benchmark for acceptable usability.
-
-Participants played both **Easy (L1)** and **Hard (L2)** modes, completing both scales after each session.
+> Every object handles its own update and display functions, simplifying the main loop.
 
 ---
 
-#### NASA-TLX: Workload Comparison
+### 5.3 Key Features
 
-##### Individual Scores by Mode
+#### 1. Procedural Map Generation
+
+- New obstacle layouts every wave  
+- Avoids player spawn zone  
+- Forces adaptive positioning
+
+#### 2. Collision Detection
+
+- Centralized `checkCollision()` logic  
+- Custom hitboxes for fast-moving projectiles  
+- Air walls prevent off-screen movement
+
+#### 3. Pet System
+
+- Pets follow the player via `lerp()`  
+- Action cooldowns and smart targeting  
+- Modular classes for `Healer`, `Attacker`, `Defender`
+
+#### 4. Weather Engine
+
+- Timer triggers effect every 30 seconds  
+- Polymorphic subclasses (`Snow`, `Thunder`, `Sun`)  
+- Affects player and enemies equally
+
+> These systems create dynamic, emergent gameplay where each run feels different.
+
+---
+
+### 5.4 Technical Challenges
+
+#### 1. Collision Precision
+
+**Problem**: Fast-moving projectiles and group enemies caused inconsistent collisions  
+**Solution**: Custom hitboxes + centralized `checkCollision()` in all entities
+
+#### 2. Pet Navigation with Dynamic Maps
+
+**Problem**: Pets got stuck when new obstacles regenerated  
+**Solution**: Recalculate target offset after map reset; smooth with `lerp()`  
+<div align="center">
+  <img src="docs/implementation/code2_image.png" alt="Pet AI Code" width="955" height="324">
+  <p><em>Figure 22. Pet follow and attack logic.</em></p>
+</div>
+
+#### 3. Upgrade Interactions (Pierce + Split)
+
+**Problem**: Stacked upgrade effects created nested condition chaos  
+**Solution**: Move logic into the `Arrow` class; let each projectile decide behavior  
+<div align="center">
+  <img src="docs/implementation/code_image.png" alt="Arrow Logic" width="820" height="345">
+  <p><em>Figure 23. Independent projectile logic for upgrades.</em></p>
+</div>
+
+> These refactors made systems modular, scalable, and easier to debug.
+
+---
+
+### 5.5 Reflection
+
+#### Lessons Learned:
+- **Modular systems are worth the setup**  
+  Refactoring mid-project to isolate logic paid off in debugging and flexibility  
+- **Encapsulation simplifies testing**  
+  Pets, upgrades, and weather systems could be tested in isolation  
+- **Performance must be monitored early**  
+  Collision checks were a major bottleneck during high enemy density
+
+#### Opportunities for Future Improvement:
+- Use spatial partitioning for collision efficiency  
+- Create a data-driven upgrade registry (e.g., JSON)  
+- Implement a publish-subscribe system for event coordination
+
+> Implementation was not just about building features—it was about building systems that could survive complexity.
+
+[Back to Table of Contents](#table-of-contents)
+
+## 6. Evaluation
+
+We evaluated Glitchwood through both qualitative and quantitative methods to assess usability, workload, and gameplay clarity across difficulty modes.
+
+---
+
+### 6.1 Qualitative Testing
+
+We conducted a **Think-Aloud Protocol** and **Post-Game Interviews** with players of different backgrounds.
+
+#### Think-Aloud Observations (6 Players):
+
+| Area           | Player Feedback                              | Action Taken                                   |
+|----------------|-----------------------------------------------|------------------------------------------------|
+| Pets           | Effects not clear                             | Added icons and particles for feedback         |
+| Weather        | Sudden changes caused confusion               | Added HUD icons and ambient sounds             |
+| Boss Attacks   | Lacked warning cues                           | Introduced pre-attack animations and flashes   |
+| Pause Feature  | Not discoverable                              | Showed pause key (`P`) in UI and tutorial      |
+
+> These changes improved game feedback, pacing, and clarity during stressful gameplay moments.
+
+#### Post-Game Interview Themes (3 Players):
+
+| Topic             | Key Takeaways                                                              |
+|-------------------|-----------------------------------------------------------------------------|
+| UI & Visuals      | “Clean and retro… readable even during chaos.”                             |
+| Difficulty Design | “Hard mode is challenging but fair.”                                       |
+| Narrative         | “Feels like being a dev stuck in their own broken system. Very thematic.”   |
+| Upgrade Clarity   | “Easy to understand; boss attacks needed clearer signals (now improved).”  |
+
+> Symbolic storytelling and strategic variety were positively received.
+
+---
+
+### 6.2 Quantitative Testing
+
+We used two established tools:  
+- **NASA-TLX**: Evaluates cognitive workload  
+- **SUS (System Usability Scale)**: Measures usability (68 is average benchmark)
+
+Each participant tested both **Easy (L1)** and **Hard (L2)** modes.
+
+#### NASA-TLX Results: Workload Comparison
+
+##### Individual Scores
 
 <div align="center">
   <img src="docs/evaluation/NASA_easy.png" alt="NASA Easy" width="820" height="230">
-  <p><em>Figure 25. NASA-TLX individual user scores for L1 (Easy Mode).</em></p>
+  <p><em>Figure 25. NASA-TLX scores – Easy Mode.</em></p>
 </div>
 
 <div align="center">
   <img src="docs/evaluation/NASA_hard.png" alt="NASA Hard" width="820" height="230">
-  <p><em>Figure 26. NASA-TLX individual user scores for L2 (Hard Mode).</em></p>
+  <p><em>Figure 26. NASA-TLX scores – Hard Mode.</em></p>
 </div>
 
-**Observation**:  
-In Hard Mode, most players reported higher **mental demand**, **temporal stress**, and **effort**, particularly during boss encounters. Easy Mode generally resulted in lower overall workload and less perceived frustration.
-
-##### Average Scores Comparison
+##### Aggregated Comparison
 
 <div align="center">
-  <img src="docs/evaluation/NASA_bar.png" alt="NASA Bar" width="760"  height="380">
-  <p><em>Figure 27. Average NASA-TLX scores by workload dimension in L1 and L2.</em></p>
-</div>
-
-This bar chart confirms that Hard Mode significantly increases mental strain and required effort. Performance self-evaluation also dipped slightly, indicating players felt less successful.
-
-##### Radar Profile
-
-<div align="center">
-  <img src="docs/evaluation/NASA_radar.png" alt="NASA Radar" width="760"  height="380">
-  <p><em>Figure 28. NASA-TLX radar comparison: Easy vs. Hard Mode workload profile.</em></p>
-</div>
-
-**Interpretation**:  
-Hard Mode creates a more cognitively intense experience, which aligns with our design goal of providing challenge escalation. However, maintaining a balance between pressure and frustration remains critical.
-
----
-
-#### SUS: System Usability Scores
-
-##### L1 (Easy Mode)
-
-<div align="center">
-  <img src="docs/evaluation/SUS_easy.png" alt="SUS Easy Questions" width="760"  height="230">
-  <p><em>Figure 29. SUS question-level responses (Easy Mode).</em></p>
+  <img src="docs/evaluation/NASA_bar.png" alt="NASA Bar" width="760" height="380">
+  <p><em>Figure 27. Average workload across six dimensions (Easy vs Hard).</em></p>
 </div>
 
 <div align="center">
-  <img src="docs/evaluation/SUS_easy_bar.png" alt="SUS Easy Bar" width="760"  height="450">
-  <p><em>Figure 30. Individual SUS scores with benchmark (Easy Mode).</em></p>
+  <img src="docs/evaluation/NASA_radar.png" alt="NASA Radar" width="760" height="380">
+  <p><em>Figure 28. Radar comparison of Easy and Hard Mode workload.</em></p>
 </div>
 
-**Average SUS Score**: **69.0**  
-This slightly exceeds the usability benchmark (68), indicating that the game is **easy to learn**, **intuitive to navigate**, and **perceived as usable** by most players in Easy Mode.
+> Hard mode increases mental demand and effort—just as designed—without excessive frustration.
 
 ---
 
-##### L2 (Hard Mode)
+#### SUS Results: Usability Scores
+
+##### Easy Mode (L1)
 
 <div align="center">
-  <img src="docs/evaluation/SUS_hard.png" alt="SUS Hard Questions" width="760"  height="230">
-  <p><em>Figure 31. SUS question-level responses (Hard Mode).</em></p>
+  <img src="docs/evaluation/SUS_easy.png" alt="SUS Easy Questions" width="760" height="230">
+  <p><em>Figure 29. SUS answers – Easy Mode.</em></p>
 </div>
 
 <div align="center">
-  <img src="docs/evaluation/SUS_hard_bar.png" alt="SUS Hard Bar" width="760"  height="450">
-  <p><em>Figure 32. Individual SUS scores with benchmark (Hard Mode).</em></p>
+  <img src="docs/evaluation/SUS_easy_bar.png" alt="SUS Easy Bar" width="760" height="450">
+  <p><em>Figure 30. Individual SUS scores – Easy Mode.</em></p>
 </div>
 
-**Average SUS Score**: **62.5**  
-While slightly below benchmark, this result is expected due to increased complexity and workload in Hard Mode. The system was still rated as **comprehensible and learnable**, though perceived ease-of-use declined.
+**Average SUS Score**: **69.0** → Above benchmark (68)  
+> Indicates solid usability for new players.
+
+##### Hard Mode (L2)
+
+<div align="center">
+  <img src="docs/evaluation/SUS_hard.png" alt="SUS Hard Questions" width="760" height="230">
+  <p><em>Figure 31. SUS answers – Hard Mode.</em></p>
+</div>
+
+<div align="center">
+  <img src="docs/evaluation/SUS_hard_bar.png" alt="SUS Hard Bar" width="760" height="450">
+  <p><em>Figure 32. Individual SUS scores – Hard Mode.</em></p>
+</div>
+
+**Average SUS Score**: **62.5** → Slightly below benchmark  
+> Expected due to higher stress but still deemed fair and navigable.
 
 ---
 
-#### Conclusion
+### 6.3 Code & UX Testing Interviews
 
-Together, the NASA-TLX and SUS results provide a balanced perspective:
+We recruited three types of testers:
+- CS students
+- Experienced gamers
+- UX/HCI-aware developers
 
-- **Easy Mode** is well-calibrated for onboarding and general usability
-- **Hard Mode** introduces cognitive tension without significantly compromising user comprehension
-- The **perceived workload rises faster than usability drops**, validating our challenge curve
+#### Feedback Highlights:
 
-> Quantitative feedback confirmed our core design assumption: players feel both tested and in control, provided that feedback clarity and pacing are preserved.
+| Area            | Insight                                   | Fix Implemented                              |
+|------------------|-------------------------------------------|----------------------------------------------|
+| Boss Skills      | Surprise attacks felt unfair              | Added warning animations and audio cues      |
+| Pet Visibility   | Unclear when pets acted                   | Particle trails and glow states added        |
+| Weather Cues     | Missed changes                            | Top-corner icons + ambient weather sounds    |
+| Scene Transitions| Felt abrupt                               | Added fade-in/out and audio bridges          |
 
----
-
-### 6.3 Code Test & Usability Interviews
-
-To validate the integration and polish of Glitchwood’s core systems, we deployed the game via **GitHub Pages** and conducted structured tests with three target user types:
-
-- **CS students**: technically literate but casual players
-- **Experienced gamers**: sensitive to combat flow and UI responsiveness
-- **Developers with HCI knowledge**: focused on interaction logic and visual feedback
-
-These participants were invited to test specific mechanics and transitions, followed by a usability interview.
+> These changes strengthened the game’s visual language and player comprehension under pressure.
 
 ---
 
-#### Focus Areas and Improvements
+### 6.4 Reflection
 
-| Focus Area         | Observation                                                             | Design Adjustment                                                      |
-|--------------------|-------------------------------------------------------------------------|------------------------------------------------------------------------|
-| **Boss Combat**     | Warning cues for major attacks were inconsistent or delayed             | Introduced pre-attack *audio cues* and *flash-based charge-up frames* |
-| **Pet Feedback**    | Players were unsure when pets activated or applied effects              | Added glow icons, particle trails, and state-based animations          |
-| **Weather Feedback**| Environmental changes went unnoticed by some players                   | Implemented top-corner HUD icons and ambient sound cues                |
-| **Scene Transitions**| Shift from gameplay to boss or pet select felt abrupt and immersion-breaking | Added fade-in/out transitions with ambient bridge audio              |
+#### Core Findings:
+- **Challenge ≠ Confusion**: Hard mode was intense but still readable.
+- **Feedback is King**: Players trusted the game more once cues were visible and timely.
+- **Quantitative + Qualitative = Clarity**: SUS and NASA-TLX measured design quality; interviews explained why.
 
-These updates targeted **player clarity**, **rhythm preservation**, and **feedback timing**, all of which were frequently raised in interviews as elements that “make combat feel fair.”
+#### What Worked:
+- Real-time feedback loops (weather, pets, damage)  
+- Think-aloud sessions for usability edge cases  
+- Testing both difficulty modes revealed design gaps early
 
----
-
-#### Reflection
-
-This stage of testing confirmed that while core mechanics were sound, the **presentation layer was key** to player satisfaction. Many design improvements stemmed from this final feedback loop—especially for high-pressure scenarios like boss phases.
-
-> Direct player observation and live commentary surfaced friction points we couldn’t detect during internal play. It emphasized that polish is not just visual, but functional and emotional: clarity, pacing, and responsiveness matter just as much as balance.
-
----
-
-### 6.4 Reflection & Conclusion
-
-The evaluation phase of Glitchwood provided critical feedback loops that shaped the final user experience. Through a combination of structured testing and observational methods, we were able to identify friction points, validate interaction clarity, and refine game balance.
-
----
-
-#### Balancing Challenge and Usability
-
-Our **dual-difficulty design** (Easy and Hard modes) was validated through both qualitative and quantitative data. Easy mode consistently scored above usability benchmarks, confirming its accessibility to new players. Hard mode introduced a measurable increase in **mental and temporal demand**, yet remained within acceptable usability thresholds.
-
-> This confirmed that Glitchwood’s challenge curve did not sacrifice clarity or control—key markers of fair game design.
-
----
-
-#### Methodological Integration
-
-The combination of:
-
-- **NASA-TLX and SUS** (standardized surveys)
-- **Think-Aloud Protocol** (live user reaction)
-- **Post-test Interviews** (emotional and contextual feedback)
-- **Code-level usability checks**
-
-…enabled us to assess the system from both **external perception** and **internal interaction mechanics**.
-
-Each method illuminated different aspects:  
-NASA-TLX quantified stress; SUS revealed learnability gaps; live sessions surfaced unclear feedback timing.
-
----
-
-#### Design Principles Learned
-
-From this process, we extracted several enduring lessons:
-
-- **Feedback must be immediate, visible, and symmetrical**: Both pet effects and weather transitions became more effective once their impact was visually and aurally reinforced.
-- **Onboarding and pacing are inseparable**: Easy mode served as both a tutorial and a gameplay experience, reinforcing learning through action rather than instruction.
-- **Polish = clarity under pressure**: High-stress scenarios (boss fights, split-second deaths) revealed how critical clear signaling and animation timing are to user satisfaction.
-
-> In short, evaluation was not a final step—it was a co-driver of design. Iterative feedback cycles ensured our game was not only functional, but understandable, learnable, and fair.
+> Testing was not just a checkpoint—it was a shaping force throughout our development.
 
 [Back to Table of Contents](#table-of-contents)
 
-## 7 Process
+## 7. Process
 
-Our team worked closely together throughout the project, ensuring clear communication, efficient collaboration, and a structured development process. This section outlines the team's roles and responsibilities, the tools we used, our Agile development methodology, and the lessons learned from our collaborative experience.
-
-### 7.1 Team Roles and Division of Tasks
-
-To ensure efficient parallel development and minimize integration overhead, we assigned each team member distinct, domain-specific roles based on individual strengths and interests. These roles were designed to reflect real-world game development pipelines, allowing us to simulate team-based software engineering under agile conditions.
+Our team of six collaborated using agile practices to manage complexity, synchronize development, and deliver a cohesive game. This chapter covers roles, workflows, tools, agile structure, and team reflection.
 
 ---
 
-#### Technical Development & System Architecture
+### 7.1 Roles and Division of Work
 
-| Name              | Role                           | Responsibilities                                                                                                           |
-|-------------------|----------------------------------|----------------------------------------------------------------------------------------------------------------------------|
-| **Chengjun Yi**   | Lead Developer & Debug Team Lead | Directed overall codebase structure, module integration, and performance tuning. Coordinated debugging tasks across sprints. |
-| **Heng Zhang**    | Core Gameplay Engineer           | Developed enemy AI, boss behaviors, collision systems, and weather logic. Integrated game physics and combat feedback.       |
-| **Feihang Yan**   | Pet System Engineer              | Designed and implemented autonomous pet logic, state transitions, and cross-module integration with combat and upgrades.    |
+Each member focused on a distinct technical or design area, enabling parallel development and clearer ownership.
 
----
+#### Technical Development
 
-#### Front-End, Visuals & UX
+| Name             | Role                         | Key Contributions                                                                 |
+|------------------|------------------------------|------------------------------------------------------------------------------------|
+| **Chengjun Yi**  | Lead Developer               | Designed code architecture, optimized performance, led integration                 |
+| **Heng Zhang**   | Core Gameplay Engineer       | Built boss logic, weather engine, collision and physics                           |
+| **Feihang Yan**  | Pet System Engineer          | Created pet AI, support effects, pet-state syncing with player                    |
 
-| Name              | Role                            | Responsibilities                                                                                                            |
-|-------------------|----------------------------------|-----------------------------------------------------------------------------------------------------------------------------|
-| **Tong Yu**       | Art Director & UI Developer      | Created all pixel art assets, animation frames, and screen transitions. Built the visual layout and HUD using p5.js.         |
-| **Xianhang Peng** | Front-End Gameplay Developer     | Built interactive front-end systems (menus, prompts, stats), and handled map UI and visual feedback mechanics.               |
+#### Visual & Frontend
 
----
+| Name             | Role                         | Key Contributions                                                                 |
+|------------------|------------------------------|------------------------------------------------------------------------------------|
+| **Tong Yu**      | Art Director & UI Developer  | Designed all pixel art, animations, and interface transitions                      |
+| **Xianhang Peng**| UI & Map Developer           | Built UI menus, health/status displays, and dynamic obstacle generation           |
 
-#### Coordination, Testing & Media
+#### Coordination & Testing
 
-| Name              | Role                                | Responsibilities                                                                                                              |
-|-------------------|--------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
-| **Qiutong Zhao**  | Project Coordinator & Media Producer | Managed task scheduling, sprint tracking, and team alignment. Directed and edited demo video. Contributed to debugging.       |
+| Name             | Role                         | Key Contributions                                                                 |
+|------------------|------------------------------|------------------------------------------------------------------------------------|
+| **Qiutong Zhao** | Project Coordinator          | Planned sprints, led testing, edited demo video, handled documentation             |
 
----
-
-#### Reflections on Division Strategy
-
-This role distribution allowed us to decouple core systems, avoid code ownership conflict, and support asynchronous work. Developers responsible for complex logic (e.g., pets, bosses, weather) were paired with teammates managing visuals and interaction layers, creating clean integration points.
-
-> By aligning technical, visual, and coordination efforts early, we avoided bottlenecks during final integration and testing phases. The clear ownership structure ensured accountability while enabling rapid iteration and cross-checks.
+> Dividing work this way minimized merge conflicts and allowed simultaneous progress on visuals, logic, and systems.
 
 ---
 
-### 7.2 Tools and Collaborative Platforms
+### 7.2 Tools and Platforms
 
-To manage the complexity of real-time game development and team collaboration, we adopted a suite of tools across five functional domains: **version control**, **project tracking**, **communication**, **design**, and **media production**. These tools enabled asynchronous development, clear task allocation, and rapid iteration throughout the project.
+We used industry-aligned tools to support communication, versioning, asset design, and project tracking.
 
----
+#### Development
 
-#### 1. Version Control and Code Review
+- **GitHub**: Branch-based development, PR reviews, GitHub Pages deployment  
+- **p5.js**: Chosen for web delivery, simplicity, and modular coding in JavaScript
 
-- **GitHub (private repo → public GitHub Pages site)**  
-  We used a **branch-based workflow**, where each team member committed code under personal branches. Pull requests (PRs) were used to merge features into the main branch after peer review.
+#### Design & Visuals
 
-- **PR Review Comments & Issue Linking**  
-  Each PR was linked to JIRA tasks, and discussion threads helped catch bugs early and align implementation with system design.
+- **Aseprite**: Pixel art and sprite animation creation  
+- **Figma**: UI mockups and interaction flows  
+- **UMLEtino**: Used for Class & Sequence diagrams
 
-> This allowed us to maintain a clean, testable main branch and integrate features incrementally without blocking other members.
+#### Management
 
----
+- **JIRA (Kanban)**: Task tracking with Sprint-based flow: `To Do → In Progress → Review → Done`  
+- **WeChat + Google Meet**: Daily syncs and screen-share for debugging and visual alignment  
+- **OBS + Premiere**: Gameplay recording and trailer editing
 
-#### 2. Task Management and Workflow Planning
-
-- **JIRA (Kanban Board)**  
-  Our project was organized into Sprints using epics and stories. We maintained a Kanban board with `To Do → In Progress → Code Review → Done` columns, updated weekly.
-
-- **Sprint Review Meetings (in-person Mondays + online Fridays)**  
-  In-person planning every Monday set weekly goals. End-of-week online sessions ensured integration readiness and surfaced blockers early.
-
-> This structure kept the team aligned and minimized last-minute bottlenecks, especially near deadlines.
+> These tools helped maintain transparency, reduce blockers, and support creative iteration across different roles.
 
 ---
 
-#### 3. Communication and Coordination
+### 7.3 Agile Development
 
-- **WeChat**  
-  Used for daily asynchronous check-ins, task updates, and quick bug discussions. It acted as our “stand-up” substitute during busy weeks.
+We followed a weekly **sprint-based agile process**, customized to suit student constraints.
 
-- **Google Meet / Discord**  
-  Reserved for live screen-sharing sessions during feature integration or demo walkthroughs.
+#### Weekly Cycle:
 
-> Real-time channels enabled fast debugging and UI alignment, especially between logic and visual engineers.
+- **Monday**: Offline sprint kickoff  
+- **Midweek**: Individual feature work  
+- **Friday–Sunday**: Integration testing, bug triage, and sprint wrap-up
 
----
+#### Task Structure:
 
-#### 4. Visual Design and Game Asset Creation
-
-- **Aseprite**  
-  All pixel art, character sprites, animations, and tile assets were created in Aseprite. Sprite sheets were exported for use in p5.js.
-
-- **Figma**  
-  Used for early-stage UI layout drafts, HUD wireframes, and visual flowcharts. Allowed visual and frontend members to co-edit screen structures.
-
-- **UMLEtino**  
-  UML diagrams (Class Diagram, Sequence Diagram) were created collaboratively to guide code architecture decisions.
-
-> These tools enabled parallel work between UI developers, gameplay engineers, and designers without version conflicts.
-
----
-
-#### 5. Media and Presentation Tools
-
-- **Adobe Premiere Pro + Photoshop**  
-  Used to edit our gameplay demo, trailer, and character intros. Also supported polishing cutscenes and transitions.
-
-- **OBS Studio**  
-  Used to record gameplay footage for evaluation, bug reporting, and showcase segments.
-
-> These tools allowed us to present Glitchwood professionally and efficiently iterate on the feedback.
-
----
-
-#### Summary
-
-Our toolchain reflected real-world software team practices: modular commits, visual-first design, centralized task tracking, and seamless remote collaboration. This foundation enabled us to develop, test, and deliver a playable, polished experience within a constrained timeline.
-
-> In short, the right tools didn’t just speed us up—they made our collaboration more structured, traceable, and quality-assured.
-
----
-
-### 7.3 Agile Development Methodology and Iteration Process
-
-We adopted an agile-inspired workflow tailored to student team constraints. Our focus was on maintaining **regular feedback loops**, **incremental deliverables**, and **cross-functional collaboration** across design, development, and evaluation phases.
-
----
-
-#### Weekly Work Rhythm
-
-Our development cycle followed a **weekly sprint structure**, with clearly scheduled checkpoints:
-
-- **Monday (Offline)**: Sprint kickoff, planning, and role alignment
-- **Midweek**: Independent development and intra-subgroup communication (e.g., logic → UI handoff)
-- **Friday–Sunday (Online)**: Sprint review, bug triage, integration testing, and demo recording
-
-Each sprint targeted a concrete milestone—such as implementing pets, integrating the upgrade system, or preparing for user testing—ensuring **visible progress** and **early risk exposure**.
-
-> This rhythm mirrored Scrum principles of short cycles, continuous delivery, and retrospective-driven refinement.
-
----
-
-#### Task Tracking with Kanban
-
-We managed tasks using a GitHub-based **Kanban board**, customized to fit our sprint stages:
-
-| Column         | Meaning                         |
-|----------------|----------------------------------|
-| `Backlog`      | Ideas and non-prioritized tasks |
-| `To Do`        | Sprint-scoped deliverables      |
-| `In Progress`  | Actively implemented features   |
-| `Code Review`  | Awaiting PR review + integration |
-| `Done`         | Fully tested and merged items   |
-
-Tasks were defined at the “story” level (e.g., “Weather should affect enemies too”) and linked to pull requests. Developers self-assigned tasks and updated the board asynchronously after major commits.
-
----
+- Stories broken into small, testable units (e.g., “Implement pet follow logic”, “Add boss warning flash”)
+- Each PR mapped to a JIRA task  
+- Sprint goals were outcome-focused: one visual system, one gameplay feature, and one UX refinement
 
 <div align="center">
-  <img src="docs/management/Glitchwood_Management.png" alt="Sprint Timeline and Kanban Overview" width="820" height="800">
-  <p><em>Figure 33. Sprint timeline with team role highlights and Kanban status flows.</em></p>
+  <img src="docs/management/Glitchwood_Management.png" alt="Sprint & Kanban Overview" width="820" height="800">
+  <p><em>Figure 33. Sprint timeline with team roles and feature deliveries.</em></p>
 </div>
 
-**Diagram Analysis**:  
-- Each member had domain-aligned goals per sprint (e.g., boss behavior, pet AI, UI overlays)  
-- Parallel feature development was synchronized via shared deadlines and test milestones  
-- MVP freeze week was followed by a “code lock + polish sprint” to improve gameplay feel and feedback
+> This cycle ensured continuous progress and early bug exposure, especially for cross-feature interactions.
 
 ---
 
-#### Sprint Refinement and Adaptive Planning
+### 7.4 Team Reflection
 
-Throughout development, we refined our sprint process in response to:
+Our collaboration improved over time, driven by lessons learned through practice and retrospectives.
 
-- **Integration challenges**: Feature modules clashing (e.g., pets + obstacles) prompted earlier pair programming
-- **Burnout risk**: Some sprints had overly ambitious scopes; we switched to value-based prioritization mid-project
-- **Testing turnaround**: We allocated fixed “playtest hours” per sprint instead of testing on-demand
+#### Communication Improvements
 
-> These adjustments reflect core agile principles: welcome change, sustain team health, and deliver working features continuously.
+- Moved from ad-hoc messaging to scheduled check-ins  
+- Held real-time syncs during risky integrations (e.g., pet + map generation)
 
----
+> **Lesson**: Synchronous debugging avoids misunderstandings and speeds resolution.
 
-#### Reflection
+#### Task Refinement
 
-While not a textbook Scrum implementation, our agile-lite process enabled:
+- Switched from vague goals (“build weather”) to scoped deliverables (“Thunder deals area damage every 3s”)
 
-- Frequent checkpoints and visible progress
-- Fast feedback from both users and team testers
-- Clear accountability and decoupled task ownership
-- High alignment between code and design expectations
+> **Lesson**: Small, actionable tasks promote clarity and accountability.
 
-> In short, agile wasn't just our workflow—it was our mindset: start small, ship often, and adjust fast.
+#### Integration Days
 
----
+- Held a full-team "jam session" near MVP to fix cross-system bugs and polish transitions
 
-### 7.4 Team Reflection and Continuous Improvement
+> **Lesson**: Sometimes, in-person teamwork solves what async coding can’t.
 
-Over the course of Glitchwood’s development, our team encountered several coordination and workflow challenges. Rather than rigidly sticking to a plan, we continually adjusted our strategies to maintain progress, reduce friction, and preserve team morale.
+#### Adaptive Planning
 
----
+- Re-scoped non-critical animations or UI polish during high-stress weeks  
+- Focused on shipping playable systems before polish
 
-#### Communication: From Ad-Hoc to Synchronized
-
-**Initial Issue**:  
-Early coordination heavily relied on asynchronous WeChat messaging, which often led to delays or misunderstandings—especially around integration requirements.
-
-**Adjustment**:  
-We shifted to structured check-ins: offline meetings every Monday (planning) and online syncs every Friday (review + bug triage). Critical decisions—like combat balancing or asset delivery—were discussed face-to-face or over live screenshare to avoid ambiguity.
-
-> **Lesson**: For complex interactions (e.g., logic ↔ visuals), real-time discussion beats async updates.
+> **Lesson**: Agility is about strategic trade-offs, not just faster coding.
 
 ---
 
-#### Task Granularity: Managing Cross-Module Dependencies
+### 7.5 Summary and Takeaways
 
-**Initial Issue**:  
-Some stories—like “Implement weather system” or “Finish boss behavior”—were too large, mixing logic, visuals, and balancing. This made it unclear who owned what, and how to test partial progress.
+Our process succeeded because we:
 
-**Adjustment**:  
-We restructured backlog items into finer-grained tasks, categorized by deliverable type (e.g., “Add lightning logic”, “Create thunder VFX”, “Link weather effect to enemy speed modifier”).
+- Assigned clear roles to support parallelism  
+- Planned in sprints with testable outcomes  
+- Used structured feedback loops to evolve collaboration  
+- Treated coordination as a system to be iterated, not assumed
 
-> **Lesson**: Granular, role-specific tasks improved ownership clarity and enabled parallel execution.
-
----
-
-#### Integration Challenges: MVP Collision and Rescue
-
-**Problem**:  
-During MVP sprint, several independently developed modules (e.g., pet system, map generator, upgrade UI) conflicted in runtime or broke progression flow.
-
-**Response**:  
-We hosted a full-day “Game Jam” style integration sprint: all members met physically, iteratively merged systems, fixed context-specific bugs, and aligned interfaces.
-
-> **Lesson**: Periodic co-location accelerates high-risk merges and improves team awareness of system interdependencies.
-
----
-
-#### Planning Flexibility: Navigating Resource Fluctuations
-
-**Issue**:  
-Unexpected delays (personal commitments, bugs, design rework) disrupted several sprint plans. Fixed-size stories often became unrealistic.
-
-**Response**:  
-We switched to **value-based sprint scoping**—prioritizing playable features over complete implementations. For example, we shipped a functional pet selection screen first, and added animations later.
-
-> **Lesson**: Agility means adjusting scope, not just shifting deadlines.
-
----
-
-#### Summary
-
-Across these experiences, we learned that **coordination is a living system**: it evolves with team size, task type, and external constraints. Successful collaboration came not from strict rules, but from shared intent and timely adaptation.
-
-> In short, we grew not just as developers—but as collaborators. Our workflows became faster, our decisions clearer, and our product stronger through constant team-level reflection.
-
----
-
-### 7.5 Reflection and Conclusion
-
-The development of Glitchwood was not only a technical challenge—it was a test of collaboration, adaptability, and shared responsibility. Our team functioned as a cross-disciplinary unit, balancing engineering, design, coordination, and evaluation across an evolving agile process.
-
----
-
-#### Summary of Team Achievements
-
-We successfully:
-
-- Built a fully playable, modular, browser-based game within academic constraints
-- Coordinated parallel development across six team members with minimal conflict
-- Applied agile planning, version control, and design-first thinking to manage complexity
-- Delivered gameplay systems (pets, weather, upgrades) that were integrated and user-tested
-
-These outcomes reflect not just individual productivity, but a synchronized, intentional team effort grounded in iterative feedback and role ownership.
-
----
-
-#### Personal and Collective Growth
-
-Over the course of the project, we each developed:
-
-- **Technical confidence** in system design, refactoring, and debugging under pressure
-- **Communication fluency**—knowing when to document, when to sync live, and how to escalate blockers
-- **Empathy in collaboration**, especially when adjusting timelines or helping others debug unfamiliar modules
-
-> These soft and hard skills will carry over to future group projects, internships, and professional work—especially in fast-moving, cross-functional teams.
-
----
-
-#### Guidance for Future Teams
-
-Reflecting on our own journey, we would recommend that future teams:
-
-- Prioritize real-time communication early, especially during system design and integration
-- Break down tasks by testable deliverables, not vague outcomes
-- Plan for failure—some features will take longer, break others, or need to be cut
-- Make retrospectives routine, not reactive
-
-> Above all, treat coordination as part of the software—not just the process. Good collaboration is a feature of good engineering.
-
----
-
-Through Glitchwood, we became more than contributors—we became a team. And that may be the most valuable deliverable of all.
+> By the end, we weren’t just building Glitchwood—we were building a well-aligned, communicative team.
 
 [Back to Table of Contents](#table-of-contents)
 
-### 8 Sustainability, Ethics, and Accessibility
+## 8. Sustainability, Ethics, and Accessibility
 
-Glitchwood was not only designed to entertain, but also to reflect a broader commitment to sustainability, ethical awareness, and accessibility. This chapter outlines how these values shaped our development decisions—from technical design to visual metaphors and deployment strategy.
-
----
-
-#### 8.1 Environmental Impact
-
-We designed Glitchwood to be **efficient by design**, both in computational demand and deployment method.
-
-- **Frame logic and visual effects were deliberately minimized**, reducing unnecessary GPU load during idle frames and low-intensity gameplay.
-- By choosing **p5.js**, we avoided large runtime engines or installations, significantly lowering the **energy cost of distribution**.
-- All assets were optimized for browser delivery—pixel art sprites, static backgrounds, and capped animation loops.
-
-> Through these measures, Glitchwood can run on older devices with limited hardware resources, expanding access and reducing lifecycle emissions.
-
-**Reflection**:  
-While our client-side game is energy-efficient, our current GitHub-hosted deployment offers limited control over backend sustainability. Future versions could adopt green hosting solutions or power-aware analytics.
+Glitchwood was built with sustainability, inclusivity, and ethical design in mind. From code to art to deployment, we treated these constraints not as limitations—but as design challenges.
 
 ---
 
-#### 8.2 Social Impact
+### 8.1 Environmental Impact
 
-Glitchwood explores the **emotional experience of tech burnout** through symbolic gameplay: a developer trapped inside a buggy system, debugging both code and self. This narrative lens helped us address:
+We minimized resource usage by design:
 
-- **Workplace overexertion**: Gameplay reflects cognitive load, pressure, and repeated failure cycles.
-- **Mental health**: The game avoids high-punishment loops and offers two difficulty levels to reduce frustration for casual players.
-- **Role diversity**: Characters metaphorically represent different developer personas, affirming that diverse work styles are valid.
+- **Lightweight engine**: Built in p5.js (browser-native, no runtime overhead)
+- **Optimized visuals**: Pixel art, capped animation frames, zero 3D assets
+- **Energy-aware loops**: Frame logic throttled during idle or low-activity scenes
 
-We also actively considered inclusivity:
+> Our game runs on old laptops and low-power devices, reducing carbon impact and expanding reach.
 
-- High-contrast color schemes aid visibility
-- Pet feedback was reinforced with icons and animations
-- Control inputs were kept simple and tutorialized in early waves
-
-> These choices support a wider range of players while embedding real-world themes into the experience.
+**Future Steps**:  
+We plan to explore green hosting (e.g., Netlify on renewable energy) and power-aware analytics (e.g., FPS benchmarking by hardware profile).
 
 ---
 
-#### 8.3 Technical Sustainability
+### 8.2 Social Impact & Narrative Themes
 
-We prioritized **long-term maintainability** and **modular extensibility**:
+Glitchwood is a metaphor: a developer trapped inside a malfunctioning system.
 
-- All core systems (weather, upgrades, pets) were developed as independent modules, reducing system coupling
-- Code reuse was maximized via inheritance and abstract classes (e.g., all enemies share movement logic)
-- Game runs on open standards (HTML5 + JS), avoiding locked platforms or proprietary libraries
+- **Enemies** = software bugs  
+- **Weather** = environmental instability  
+- **Pets** = debugging tools  
+- **Bosses** = runtime failures or burnout events
 
-> This structure enables future teams—or even external contributors—to extend the system with new content (e.g., characters, weather types) without rewriting foundational logic.
+By embedding these metaphors, we touched on:
 
-We also intentionally targeted **low-spec hardware**, ensuring our game is playable on entry-level laptops or tablets without additional setup.
+- **Burnout & overwork**: The escalating chaos of waves reflects unsustainable pressure  
+- **Mental health**: Players are rewarded for adaptability and support—not punishment  
+- **Diversity of dev roles**: Three characters represent distinct archetypes of software workers
+
+> Players felt “seen” by the metaphor, without any explicit story beats—validation that our symbolism worked.
 
 ---
 
-#### 8.4 Sustainability-Oriented Requirements
+### 8.3 Technical Sustainability
 
-Drawing from the **SusAF (Sustainability Awareness Framework)**, we embedded sustainability goals directly into our requirements gathering process. Below are selected examples from each domain:
+We wrote code for the long term:
 
-| Type            | Stakeholder        | Requirement                                                                                   |
-|-----------------|--------------------|-----------------------------------------------------------------------------------------------|
-| Environmental   | Developer           | Avoid frame-locked loops and GPU-intensive effects to reduce device energy consumption        |
-| Technical       | Maintainer          | Modularize all features to prevent duplication and ease feature expansion                     |
-| Social          | Casual player       | Provide a low-frustration “Easy Mode” with full gameplay content                              |
-| Accessibility   | Visually sensitive user | Use strong visual contrast and pet effect feedback mechanisms                              |
-| Deployment      | Tester              | Host via web platform for zero-install testing across different systems and browsers          |
+- **Modular systems**: Pets, upgrades, weather types all run in isolated classes  
+- **Extensible logic**: Adding new weather or bosses only requires subclassing, not rewrites  
+- **Open-source compatible**: Game runs entirely on web standards (HTML + JS)
 
-> These requirements ensured that sustainability was not an afterthought, but a constraint baked into system scope, feature prioritization, and user expectations.
+> Future developers can fork and expand Glitchwood without architectural debt.
+
+This also enabled us to keep the bundle small (<5MB), making the game mobile-accessible and classroom-friendly.
+
+---
+
+### 8.4 Accessibility by Design
+
+We aimed to support a wide audience:
+
+- **Color contrast**: All core UI elements follow WCAG 2.0 AA contrast standards  
+- **Simple controls**: Keyboard + mouse only; no complex combos  
+- **Tutorial overlay**: Introduces movement, attack, and pet mechanics non-intrusively  
+- **Pet and weather feedback**: Animations, icons, and sound cues help players understand cause/effect
+
+> These features directly addressed think-aloud test feedback, especially from casual or neurodiverse players.
+
+---
+
+### 8.5 Sustainability-Driven Requirements
+
+Drawing from the SusAF (Sustainability Awareness Framework), we structured several system goals around sustainability values:
+
+| Sustainability Type | Stakeholder      | Requirement                                                                 |
+|----------------------|------------------|------------------------------------------------------------------------------|
+| Environmental        | Developer         | Avoid GPU-intensive visuals; use efficient loops                            |
+| Technical            | Future Maintainer | Modularize weather/pet/upgrades into standalone classes                     |
+| Social               | Casual Player     | Easy Mode must offer full content, not just a truncated experience          |
+| Accessibility        | Vision-sensitive user | Reinforce gameplay effects with audio + icons                           |
+| Deployment           | Tester            | Must run in browser on any OS without installation                         |
+
+> These were treated as “non-functional requirements,” influencing design scope and code structure.
 
 ---
 
 ### Summary
 
-Rather than treat sustainability and ethics as compliance topics, we saw them as **creative constraints**—challenges that made Glitchwood more focused, inclusive, and robust. From architecture to artwork, these principles helped us build not just a game, but a thoughtful, accessible system.
+By weaving sustainability and ethics into both game content and technical delivery, Glitchwood became more than playable—it became intentional.
 
-> Our goal wasn’t just to simulate software failure—but to demonstrate how intentional design can lead to software resilience.
+- **Sustainability** guided how we deployed and optimized
+- **Ethics** shaped our narrative and feedback systems
+- **Accessibility** widened our user base and reduced frustration
+
+> Glitchwood doesn’t just simulate glitches—it reflects how good systems survive under pressure.
 
 [Back to Table of Contents](#table-of-contents)
 
-### 9 Conclusion
+## 9. Conclusion
 
-Glitchwood has been more than a course project—it has been a compact simulation of real-world software design, collaborative game development, and iterative user-centered refinement. This final chapter synthesizes the technical, creative, and collaborative insights we gained.
-
----
-
-#### 9.1 What We Learned
-
-**Architectural Planning Matters**  
-Starting with clear UML diagrams, modular code boundaries, and shared naming conventions helped us avoid later-stage refactoring and ensured everyone could work independently yet compatibly.
-
-**Agile in Practice**  
-We learned that short sprints, live reviews, and early testing loops outperform long isolated development. Features like the weather system or pet AI evolved rapidly due to this incremental process.
-
-**Design–Code–Player Feedback Loop**  
-Many design decisions—like pet visuals, boss warnings, or UI timing—were directly informed by user feedback. We experienced how usability is not “icing,” but core to retention and perceived quality.
-
-> These lessons extended beyond code: they improved our ability to scope, prioritize, communicate, and iterate as a team.
+Glitchwood began as a game—and evolved into a system that reflects the reality of software creation: uncertain, modular, fragile, and deeply human.
 
 ---
 
-#### 9.2 Technical Challenges Overcome
+### 9.1 Lessons Learned
 
-We confronted and resolved three major categories of challenges:
+**1. Architecture Matters**  
+Starting with clear UML diagrams and object-oriented boundaries saved us from chaos later. Every scalable feature—from pets to upgrades—was possible because we modularized early.
 
-- **System Complexity**: Combining random upgrades, pet AI, and procedural waves strained early logic structures. We refactored these into separate classes with clear interface contracts.
-- **Performance Bottlenecks**: Late-stage issues with entity collision and animation lag were mitigated through batching, frame logic capping, and spatial spawning buffers.
-- **Upgrade Interactions**: Effects like “Split + Pierce” required a shift from player-driven upgrades to projectile-bound logic, teaching us how **ownership logic** affects scalability.
+**2. Agile = Adaptation**  
+We learned to plan in sprints, test often, fail fast, and adjust priorities without panic. When integration broke, we debugged together. When timelines slipped, we shipped smaller but smarter.
 
-These challenges forced us to think like engine designers, not just feature coders.
+**3. Feedback Loops Drive Quality**  
+Player comments directly shaped visuals, pacing, and even input mapping. SUS and NASA-TLX scores were helpful—but think-aloud reactions told us what needed fixing now.
 
----
-
-#### 9.3 Collaboration and Testing Insights
-
-What began as task assignment evolved into true **collaborative ownership**. We:
-
-- Rewrote UI based on HCI tester feedback
-- Tuned gameplay balance based on NASA-TLX workload patterns
-- Adapted code structure based on integration friction
-
-The mix of **quantitative analysis (SUS, NASA)** and **qualitative UX review** helped us triangulate improvements that made the game both fair and fun.
-
-> We didn’t just test our game—we tested our own assumptions.
+> The best version of Glitchwood wasn’t on the whiteboard. It emerged through testing, listening, and rebuilding.
 
 ---
 
-#### 9.4 Looking Ahead
+### 9.2 Overcoming Technical Challenges
 
-If further developed, Glitchwood offers two promising directions:
+**System Complexity**  
+Interacting systems (e.g., pierce + split + pet + weather) quickly became hard to manage. We fixed this by isolating logic: projectiles handled their own upgrades; pets ran autonomous loops.
 
-**Technical Growth**:
-- Multiplayer co-op support via socket-based state sync
-- Data-driven upgrade scripting (JSON/DB instead of hardcoded logic)
-- Scene streaming and animation queueing for performance tuning
+**Performance Bottlenecks**  
+Enemy crowding caused lag. We capped spawn rates, used pooling, and added cooldown throttles to improve frame consistency.
 
-**Educational & Experimental Potential**:
-- Used as an **educational sandbox**: “debug the metaphor”
-- Support for **player-made upgrade mods**
-- Expanding metaphor: more "bugs", crash events, or recovery arcs
+**Upgrade Interaction**  
+Hardcoded effects got messy fast. Moving to data-driven flags and class-based projectile behaviors restored sanity.
 
-> The game is architected for growth—not just in size, but in meaning.
+> These challenges taught us to treat every feature as its own system—with clear inputs, outputs, and ownership.
 
 ---
 
-#### 9.5 Final Thoughts
+### 9.3 Collaboration Insights
 
-Glitchwood began as a roguelike. It became a metaphor. It ended as a living software system—balanced between story, system, and scale.
+We evolved from dividing tasks to owning features collectively. Our biggest upgrades came not from code—but from:
 
-Through this project, we became better programmers, better designers, and most importantly, better collaborators. We learned how to take feedback without ego, build systems with intention, and ship a product that others could truly engage with.
+- User interviews (“I didn’t even see the weather change.”)
+- Sprint retros (“Pets are breaking during map reset.”)
+- PR reviews (“Why is this logic duplicated again?”)
 
-> In the end, the most meaningful escape wasn’t from the game world—but into the creative process itself.
+By the final sprint, we weren’t just writing code—we were shipping systems with shared accountability and design integrity.
+
+---
+
+### 9.4 Future Directions
+
+Glitchwood is architected to grow.
+
+**Technical Possibilities**:
+- Multiplayer: shared states, pet sync, co-op debugging
+- Modding: JSON-based upgrade definitions or user-made pets
+- Story: branching “developer burnout recovery” arcs or error log collectibles
+
+**Educational Use**:
+- Game-based learning about bugs, system design, or logic modeling
+- Sandbox mode: teach physics, state machines, or enemy AI through play
+
+> Glitchwood can become a platform—not just for players, but for learners and tinkerers.
+
+---
+
+### 9.5 Final Reflections
+
+In building Glitchwood, we learned to:
+
+- Work across disciplines and time zones
+- Balance gameplay with metaphor
+- Code systems that teach and scale
+
+And most of all: to collaborate with intention.
+
+> Every weather effect, every flicker, every pet—it’s all a metaphor. Not just for software bugs, but for building something together, under pressure, with care.
 
 [Back to Table of Contents](#table-of-contents)
 
@@ -2097,3 +1488,5 @@ Thank you for reviewing our journey. Glitchwood was not just a game—it was a s
 <div align="center">
   <img src="docs/report/bye.gif" alt="Byebye" width="580"  height="330">
 </div>
+
+[Back to Table of Contents](#table-of-contents)
