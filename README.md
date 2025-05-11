@@ -21,7 +21,7 @@
 
 <div align="center">
   <a href="https://youtu.be/V8NCOusjgn8" target="_blank">
-    <img src="https://img.youtube.com/vi/V8NCOusjgn8/0.jpg" alt="Watch the Demo Video" width="580" height="350"/>
+    <img src="https://img.youtube.com/vi/V8NCOusjgn8/maxresdefault.jpg" alt="Watch the Demo Video" width="580" height="350"/>
   </a>
 </div>
 
