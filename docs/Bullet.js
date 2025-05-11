@@ -1,3 +1,5 @@
+// --- Base Bullet Class ---
+// Handles behavior for player-fired projectiles, including different types like normal, pierce, and bounce.
 class Bullet {
   constructor(x, y, vel, type = "normal", bImageUp, bImageDown, bImageLeft, bImageRight, state) {
     this.pos = createVector(x, y);
@@ -45,6 +47,9 @@ class Bullet {
     this.animationCounter = 0;
   }
 
+  // Updates the bullet's state each frame.
+  // Moves the bullet, checks for collisions with enemies and obstacles, and handles bullet-specific logic (piercing, bouncing).
+  // Returns false if the bullet should be destroyed (e.g., hit an enemy, obstacle, or went off-screen), true otherwise.
   update() {
     this.pos.add(this.vel);
 
@@ -140,7 +145,8 @@ class Bullet {
     return true;
   }
 
-
+  // Displays the bullet on the screen.
+  // Renders the bullet's image if available, otherwise draws a default ellipse.
   display() {
     push();
     translate(this.pos.x, this.pos.y);
@@ -166,7 +172,10 @@ class Bullet {
 }
 
 // --- EnemyBullet Class ---
+// Basic projectile fired by enemies.
 class EnemyBullet {
+  // Constructor for the EnemyBullet class.
+  // Initializes basic properties like position, velocity, radius, and damage.
   constructor(x, y, vel) {
     this.pos = createVector(x, y);
     this.vel = vel;
@@ -174,6 +183,9 @@ class EnemyBullet {
     this.damage = 10;
   }
 
+  // Updates the enemy bullet's state each frame.
+  // Moves the bullet and checks for collisions with obstacles or screen boundaries.
+  // Returns false if the bullet should be destroyed, true otherwise.
   update() {
     this.pos.add(this.vel);
     for (let obs of obstacles) {
@@ -187,6 +199,8 @@ class EnemyBullet {
     );
   }
 
+  // Displays the enemy bullet on the screen.
+  // Renders it as a simple colored ellipse.
   display() {
     fill(200, 100, 255);
     noStroke();
@@ -195,14 +209,25 @@ class EnemyBullet {
 }
 
 // --- WebProjectile Class ---
+// Represents a specialized enemy projectile that creates a web effect.
+// Extends EnemyBullet and adds animation for the web.
 class WebProjectile extends EnemyBullet {
+  // Constructor for the WebProjectile class.
+  // Initializes web-specific properties like radius and animation parameters.
   constructor(x, y, vel) {
     super(x, y, vel);
     this.radius = 10;
 
-        // Animation properties    this.frameIndex = 0;    this.frameCount = 6; // acidProjectile2 image has 6 frames    this.frameDelay = 6;    this.frameCounter = 0;
+    // Animation properties
+    this.frameIndex = 0;
+    this.frameCount = 6; // acidProjectile2 image has 6 frames
+    this.frameDelay = 6;
+    this.frameCounter = 0;
   }
 
+  // Updates the web projectile's state each frame.
+  // Moves the projectile and progresses its animation.
+  // Returns false if the bullet should be destroyed (e.g., went off-screen), true otherwise.
   update() {
     this.pos.add(this.vel);
 
@@ -215,6 +240,9 @@ class WebProjectile extends EnemyBullet {
     return !(this.pos.x < 0 || this.pos.x > width || this.pos.y < 0 || this.pos.y > height);
   }
 
+  // Displays the web projectile on the screen.
+  // Renders the animated web image if available, with rotation based on velocity.
+  // Falls back to a simple ellipse if the image is not loaded.
   display() {
     if (typeof webEffectImg !== 'undefined' && webEffectImg) {
       try {
@@ -258,7 +286,11 @@ class WebProjectile extends EnemyBullet {
 }
 
 // --- GhostFire Class ---
+// Represents a homing projectile fired by enemies, which seeks the player.
+// Includes animation and particle effects on collision.
 class GhostFire {
+  // Constructor for the GhostFire class.
+  // Initializes properties for homing behavior, damage, animation, and visual effects.
   constructor(x, y) {
     this.pos = createVector(x, y);
     this.vel = createVector(0, 0);
@@ -278,6 +310,8 @@ class GhostFire {
     this.glowAlpha = 150;
   }
 
+  // Calculates the steering force to apply to the projectile to seek a target.
+  // Takes a target vector (usually the player's position) and returns a steering vector.
   seek(target) {
     let desired = p5.Vector.sub(target, this.pos);
     desired.normalize();
@@ -288,6 +322,9 @@ class GhostFire {
     return steer;
   }
 
+  // Updates the ghost fire's state each frame.
+  // Handles animation, applies seeking behavior, updates position, and checks for collisions.
+  // Damages the player on collision or creates particle effects if it hits an obstacle.
   update() {
     this.frameCounter++;
     if (this.frameCounter >= this.frameDelay) {
@@ -324,6 +361,8 @@ class GhostFire {
     }
   }
 
+  // Displays the ghost fire on the screen.
+  // Renders the animated ghost fire image.
   display() {
     push();
     imageMode(CENTER);
