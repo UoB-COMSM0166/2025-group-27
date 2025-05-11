@@ -42,11 +42,7 @@ function handleGameplay(now) {
   if (wave == 5 || wave == 10 || wave == 15) {
     obstacleBuild = false;
   }
-  if (wave == 6 && !obstacleBuild) {
-    obstacles = [];
-  } else if (wave == 7 && !obstacleBuild) {
-    generateInitialObstacles();
-  } else if (wave == 11 && !obstacleBuild) {
+  if (wave == 11 && !obstacleBuild) {
     obstacles = [];
     generateInitialObstacles();
   }

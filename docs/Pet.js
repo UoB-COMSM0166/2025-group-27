@@ -541,6 +541,8 @@ function displayPetReveal() {
 function finishPetSelection() {
   player.needsPetSelection = false;
   wave++;
+  obstacles = [];
+  generateInitialObstacles();
   gameState = "game";
   spawnEnemiesForWave(wave);
 }
