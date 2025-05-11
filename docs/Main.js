@@ -1,50 +1,56 @@
-// ===== 全局变量 =====
-let difficult; //难度
-let player;
-let bullets = [];
-let enemyBullets = [];
-let enemies = [];
-let obstacles = [];
-let expOrbs = [];
-let floatingTexts = [];
-let poisonTrails = []; // 新增：毒气轨迹数组
-let score = 0;
-let wave = 1;
-let gameState = "mainMenu"; // "mainMenu", "menu"（角色选择）, "game", "paused", "upgrading", "gameOver"
+// ===== Global Variables =====
+let difficult;               // Game difficulty
+let player;                  // Player instance
+let bullets = [];            // Array of player bullets
+let enemyBullets = [];       // Array of enemy bullets
+let enemies = [];            // Array of enemies
+let obstacles = [];          // Array of obstacles
+let expOrbs = [];            // Array of experience orbs
+let floatingTexts = [];      // Array of floating text effects
+let poisonTrails = [];       // Array of poison pool effects
+let score = 0;               // Player score
+let wave = 1;                // Current wave number
+
+// "mainMenu", "menu", "game", "paused", "upgrading", "gameOver"
+let gameState = "mainMenu";
 let lastTerrainChange = 0;
-let feathers = [];
-let featherSprite;
+let feathers = [];           // Array of falling feather effects
+let featherSprite;           // Feather image
 const borderOffset = 10;
 let obstacleBuild = false;
-//亮度以及音量
+
+// Audio/visual settings
 let volumeSlider;
 let backButton;
-let volume;   // 默认音量
+let volume;
 
-// 暂停按钮和暂停时间
+// Pause functionality
 let pauseButton;
 let pauseStartTime = 0;
 let totalPausedTime = 0;
 
-// ----- 天气相关全局变量 -----
-let weather = "normal";              // 当前天气："normal", "hot", "snowy", "thunderstorm"
-let lastWeatherChange = 0;           // 上一次随机选择天气的时间
-let weatherStartTime = 0;            // 当前特殊天气开始的时间
+// ----- Weather-related globals -----
+let weather = "normal";              // "normal", "hot", "snowy", "thunderstorm"
+let lastWeatherChange = 0;           // Timestamp of last weather change
+let weatherStartTime = 0;            // Timestamp when current special weather began
 
+// Lightning effect variables
 let lightningZone = null;
 let lightningChain = [];
 let lastLightningTime = 0;
-const lightningDelay = 1000; // 每道闪电延迟（毫秒）
-const maxLightningChain = 3; // 最大连续闪电数
-let upgradeOptions = [];
-let choosingUpgrade = false;
-let passiveSkills = [];
-let coins = 0;
-let usedBossTypes = [];
+const lightningDelay = 1000;     // ms between lightning strikes
+const maxLightningChain = 3;     // Maximum number of chained strikes
+
+let upgradeOptions = [];      // Available upgrade options
+let choosingUpgrade = false;  // Whether in upgrade selection
+let passiveSkills = [];       // Unlocked passive skills
+let coins = 0;                // Player currency
+let usedBossTypes = [];       // Boss types already encountered
 let commonEnemyAction = {};
 let commonEnemyAction1 = {};
 let commonEnemyAction2 = {};
-// 以下变量属于扩展（UI、统计等）
+
+// UI and statistics
 let normalEnemiesDefeated = 0;
 let bossDefeated = 0;
 let bossDefeatedCount = 0;
@@ -52,23 +58,30 @@ let finalStats = {};
 let showAttributes = false;
 let gameStartTime = 0;
 let bossActive = false;
+
+// Potion selection
 let potionOptions = [];
 let choosingPotion = false;
 let potionButtons = [];
-// 波数提示动画（可选效果）
+
+// Wave announcement animation
 let waveTextAnimation = 0;
-// 热气动画控制
+
+// Heat haze animation frame
 let currentFrame = 0;
-// 调试标记
+
+// Debug flag
 const debug = false;
+
+// UI button arrays
 let mainMenuButtons = [];
 let charSelectButtons = [];
 let pauseButtons = [];
-
 let mainMenuButton = [];
 let endlessModeButton = [];
 let victoryButtons = [];
 
+// Pet selection reveal state
 let selectedPetFrontImage = null;
 let petRevealTimer = 0;
 let petRevealFrameIndex = 0;
@@ -79,16 +92,17 @@ let selectPetsImage;
 let petRevealBackground;
 let featherBladeSprite;
 
+// Fog of war effect controls
 let levelFogEnabled = false;
 let levelFogOpacity = 0;
 let levelFogRadius = 150;
 let maxLevelFogOpacity = 180;
 let fogTransitionSpeed = 5;
 
+// Additional animation state
 let currentFrame1 = 0;
 let animationDone = false;
 let deathAnimations = [];
-
 const MAX_FEATHERS = 50;
 
 //----------------------preload image-----------------------------
@@ -167,11 +181,12 @@ function preload() {
   // BirdBoss bossAction
   bossAction = loadImage("./assets/candidate_images/characters/enemies/birdman/BirdBoss.png");
   featherSprite = loadImage("./assets/candidate_images/characters/enemies/birdman/falling_feather_yellow.png");
-  // adjustment
 
+  //slime boss
   slimeBossImage = loadImage("./assets/candidate_images/effects/skill_effects/drip/cell_sphere/boss_slime_blue.png");
   slimeBoss2Image = loadImage("./assets/candidate_images/effects/skill_effects/drip/cell_sphere/boss_slime.png");
   //spiderBossAction = loadImage("./assets/images/Characters/Enemies/SpiderBoss/SpiderBoss.png");
+
   //main menu sound
   mainMenuSound = loadSound("./assets/candidate_sounds/Music/MainMenu.ogg");
   // normal enemies music
@@ -282,17 +297,20 @@ function preload() {
   featherBladeSprite = loadImage("./assets/candidate_images/characters/enemies/birdman/falling_feather_blue.png");
 }
 
-
+//setup canvas and initial state 
 function setup() {
   createCanvas(1062, 600);
   volume = 0.5;
   gameStartTime = millis();
-  generateInitialObstacles();
-  initButtons();
-  setupVictoryButtons();
+
+  generateInitialObstacles(); // Spawn initial obstacles
+  initButtons();              // Create main menu and UI buttons
+  setupVictoryButtons();      // Button setup for victory screen
+
   gameState = "mainMenu";
   setupSnow();
 
+  // Configure pause button in top-right
   pauseButton = new Button(width - 110, 10, 100, 30, "Pause", () => {
     if (gameState === "game") {
       gameState = "paused";
@@ -303,10 +321,11 @@ function setup() {
 
 function draw() {
   background(51);
-  updateWeather();
+  updateWeather();// Change weather periodically
   noStroke();
   strokeWeight(1);
 
+  // Synchronize volumes
   arrowsound.setVolume(volume);
   gunsound.setVolume(volume);
   keyboardsound.setVolume(volume);
@@ -320,6 +339,7 @@ function draw() {
   normalMusic78.setVolume(volume);
   mainMenuSound.setVolume(volume);
 
+  // Render current screen based on gameState
   switch (gameState) {
     case "mainMenu":
       displayMainMenu();
@@ -375,6 +395,7 @@ function draw() {
       break;
   }
 
+  // Update and draw floating text effects
   floatingTexts = floatingTexts.filter((ft) => {
     if (ft.update()) {
       ft.display();
@@ -391,12 +412,12 @@ function draw() {
     displayAttributes();
   }
 
+  // Remove dead enemies after death animations
   enemies.forEach(enemy => {
     if (enemy.isDying) {
       updateDeathEffect(enemy);
     }
   });
-
   enemies.forEach(enemy => {
     if (enemy.health <= 0 && enemy.dead) {
       let index = enemies.indexOf(enemy);
@@ -404,13 +425,16 @@ function draw() {
     }
   });
 
-  drawWeatherEffects();
+  drawWeatherEffects();// Render weather overlays
 
+  // Draw fog for BugBoss if active
   for (let enemy of enemies) {
     if (enemy instanceof BugBoss && enemy.fogOpacity > 0) {
       enemy.drawFogEffect();
     }
   }
+
+  // Display current weather text when playing
   if (gameState == "game") {
     //weather text
     textSize(16);
@@ -418,13 +442,14 @@ function draw() {
     text("Weather：" + weather, 70, height - 10);
   }
 
-  drawPlayerStats();
+  drawPlayerStats();// Health, EXP bars
   stroke(255, 0, 0);
   strokeWeight(4);
   noFill();
   rect(0, 0, width, height);
 }
 
+//draw health and EXP UI 
 function drawPlayerStats() {
   if (!player) {
     return;
@@ -447,7 +472,7 @@ function drawPlayerStats() {
       10 + healthBarHeight / 2
     );
 
-    //draw Exp
+    // EXP bar
     const expBarWidth = 200;
     const expBarHeight = 10;
     const expPercentage = player.exp / player.expToNextLevel;
@@ -473,22 +498,26 @@ function initPlayer(type) {
   gameState = "petSelection";
 }
 
+//poison pool effect rendering 
 function drawPoisonPools() {
   for (let i = poisonTrails.length - 1; i >= 0; i--) {
     const pool = poisonTrails[i];
     const elapsed = millis() - pool.startTime;
 
+    // Remove pool when duration ends
     if (elapsed > pool.duration) {
       poisonTrails.splice(i, 1);
       continue;
     }
 
+    // Animate pool sprite frames
     pool.frameCounter++;
     if (pool.frameCounter >= pool.frameDelay) {
       pool.frameCounter = 0;
       pool.frameIndex = (pool.frameIndex + 1) % pool.frameCount;
     }
 
+    // Fade out over life
     const fadeRatio = elapsed / pool.duration;
     const alpha = map(fadeRatio, 0, 1, 1, 0);
 
@@ -499,6 +528,8 @@ function drawPoisonPools() {
 
     noFill();
     strokeWeight(5);
+
+    // Draw layered flame rings
     for (let r = 0; r < 5; r++) {
       //flame fade
       let flameColor;
@@ -512,6 +543,7 @@ function drawPoisonPools() {
       ellipse(pool.pos.x, pool.pos.y, displayRadius * 2 + r * 18);
     }
 
+    // Generate sparks periodically
     if (frameCount % 4 === 0) {
       pool.sparks = pool.sparks || [];
 
@@ -558,6 +590,7 @@ function drawPoisonPools() {
       }
     }
 
+    // Create ripples over time
     if (frameCount % 7 === 0) {
       pool.ripples = pool.ripples || [];
       pool.ripples.push({
@@ -589,6 +622,7 @@ function drawPoisonPools() {
       }
     }
 
+    // Draw inner core glow layers
     noStroke();
     for (let c = 0; c < 3; c++) {
       let coreRadius = displayRadius * (0.2 - c * 0.05);
@@ -600,7 +634,7 @@ function drawPoisonPools() {
 
     pop();
 
-    //detect if player is in flame
+    // Damage player if inside poison radius
     if (player && dist(pool.pos.x, pool.pos.y, player.pos.x, player.pos.y) < displayRadius + player.radius) {
       if (frameCount % 12 === 0) {
         player.takeDamage(5);
