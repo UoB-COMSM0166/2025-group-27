@@ -82,22 +82,21 @@
 </div>
 
 # Project Report
-
-<!-- TOC -->
-- [Project Report](#project-report)
-  - [Table of Contents](#table-of-contents)
+## Project Report
+## Table of Contents
+- [Table of Contents](#table-of-contents)
   - [1 Introduction](#1-introduction)
     - [1.1 Overview](#11-overview)
-    - [1.2 Ideation and Design Origins](#12-ideation-and-design-origins)
-    - [1.3 Inspiration](#13-inspiration)
-    - [1.4 Innovation](#14-innovation)
-    - [1.5 Vision](#15-vision)
+    - [1.2 Inspiration](#12-inspiration)
+    - [1.3 Innovation](#13-innovation)
+    - [1.4 Vision](#14-vision)
   - [2 Requirements](#2-requirements)
     - [2.1 Stakeholder Identification: The Onion Model](#21-stakeholder-identification-the-onion-model)
     - [2.2 Requirements Analysis: Epics, User Stories, and Acceptance Criteria](#22-requirements-analysis-epics-user-stories-and-acceptance-criteria)
     - [2.3 Applying Requirements to Our Game](#23-applying-requirements-to-our-game)
-    - [2.4 Use-Case Diagram and Use-Case Specification](#24-use-case-diagram-and-use-case-specification)
-    - [2.5 Reflection and Conclusion](#25-reflection-and-conclusion)
+    - [2.4 Early Stage Design and Ideation Process](#24-early-stage-design-and-ideation-process)
+    - [2.5 Use-Case Diagram and Use-Case Specification](#25-use-case-diagram-and-use-case-specification)
+    - [2.6 Reflection and Conclusion](#26-reflection-and-conclusion)
   - [3 Design](#3-design)
     - [3.1 System Architecture Overview](#31-system-architecture-overview)
     - [3.2 Class Diagram](#32-class-diagram)
@@ -120,24 +119,20 @@
     - [6.3 Agile Development Methodology](#63-agile-development-methodology)
     - [6.4 Team Reflection and Continuous Improvement](#64-team-reflection-and-continuous-improvement)
   - [7 Sustainability, Ethics, and Accessibility](#7-sustainability-ethics-and-accessibility)
-      - [7.1 Environmental Impact](#71-environmental-impact)
-      - [7.2 Social Impact](#72-social-impact)
-      - [7.3 Technical Sustainability](#73-technical-sustainability)
-      - [7.4 Sustainability-Oriented Requirements](#74-sustainability-oriented-requirements)
+    - [7.1 Environmental Impact](#71-environmental-impact)
+    - [7.2 Social Impact](#72-social-impact)
+    - [7.3 Technical Sustainability](#73-technical-sustainability)
+    - [7.4 Sustainability-Oriented Requirements](#74-sustainability-oriented-requirements)
   - [8 Conclusion](#8-conclusion)
-      - [8.1 What We Learned](#81-what-we-learned)
-      - [8.2 Technical Challenges Overcome](#82-technical-challenges-overcome)
-      - [8.3 Collaboration and Testing Insights](#83-collaboration-and-testing-insights)
-      - [8.4 Looking Ahead](#84-looking-ahead)
-      - [8.5 Final Thoughts](#85-final-thoughts)
+    - [8.1 What We Learned](#81-what-we-learned)
+    - [8.2 Technical Challenges Overcome](#82-technical-challenges-overcome)
+    - [8.3 Collaboration and Testing Insights](#83-collaboration-and-testing-insights)
+    - [8.4 Looking Ahead](#84-looking-ahead)
+    - [8.5 Final Thoughts](#85-final-thoughts)
   - [9 Appendix](#9-appendix)
     - [9.1 Contributions of Team Members](#91-contributions-of-team-members)
     - [9.2 References](#92-references)
     - [9.3 Goodbye from the Team](#93-goodbye-from-the-team)
-
-
-## Table of Contents
-
 
 ## 1 Introduction
 
@@ -180,93 +175,7 @@ Glitchwood is designed for both casual players and roguelike veterans, featuring
 
 Most importantly, **Glitchwood** is a symbolic representation of software development, incorporating glitches, bugs, and system pressure into its mechanics.
 
-### 1.2 Ideation and Design Origins
-
-Before arriving at **Glitchwood**, our team explored multiple game ideas, which were tested through prototypes and discussions. Here we outline the path leading to the final design.
-
-#### Game Idea 1: Survival Roguelike (Selected)
-
-A wave-based roguelike where players control developer-themed characters in glitchy environments filled with enemies, hazards, and random upgrades. The gameplay focuses on fast-paced combat and metaphor-driven design.
-
-<div align="center">
-  <img src="docs/game_idea/Survival_Shooting_Game(Rogue_like_Elements).png" alt="Survival Shooting Game" width="820" height="570">
-  <p><em>Figure 5. Mind map for Survival Roguelike concept.</em></p>
-</div>
-
-**Core Mechanics:**
-- Distinct character classes (melee, ranged, projectile)  
-- Random upgrades between waves  
-- Companion pets with offensive, defensive, or healing roles  
-- Weather system that changes every 30 seconds  
-- Boss encounters and Endless Mode after wave 15  
-
-<div align="center">
-  <img src="docs/game_idea/game1_who.gif" alt="Character Selection" width="580" height="350"/>
-  <p><em>Figure 6. Character selection prototype.</em></p>
-</div>
-
-<div align="center">
-  <img src="docs/game_idea/game1_select.gif" alt="Pet Selection" width="580" height="350"/>
-  <p><em>Figure 7. Pet selection interface prototype.</em></p>
-</div>
-
-<div align="center">
-  <img src="docs/game_idea/game1_attack.gif" alt="Combat Demo" width="580" height="350"/>
-  <p><em>Figure 8. Combat system demo prototype.</em></p>
-</div>
-
-<div align="center">
-  <video src="https://github.com/user-attachments/assets/141335507/439241019-1799972f-5791-44f3-937b-22e1397587ac.mp4" controls width="540">
-    Your browser does not support the video tag.
-  </video>
-  <p><em>Figure 9. Paper prototype demo for Survival Roguelike.</em></p>
-</div>
-
-**Design Strengths:**
-- Modular systems for easy collaboration  
-- High replayability due to random upgrades and dynamic weather  
-- Easily testable mechanics with P5.js  
-- Symbolic gameplay that mirrors software development challenges  
-
-#### Game Idea 2: Horror Puzzle RPG (Not Selected)
-
-An immersive puzzle RPG set in a frozen university lab, where the player must solve programming-themed puzzles to escape a time loop.
-
-<div align="center">
-  <img src="docs/game_idea/Horror_Puzzle_RPG_Game.png" alt="Horror Puzzle RPG Game" width="820" height="570">
-  <p><em>Figure 10. Mind map for Horror Puzzle RPG concept.</em></p>
-</div>
-
-**Core Concepts:**
-- Puzzle solving through logic gates and key-item use  
-- Repeated loops unlocking new areas and dialogue  
-- Supernatural horror elements with escalating difficulty  
-- Multiple endings based on player decisions  
-
-<div align="center">
-  <video src="https://github.com/user-attachments/assets/141335507/439230948-ebbef71e-5e4e-4bac-967e-0046e64da9a3.mp4" controls width="540">
-    Your browser does not support the video tag.
-  </video>
-  <p><em>Figure 11. Prototype video for Horror Puzzle RPG.</em></p>
-</div>
-
-**Design Limitations:**
-- Complex branching logic difficult to manage in P5.js  
-- Harder to modularize across developers  
-- Story dependencies complicating iterative testing  
-
-#### Why We Chose the Survival Roguelike
-
-We selected **Game Idea 1** for **Glitchwood** because:
-- **Modularity**: The pet, weather, and enemy systems could be developed independently.  
-- **P5.js Compatibility**: More suited for browser deployment.  
-- **Agile Iteration**: Easier to iterate and playtest.  
-- **Clear Metaphor Integration**: The theme of debugging and developer pressure fit well.  
-- **Collaborative Scalability**: Easier to divide the workload across different roles.
-
-> Although the horror RPG had narrative potential, the survival roguelike provided a more solid base for both creativity and engineering.
-
-### 1.3 Inspiration
+### 1.2 Inspiration
 
 To refine our design, we studied two modern roguelikes: **Vampire Survivors** and **20 Minutes Till Dawn**. These games provided valuable insights into gameplay mechanics, balance, and system complexity.
 
@@ -301,7 +210,7 @@ Working within **P5.js**, we designed modular systems that allow:
 - Distinct character behaviors and upgrade paths  
 - Thematic consistency between gameplay and metaphor  
 
-### 1.4 Innovation
+### 1.3 Innovation
 
 **Glitchwood** brings several innovations to the roguelike format, blending symbolic design with engaging mechanics, narrative, and visual cohesion.
 
@@ -365,7 +274,7 @@ The story in **Glitchwood** metaphorically reflects a **programmer’s emotional
 
 This narrative innovatively ties the experience of software development to in-game mechanics, creating a symbolic journey that resonates with developers.
 
-### 1.5 Vision
+### 1.4 Vision
 
 **Glitchwood** was built with two core objectives:
 
@@ -416,7 +325,7 @@ To guide our requirements planning, we used the **Onion Model** to map out the d
 
 <div align="center">
   <img src="docs/requirements/Onion_Model.png" alt="Onion Model of Stakeholders" width="820" height="530">
-  <p><em>Figure 12. Onion model diagram for stakeholder analysis.</em></p>
+  <p><em>Figure 7. Onion model diagram for stakeholder analysis.</em></p>
 </div>
 
 #### Core Layer: The System Itself
@@ -496,7 +405,7 @@ The diagram below shows how we mapped user stories and acceptance criteria acros
 
 <div align="center">
   <img src="docs/requirements/Stakeholder_Requirements.png" alt="Stakeholder Requirements" width="820" height="620">
-  <p><em>Figure 13. Epics, user stories, and acceptance criteria mapped by stakeholder group.</em></p>
+  <p><em>Figure 8. Epics, user stories, and acceptance criteria mapped by stakeholder group.</em></p>
 </div>
 
 By grounding our development process in structured, testable requirements, we were able to plan features methodically, communicate goals clearly across the team, and iterate with confidence throughout each sprint.
@@ -550,7 +459,64 @@ To create a coherent and visually engaging product, we focused on:
 
 By consistently referring back to our original user stories and acceptance criteria, we ensured that every system feature served a specific purpose—either fulfilling a user need, enabling better testing, or reinforcing the game’s narrative metaphor. This alignment made our development more focused, justifiable, and user-centered throughout the entire process.
 
-### 2.4 Use-Case Diagram and Use-Case Specification
+### 2.4 Early Stage Design and Ideation Process
+
+During the early stages of the design process for **Glitchwood**, our team focused on the ideation of game concepts and system requirements, guided by key tools like the **Onion Model** and **User Stories**. After analyzing stakeholders and defining the project’s requirements, we began developing paper prototypes to visualize gameplay mechanics and interactions.
+
+#### Paper Prototyping
+
+We used paper prototyping to sketch out the key features of the game’s user interface, gameplay flow, and overall mechanics. This allowed us to quickly test different ideas without investing in complex coding, ensuring that we could iterate and improve upon the design before committing to the digital prototype.
+
+**Core Features Explored in Paper Prototypes:**
+- **Character Selection Screen:** We tested multiple layouts and interactions to allow players to choose their characters with ease, ensuring that the design was intuitive and user-friendly.  
+- **Combat and Upgrade System:** The paper prototype demonstrated how combat would work during waves, along with the dynamic upgrade system that players would interact with between each wave.  
+- **Pet Selection Interface:** We designed a basic layout to showcase the different companion pets that players could select, each with unique attributes that would affect gameplay.
+
+<div align="center">
+  <img src="docs/game_idea/Survival_Shooting_Game(Rogue_like_Elements).png" alt="Survival Shooting Game" width="820" height="570">
+  <p><em>Figure 9. Mind map for Survival Roguelike concept.</em></p>
+</div>
+
+Through these initial designs, we clarified key gameplay elements such as **wave-based progression**, **random upgrades**, **pet system**, and **dynamic weather changes**. Paper prototypes were used to test the interaction flow between these elements and ensure a balanced and engaging experience for the player.
+
+<div align="center">
+  <img src="docs/game_idea/game1_who.gif" alt="Character Selection" width="580" height="350"/>
+  <p><em>Figure 10. Character selection prototype.</em></p>
+</div>
+
+<div align="center">
+  <img src="docs/game_idea/game1_select.gif" alt="Pet Selection" width="580" height="350"/>
+  <p><em>Figure 11. Pet selection interface prototype.</em></p>
+</div>
+
+<div align="center">
+  <img src="docs/game_idea/game1_attack.gif" alt="Combat Demo" width="580" height="350"/>
+  <p><em>Figure 12. Combat system demo prototype.</em></p>
+</div>
+
+<div align="center">
+  <video src="https://github.com/user-attachments/assets/141335507/439241019-1799972f-5791-44f3-937b-22e1397587ac.mp4" controls width="540">
+    Your browser does not support the video tag.
+  </video>
+  <p><em>Figure 13. Paper prototype demo for Survival Roguelike.</em></p>
+</div>
+
+#### Ideation and Design Decisions
+
+The decision to proceed with a **survival roguelike** concept was based on the feedback and analysis derived from earlier stakeholder mapping (Onion Model) and user stories. After identifying key design challenges and desired features (e.g., difficulty scaling, replayability, and intuitive controls), we narrowed down our ideas to a game that was both engaging and symbolically representative of software development struggles.
+
+**Key Design Decisions:**
+- **Gameplay Loop**: The core loop of defeating enemies, upgrading abilities, and surviving increasingly difficult waves was confirmed through prototyping and feedback.  
+- **Randomized Upgrades and Replayability**: We focused on a dynamic upgrade system to keep each playthrough fresh and replayable, which led to the design of random upgrades between waves.  
+- **Symbolic Metaphors**: Building on the developer theme, the pets and weather systems were designed to represent debugging tools and external work conditions.
+
+#### Refining through Iteration
+
+After the initial paper prototyping, the team held multiple brainstorming sessions and playtesting rounds to refine the game’s mechanics and user interface. Each iteration brought us closer to a solid vision for **Glitchwood**, aligning the game’s systems with its metaphorical narrative and ensuring that the final design would resonate with players while addressing core gameplay needs.
+
+In conclusion, the early stage design process, supported by paper prototyping and continuous iteration, played a crucial role in laying the foundation for **Glitchwood**. This method allowed us to quickly test and refine core features before fully committing to the digital build.
+
+### 2.5 Use-Case Diagram and Use-Case Specification
 
 We developed a **Use Case Diagram** to model the system-level interactions between users and the game. It visualizes the primary actions of each user role—**Player** and **Developer**—along with the conditions under which these actions occur.
 
@@ -608,7 +574,7 @@ We developed a **Use Case Diagram** to model the system-level interactions betwe
 
 This model served as a foundation for designing UI screens, menu flow, and state transitions. It also provided a reference point when debugging scene logic or implementing persistent game states like pet selection and score tracking.
 
-### 2.5 Reflection and Conclusion
+### 2.6 Reflection and Conclusion
 
 Throughout the planning phase, using structured requirement techniques helped us move from creative ambition to implementable design. This section reflects on how these methods supported our workflow and strengthened our final product.
 
