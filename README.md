@@ -351,20 +351,19 @@ The game introduces multiple gameplay systems that enrich replayability and stra
 
 #### Narrative Innovation
 
-The story metaphorically reflects a **programmer's emotional journey** through:
+The story in **Glitchwood** metaphorically reflects a **programmer’s emotional journey**:
 
-- **Burnout**
-- **Debugging and bugs**
-- **Problem-solving under stress**
+- **Overwork and Entanglement with Code**: The protagonist, a developer, is "compiled" into their own game, symbolizing the inescapable entanglement developers feel with their code.
+  
+- **Debugging as Combat**: Players fight bosses, each representing a tough bug or technical challenge, reflecting the process of debugging and overcoming obstacles in development.
 
-Rather than using explicit dialogue, these themes are **embedded in mechanics and visuals**, creating a symbolic rather than literal narrative.
+- **Changing Weather as Environmental Pressure**: The dynamic weather system mirrors the constantly changing work conditions and external pressures developers face in their environments.
 
-#### Visual & Thematic Innovation
+- **Weapons and Pets as Debugging Tools**: The weapons and pets represent debugging tools and resources that assist the developer in navigating and solving problems within the game, much like real-world debugging tools help programmers fix issues.
 
-- Pixel art characters represent **programmer archetypes**.
-- UI elements resemble **code editors and console logs**.
-- **Glitch effects and corrupted sprites** evoke software instability.
-- Sound design is minimal and ambient, reinforcing immersion.
+- **Escaping the Game as Relief**: The ultimate goal of escaping the game symbolizes the satisfaction of completing debugging and returning to the real world, representing the closure of a project.
+
+This narrative innovatively ties the experience of software development to in-game mechanics, creating a symbolic journey that resonates with developers.
 
 ### 1.5 Vision
 
