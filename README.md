@@ -977,7 +977,7 @@ Pathfinding wasn’t feasible under time constraints. If we reused static follow
 We introduced **dynamic path re-evaluation logic**, where each pet recalculates its relative offset from the player after obstacle regeneration. We used `lerp()` smoothing to ensure fluid motion and avoid visual stuttering. Additionally, key behaviors such as auto-attack and shielding were encapsulated in per-pet classes.
 
 <div align="center">
-  <img src="docs/implementation/code2_image.png" alt="code2_image" width="955" height="324">
+  <img src="docs/implementation/code2_image.png" alt="code2_image" width="820" height="270">
   <p><em>Figure 17. Code snippet showing pet behavior: `follow()` and `autoAttack()` logic.</em></p>
 </div>
 
@@ -995,7 +995,7 @@ Initially, upgrade effects were handled in the `Player` class. This created bran
 We refactored the upgrade system so that **each projectile handled its own behavior**. Logic for `onHit()` was moved into the `Arrow` class, which now independently determines whether to split, pierce, or both—based on its instantiation parameters.
 
 <div align="center">
-  <img src="docs/implementation/code_image.png" alt="code_image" width="820" height="345">
+  <img src="docs/implementation/code_image.png" alt="code_image" width="820" height="310">
   <p><em>Figure 18. `Arrow` class handling multiple upgrade effects independently.</em></p>
 </div>
 
@@ -1124,7 +1124,7 @@ In Hard Mode, most players reported higher **mental demand**, **temporal stress*
 ##### Average Scores Comparison
 
 <div align="center">
-  <img src="docs/evaluation/NASA_bar.png" alt="NASA Bar" width="760"  height="380">
+  <img src="docs/evaluation/NASA_bar.png" alt="NASA Bar" width="820"  height="420">
   <p><em>Figure 21. Average NASA-TLX scores by workload dimension in L1 and L2.</em></p>
 </div>
 
@@ -1133,7 +1133,7 @@ This bar chart confirms that Hard Mode significantly increases mental strain and
 ##### Radar Profile
 
 <div align="center">
-  <img src="docs/evaluation/NASA_radar.png" alt="NASA Radar" width="760"  height="380">
+  <img src="docs/evaluation/NASA_radar.png" alt="NASA Radar" width="820"  height="420">
   <p><em>Figure 22. NASA-TLX radar comparison: Easy vs. Hard Mode workload profile.</em></p>
 </div>
 
@@ -1145,12 +1145,12 @@ Hard Mode creates a more cognitively intense experience, which aligns with our d
 ##### L1 (Easy Mode)
 
 <div align="center">
-  <img src="docs/evaluation/SUS_easy.png" alt="SUS Easy Questions" width="760"  height="230">
+  <img src="docs/evaluation/SUS_easy.png" alt="SUS Easy Questions" width="820"  height="260">
   <p><em>Figure 23. SUS question-level responses (Easy Mode).</em></p>
 </div>
 
 <div align="center">
-  <img src="docs/evaluation/SUS_easy_bar.png" alt="SUS Easy Bar" width="760"  height="450">
+  <img src="docs/evaluation/SUS_easy_bar.png" alt="SUS Easy Bar" width="820"  height="480">
   <p><em>Figure 24. Individual SUS scores with benchmark (Easy Mode).</em></p>
 </div>
 
@@ -1160,12 +1160,12 @@ This slightly exceeds the usability benchmark (68), indicating that the game is 
 ##### L2 (Hard Mode)
 
 <div align="center">
-  <img src="docs/evaluation/SUS_hard.png" alt="SUS Hard Questions" width="760"  height="230">
+  <img src="docs/evaluation/SUS_hard.png" alt="SUS Hard Questions" width="820"  height="260">
   <p><em>Figure 25. SUS question-level responses (Hard Mode).</em></p>
 </div>
 
 <div align="center">
-  <img src="docs/evaluation/SUS_hard_bar.png" alt="SUS Hard Bar" width="760"  height="450">
+  <img src="docs/evaluation/SUS_hard_bar.png" alt="SUS Hard Bar" width="820"  height="500">
   <p><em>Figure 26. Individual SUS scores with benchmark (Hard Mode).</em></p>
 </div>
 
@@ -1287,12 +1287,12 @@ You can follow our team's development progress on the board here:
 - [**Kanban Board (Jira)**](https://1971026049.atlassian.net/jira/software/projects/KAN/boards/1)
 
 <div align="center">
-  <img src="docs/kanban/kanban1.png" alt="Kanban1" width="580" height="350"/>
+  <img src="docs/kanban/kanban1.png" alt="Kanban1" width="820" height="610"/>
   <p><em>Figure 27. Project progress presentation on the Kanban board.</em></p>
 </div>
 
 <div align="center">
-  <img src="docs/kanban/kanban2.png" alt="Kanban2" width="580" height="350"/>
+  <img src="docs/kanban/kanban2.png" alt="Kanban2" width="820" height="600"/>
   <p><em>Figure 28. Completed tasks demonstration on the Kanban board.</em></p>
 </div>
 
