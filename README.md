@@ -6,6 +6,7 @@
 
 <div align="center">
   <img src="docs/assets/selected_images/poster/Glitchwood.png" alt="Icon" width="120%">
+    <p><em>Game Icon for Glitchwood.</em></p>
 </div>
 
 ## Quick Start
@@ -23,12 +24,15 @@
   <a href="https://youtu.be/V8NCOusjgn8" target="_blank">
     <img src="https://img.youtube.com/vi/V8NCOusjgn8/maxresdefault.jpg" alt="Watch the Demo Video" width="580" height="350"/>
   </a>
+    <p><em>Thumbnail for the YouTube demo video (click to watch).</em></p>
+</div>
 </div>
 
 # Our Group
 
 <div align="center">
   <img src="docs/assets/selected_images/member/Group27.png" alt="Group Photo" width="75%">
+  <p><em>Group photo of Team 27 with member names marked.</em></p>
 </div>
 
 <div align="center">
@@ -75,21 +79,6 @@
   </tbody>
 </table>
 
-</div>
-
-# Kanban Board
-
-- [**Kanban Board (Jira)**](https://1971026049.atlassian.net/jira/software/projects/KAN/boards/1)  
-  _Follow our team’s agile workflow and development progress._
-
-<div align="center">
-  <img src="docs/kanban/kanban1.png" alt="Kanban1" width="580" height="350"/>
-  <p><em>Project progress presentation</em></p>
-  
-</div>
-<div align="center">
-  <img src="docs/kanban/kanban2.png" alt="Kanban2" width="580" height="350"/>
-  <p><em>Completed tasks demonstration</em></p>
 </div>
 
 # Project Report
@@ -1191,11 +1180,11 @@ To ensure efficient parallel development and reduce integration overhead, we ass
 | Name             | Role                           | Responsibilities                                                                                           |
 |------------------|--------------------------------|------------------------------------------------------------------------------------------------------------|
 | **Chengjun Yi**  | Lead Developer & Debug Lead    | Managed codebase structure, module integration, and performance optimization. Led debugging efforts.       |
+| **Qiutong Zhao** | Project Coordinator & Media Producer| Managed project scheduling, sprint tracking, and media production. Directed demo video and contributed to testing. |
 | **Heng Zhang**   | Core Gameplay Engineer         | Developed enemy AI, boss behaviors, collision systems, and weather logic. Integrated game mechanics.       |
 | **Feihang Yan**  | Pet System Engineer            | Designed and implemented autonomous pet logic and integration with combat and upgrades.                    |
 | **Tong Yu**      | Art Director & UI Developer     | Created pixel art assets, animations, and UI design, built visual layout using p5.js.                      |
 | **Xianhang Peng**| Front-End Developer             | Developed interactive front-end systems, menus, stats, and map UI.                                        |
-| **Qiutong Zhao** | Project Coordinator & Media Producer| Managed project scheduling, sprint tracking, and media production. Directed demo video and contributed to testing. |
 
 > Clear role ownership led to rapid iteration and reduced integration bottlenecks.
 
@@ -1210,17 +1199,31 @@ We used a variety of tools to manage the complexity of the project, focusing on 
 
 > These tools helped maintain code clarity and ensure smooth feature integration.
 
-#### 2. Task Management and Workflow Planning
+#### 2. Task Management and Kanban Workflow
 
-- **JIRA**: Sprint planning with a Kanban board, organized into `To Do → In Progress → Code Review → Done`.  
-- **Sprint Meetings**: Weekly planning on Mondays and reviews on Fridays, ensuring team alignment and quick issue resolution.
+To ensure efficient task management and collaboration, we used **JIRA** and its Kanban board system to break down tasks into manageable chunks. The workflow was organized into `To Do → In Progress → Code Review → Done`, allowing us to:
 
-> This structure kept the project moving smoothly, especially near deadlines.
+- **Track Task Progress**: The Kanban board allowed us to visualize the current status of each task and the overall project, ensuring no task was overlooked.
+- **Maintain Clear Communication**: With each team member assigned clear tasks, the board helped keep everyone aligned on what needed to be done and what was in progress, improving overall coordination.
+- **Improve Efficiency**: By maintaining a clear overview of all tasks, the team could easily identify bottlenecks and adjust priorities when necessary.
+
+You can follow our team's development progress on the board here:  
+- [**Kanban Board (Jira)**](https://1971026049.atlassian.net/jira/software/projects/KAN/boards/1)
+
+<div align="center">
+  <img src="docs/kanban/kanban1.png" alt="Kanban1" width="580" height="350"/>
+  <p><em>Figure 27. Project progress presentation on the Kanban board.</em></p>
+</div>
+
+<div align="center">
+  <img src="docs/kanban/kanban2.png" alt="Kanban2" width="580" height="350"/>
+  <p><em>Figure 28. Completed tasks demonstration on the Kanban board.</em></p>
+</div>
 
 #### 3. Communication and Coordination
 
 - **WeChat**: Daily asynchronous check-ins for task updates and bug discussions.  
-- **Google Meet/Discord**: Used for live screen-sharing during feature integration and demos.
+- **Google Meet**: Used for live screen-sharing during feature integration and demos.
 
 > These tools facilitated quick feedback and ensured UI and logic alignment across teams.
 
@@ -1250,7 +1253,7 @@ We used an Agile-inspired process to maintain regular feedback loops, incrementa
 
 <div align="center">
   <img src="docs/management/Glitchwood_Management.png" alt="Sprint Timeline and Kanban Overview" width="820" height="800">
-  <p><em>Figure 27. Sprint timeline with team role highlights and Kanban status flows.</em></p>
+  <p><em>Figure 29. Sprint timeline with team role highlights and Kanban status flows.</em></p>
 </div>
 
 #### Weekly Work Rhythm
@@ -1513,5 +1516,7 @@ Thank you for reviewing our journey. Glitchwood was not just a game—it was a s
 
 <div align="center">
   <img src="docs/report/bye.gif" alt="Byebye" width="580"  height="330">
-  <p><em>Figure 28. The team waves goodbye—our closing gesture from the world of Glitchwood.</em></p>
+  <p><em>Figure 30. The team waves goodbye—our closing gesture from the world of Glitchwood.</em></p>
 </div>
+
+[Back to Table of Contents](#table-of-contents)
