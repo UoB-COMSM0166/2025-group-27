@@ -83,66 +83,61 @@
 
 # Project Report
 
+<!-- TOC -->
+- [Project Report](#project-report)
+  - [Table of Contents](#table-of-contents)
+  - [1 Introduction](#1-introduction)
+    - [1.1 Overview](#11-overview)
+    - [1.2 Ideation and Design Origins](#12-ideation-and-design-origins)
+    - [1.3 Inspiration](#13-inspiration)
+    - [1.4 Innovation](#14-innovation)
+    - [1.5 Vision](#15-vision)
+  - [2 Requirements](#2-requirements)
+    - [2.1 Stakeholder Identification: The Onion Model](#21-stakeholder-identification-the-onion-model)
+    - [2.2 Requirements Analysis: Epics, User Stories, and Acceptance Criteria](#22-requirements-analysis-epics-user-stories-and-acceptance-criteria)
+    - [2.3 Applying Requirements to Our Game](#23-applying-requirements-to-our-game)
+    - [2.4 Use-Case Diagram and Use-Case Specification](#24-use-case-diagram-and-use-case-specification)
+    - [2.5 Reflection and Conclusion](#25-reflection-and-conclusion)
+  - [3 Design](#3-design)
+    - [3.1 System Architecture Overview](#31-system-architecture-overview)
+    - [3.2 Class Diagram](#32-class-diagram)
+    - [3.3 Sequence Diagram](#33-sequence-diagram)
+    - [3.4 Reflection and Conclusion](#34-reflection-and-conclusion)
+  - [4 Implementation](#4-implementation)
+    - [4.1 Basic Implementation](#41-basic-implementation)
+    - [4.2 Code Architecture Overview](#42-code-architecture-overview)
+    - [4.3 Key Features and Highlights](#43-key-features-and-highlights)
+    - [4.4 Three Key Technical Challenges in Glitchwood's Development](#44-three-key-technical-challenges-in-glitchwoods-development)
+    - [4.5 Reflection and Conclusion](#45-reflection-and-conclusion)
+  - [5 Evaluation](#5-evaluation)
+    - [5.1 Qualitative Evaluation](#51-qualitative-evaluation)
+    - [5.2 Quantitative Evaluation](#52-quantitative-evaluation)
+    - [5.3 Code Test \& Usability Interviews](#53-code-test--usability-interviews)
+    - [5.4 Reflection \& Conclusion](#54-reflection--conclusion)
+  - [6 Process](#6-process)
+    - [6.1 Team Roles and Division of Tasks](#61-team-roles-and-division-of-tasks)
+    - [6.2 Tools and Collaborative Platforms](#62-tools-and-collaborative-platforms)
+    - [6.3 Agile Development Methodology](#63-agile-development-methodology)
+    - [6.4 Team Reflection and Continuous Improvement](#64-team-reflection-and-continuous-improvement)
+  - [7 Sustainability, Ethics, and Accessibility](#7-sustainability-ethics-and-accessibility)
+      - [7.1 Environmental Impact](#71-environmental-impact)
+      - [7.2 Social Impact](#72-social-impact)
+      - [7.3 Technical Sustainability](#73-technical-sustainability)
+      - [7.4 Sustainability-Oriented Requirements](#74-sustainability-oriented-requirements)
+  - [8 Conclusion](#8-conclusion)
+      - [8.1 What We Learned](#81-what-we-learned)
+      - [8.2 Technical Challenges Overcome](#82-technical-challenges-overcome)
+      - [8.3 Collaboration and Testing Insights](#83-collaboration-and-testing-insights)
+      - [8.4 Looking Ahead](#84-looking-ahead)
+      - [8.5 Final Thoughts](#85-final-thoughts)
+  - [9 Appendix](#9-appendix)
+    - [9.1 Contributions of Team Members](#91-contributions-of-team-members)
+    - [9.2 References](#92-references)
+    - [9.3 Goodbye from the Team](#93-goodbye-from-the-team)
+
+
 ## Table of Contents
 
-- [1 Introduction](#1-introduction)
-  - [1.1 Overview](#11-overview)
-  - [1.2 Ideation and Design Origins](#12-ideation-and-design-origins)
-  - [1.3 Inspiration](#13-inspiration)
-  - [1.4 Innovation](#14-innovation)
-  - [1.5 Vision](#15-vision)
-  
-- [2 Requirements](#2-requirements)
-  - [2.1 Stakeholder Identification: The Onion Model](#21-stakeholder-identification-the-onion-model)
-  - [2.2 Requirements Analysis: Epics, User Stories, and Acceptance Criteria](#22-requirements-analysis-epics-user-stories-and-acceptance-criteria)
-  - [2.3 Applying Requirements to Our Game](#23-applying-requirements-to-our-game)
-  - [2.4 Use-Case Diagram and Use-Case Specification](#24-use-case-diagram-and-use-case-specification)
-  - [2.5 Reflection and Conclusion](#25-reflection-and-conclusion)
-
-- [3 Design](#3-design)
-  - [3.1 System Architecture Overview](#31-system-architecture-overview)
-  - [3.2 Class Diagram](#32-class-diagram)
-  - [3.3 Sequence Diagram](#33-sequence-diagram)
-  - [3.4 Reflection and Conclusion](#34-reflection-and-conclusion)
-
-- [4 Implementation](#4-implementation)
-  - [4.1 Core Gameplay Implementation](#41-core-gameplay-implementation)
-  - [4.2 Code Architecture Overview](#42-code-architecture-overview)
-  - [4.3 Key Features and Highlights](#43-key-features-and-highlights)
-  - [4.4 Technical Challenges and Solutions](#44-technical-challenges-and-solutions)
-  - [4.5 Reflection and Conclusion](#45-reflection-and-conclusion)
-
-- [5 Evaluation](#5-evaluation)
-  - [5.1 Qualitative Evaluation](#51-qualitative-evaluation)
-  - [5.2 Quantitative Evaluation](#52-quantitative-evaluation)
-  - [5.3 Code Testing & Usability Interviews](#53-code-testing-usability-interviews)
-  - [5.4 Reflection and Conclusion](#54-reflection-and-conclusion)
-
-- [6 Process](#6-process)
-  - [6.1 Team Roles and Collaboration](#61-team-roles-and-collaboration)
-  - [6.2 Tools and Workflow](#62-tools-and-workflow)
-  - [6.3 Agile Practices](#63-agile-practices)
-  - [6.4 Continuous Improvement](#64-continuous-improvement)
-  - [6.5 Reflection and Conclusion](#65-reflection-and-conclusion)
-
-- [7 Sustainability, Ethics, and Accessibility](#7-sustainability-ethics-and-accessibility)
-  - [7.1 Environmental Efficiency](#71-environmental-efficiency)
-  - [7.2 Social and Narrative Themes](#72-social-and-narrative-themes)
-  - [7.3 Technical Sustainability](#73-technical-sustainability)
-  - [7.4 Accessibility & Inclusive Design](#74-accessibility-inclusive-design)
-  - [7.5 Summary](#75-summary)
-
-- [8 Conclusion](#8-conclusion)
-  - [8.1 What We Learned](#81-what-we-learned)
-  - [8.2 Challenges Overcome](#82-challenges-overcome)
-  - [8.3 Collaboration Insights](#83-collaboration-insights)
-  - [8.4 Future Directions](#84-future-directions)
-  - [8.5 Final Thoughts](#85-final-thoughts)
-
-- [9 Appendix](#9-appendix)
-  - [9.1 Contributions of Team Members](#91-contributions-of-team-members)
-  - [9.2 References](#92-references)
-  - [9.3 Goodbye from the Team](#93-goodbye-from-the-team)
 
 ## 1 Introduction
 
@@ -305,6 +300,110 @@ Working within **P5.js**, we designed modular systems that allow:
 - Rapid iteration and extensibility  
 - Distinct character behaviors and upgrade paths  
 - Thematic consistency between gameplay and metaphor  
+
+### 1.4 Innovation
+
+**Glitchwood** brings several innovations to the roguelike format, blending symbolic design with engaging mechanics, narrative, and visual cohesion.
+
+#### Mechanical Innovations
+
+The game introduces multiple gameplay systems that enrich replayability and strategic depth:
+
+- **Three distinct characters**, each with unique combat roles and upgrade styles (rather than a shared progression tree).
+- A **pet system**: after defeating a boss, players select one of three pets—**attack**, **shield**, or **heal**—which significantly influence combat tactics.
+- A **dynamic weather system** that alters gameplay every 30 seconds:
+  - **Snow** slows movement
+  - **Lightning** causes random damage
+  - **Sunlight** gradually drains health  
+  All weather effects apply symmetrically to both players and enemies.
+
+##### ▶ Characters
+
+|                                             Image                                             |      Name       | Description                                                                                                   |
+| :-------------------------------------------------------------------------------------------: | :-------------: | :------------------------------------------------------------------------------------------------------------ |
+|  <img src="docs/assets/selected_images/characters/intro/mousegirl_intro.gif" height="100px">  |  **Mousegirl**  | Charge-based ranged attacker. Fully charged, deals highest damage. Upgrades focus on bow mechanics.           |
+| <img src="docs/assets/selected_images/characters/intro/computerboy_intro.gif" height="100px"> | **Computerboy** | Easy-to-use character with strong bullet-based attacks. Upgrades boost attributes and firepower.              |
+| <img src="docs/assets/selected_images/characters/intro/keyboardman_intro.gif" height="100px"> | **Keyboardman** | Melee fighter with high AoE damage. Needs to stay close. Upgrades emphasize survivability and special traits. |
+
+##### ▶ Bosses
+
+|                                    Image                                     |     Name      | Description                                                                                 |
+| :--------------------------------------------------------------------------: | :-----------: | :------------------------------------------------------------------------------------------ |
+| <img src="docs/assets/selected_images/bossgif/Slimeboss.gif" height="100px"> | **Slimeboss** | Classic RPG enemy reimagined as a boss. Four colored forms with different attack patterns.  |
+| <img src="docs/assets/selected_images/bossgif/Birdboss.gif" height="100px">  | **Birdboss**  | Shrine-dwelling boss with dash and restriction skills. Stay outside its range to stay safe. |
+|  <img src="docs/assets/selected_images/bossgif/Bugboss.gif" height="100px">  |  **Bugboss**  | Disrupts vision and summons ghost flames. Sudden high-damage attacks — stay alert!          |
+
+##### ▶ Weather Effects
+
+|                           Image                            |     Name      | Description                                                                      |
+| :--------------------------------------------------------: | :-----------: | :------------------------------------------------------------------------------- |
+|   <img src="docs/introduction/flake.gif" height="100px">   |   **Snow**    | Slows the movement speed of all characters and enemies.                          |
+| <img src="docs/introduction/lightning.gif" height="100px"> | **Lightning** | Strikes randomly within the field, dealing damage to any target it hits.         |
+|    <img src="docs/introduction/sun.gif" height="100px">    |    **Sun**    | Increases attack speed for both players and enemies, leading to faster combat.   |
+
+##### ▶ Pet System
+
+|                         Image                          |    Name    | Description                                                                    |
+| :----------------------------------------------------: | :--------: | :----------------------------------------------------------------------------- |
+|  <img src="docs/introduction/fox.gif" height="100px">  | **Blaze**  | Attacks enemies, dealing damage to them.                                       |
+|  <img src="docs/introduction/cow.gif" height="100px">  | **Aegis**  | Protects the player, preventing damage from enemies and environmental hazards. |
+| <img src="docs/introduction/fairy.gif" height="100px"> | **Aurora** | Heals the player by restoring health over time.                                |
+
+#### Narrative Innovation
+
+The story metaphorically reflects a **programmer's emotional journey** through:
+
+- **Burnout**
+- **Debugging and bugs**
+- **Problem-solving under stress**
+
+Rather than using explicit dialogue, these themes are **embedded in mechanics and visuals**, creating a symbolic rather than literal narrative.
+
+#### Visual & Thematic Innovation
+
+- Pixel art characters represent **programmer archetypes**.
+- UI elements resemble **code editors and console logs**.
+- **Glitch effects and corrupted sprites** evoke software instability.
+- Sound design is minimal and ambient, reinforcing immersion.
+
+### 1.5 Vision
+
+**Glitchwood** was built with two core objectives:
+
+1. Deliver a polished, replayable roguelike experience.
+2. Explore how technical and creative systems can metaphorically reflect real-world software development.
+
+#### Gameplay Vision
+
+We aimed to create **modular, extensible systems**—such as:
+
+- The **weather engine**
+- The **pet integration system**
+- **Enemy generation logic**
+
+These were intentionally designed for scalability, supporting future additions like new abilities, difficulty adjustments, or even **multiplayer co-op**. Our architecture prioritized **clean, maintainable code** that facilitates rapid iteration and long-term evolution.
+
+#### Technical Vision
+
+Using **P5.js** as our engine of choice, we set out to **push its real-time performance limits** while maintaining smooth responsiveness. This involved tackling challenges like:
+
+- **Collision detection** under load
+- **Animation state management**
+- **Fluid input handling**
+
+Through this, we deepened our understanding of performance optimization within browser-based interactive environments.
+
+#### Forward-Looking Possibilities
+
+*Glitchwood* is more than a game—it’s a **framework for experimentation**. Potential future directions include:
+
+- Deeper **roguelike branching paths** and player-driven storylines
+- **Community-generated upgrades** or modding support
+- Educational use as a **code-as-metaphor learning platform**
+- Expansion into **cooperative multiplayer**
+- Continued **performance and accessibility tuning**
+
+Our long-term vision is to grow *Glitchwood* into a **living sandbox**—one that bridges gameplay, storytelling, and system design while staying grounded in both technical and emotional authenticity.
 
 [Back to Table of Contents](#table-of-contents)
 
