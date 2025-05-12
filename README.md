@@ -1287,12 +1287,12 @@ You can follow our team's development progress on the board here:
 - [**Kanban Board (Jira)**](https://1971026049.atlassian.net/jira/software/projects/KAN/boards/1)
 
 <div align="center">
-  <img src="docs/kanban/kanban1.png" alt="Kanban1" width="820" height="610"/>
+  <img src="docs/kanban/kanban1.png" alt="Kanban1" width="820" height="580"/>
   <p><em>Figure 27. Project progress presentation on the Kanban board.</em></p>
 </div>
 
 <div align="center">
-  <img src="docs/kanban/kanban2.png" alt="Kanban2" width="820" height="600"/>
+  <img src="docs/kanban/kanban2.png" alt="Kanban2" width="820" height="580"/>
   <p><em>Figure 28. Completed tasks demonstration on the Kanban board.</em></p>
 </div>
 
@@ -1328,7 +1328,7 @@ Our toolset enabled modular development, efficient task tracking, and seamless c
 We used an Agile-inspired process to maintain regular feedback loops, incremental deliverables, and cross-functional collaboration across design, development, and evaluation.
 
 <div align="center">
-  <img src="docs/management/Glitchwood_Management.png" alt="Sprint Timeline and Kanban Overview" width="820" height="800">
+  <img src="docs/management/Glitchwood_Management.png" alt="Sprint Timeline and Kanban Overview" width="820" height="560">
   <p><em>Figure 29. Sprint timeline with team role highlights and Kanban status flows.</em></p>
 </div>
 
