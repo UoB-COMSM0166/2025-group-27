@@ -104,7 +104,7 @@
     - [3.3 Sequence Diagram](#33-sequence-diagram)
     - [3.4 Reflection and Conclusion](#34-reflection-and-conclusion)
   - [4 Implementation](#4-implementation)
-    - [4.1 Basic Implementation](#41-basic-implementation)
+    - [4.1 Core Gameplay Implementation](#41-core-gameplay-implementation)
     - [4.2 Code Architecture Overview](#42-code-architecture-overview)
     - [4.3 Key Features and Highlights](#43-key-features-and-highlights)
     - [4.4 Three Key Technical Challenges in Glitchwood's Development](#44-three-key-technical-challenges-in-glitchwoods-development)
@@ -810,7 +810,7 @@ This architecture lays a strong foundation for future extensions such as multipl
 
 ## 4 Implementation
 
-### 4.1 Basic Implementation
+### 4.1 Core Gameplay Implementation
 
 The core gameplay loop of Glitchwood revolves around real-time movement, combat, and adaptive environmental interaction. We implemented this loop by combining player input handling, procedural environment generation, adaptive enemy logic, and modular support systems such as pets and weather.
 
@@ -1440,42 +1440,42 @@ Glitchwood was not only designed to entertain, but also to reflect a broader com
 
 We designed Glitchwood to be **efficient by design**, both in computational demand and deployment method.
 
-- **Frame logic and visual effects were deliberately minimized**, reducing unnecessary GPU load during idle frames and low-intensity gameplay.
-- By choosing **p5.js**, we avoided large runtime engines or installations, significantly lowering the **energy cost of distribution**.
-- All assets were optimized for browser delivery—pixel art sprites, static backgrounds, and capped animation loops.
+- **Optimized resource usage**: In order to reduce unnecessary GPU and CPU load, we minimized the frame logic and visual effects during idle frames and low-intensity gameplay. For example, complex animations and visual effects were capped, ensuring that the game uses only the resources it needs to maintain smooth gameplay.
+- **Choice of p5.js**: By opting for **p5.js**, a lightweight JavaScript library, we avoided the need for large runtime engines or installations, significantly lowering the **energy cost of distribution**. This also ensures that the game is accessible through web browsers without requiring additional plugins or high system resources.
+- **Optimized assets for web delivery**: All game assets, including pixel art sprites, static backgrounds, and animation loops, were optimized for browser delivery. This ensures a smaller file size and reduced data transfer, making it more energy-efficient for both servers and players' devices.
 
 > Through these measures, Glitchwood can run on older devices with limited hardware resources, expanding access and reducing lifecycle emissions.
 
 **Reflection**:  
-While our client-side game is energy-efficient, our current GitHub-hosted deployment offers limited control over backend sustainability. Future versions could adopt green hosting solutions or power-aware analytics.
+While our client-side game is energy-efficient, our current GitHub-hosted deployment offers limited control over backend sustainability. Future versions could adopt green hosting solutions or power-aware analytics. For example, hosting on data centers powered by renewable energy sources could further reduce the environmental impact.
 
 #### 7.2 Social Impact
 
 Glitchwood explores the **emotional experience of tech burnout** through symbolic gameplay: a developer trapped inside a buggy system, debugging both code and self. This narrative lens helped us address:
 
-- **Workplace overexertion**: Gameplay reflects cognitive load, pressure, and repeated failure cycles.
-- **Mental health**: The game avoids high-punishment loops and offers two difficulty levels to reduce frustration for casual players.
-- **Role diversity**: Characters metaphorically represent different developer personas, affirming that diverse work styles are valid.
+- **Workplace overexertion**: Gameplay reflects the cognitive load, pressure, and repeated failure cycles that many software developers face. By incorporating elements of frustration, debugging, and dealing with system crashes, the game creates an emotional connection to the stresses of real-life software development.
+- **Mental health**: The game avoids high-punishment loops, instead offering a more forgiving experience through two difficulty levels. This makes the game more approachable for casual players, offering an enjoyable experience without overwhelming them. The goal is to highlight the balance between challenge and mental well-being.
+- **Role diversity**: Characters in the game metaphorically represent different developer personas. This acknowledges that there is no one-size-fits-all approach in development. Whether it's the more meticulous type of programmer or the fast-paced problem solver, the game recognizes the validity of different work styles and encourages diversity in the workplace.
 
 We also actively considered inclusivity:
 
-- High-contrast color schemes aid visibility
-- Pet feedback was reinforced with icons and animations
-- Control inputs were kept simple and tutorialized in early waves
+- **High-contrast color schemes** were implemented to aid visibility for players with visual impairments, ensuring that the game remains accessible to a wider range of users.
+- **Pet feedback** was reinforced with clear icons and animations, making it easier for players to understand when their pets are performing actions or assisting in combat.
+- **Simplified control inputs** were introduced and tutorialized in the early waves of the game, ensuring that even novice players can quickly grasp the mechanics without feeling overwhelmed.
 
-> These choices support a wider range of players while embedding real-world themes into the experience.
+> These choices support a wider range of players while embedding real-world themes into the experience. We hope that by bringing these aspects into the gameplay, we can create a conversation around mental health and inclusivity in the tech industry.
 
 #### 7.3 Technical Sustainability
 
 We prioritized **long-term maintainability** and **modular extensibility**:
 
-- All core systems (weather, upgrades, pets) were developed as independent modules, reducing system coupling
-- Code reuse was maximized via inheritance and abstract classes (e.g., all enemies share movement logic)
-- Game runs on open standards (HTML5 + JS), avoiding locked platforms or proprietary libraries
+- **Modular code design**: All core systems, including weather effects, upgrades, and pets, were developed as independent modules, reducing system coupling and enhancing flexibility for future updates. This approach ensures that individual features can be extended or modified without affecting other parts of the game.
+- **Code reuse and abstraction**: We maximized code reuse by utilizing inheritance and abstract classes. For instance, all enemies share the same basic movement logic, allowing for easy integration of new enemy types without rewriting core functionality.
+- **Open standards**: The game runs on open standards such as **HTML5** and **JavaScript**, avoiding the use of proprietary libraries or locked platforms. This ensures that the game remains accessible, adaptable, and easy to modify in the future.
 
-> This structure enables future teams—or even external contributors—to extend the system with new content (e.g., characters, weather types) without rewriting foundational logic.
+> This structure enables future teams—or even external contributors—to extend the system with new content (e.g., characters, weather types) without rewriting foundational logic, promoting long-term sustainability in the game's development.
 
-We also intentionally targeted **low-spec hardware**, ensuring our game is playable on entry-level laptops or tablets without additional setup.
+We also intentionally targeted **low-spec hardware**, ensuring our game is playable on entry-level laptops or tablets without additional setup, making the game more accessible to players with limited access to high-end gaming systems.
 
 #### 7.4 Sustainability-Oriented Requirements
 
@@ -1483,11 +1483,11 @@ Drawing from the **SusAF (Sustainability Awareness Framework)**, we embedded sus
 
 | Type            | Stakeholder        | Requirement                                                                                   |
 |-----------------|--------------------|-----------------------------------------------------------------------------------------------|
-| Environmental   | Developer           | Avoid frame-locked loops and GPU-intensive effects to reduce device energy consumption        |
-| Technical       | Maintainer          | Modularize all features to prevent duplication and ease feature expansion                     |
-| Social          | Casual player       | Provide a low-frustration “Easy Mode” with full gameplay content                              |
-| Accessibility   | Visually sensitive user | Use strong visual contrast and pet effect feedback mechanisms                              |
-| Deployment      | Tester              | Host via web platform for zero-install testing across different systems and browsers          |
+| Environmental   | Developer           | Avoid frame-locked loops and GPU-intensive effects to reduce device energy consumption.        |
+| Technical       | Maintainer          | Modularize all features to prevent duplication and ease feature expansion.                     |
+| Social          | Casual player       | Provide a low-frustration “Easy Mode” with full gameplay content to ensure accessibility.      |
+| Accessibility   | Visually sensitive user | Use strong visual contrast and clear pet effect feedback mechanisms for better accessibility. |
+| Deployment      | Tester              | Host via web platform for zero-install testing across different systems and browsers.          |
 
 > These requirements ensured that sustainability was not an afterthought, but a constraint baked into system scope, feature prioritization, and user expectations.
 
