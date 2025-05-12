@@ -22,7 +22,7 @@
 
 <div align="center">
   <a href="https://youtu.be/V8NCOusjgn8" target="_blank">
-    <img src="https://img.youtube.com/vi/V8NCOusjgn8/maxresdefault.jpg" alt="Watch the Demo Video" width="580" height="350"/>
+    <img src="https://img.youtube.com/vi/V8NCOusjgn8/maxresdefault.jpg" alt="Watch the Demo Video" width="580" height="340"/>
   </a>
     <p><em>Thumbnail for the YouTube demo video (click to watch).</em></p>
 </div>
@@ -679,7 +679,7 @@ To define the static structure of our system, we created a UML **class diagram**
 The diagram below outlines how we organized key gameplay systems around modular, extensible classes.
 
 <div align="center">
-  <img src="docs/design/ClassDiagram.png" alt="Class Diagram" width="820" height="380">
+  <img src="docs/design/ClassDiagram.png" alt="Class Diagram" width="820" height="400">
   <p><em>Figure 15. UML class diagram of core gameplay systems.</em></p>
 </div>
 
@@ -1124,7 +1124,7 @@ In Hard Mode, most players reported higher **mental demand**, **temporal stress*
 ##### Average Scores Comparison
 
 <div align="center">
-  <img src="docs/evaluation/NASA_bar.png" alt="NASA Bar" width="820"  height="420">
+  <img src="docs/evaluation/NASA_bar.png" alt="NASA Bar" width="820"  height="410">
   <p><em>Figure 21. Average NASA-TLX scores by workload dimension in L1 and L2.</em></p>
 </div>
 
@@ -1133,7 +1133,7 @@ This bar chart confirms that Hard Mode significantly increases mental strain and
 ##### Radar Profile
 
 <div align="center">
-  <img src="docs/evaluation/NASA_radar.png" alt="NASA Radar" width="820"  height="420">
+  <img src="docs/evaluation/NASA_radar.png" alt="NASA Radar" width="820"  height="430">
   <p><em>Figure 22. NASA-TLX radar comparison: Easy vs. Hard Mode workload profile.</em></p>
 </div>
 
