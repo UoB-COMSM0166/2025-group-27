@@ -552,7 +552,7 @@ By consistently referring back to our original user stories and acceptance crite
 
 ### 2.4 Use-Case Diagram and Use-Case Specification
 
-To structure Glitchwood’s interactive features, we developed a detailed **Use Case Diagram** that models all system-level interactions between users and the game. The diagram visualizes the primary actions available to each user role—**Player** and **Developer**—as well as the conditions under which these actions occur.
+We developed a **Use Case Diagram** to model the system-level interactions between users and the game. It visualizes the primary actions of each user role—**Player** and **Developer**—along with the conditions under which these actions occur.
 
 <div align="center">
   <img src="docs/requirements/use_case_diagram.png" alt="Use Case Diagram and Specification" width="1100" height="580">
@@ -561,19 +561,17 @@ To structure Glitchwood’s interactive features, we developed a detailed **Use 
 
 #### Actors and Use Case Overview
 
-- **Player**: The end user who interacts with the game interface and mechanics.
-- **Developer**: The system maintainer, responsible for updates and content expansion.
+- **Player**: The user interacting with the game.
+- **Developer**: The system maintainer for updates and content expansion.
 
 **Key player actions include:**
-
 - Starting the game → Choosing difficulty and character
 - Combat interaction → Fighting enemies, facing bosses
 - Choosing upgrades
 - Saving, pausing, resuming the game
-- Entering infinite mode or returning to main menu
+- Entering infinite mode or returning to the main menu
 
 **Developer actions include:**
-
 - Releasing new game versions via content patches or technical updates
 
 #### Representative Use Case: Complete Game
@@ -587,24 +585,21 @@ To structure Glitchwood’s interactive features, we developed a detailed **Use 
 **Postconditions**: Player stats and score are saved; session ends or enters infinite mode.
 
 **Basic Flow:**
-
 1. Player selects difficulty
 2. Player selects a character
 3. Waves of enemies are fought
 4. Player gains XP, selects upgrades
-5. Boss appears at interval (e.g., wave 5, 10, 15)
+5. Boss appears at intervals (e.g., wave 5, 10, 15)
 6. Player either defeats boss and continues or is defeated
 7. After wave 15, player may:
    - Finish the game
    - Enter infinite mode
 
 **Alternate Flows:**
-
 - *Game Over*: Player dies → score displayed → return to menu
 - *Infinite Mode*: Player continues in looped progression until death
 
 **Special Requirements:**
-
 - Weather changes every 30 seconds
 - Upgrade pool is randomized per run
 - Enemy spawn rate increases over time
@@ -811,11 +806,11 @@ This architecture lays a strong foundation for future extensions such as multipl
 
 ### 4.1 Core Gameplay Implementation
 
-The core gameplay loop of Glitchwood revolves around real-time movement, combat, and adaptive environmental interaction. We implemented this loop by combining player input handling, procedural environment generation, adaptive enemy logic, and modular support systems such as pets and weather.
+The core gameplay loop of Glitchwood revolves around real-time movement, combat, and environmental interaction. This was implemented by combining player input handling, procedural environment generation, adaptive enemy logic, and modular support systems like pets and weather.
 
 #### Player Controls and Input Handling
 
-Players control their character using keyboard keys (WASD for movement) and mouse input (aiming and clicking to attack). Internally, we rely on p5.js event functions:
+Players control their character using keyboard keys (WASD for movement) and mouse input (aiming and clicking to attack). Internally, we use p5.js event functions:
 
 - `keyPressed()` and `keyReleased()` update movement states
 - `mouseClicked()` triggers weapon attacks based on the character's class
@@ -826,13 +821,12 @@ Players control their character using keyboard keys (WASD for movement) and mous
 
 Each map consists of randomly generated obstacles that block movement and projectiles. When a new wave begins:
 
-- All previous obstacles are cleared
-- New obstacles are placed based on current wave level
-- Obstacle layout uses a stack-based generation pattern to ensure collision-free placement
+- Previous obstacles are cleared
+- New obstacles are placed based on the current wave level
 
-Certain bosses (e.g., `Slimeboss`) are designed to **ignore obstacles**, adding a layer of unpredictability to combat.
+Certain bosses (e.g., `Slimeboss`) are designed to ignore obstacles, adding unpredictability to combat.
 
-> Procedural regeneration increases replayability while forcing players to adapt their positioning strategies per wave.
+> Procedural regeneration increases replayability and forces players to adapt their positioning strategies.
 
 #### Enemy Spawn and Pursuit Logic
 
@@ -840,37 +834,37 @@ Enemies spawn outside the visible map area and at a minimum distance from the pl
 
 - Real-time vector calculation toward the player
 - Angle-based movement adjustment for obstacle avoidance
-- Progressive increase in spawn count per wave
+- Increased spawn count per wave
 
-Bosses appear on **waves 5, 10, and 15**, each bringing unique abilities and challenge curves.
+Bosses appear on **waves 5, 10, and 15**, each bringing unique abilities and challenges.
 
-> This algorithm balances fairness (avoid surprise spawns) and difficulty scaling as waves progress.
+> This algorithm balances fairness and difficulty scaling as waves progress.
 
 #### Weather and Pet Systems
 
-After defeating the first boss, players select one of three pets, each providing continuous support:
+After defeating the first boss, players select one of three pets for continuous support:
 
 - `Blaze`: Attacks nearby enemies
 - `Aegis`: Generates a protective shield
 - `Aurora`: Gradually heals the player over time
 
-Separately, the **weather system** is triggered every 30 seconds, randomly selecting one of three global effects:
+The **weather system** is triggered every 30 seconds, with three possible effects:
 
-- `Snow`: Reduces movement speed for all characters and enemies
+- `Snow`: Reduces movement speed
 - `Thunder`: Deals periodic area damage
-- `Sun`: Temporarily increases player attack speed
+- `Sun`: Increases player attack speed
 
-Both systems are implemented via independent classes and rely on the global time and frame counters provided by p5.js.
+Both systems are implemented via independent classes and rely on p5.js’s global time and frame counters.
 
 > Decoupling pets and weather from the main game loop allows for easy tuning, testing, and future expansion.
 
 ### 4.2 Code Architecture Overview
 
-Glitchwood’s codebase follows a modular, event-driven structure grounded in object-oriented design. Each system—combat, weather, pets, upgrades—was encapsulated into standalone components to maximize scalability and reduce coupling.
+Glitchwood’s codebase follows a modular, event-driven structure grounded in object-oriented design. Each system—combat, weather, pets, upgrades—is encapsulated into standalone components to maximize scalability and reduce coupling.
 
 #### Central Game Loop
 
-At the core is the **main game loop**, which runs continuously using p5.js’s `draw()` function. This loop is responsible for:
+At the core is the **main game loop**, which runs continuously using p5.js’s `draw()` function. It is responsible for:
 
 - Updating player input states
 - Moving all entities (player, enemies, pets, projectiles)
@@ -886,89 +880,73 @@ User input events (`keyPressed()`, `mouseClicked()`) trigger immediate actions (
 
 Each gameplay element is encapsulated in its own class:
 
-- **Player**  
-  Stores attributes (`HP`, `speed`, `weaponType`) and handles input response, movement, and upgrade selection. Each player instance may include references to an equipped weapon and a companion pet.
-
-- **Enemy & Boss**  
-  Subclasses of a shared `Figure` superclass. Bosses override behavior methods to implement unique skills and animations.
-
-- **Projectile System**  
-  `Bullet`, `Arrow`, and enemy projectiles are autonomous instances updated every frame. Each includes collision logic and lifespan management.
-
-- **Pet System**  
-  Pets are subclassed into attacker, healer, or defender types. Each uses a combination of `follow()` and `trigger()` methods to manage position and behavior independently.
-
-- **Weather System**  
-  Implements a timed trigger using frame counters and random selection to apply a global environmental modifier every 30 seconds.
+- **Player**: Stores attributes and handles input response, movement, and upgrade selection.
+- **Enemy & Boss**: Subclasses of a shared `Figure` superclass. Bosses override behavior methods.
+- **Projectile System**: Handles projectiles like `Bullet` and `Arrow`.
+- **Pet System**: Pets have individual behavior classes for attack, healing, and defense.
+- **Weather System**: Applies global environmental modifiers every 30 seconds.
 
 > By isolating behavior within self-contained classes, we ensured system robustness and reusability.
 
 #### Special Interaction Handlers
 
-To support complex game states and transitions, we implemented a lightweight **state manager**, built around a `gameState` global variable (e.g., `"start"`, `"wave"`, `"boss"`, `"selectPet"`, `"gameOver"`).
+We implemented a lightweight **state manager** with a `gameState` global variable (e.g., `"start"`, `"wave"`, `"boss"`, `"selectPet"`, `"gameOver"`). Each phase is associated with a rendering function, called inside `draw()`.
 
-Each visual or logical phase is associated with a rendering function (`drawStartScreen()`, `drawWave()`, etc.), which is conditionally called inside `draw()`.
-
-> This approach simplified phase transitions without relying on third-party state machines, keeping logic transparent and testable.
-
-This architecture allowed us to independently develop features while maintaining a unified flow. Features such as new enemies, weapon types, or pets could be added without modifying core systems, enabling safe
+> This simplified phase transitions and kept the logic transparent.
 
 ### 4.3 Key Features and Highlights
-
-Glitchwood's gameplay is defined by several key systems that work together to create an engaging, adaptive experience. Each of these systems was designed with modularity and replayability in mind.
 
 #### 1. Procedural Map and Obstacle Generation
 
 **Description**:  
-Every wave spawns a new battle arena with a fresh layout of obstacles that block both movement and attacks.
+Every wave spawns a new battle arena with randomly placed obstacles.
 
 **Implementation**:  
-Obstacles are instantiated using a stack-based generator, which ensures:
 - Random placement
-- Non-overlapping with player spawn zone
+- Non-overlapping with the player spawn zone
 - Obstacle shapes and density scale with wave number
 
 **Design Value**:  
-This system increases replayability and forces players to continually adapt tactics. It also introduces soft cover dynamics, rewarding positioning and spatial awareness.
+This increases replayability and forces players to adapt their tactics.
 
 #### 2. Fine-Grained Collision Detection
 
 **Description**:  
-Player, enemy, projectile, pet, and obstacle collisions are handled precisely to ensure a fair and responsive combat experience.
+Handles collisions for player, enemy, projectile, pet, and obstacles.
 
 **Implementation**:  
-- All game objects implement `checkCollision()` methods based on distance, angle, or bounding box
+- Uses `checkCollision()` methods based on distance, angle, or bounding box
 - Projectiles deactivate on contact
-- "Air walls" are added at the edges of the canvas to prevent unintended exits
+- "Air walls" prevent unintended exits
 
 **Design Value**:  
-By centralizing and unifying hit detection logic, we achieved consistent responses across different interaction types. This minimized bugs and made testing easier.
+Consistent hit detection logic reduces bugs and makes testing easier.
 
 #### 3. Adaptive Pet System
 
 **Description**:  
-Pets accompany the player after boss battles, offering passive support in one of three modes: attack, heal, or defend.
+Pets provide passive support in attack, healing, or defense.
 
 **Implementation**:  
 - Pets follow the player using `lerp()` smoothing
-- Each pet class includes cooldown management (`attackCooldown`, `shieldDuration`, etc.)
-- Pets detect enemies or player HP status and act accordingly
+- Each pet includes cooldown management
+- Pets detect enemies or player HP status
 
 **Design Value**:  
-The pet system adds strategic depth while maintaining mechanical clarity. It also gave us an opportunity to explore autonomous agent design within a real-time loop.
+Adds strategic depth while maintaining clarity in gameplay.
 
 #### 4. Dynamic Weather Engine
 
 **Description**:  
-Every 30 seconds, the game environment shifts to a new weather state that applies global effects to all characters.
+Every 30 seconds, the game environment shifts to a new weather state affecting all characters.
 
 **Implementation**:  
-- Weather types (`Snow`, `Thunder`, `Sun`) are subclasses of a `Weather` base class
-- Effects are triggered based on `frameCount` and stored in a shared modifier object
-- Weather updates are independent of player input or enemy state
+- Weather types are subclasses of a `Weather` base class
+- Effects are triggered based on `frameCount`
+- Updates are independent of player input or enemy state
 
 **Design Value**:  
-This mechanic keeps gameplay unpredictable and encourages real-time adaptation. Because it affects enemies and players equally, it introduces tactical windows and disruption events that shape each wave differently.
+Keeps gameplay unpredictable and encourages real-time adaptation.
 
 ### 4.4 Three Key Technical Challenges in Glitchwood's Development
 
