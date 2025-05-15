@@ -292,6 +292,8 @@ class GhostFire {
     this.radius = 15;
     this.damage = 20;
     this.isActive = true;
+    this.lifespan = 300; // Add lifespan to prevent infinite tracking
+    this.obstacleAvoidanceForce = 0.3; // Force to avoid obstacles
 
     this.frameIndex = 0;
     this.totalFrames = 5;
@@ -324,14 +326,27 @@ class GhostFire {
       this.frameIndex = (this.frameIndex + 1) % this.totalFrames;
     }
 
+    // Decrease lifespan
+    this.lifespan--;
+    if (this.lifespan <= 0) {
+      this.isActive = false;
+      return;
+    }
+
+    // Calculate steering force to seek player
     let steer = this.seek(player.pos);
     this.acc.add(steer);
+
+    // Add obstacle avoidance
+    let avoidForce = this.avoidObstacles();
+    this.acc.add(avoidForce);
 
     this.vel.add(this.acc);
     this.vel.limit(this.maxSpeed);
     this.pos.add(this.vel);
     this.acc.mult(0);
 
+    // Check collision with player
     let d = dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y);
     if (d < this.radius + player.radius) {
       player.takeDamage(this.damage);
@@ -339,18 +354,36 @@ class GhostFire {
       this.isActive = false;
     }
 
+    // Check if out of bounds
+    if (this.pos.x < 0 || this.pos.x > width || this.pos.y < 0 || this.pos.y > height) {
+      this.isActive = false;
+    }
+  }
+
+  avoidObstacles() {
+    let avoidForce = createVector(0, 0);
+    let count = 0;
+
     for (let obs of obstacles) {
-      if (obs.collidesWith(this.pos, this.radius * 2, this.radius * 2)) {
-        this.isActive = false;
-        for (let i = 0; i < 8; i++) {
-          let angle = random(TWO_PI);
-          let speed = random(2, 5);
-          let velocity = p5.Vector.fromAngle(angle).mult(speed);
-          particles.push(new Particle(this.pos.x, this.pos.y, velocity, color(255, 150, 0)));
-        }
-        break;
+      let closestX = constrain(this.pos.x, obs.pos.x, obs.pos.x + obs.width);
+      let closestY = constrain(this.pos.y, obs.pos.y, obs.pos.y + obs.height);
+      let closest = createVector(closestX, closestY);
+      let d = p5.Vector.dist(this.pos, closest);
+
+      if (d < this.radius * 3) {
+        let avoid = p5.Vector.sub(this.pos, closest);
+        avoid.normalize();
+        avoid.mult(this.obstacleAvoidanceForce);
+        avoidForce.add(avoid);
+        count++;
       }
     }
+
+    if (count > 0) {
+      avoidForce.div(count);
+    }
+
+    return avoidForce;
   }
 
   // Displays the ghost fire on the screen.
